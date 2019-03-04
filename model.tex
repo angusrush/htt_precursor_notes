@@ -1,0 +1,2192 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Model categories}
+\label{ch:model_categories}
+
+\section{Localization of categories}
+\label{sec:localization_of_categories}
+
+\begin{definition}[localization of a category]
+  \label{def:localization_of_a_category}
+  Let $\mathcal{C}$ be a category, and $\mathcal{W}$ a set of morphisms of $\mathcal{C}$. The \defn{localization of $\mathcal{C}$ at $\mathcal{W}$} is a pair $(\mathcal{C}[\mathcal{W}^{-1}], \pi)$ where $\mathcal{C}([\mathcal{W}^{-1}])$ is a category and $\pi\colon \mathcal{C} \to \mathcal{C}[\mathcal{W}^{-1}]$ is a functor, such that the following conditions hold.
+
+  \begin{itemize}
+    \item For all $w \in \mathcal{W}$, $\pi(w)$ is an isomorphism.
+
+    \item For any category $\mathcal{A}$ and functor $F\colon \mathcal{C} \to \mathcal{A}$ such that $F(w)$ is an isomorphism for all $w \in \mathcal{W}$, there exists a functor $\tilde{F}\colon \mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{A}$ and a natural isomorphism $\tilde{F} \circ \pi \Rightarrow F$.
+      \begin{equation*}
+        \begin{tikzcd}
+          \mathcal{C}
+          \arrow[r, swap, ""'{name=A}, swap, "F"]
+          \arrow[d, swap, "\pi"]
+          & \mathcal{A}
+          \\
+          \mathcal{C}[\mathcal{W}^{-1}]
+          \arrow[ur, swap, "\exists\tilde{F}"]
+          \arrow[from=A, Rightarrow]
+        \end{tikzcd}
+      \end{equation*}
+      Note that the above diagram is not required to commute.
+
+    \item For every category $\mathcal{A}$, the pullback functor
+      \begin{equation*}
+        \pi^{*}\colon \mathbf{Cat}(\mathcal{C}[\mathcal{W}^{-1}], \mathcal{A}) \to \mathbf{Cat}(\mathcal{C}, \mathcal{A})
+      \end{equation*}
+      is fully faithful.
+  \end{itemize}
+\end{definition}
+
+Note that by the third axiom, the functor $\tilde{F}$ is guaranteed to be unique up to isomorphism; fully faithfulness tells us precisely that functors $\mathcal{C} \to \mathcal{A}$ and functors $\mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{A}$ sending $\mathcal{W}$ to isomorphisms are in bijection up to isomorphism
+
+The idea behind the localization of a category is very similar to that of a ring. Roughly speaking, in localizing a category $\mathcal{C}$ at a set of morphisms $\mathcal{W}$, one adds just enough morphisms to $\mathcal{C}$ so that all the morphisms in $\mathcal{W}$ have inverses. Of course in adding any morphism to a category, one also has to freely add in compositions with other morphisms. For this reason, the localization of a category is in general unwieldy. Furthermore, one runs into size-theoretic issues: even if $\mathcal{C}$ is a small category, one cannot in general be sure that $\mathcal{C}[\mathcal{W}^{-1}]$ is small.
+
+There is an explicit construction of the localization of a category, but it is extremely unweildy to work with. Fortunately, model categories provide a way of computing and working with localizations which is practical and avoids issues of size.
+
+\section{Model categories}
+\label{sec:model_categories}
+
+Model categories provide a setting in which one can define a purely category-theoretic form of homotopy theory.
+
+\begin{definition}[model category]
+  \label{def:model_category}
+  A \defn{model category} is a category $\mathcal{C}$ together with three sets of morphisms
+  \begin{itemize}
+    \item $\W$, the set of \emph{weak equivalences}
+
+    \item $\fib$, the set of \emph{fibrations}
+
+    \item $\cof$, the set of \emph{cofibrations}
+  \end{itemize}
+  subject to the following axioms.
+  \begin{enumerate}[label=(M\arabic*)]
+    \item\label{item:MC_complete_cocomplete} The category $\mathcal{C}$ has all small limits and colimits.
+
+    \item\label{item:MC_two_out_of_three} The set $\W$ satisfies the so-called \emph{two-out-of-three law:} if the diagram
+      \begin{equation*}
+        \begin{tikzcd}
+          X
+          \arrow[rr, "g"]
+          \arrow[rd, swap, "h"]
+          && Z
+          \\
+          & Y
+          \arrow[ur, swap, "f"]
+        \end{tikzcd}
+      \end{equation*}
+      commutes and two out of three of $f$, $g$, and $h$ are weak equivalences, then the third is as well.
+
+    \item\label{item:MC_closed_under_retracts} The sets $\W$, $\fib$, and $\cof$ are all closed under retracts: given the following diagram, if $g$ belongs to any of the above sets, then so does $f$.
+      \begin{equation*}
+        \begin{tikzcd}
+          X
+          \arrow[r]
+          \arrow[d, swap, "f"]
+          & Y
+          \arrow[r]
+          \arrow[d, "g"]
+          & X
+          \arrow[d, "f"]
+          \\
+          Z
+          \arrow[r]
+          & W
+          \arrow[r]
+          & Z
+        \end{tikzcd}
+      \end{equation*}
+
+    \item\label{item:MC_solve_some_lifting_problems} We can solve a lifting problem
+      \begin{equation*}
+        \begin{tikzcd}
+          U
+          \arrow[r]
+          \arrow[d, swap, "i"]
+          & X
+          \arrow[d, "p"]
+          \\
+          V
+          \arrow[r]
+          & P
+        \end{tikzcd}
+      \end{equation*}
+      if all of the following conditions hold.
+      \begin{itemize}
+        \item The morphism $i$ is a cofibration.
+
+        \item The morphism $p$ is a fibration.
+
+        \item At least one of $i$ and $p$ is a weak equivalence.
+      \end{itemize}
+
+    \item\label{item:MC_morphisms_factorize} Any morphism $f\colon X \to Y$ admits the following factorizations.
+      \begin{itemize}
+        \item We can write $f = p \circ i$, where $p$ is a fibration and $i$ is both a cofibration and a weak equivalence.
+          \begin{equation*}
+            \begin{tikzcd}
+              A
+              \arrow[rr, "f"]
+              \arrow[dr, swap, "\cof \cap \W \ni i"]
+              && B
+              \\
+              & X
+              \arrow[ur, swap, "p \in \fib"]
+            \end{tikzcd}
+          \end{equation*}
+
+        \item We can write $f = p \circ i$, where $p$ is both a fibration and a weak equivalence, and $i$ is a cofibration.
+          \begin{equation*}
+            \begin{tikzcd}
+              A
+              \arrow[rr, "f"]
+              \arrow[dr, swap, "\cof \ni i"]
+              && B
+              \\
+              & X
+              \arrow[ur, swap, "p \in \fib \cap \W"]
+            \end{tikzcd}
+          \end{equation*}
+      \end{itemize}
+  \end{enumerate}
+\end{definition}
+
+To simplify terminology, we will use the following terms.
+\begin{itemize}
+  \item We will call morphisms which are both weak equivalences and fibrations \emph{trivial fibrations}:
+    \begin{equation*}
+      \W \cap \fib = \{\text{trivial fibrations}\}.
+    \end{equation*}
+
+  \item We will call morphisms which are both weak equivalences and cofibrations \emph{trivial cofibrations}:
+    \begin{equation*}
+      \W \cap \cof = \{\text{trivial cofibrations}\}.
+    \end{equation*}
+
+  \item We will call an object $X \in \mathcal{C}$ \emph{cofibrant} if the unique morphism $\emptyset \to X$ is a cofibration.
+
+  \item We will call an object $Y \in \mathcal{C}$ \emph{fibrant} if the unique morphism $X \to *$ is a fibration.
+\end{itemize}
+
+\begin{lemma}
+  \label{lemma:retract_argument}
+  Let $\mathcal{C}$ be any category, and let $f = p \circ i$ be a morphism in $\mathcal{C}$.
+  \begin{enumerate}
+    \item If $f$ has the left lifting property with respect to $p$, then $f$ is a retract of $i$.
+
+    \item If $f$ has the right lifting property with respect to $i$ then $f$ is a retract of $p$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  Suppose $f$ has the left-lifting property with respect to $p$. Then the following diagram admits a lift.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r, "i"]
+      \arrow[d, swap, "f"]
+      & X
+      \arrow[d, "p"]
+      \\
+      B
+      \arrow[r, equals]
+      \arrow[ur, dashed]
+      & B
+    \end{tikzcd}
+  \end{equation*}
+
+  Expanding, we find the following diagram.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r, equals]
+      \arrow[d, swap, "f"]
+      & A
+      \arrow[d, "i"]
+      \arrow[r, equals]
+      & A
+      \arrow[d, "f"]
+      \\
+      B
+      \arrow[r, dashed]
+      \arrow[rr, bend right, swap, "\id_{B}"]
+      & X
+      \arrow[r, "p"]
+      & B
+    \end{tikzcd}
+  \end{equation*}
+  This exhibits $f$ as a retract of $i$.
+\end{proof}
+
+The axioms for a model category are over-specified, in the sense that providing $\W$ and either $\fib$ and $\cof$ is sufficient to derive the other one.
+\begin{lemma}
+  \label{lemma:relations_between_lifting_properties_and_fibrations}
+  Let $\mathcal{C}$ be a model category. We have the following.
+  \begin{enumerate}
+    \item $\cof\rlp = \fib \cap \W$
+    \item $\cof = \llp(\fib \cap \W)$
+    \item $(\cof \cap \W)\rlp = \fib$
+    \item $\cof \cap \W = \llp\fib$
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  We prove 4. The proof of 1 is mutatis mutandis equivalent.
+
+  Let $f \in \cof \cap \W$. Then by \hyperref[item:MC_solve_some_lifting_problems]{Axiom~\ref*{item:MC_solve_some_lifting_problems}}, $f \in \llp\fib$.
+
+  Now suppose $f \in \llp\fib$. By \hyperref[item:MC_morphisms_factorize]{Axiom~\ref*{item:MC_morphisms_factorize}}, we can always find a factorization $f = p \circ i$, where $p$ is a fibration and $i$ is a trivial cofibration.
+
+  By \hyperref[item:MC_solve_some_lifting_problems]{Axiom~\ref*{item:MC_solve_some_lifting_problems}}, $f$ has the left lifting property with respect to $p$, so by \hyperref[lemma:retract_argument]{Lemma~\ref*{lemma:retract_argument}}, $f$ is a retract of $i$. But since by \hyperref[item:MC_closed_under_retracts]{Axiom~\ref*{item:MC_closed_under_retracts}} both $\W$ and $\cof$ are closed under retracts, $f$ is also a trivial cofibration as needed.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:trivial_fibrations_and_cofibrations_are_saturated}
+  In any model category, the sets $\cof$ and $\cof \cap \W$ are saturated (\hyperref[def:saturated]{Definition~\ref*{def:saturated}}).
+\end{corollary}
+\begin{proof}
+  By \hyperref[thm:left_perp_is_saturated]{Theorem~\ref*{thm:left_perp_is_saturated}}, any set which is of the form $\llp \mathcal{M}$ is saturated.
+\end{proof}
+
+\begin{example}
+  The following are examples of model structures.
+  \begin{enumerate}
+    \item The category $\mathbf{Top}$ carries the so-called \emph{Quillen model structure,} with
+      \begin{itemize}
+        \item $\W =$ weak homotopy equivalences,
+
+        \item $\fib =$ Serre fibrations,
+
+        \item $\cof =$ $\llp(\fib \cap \W)$.
+      \end{itemize}
+
+    \item The category $\SSet$ has a model structure called the \emph{Kan model structure} with
+      \begin{itemize}
+        \item $\W =$ weak homotopy equivalences, i.e.\ Kan fibrations $X \to Y$ such that $\pi_{0}(X)$ and $\pi_{n}(X, x)$ for all $n \geq 1$ and $x \in X$.
+
+        \item $\fib =$ Kan fibrations,
+
+        \item $\cof =$ monomorphisms.
+      \end{itemize}
+
+      Note that in this case, $\W \cap \cof = \llp\fib = \{\text{anodyne morphisms}\}$.
+
+    \item For any small ring $R$, the category $\mathbf{Ch}(R)$ of chain complexes of small left $R$-modules has a model structure, called the \emph{projective model structure,} with
+      \begin{itemize}
+        \item $\W = $ Quasi-isomorphisms
+
+        \item $\fib = $ morphisms $f$ of complexes such that $f_{n}$ is a surjection for all $n$
+
+        \item $\cof =$ $\llp(\fib \cap \W)$.
+      \end{itemize}
+  \end{enumerate}
+\end{example}
+
+\begin{example}
+  \label{eg:opposite_model_category}
+  Let $\mathcal{C}$ be a category with model structure $(\W, \fib, \cof)$. Then $\mathcal{C}\op$ is a model category with model structure $(\W, \cof, \fib)$.
+\end{example}
+
+\subsection{A model structure on the category of categories}
+\label{ssc:a_model_structure_on_the_category_of_categories}
+
+In general, proving that three sets of morphisms form the fibrations, cofibrations, and weak equivalences of a model structure is in general an immense undertaking. There are a few model structures, however, which are somewhat simple.
+
+Consider the category $I$ with the following objects and morphisms (excluding identity morphisms).
+\begin{equation*}
+  \begin{tikzcd}
+    0
+    \arrow[r, bend left]
+    & 1
+    \arrow[l, bend left]
+  \end{tikzcd}
+\end{equation*}
+
+Denote the functor including $0 \hookrightarrow I$ by $\iota$.
+
+The following is a model structure on $\mathbf{Cat}$.
+\begin{itemize}
+  \item $\W =$ categorical equivalences
+
+  \item $\fib =$ \emph{isofibrations}, i.e.\ functors with the right lifting property with respect to $\iota$
+
+  \item $\cof =$ functors which are injective on objects
+\end{itemize}
+
+We verify the axioms one by one. This section is incomplete and a bit wrong at the moment. I'll come back to it.
+\subsubsection{Axiom M1: Limits and colimits}
+
+We already know that $\mathbf{Cat}$ has all limits and colimits.
+
+\subsubsection{Axiom M2: Two-out-of-three}
+
+We have the following results.
+\begin{itemize}
+  \item If a functor is a weak equivalence, then its weak inverse is also a weak equivalence.
+
+  \item Composition of weak equivalences gives again a weak equivalence (by the horizontal composition formula).
+\end{itemize}
+Thus, the same reasoning that shows that the 2/3 law holds for bona-fide isomorphisms also holds for weak equivalences.
+
+\subsubsection{Axiom M3: Closure under retracts}
+First suppose that $G$ is an equivalence of categories. We need to show that $F$ is also an equivalence of categories.
+\begin{equation*}
+  \begin{tikzcd}
+    \mathcal{A}
+    \arrow[d, swap, "F"]
+    \arrow[r, "R"]
+    & \mathcal{C}
+    \arrow[d, "G"]
+    \arrow[r, "S"]
+    & \mathcal{A}
+    \arrow[d, "F"]
+    \\
+    \mathcal{B}
+    \arrow[r, swap, "T"]
+    & \mathcal{D}
+    \arrow[r, swap, "U"]
+    & \mathcal{B}
+  \end{tikzcd}
+\end{equation*}
+Since both $S \circ R$ and $U \circ T$ compose to the identity, $T$ and $R$ are injective on objects and morphisms (in the on-the-nose, evil sense), and $S$ and $U$ are similarly surjective. Thus $G$ is:
+\begin{itemize}
+  \item \textbf{Essentially surjective:} We can map any $b \in \mathcal{B}$ to $\mathcal{D}$ with $T$, then lift it to something in $\mathcal{C}$ using $G$'s weak inverse, which we'll call $G ^{-1}$. Mapping the result of this to $\mathcal{A}$ with $S$ gives us an object
+    \begin{equation*}
+      (S \circ G^{-1} \circ T)(b) \in A.
+    \end{equation*}
+
+    The claim is that under $F$ this maps to something isomorphic to $b$. Evaluating on $F$, we have
+    \begin{equation*}
+      F((S \circ G^{-1} \circ T)(b)) = (U \circ G \circ G^{-1} \circ T)(b).
+    \end{equation*}
+    We have a natural isomorphism $G \circ G^{-1} \Rightarrow \id$, which tells us that
+    \begin{equation*}
+      (U \circ G \circ G^{-1} \circ T)(b) \simeq (U \circ T)(b) = b.
+    \end{equation*}
+
+  \item \textbf{Fully faithful:} The logic is very similar. We can map any morphism $f$ in $\mathcal{B}$ to a morphism in $\mathcal{D}$ with $T$, and (because $G$ is fully faithful) find a unique preimage in $\mathcal{C}$ which we'll call $G^{-1}(T(f))$. Applying $S$ gives us a morphism
+    \begin{equation*}
+      (S \circ G^{-1} \circ T)(f) \quad\text{in}\ \mathcal{A}.
+    \end{equation*}
+    Then
+    \begin{align*}
+      (F \circ S \circ G^{-1} \circ T)(f) &= (U \circ G \circ G^{-1} \circ T)(f) \\
+      &= (U \circ T)(f) \\
+      &= f.
+    \end{align*}
+\end{itemize}
+
+Now suppose that $G$ is in $\mathfrak{C}$. We need to show that $F \in \mathfrak{C}$.
+
+Applying the forgetful functor to $\mathbf{Set}$ we have the following diagram.
+\begin{equation*}
+  \begin{tikzcd}
+    A
+    \arrow[r, "r"]
+    \arrow[d, swap, "f"]
+    & C
+    \arrow[d, "g"]
+    \arrow[r, "s"]
+    & A
+    \arrow[d, "f"]
+    \\
+    B
+    \arrow[r, swap, "t"]
+    & D
+    \arrow[r, swap, "u"]
+    & B
+  \end{tikzcd}
+\end{equation*}
+The map $r$ is injective because the identity factors through it, and $g$ is injective by assumption. Suppose we are given $a$, $a' \in A$ such that $f(a) = f(a')$. Then $t(f(a)) = t(f(a'))$, so $g(r(a)) = g(r(a'))$. But $g$ and $r$ are both injective, so $a = a'$.
+
+Now suppose that $G$ is in $\mathfrak{F}$. We need to show that $F \in \mathfrak{F}$.
+\begin{equation*}
+  \begin{tikzcd}
+    \mathcal{A}
+    \arrow[d, swap, "F"]
+    \arrow[r, "R"]
+    & \mathcal{C}
+    \arrow[d, "G"]
+    \arrow[r, "S"]
+    & \mathcal{A}
+    \arrow[d, "F"]
+    \\
+    \mathcal{B}
+    \arrow[r, swap, "T"]
+    & \mathcal{D}
+    \arrow[r, swap, "U"]
+    & \mathcal{B}
+  \end{tikzcd}
+\end{equation*}
+
+To see this, note that we can augment any lifting problem
+\begin{equation*}
+  \begin{tikzcd}
+    (*)
+    \arrow[r]
+    \arrow[d, hookrightarrow]
+    & \mathcal{A}
+    \arrow[d, "F"]
+    \\
+    (* \leftrightarrow \bullet)
+    \arrow[r]
+    & \mathcal{B}
+  \end{tikzcd}
+\end{equation*}
+as follows; composing with $R$ gives us a lifting problem we can solve, yielding the dashed arrow.
+\begin{equation*}
+  \begin{tikzcd}
+    (*)
+    \arrow[r]
+    \arrow[d, hookrightarrow]
+    & \mathcal{A}
+    \arrow[d]
+    \arrow[r, "R"]
+    & \mathcal{C}
+    \arrow[r, "S"]
+    \arrow[d]
+    & \mathcal{A}
+    \arrow[d]
+    \\
+    (* \leftrightarrow \bullet)
+    \arrow[r]
+    \arrow[urr, dashed]
+    & \mathcal{B}
+    \arrow[r]
+    & \mathcal{D}
+    \arrow[r]
+    & \mathcal{B}
+  \end{tikzcd}
+\end{equation*}
+We can compose this with $S$ to get a lift to $A$, which is what we want.
+
+\subsubsection{Axiom M4: Solving lifting problems}
+Consider a diagram
+\begin{equation*}
+  \begin{tikzcd}
+    \mathcal{A}
+    \arrow[r, "F"]
+    \arrow[d, swap, "i"]
+    & \mathcal{B}
+    \arrow[d, "P"]
+    \\
+    \mathcal{C}
+    \arrow[r, swap, "G"]
+    & \mathcal{D}
+  \end{tikzcd}
+\end{equation*}
+where $i$ is injective on objects and $P$ is both an isofibration and a weak equivalence.
+
+Pick any $d \in \mathcal{D}$. Since $P$ is an equivalence of categories, there is some object $b \in \mathcal{B}$ such that $P(b) \simeq d$. Define a functor $I \to \mathcal{D}$ which sends $* \mapsto b$ and $\bullet \mapsto P(b)$, and a functor $(*) \to \mathcal{B}$ which picks out $b$. This gives us a commuting diagram
+\begin{equation*}
+  \begin{tikzcd}
+    (*)
+    \arrow[r]
+    \arrow[d]
+    & \mathcal{B}
+    \arrow[d]
+    \\
+    I
+    \arrow[r]
+    & \mathcal{D}
+  \end{tikzcd}
+\end{equation*}
+Since $P$ is an isofibration, we have a lift $I \to \mathcal{B}$, which maps $\bullet$ to an object $\hat{d} \in \mathcal{B}$ such that $P(\hat{d}) = d$. Thus, $P$ is surjective on objects.
+
+Suppose first that $c$ is in the image of $i$. Then (because $i$ is injective on objects) we can lift $c$ uniquely to an object of $A$, then map the result to $\mathcal{B}$ with $F$. We define this to be $\ell(c)$.
+
+\begin{equation*}
+  \begin{tikzcd}
+    \mathcal{A}
+    \arrow[r, "F"]
+    \arrow[d, swap, "i"]
+    & \mathcal{B}
+    \arrow[d, "P"]
+    \\
+    \mathcal{C}
+    \arrow[r, swap, "G"]
+    \arrow[ur, dashed, "\ell"]
+    & \mathcal{D}
+  \end{tikzcd}
+\end{equation*}
+
+This makes both triangles formed commute trivially.
+
+If $c$ is not mapped to by $i$, then we define $\ell(c)$ to be any lift $\widehat{G(c)}$. This makes the lower triangle commute by definition, and the upper triangle is irrelevant since $i$ never hits these objects.
+
+Since $P$ is an equivalence of categories, the maps
+\begin{equation*}
+  P_{b, b'}\colon \mathcal{B}(b, b') \to \mathcal{D}(P(b),P(b'));\qquad \left[ b \overset{f}{\to} b' \right] \mapsto \left[ P(b) \overset{P(f)}{\to} P(b') \right]
+\end{equation*}
+are bijections, hence can be inverted. Thus we can define $\ell$ on morphisms $f\colon c \to c'$ in $\mathcal{C}$ by
+\begin{equation*}
+  \ell(f) = P^{-1}_{\ell(c), \ell(c')}(G(f)).
+\end{equation*}
+
+The upper triangle
+\begin{equation*}
+  \begin{tikzcd}
+    \left[ a \overset{f}{\to} a' \right]
+    \arrow[r, mapsto]
+    \arrow[d, mapsto]
+    & \left[ F(a)\overset{F(f)}{\to} F(a') \right] \overset{!}{=} \left[ \ell(i(a))\overset{\ell(i(f))}{\to}\ell(i(b)) \right]
+    \\
+    \left[ i(a)\overset{i(f)}{\to} i(a') \right]
+    \arrow[ur, mapsto]
+  \end{tikzcd}
+\end{equation*}
+commutes since $\ell(i(a)) = F(a)$ and $\ell(i(a')) = F(a')$, so
+\begin{align*}
+  \ell(i(f)) &= P^{-1}_{\ell(i(a)), \ell(i(a'))}(G(i(f))) \\
+  &= P^{-1}_{F(a),F(a')}(P(F(f))) \\
+  &= F(f).
+\end{align*}
+
+To see that the lower triangle
+\begin{equation*}
+  \begin{tikzcd}
+    & \left[ \ell(c) \overset{\ell(f)}{\to} \ell(c') \right]
+    \arrow[d, mapsto]
+    \\
+    \left[ c \overset{f}{\to} c' \right]
+    \arrow[ur, mapsto]
+    \arrow[r, mapsto]
+    & \left[ G(c) \overset{G(f)}{\to} G(c') \right] \overset{!}{=} \left[ P(\ell(c)) \overset{P(\ell(f))}{\to} P(\ell(c')) \right]
+  \end{tikzcd}
+\end{equation*}
+note that we have already seen that $P(\ell(c)) = G(c)$ and $P(\ell(c')) = G(c')$, and for $f\colon c \to c'$ we defined
+\begin{equation*}
+  \ell(f) = P^{-1}_{\ell(c), \ell(c')}(G(f)),
+\end{equation*}
+so
+\begin{equation*}
+  P(\ell(f)) = G(f).
+\end{equation*}
+
+Now we are in the situation where $i$ is both injective and an equivalence of categories, and $P$ is an isofibration.
+
+Let $c \in \mathcal{C}$. Becase $i$ is essentially surjective we can always pick $c' \in \mathcal{C}$ such that $c'$ is in the image of $i$, i.e.\ such that there exists some $a_{c}$ with $i(a_{c}) = c' \simeq c$. For each such $c$, pick such a $c'$ and $a_{c}$. If $c$ is already in the image of $i$, pick $c' = c$; that is, demand that $a_{i(a)} = a$.
+
+This allows us to define, for each $c \in \mathcal{C}$ functors as follows.
+\begin{equation*}
+  \begin{tikzcd}
+    *
+    \arrow[r, mapsto]
+    & F(a_{c})
+    \\
+    (* \leftrightarrow \bullet)
+    \arrow[r, mapsto]
+    & G(c') \leftrightarrow G(c)
+  \end{tikzcd}
+\end{equation*}
+Then $P$'s isofibricity gives a functor $I \to \mathcal{B}$ making the diagram
+
+commute, which sends $\bullet$ to some object $b_{c} \in \mathcal{B}$. By the commutativity, $P(b_{c}) = G(c)$.
+
+Define the lift $\ell$ by $\ell(c) = b_{c}$. The upper triangle is
+\begin{equation*}
+  \begin{tikzcd}
+    a
+    \arrow[d, mapsto]
+    \arrow[r, mapsto]
+    & F(a) \overset{!}{=} \ell(i(a))
+    \\
+    i(a)
+    \arrow[ur, mapsto]
+  \end{tikzcd}
+\end{equation*}
+which commutes because $\ell(i_{a}) = F(a_{a}) = F(a)$.
+
+The lower triangle
+\begin{equation*}
+  \begin{tikzcd}
+    & \ell(c)
+    \arrow[d, mapsto]
+    \\
+    c
+    \arrow[r, mapsto]
+    \arrow[ur, mapsto]
+    & G(c) \overset{!}{=} P(\ell(c))
+  \end{tikzcd}
+\end{equation*}
+commutes because $P(\ell(c)) = P(b_{c}) = G(c)$.
+
+By the same logic as the previous problem, any morphism $f\colon c \to c'$ lifts well-definedly to a map $\hat{f}\colon a_{c} \to a_{c'}$. We define
+\begin{equation*}
+  \ell(f) = F(\hat{f}).
+\end{equation*}
+The upper triangle
+\begin{equation*}
+  \begin{tikzcd}
+    f
+    \arrow[r, mapsto]
+    \arrow[d, mapsto]
+    & F(f) \overset{!}{=} \ell(i(f))
+    \\
+    i(f)
+    \arrow[ur, mapsto]
+  \end{tikzcd}
+\end{equation*}
+commutes since $\ell(i(f)) = f$ by definition of $\hat{f}$. The lower triangle
+\begin{equation*}
+  \begin{tikzcd}
+    & \ell(f)
+    \arrow[d, mapsto]
+    \\
+    f
+    \arrow[ur, mapsto]
+    \arrow[r, mapsto]
+    & P(\ell(f)) \overset{!}{=} G(f)
+  \end{tikzcd}
+\end{equation*}
+commutes because
+\begin{align*}
+  P(\ell(f)) &= P(F(\hat{f})) \\
+  &= G(i(\hat{f})) \\
+  &= G(f).
+\end{align*}
+
+\subsubsection{Axiom M5: Factorization}
+For any functor $F\colon \mathcal{C} \to \mathcal{D}$, define a functor $G\colon \mathcal{C} \to \mathcal{L}$ on objects by
+\begin{equation*}
+  x \mapsto (x, Fx, \id_{Fx}),
+\end{equation*}
+and on morphisms by $f \mapsto f$. The functor $G'$ sending
+\begin{equation*}
+  (c, d, f) \mapsto c.
+\end{equation*}
+is a weak inverse to $G$. As a check: these form an equivalence of categories since
+\begin{equation*}
+  G' \circ G\colon x \mapsto (x, Fx, \id_{Fx}) \mapsto x
+\end{equation*}
+and
+\begin{equation*}
+  G \circ G'\colon (c, d, f) \mapsto c \mapsto (c, Fc, \id_{Fc});
+\end{equation*}
+the map
+\begin{equation*}
+  G(\id_{c})\colon (c, d, f) \to (c, Fc, \id_{Fc})
+\end{equation*}
+is a natural isomorphism since the naturality square
+\begin{equation*}
+  \begin{tikzcd}
+    (c, d, f)
+    \arrow[r, "G(\id_{c})"]
+    \arrow[d, swap, "g"]
+    & (c, Fc, \id_{Fc})
+    \arrow[d, "g"]
+    \\
+    (c', d', f')
+    \arrow[r, swap, "G(\id_{c'})"]
+    & (c', Fc', \id_{Fc'})
+  \end{tikzcd}
+\end{equation*}
+commutes.
+
+It is also clear that $G$ is injective on objects since $(c, d, f) \neq (c', d', f') \implies c \neq c'$, so $G \in \mathfrak{C}$.
+
+Define also a functor $H\colon \mathcal{L} \to \mathcal{D}$ sending $(c, d, f) \mapsto d$ and $g\colon c \to c'$ to $F(g)$. Then
+\begin{equation*}
+  H \circ G\colon c \mapsto (c, Fc, \id_{Fc}) \mapsto Fc;\qquad g \mapsto g \mapsto Fg.
+\end{equation*}
+It remains only to show that $H \in \mathfrak{F}$, we need to show that it is an isofibration. Consider the following diagram.
+\begin{equation*}
+  \begin{tikzcd}
+    (*)
+    \arrow[ddd, swap, hookrightarrow]
+    \arrow[rrr]
+    &&& \mathcal{L}
+    \arrow[ddd, "H"]
+    \\
+    & *
+    \arrow[r, mapsto]
+    \arrow[d, mapsto]
+    & (c, d, f)
+    \arrow[d, mapsto]
+    \\
+    & *
+    \arrow[r, mapsto]
+    & d
+    \\
+    (* \leftrightarrow \bullet)
+    \arrow[rrr]
+    &&& \mathcal{D}
+  \end{tikzcd}
+\end{equation*}
+We need to show that given an isomorphism $r\colon d \to d'$ and an object $(c, d, f)$ in $\mathcal{L}$, we can find an object $(c', d', f')$ which is isomorphic to $(c, d, f)$. We can; taking $c' = c$, and $f' = r \circ f$ gives us what we want since the following diagram commutes.
+\begin{equation*}
+  \begin{tikzcd}
+    & (c, d, f) \leftrightarrow (c, d', r \circ f)
+    \arrow[d, mapsto]
+    \\
+    (* \leftrightarrow \bullet)
+    \arrow[ur, mapsto]
+    \arrow[r, mapsto]
+    & c \leftrightarrow c'
+  \end{tikzcd}
+\end{equation*}
+
+\textbf{Part 2:}
+We define $G$ to be the canonical injection, and $H$ to be defined on objects as follows.
+\begin{equation*}
+  H\colon x \mapsto
+  \begin{cases}
+    Fx, &x \in \mathcal{C} \\
+    x, &x \in \mathcal{D}
+  \end{cases}
+\end{equation*}
+The hom-sets in $\mathcal{R}$ are already appropriate hom-sets in $\mathcal{D}$, so we don't need to do anything to define $H$ on morphisms: we simply define it to be the identity on hom-sets.
+
+To see that $H$ is an equivalence of categories, note that it is essentially surjective because it is surjective `on the nose,' and that it is fully faithful because $H$ is the identity on hom-sets.
+
+It is obvious that $G$ is injective on objects.
+
+Now consider the following diagram.
+\begin{equation*}
+  \begin{tikzcd}
+    (*)
+    \arrow[r, "a"]
+    \arrow[d]
+    & \mathcal{R}
+    \arrow[d]
+    \\
+    (* \leftrightarrow \bullet)
+    \arrow[r, "b"]
+    & \mathcal{D}
+  \end{tikzcd}
+\end{equation*}
+Define a functor $\ell\colon I \to \mathcal{R}$ sending $* \mapsto a(*)$ and $\bullet \mapsto b(\bullet)$. This makes both triangles commute: the upper triangle is
+\begin{equation*}
+  \begin{tikzcd}
+    *
+    \arrow[r, mapsto]
+    \arrow[d, mapsto]
+    & a(*)
+    \\
+    *
+    \arrow[ur, mapsto]
+  \end{tikzcd}
+\end{equation*}
+and the lower triangle is
+\begin{equation*}
+  \begin{tikzcd}
+    & a(*) \leftrightarrow b(\bullet)
+    \\
+    * \leftrightarrow \bullet
+  \end{tikzcd}
+\end{equation*}
+
+
+\section{The Homotopy category of a model category}
+\label{sec:the_homotopy_category_of_a_model_category}
+
+In \hyperref[ssc:left_homotopy]{Subsection~\ref*{ssc:left_homotopy}}, we define the notion of a \emph{left homotopy} of maps $A \to B$, denoted $\overset{l}{\sim}$, and show that for any cofibrant object $A$ and any object $B$, left homotopy yields an equivalence relation on $\mathcal{C}(A, B)$.
+\begin{equation*}
+  \begin{tikzcd}
+    \overbrace{A}^{\cof}
+    \arrow[r, "f"]
+    & B
+  \end{tikzcd}
+\end{equation*}
+
+In \hyperref[ssc:right_homotopy]{Subsection~\ref*{ssc:right_homotopy}}, we define a dual notion, \emph{right homotopy,} denoted $\overset{r}{\sim}$, and show that for any object $A$ and any fibrant object $B$, right homotopy yields an equivalence relation on $\mathcal{C}(A, B)$.
+\begin{equation*}
+  \begin{tikzcd}
+    A
+    \arrow[r, "f"]
+    & \overbrace{B}^{\fib}
+  \end{tikzcd}
+\end{equation*}
+
+In \hyperref[ssc:homotopy_equivalents]{Subsection~\ref*{ssc:homotopy_equivalents}}, we show that when looking at maps from a cofibrant object to a fibrant object
+\begin{equation*}
+  \begin{tikzcd}
+    \overbrace{A}^{\cof}
+    \arrow[r, "f"]
+    & \overbrace{B}^{\fib}
+  \end{tikzcd}
+\end{equation*}
+a left homotopy $f \overset{l}{\sim} f'$ gives rise to a right homotopy and vice versa, and thus the two notions agree. Thus, for maps from a cofibrant object to a fibrant object, we do not keep track of left- and right homotopies, calling them simply \emph{homotopies.}
+
+This allows us to define, for two maps between fibrant-cofibrant objects, a notion of homotopy equivalence; we say that a map $f\colon A \to B$, where $A$ and $B$ are fibrant-cofibrant, is a homotopy equivalence if it has a homotopy inverse $g$, i.e.\ a map $g$ such that
+\begin{equation*}
+  f \circ g \sim \id_{B},\qquad \text{and}\qquad g \circ f \sim \id_{A}.
+\end{equation*}
+
+Next, we show that this notion is preserved under composition: if $f$ and $g$ are homotopy equivalences, then so is $g \circ f$. This allows us to prove Whitehead's theorem, which tells us that any weak equivalence between fibrant-cofibrant objects is a homotopy equivalence.
+
+Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model category, whose objects are the fibrant-cofibrant objects of $\mathcal{C}$, and whose morphisms $X \to Y$ are the homotopy classes of morphisms $X \to Y$.
+
+\subsection{Left homotopy}
+\label{ssc:left_homotopy}
+
+\begin{definition}[cylinder object]
+  \label{def:cylinder_object}
+  Let $\mathcal{C}$ be a model category, and let $A \in \mathcal{C}$. A \defn{cylinder object for $A$} is an object $C$ together with a factorization
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(\id, \id)}"]
+      \arrow[d, swap, "{i = (i_{0}, i_{1})}"]
+      & A
+      \\
+      C
+      \arrow[ur, swap, "\sigma"]
+    \end{tikzcd}
+  \end{equation*}
+  such that $i$ is a cofibration and $\sigma$ is a weak equivalence.
+\end{definition}
+
+\begin{example}
+  In $\SSet$ equipped with the Kan model structure, the object $\Delta^{1} \times S$ always functions as a cylinder object over $S$.
+  \begin{equation*}
+    \begin{tikzcd}
+      S \amalg S
+      \arrow[r, "{(\id, \id)}"]
+      \arrow[d, swap, "{(s_{0} \times \id, s_{1} \times \id)}"]
+      & S
+      \\
+      \Delta^{1} \times S
+      \arrow[ur, swap, "\pi_{2}"]
+    \end{tikzcd}
+  \end{equation*}
+
+  In this case, $i$ is a cofibration because it is an inclusion (hence a monomorphism as required) and $\pi_{2}$ is a weak equivalence (i.e.\ a homotopy equivalence) because
+\end{example}
+
+\begin{example}
+  \label{eg:cylinder_objects_in_model_structure_on_cat}
+  In the model category on categories, defined in \hyperref[ssc:a_model_structure_on_the_category_of_categories]{Subsection~\ref*{ssc:a_model_structure_on_the_category_of_categories}}, any category $\mathcal{C}$ has cylinder object $\mathcal{C} \times I$, taken with the below factorization.
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C} \amalg \mathcal{C}
+      \arrow[d, swap, "i = {(\id \times \{*\}, \id \times \{\bullet\})}"]
+      \arrow[r, "{(\id, \id)}"]
+      & \mathcal{C}
+      \\
+      \mathcal{C} \times I
+      \arrow[ur, swap, "\pi"]
+    \end{tikzcd}
+  \end{equation*}
+  The map $i$ is obviously injective on objects, and the map $\pi$ is an equivalence since the map $c \mapsto (c, 0)$ functions as a weak inverse.
+\end{example}
+
+\begin{definition}[left homotopy]
+  \label{def:left_homotopy}
+  Let $\mathcal{C}$ be a model category, and let $f$, $g\colon A \to B$ be two morphsims in $\mathcal{C}$. A \defn{left homotopy} between $f$ and $g$ consists of a cylinder object $C$ for $A$ (\hyperref[def:cylinder_object]{Definition~\ref*{def:cylinder_object}}) and a map $H\colon C \to B$ such that the following diagram commutes.
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[d, swap, "i"]
+      \arrow[r, "{(f, g)}"]
+      & B
+      \\
+      C
+      \arrow[ur, swap, "H"]
+    \end{tikzcd}
+  \end{equation*}
+
+  In this case, we will write
+  \begin{equation*}
+    f \overset{l}{\sim} g.
+  \end{equation*}
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:cylinder_injections_are_trivial_cofibrations}
+  Let $A$ be a cofibrant object. If $C$ is a cylinder object for $A$, then the maps $i_{1}$ and $i_{2}$ are trivial cofibrations.
+\end{lemma}
+\begin{proof}
+  Since $A$ is cofibrant, by definition the map $\emptyset \to A$ is a cofibration. Consider the following pushout square.
+  \begin{equation*}
+    \begin{tikzcd}
+      \emptyset
+      \arrow[r]
+      \arrow[d]
+      & A
+      \arrow[d]
+      \\
+      A
+      \arrow[r]
+      & A \amalg A
+    \end{tikzcd}
+  \end{equation*}
+
+  Since by \hyperref[cor:trivial_fibrations_and_cofibrations_are_saturated]{Corollary~\ref*{cor:trivial_fibrations_and_cofibrations_are_saturated}} cofibrations are closed under pushout, the canonical injections $\iota_{\alpha}\colon A \to A \amalg A$, $\alpha = 1$, $2$, are also cofibrations. Since $i_{\alpha} = i \circ \iota_{\alpha}$ is a composition of cofibrations, it is again a cofibration by closure under countable composition.
+
+  Since the diagram
+  \begin{equation*}
+    \begin{tikzcd}[row sep=large, column sep=large]
+      A
+      \arrow[d, hookrightarrow, "\iota_{\alpha}"]
+      \arrow[rd, "\id"]
+      \arrow[dd, bend right, swap, "\iota_{\alpha}"]
+      \\
+      A \amalg A
+      \arrow[r, "{(\id, \id)}"]
+      \arrow[d, "i"]
+      & A
+      \\
+      C
+      \arrow[ur, swap, "\sigma"]
+    \end{tikzcd}
+  \end{equation*}
+  commutes, we can write $\id_{A} = \sigma \circ i_{\alpha}$ (with $\id_{A}$ a weak equivalence because it is an isomorphsim and $\sigma$ a weak equivalence by assumption), so by the two-out-of-three law $i_{\alpha}$ is a weak equivalence.
+\end{proof}
+
+\begin{proposition}
+  \label{prop:left_homotopy_is_equivalence_relation}
+  If $A$ is a cofibrant object, then left homotopy of maps $A \to B$ is an equivalence relation.
+\end{proposition}
+\begin{proof}
+  To see that left homotopy is an equivalence relation, let $C$ be any cylinder object over $A$.
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(\id, \id)}"]
+      \arrow[d, swap, "{i = (i_{0}, i_{1})}"]
+      & A
+      \\
+      C
+      \arrow[ur, swap, "\sigma"]
+    \end{tikzcd}
+  \end{equation*}
+  Then the following diagram commutes.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=large]
+      A \amalg A
+      \arrow[r, "{(f, f)}"]
+      \arrow[d, swap, "i"]
+      & B
+      \\
+      C
+      \arrow[ur, swap, "f \circ \sigma"]
+    \end{tikzcd}
+  \end{equation*}
+  This means precisely that $f \circ \sigma$ functions as a left homotopy from $f$ to itself.
+
+  Next, we show that left homotopy is symmetric. First, we note that in any category with coproducts, there is a natural isomorphism $\mathrm{swap}_{A}\colon A \amalg A \to A \amalg A$ which switches the components. Because $\cof$ is saturated and thus contains all isomorphisms, $\mathrm{swap}_{A}$ is a cofibration. This gives us a new factorization exhibiting $C$ as a cylinder object of $A$.
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(\id, \id)}"]
+      \arrow[d, swap, "i \circ \mathrm{swap}_{A}"]
+      & A
+      \\
+      C
+      \arrow[ur, swap, "\sigma"]
+    \end{tikzcd}
+  \end{equation*}
+  Let $H$ be a left homotopy $f \overset{l}{\sim} g$ as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(f, g)}"]
+      \arrow[d, swap, "i"]
+      & B
+      \\
+      C
+      \arrow[ur, swap, "H"]
+    \end{tikzcd}
+  \end{equation*}
+
+  The diagram
+  \begin{equation*}
+    \begin{tikzcd}[column sep=large]
+      A \amalg A
+      \arrow[d, swap, "\mathrm{swap}_{A}"]
+      \arrow[dr, "{(g, f)}"]
+      \\
+      A \amalg A
+      \arrow[r, "{(f, g)}"]
+      \arrow[d, swap, "i"]
+      & B
+      \\
+      C
+      \arrow[ur, swap, "H"]
+    \end{tikzcd}
+  \end{equation*}
+  exhibits a left homotopy $g \overset{l}{\sim} f$.
+
+  It remains only to show that left homotopy is transitive. To this end, suppose $f \overset{l}{\sim} g$ and $g \overset{l}{\sim} h$,
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(f, g)}"]
+      \arrow[d, swap, "{(i_{0}, i_{1})}"]
+      & B
+      \\
+      C
+      \arrow[ur, swap, "H"]
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(g, h)}"]
+      \arrow[d, swap, "{(i_{0}', i_{1}')}"]
+      & B
+      \\
+      C'
+      \arrow[ur, swap, "H'"]
+    \end{tikzcd}
+  \end{equation*}
+  where $C$ and $C'$ are cylinder objects for $A$ with the following factorizations.
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(\id, \id)}"]
+      \arrow[d, swap, "{(i_{0}, i_{1})}"]
+      & A
+      \\
+      C
+      \arrow[ur, swap, "\sigma"]
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(\id, \id)}"]
+      \arrow[d, swap, "{(i_{0}', i_{1}')}"]
+      & B
+      \\
+      C'
+      \arrow[ur, swap, "\sigma'"]
+    \end{tikzcd}
+  \end{equation*}
+
+  Consider the following diagram, where the top left square is a pushout square.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r, "i_{0}'"]
+      \arrow[d, swap, "i_{1}"]
+      & C'
+      \arrow[d, swap, "j_{1}"]
+      \arrow[ddr, bend left, "H'"]
+      \\
+      C
+      \arrow[r, "j_{0}'"]
+      \arrow[drr, swap, bend right, "H"]
+      & C \coprod_{A} C'
+      \arrow[dr, dashed, "\exists!\tilde{H}"]
+      \\
+      && B
+    \end{tikzcd}
+  \end{equation*}
+
+  The following diagram commutes.
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(f, h)}"]
+      \arrow[d, swap, "{(j_{0}' \circ i_{0}, j_{1} \circ i_{0}')}"]
+      & B
+      \\
+      C \amalg_{A} C'
+      \arrow[ur, swap, "\tilde{H}"]
+    \end{tikzcd}
+  \end{equation*}
+
+  It remains only to show that $C \amalg_{A} C'$ is a cylinder object for $A$. Define a map $\tilde{\sigma}$ as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r, "i_{0}'"]
+      \arrow[d, swap, "i_{1}"]
+      & C'
+      \arrow[d, swap, "j_{1}"]
+      \arrow[ddr, bend left, "\sigma'"]
+      \\
+      C
+      \arrow[r, "j_{0}'"]
+      \arrow[drr, swap, bend right, "\sigma"]
+      & C \coprod_{A} C'
+      \arrow[dr, dashed, "\exists!\tilde{\sigma}"]
+      \\
+      && A
+    \end{tikzcd}
+  \end{equation*}
+  Since $j_{1} \in \W \cap \cof$ and $\sigma' \in \W$, we have by \hyperref[item:MC_two_out_of_three]{Axiom~\ref*{item:MC_two_out_of_three}} that $\tilde{\sigma}$ is a weak equivalence.
+
+  Thus, to show that $C \amalg_{A} C'$ is a cylinder object with the factorization
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(\id, \id)}"]
+      \arrow[d, swap, "{(j_{0}' \circ i_{0}, j_{1} \circ i_{0}')}"]
+      & A
+      \\
+      C \amalg_{A} C'
+      \arrow[ur, swap, "\tilde{\sigma}"]
+    \end{tikzcd}
+  \end{equation*}
+  we need only show that $(j'_{0} \circ i_{1}, j_{1} \circ i'_{0})$ is a cofibration.
+
+  First note that the following square is a pushout square, where $\delta$ is the codiagonal.
+  \begin{equation*}
+    \begin{tikzcd}[row sep=huge, column sep=huge]
+      (A \amalg A) \amalg (A \amalg A)
+      \arrow[r, "{(i_{0}, i_{1}) \amalg (i'_{0}, i'_{1})}"]
+      \arrow[d, swap, "{(\id, \delta, \id)}"]
+      & C \amalg C'
+      \arrow[d, "{(j'_{0}, j_{1})}"]
+      \\
+      A \amalg A \amalg A
+      \arrow[r]
+      & C \amalg_{A} C
+    \end{tikzcd}
+  \end{equation*}
+  To see this, note maps
+  \begin{equation*}
+    (\alpha, \beta)\colon C \amalg C' \to Z \qquad\text{and}\qquad (a,b,c)\colon A \amalg A \amalg A
+  \end{equation*}
+  which form a cocone satisfy $\beta \circ i'_{0} = b$ and $\alpha \circ i_{1} = f$.
+  \begin{equation*}
+    \begin{tikzcd}[row sep=huge, column sep=huge]
+      (A \amalg A) \amalg (A \amalg A)
+      \arrow[r, "{(i_{0}, i_{1}) \amalg (i'_{0}, i'_{1})}"]
+      \arrow[d, swap, "{(\id, \delta, \id)}"]
+      & C \amalg C'
+      \arrow[d]
+      \arrow[ddr, bend left, "{(\alpha, \beta)}"]
+      \\
+      A \amalg A \amalg A
+      \arrow[r, "k"]
+      \arrow[drr, bend right, swap, "{(a,b,c)}"]
+      & C \amalg_{A} C
+      \arrow[dr, dashed, "\exists!"]
+      \\
+      && Z
+    \end{tikzcd}
+  \end{equation*}
+  Thus, there is a unique map
+  \begin{equation*}
+    C \amalg_{A} C \to Z
+  \end{equation*}
+  making the above diagram commute.
+
+  Note that because $(i_{0}, i_{1}) \amalg (i'_{0}, i'_{1})$ is a cofibration, $k$ must be also.
+
+  Also, the map $A \amalg A \to A \amalg A \amalg A$ is a cofibration because the following diagram is a pushout.
+  \begin{equation*}
+    \begin{tikzcd}
+      \emptyset
+      \arrow[r]
+      \arrow[d]
+      & A
+      \arrow[d]
+      \\
+      A \amalg A
+      \arrow[r]
+      & A \amalg A \amalg A
+    \end{tikzcd}
+  \end{equation*}
+  Thus, the composition
+  \begin{equation*}
+    A \amalg A \to A \amalg A \amalg A \to C \amalg_{A} C'
+  \end{equation*}
+  is a cofibration.
+\end{proof}
+
+\subsection{Right homotopy}
+\label{ssc:right_homotopy}
+
+There is a dual notion to left fibrations, called right fibrations. The theory of right fibrations is dual to that of left fibrations.
+
+\begin{definition}[path object]
+  \label{def:path_object}
+  Let $B$ be an object of a model category. A \defn{path object} for $B$ is an object $P$, together with a factorization
+  \begin{equation*}
+    \begin{tikzcd}
+      & P
+      \arrow[d, "p"]
+      \\
+      B
+      \arrow[ur, "s"]
+      \arrow[r, swap, "{(\id, \id)}"]
+      & B \times B
+    \end{tikzcd}
+  \end{equation*}
+  where $p$ is a fibration and $s$ is a weak equivalence.
+\end{definition}
+
+\begin{definition}[right homotopy]
+  \label{def:right_homotopy}
+  A \defn{right homotopy} between morphisms $f$, $g\colon A \to B$ consists of a path object $P$ and a factorization as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      & P
+      \arrow[d, "p"]
+      \\
+      A
+      \arrow[ur, "H"]
+      \arrow[r, swap, "{(f, g)}"]
+      & B \times B
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:path_projections_are_trivial_fibrations}
+  Let $B$ be a fibrant object. If $P$ is a cylinder object for $B$, then the maps $p_{0}$ and $p_{1}$ are trivial fibrations.
+\end{lemma}
+\begin{proof}
+  Apply \hyperref[lemma:cylinder_injections_are_trivial_cofibrations]{Lemma~\ref*{lemma:cylinder_injections_are_trivial_cofibrations}} to the opposite model category (\hyperref[eg:opposite_model_category]{Example~\ref*{eg:opposite_model_category}}).
+\end{proof}
+
+\begin{proposition}
+  \label{prop:right_homotopy_is_equivalence_relation}
+  Let $B$ a fibrant object. Right homotopy of maps $f$, $g\colon A \to B$ is an equivalence relation.
+\end{proposition}
+\begin{proof}
+  Apply \hyperref[prop:left_homotopy_is_equivalence_relation]{Proposition~\ref*{prop:left_homotopy_is_equivalence_relation}} to the opposite model category (\hyperref[eg:opposite_model_category]{Example~\ref*{eg:opposite_model_category}}).
+\end{proof}
+
+\subsection{Homotopy equivalents}
+\label{ssc:homotopy_equivalents}
+
+Under certain conditions, namely when the domain and codomain are fibrant-cofibrant, left and right homotopy are equivalent.
+
+\begin{lemma}
+  \label{lemma:left_homotopy_implies_right_homotopy}
+  Suppose $A$ is cofibrant, and suppose that $f$, $g\colon A \to B$ are left homotopic. Then given any path object $P$ for $B$, there is a right homotopy between $f$ and $g$ with underlying path object $P$.
+\end{lemma}
+\begin{proof}
+  Suppose we are given a left homotopy
+  \begin{equation*}
+    \begin{tikzcd}
+      A \amalg A
+      \arrow[r, "{(f, g)}"]
+      \arrow[d, swap, "i"]
+      & B
+      \\
+      C
+      \arrow[ur, swap, "H"]
+    \end{tikzcd}
+  \end{equation*}
+  and suppose that $P$ has the following factorization
+  \begin{equation*}
+    \begin{tikzcd}
+      & P
+      \arrow[d, "p"]
+      \\
+      B
+      \arrow[ur, "s"]
+      \arrow[r, swap, "{(\id, \id)}"]
+      & B \times B
+    \end{tikzcd}
+  \end{equation*}
+  Consider the following diagram.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r, "s \circ f"]
+      \arrow[d, swap, "i_{0}"]
+      & P
+      \arrow[d, "p"]
+      \\
+      C
+      \arrow[r, swap, "{(f \circ \sigma, H)}"]
+      & B \times B
+    \end{tikzcd}
+  \end{equation*}
+  It commutes because
+  \begin{equation*}
+    p \circ s \circ f = (\id, \id) \circ f = (f, f)
+  \end{equation*}
+  and
+  \begin{equation*}
+    (f \circ \sigma, H) \circ i_{0} = (f \circ \sigma \circ i_{0}, H \circ i_{0}) = (f \circ \id, f) = (f, f).
+  \end{equation*}
+
+  By definition, $p$ is a fibration, and we have seen in \hyperref[lemma:cylinder_injections_are_trivial_cofibrations]{Lemma~\ref*{lemma:cylinder_injections_are_trivial_cofibrations}} that $i_{0}$ is a trivial cofibration. Thus, we have a lift $h\colon C \to P$.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r, "s \circ f"]
+      \arrow[d, swap, "i_{0}"]
+      & P
+      \arrow[d, "p"]
+      \\
+      C
+      \arrow[r, swap, "{(f \circ \sigma, H)}"]
+      \arrow[ur, dashed, "h"]
+      & B \times B
+    \end{tikzcd}
+  \end{equation*}
+
+  Then we have
+  \begin{align*}
+    p \circ h \circ i_{1} &= (f \circ \sigma, H) \circ i_{1} \\
+    &= (f \circ \sigma \circ i_{1}, H \circ i_{1}) \\
+    &= (f, g),
+  \end{align*}
+  so the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      & P
+      \arrow[d, "p"]
+      \\
+      A
+      \arrow[ur, "h \circ i_{1}"]
+      \arrow[r, swap, "{(f, g)}"]
+      & B \times B
+    \end{tikzcd}
+  \end{equation*}
+  commutes. Thus, $h \circ i_{1}$ gives a right homotopy between $f$ and $g$.
+\end{proof}
+
+\begin{corollary}
+  Let $f$, $g\colon A \to B$ be morphisms, and suppose that $A$ is cofibrant and $B$ is fibrant. Then TFAE.
+  \begin{enumerate}
+    \item $f$ and $g$ are left homotopic.
+
+    \item For every path object $P$ for $B$, there is a right homotopy between $f$ and $g$ with path object $P$.
+
+    \item $f$ and $g$ are right homotopic.
+
+    \item For every cylinder object $C$ for $A$, there is a left homotopy between $f$ and $g$ with cylinder object $C$.
+  \end{enumerate}
+\end{corollary}
+\begin{proof}
+  \leavevmode
+  \begin{itemize}
+    \item[$1 \Rightarrow 2$.] \hyperref[lemma:left_homotopy_implies_right_homotopy]{Lemma~\ref*{lemma:left_homotopy_implies_right_homotopy}}.
+
+    \item[$2 \Rightarrow 3$.] Trivial.
+
+    \item[$3 \Rightarrow 4$.] Dual to \hyperref[lemma:left_homotopy_implies_right_homotopy]{Lemma~\ref*{lemma:left_homotopy_implies_right_homotopy}}.
+
+    \item[$4 \Rightarrow 1$.] Trivial.
+  \end{itemize}
+\end{proof}
+
+The above result shows that when considering morphisms between a cofibrant object and a fibrant object, there is no difference between left and right fibrations. Therefore, we will not distinguish them.
+
+\begin{definition}[homotopy equivalence]
+  \label{def:homotopy_equivalence_model_category}
+  Let $f\colon X \to Y$ be a morphism with $X$ and $Y$ fibrant-cofibrant. We say that $f$ is a \defn{homotopy equivalence} if there exists a morphism $g\colon Y \to X$ such that $g \circ f \sim \id_{X}$ and $f \circ g \sim \id_{Y}$.
+\end{definition}
+
+Composition on the left and on the right preserves homotopy equivalence.
+\begin{lemma}
+  \label{lemma:composition_with_any_morphism_preserves_homotopy_equivalence}
+  Let $f$, $g\colon X \to Y$ be homotopy equivalent morphisms between fibrant-cofibrant objects, and let $W$ and $Z$ be fibrant-cofibrant. Then the following hold.
+  \begin{enumerate}
+    \item For any $h\colon Y \to Z$, $h \circ f \sim h \circ g$.
+
+    \item For any $h'\colon W \to X$, $f \circ h' \sim g \circ h'$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leavevmode
+  \begin{enumerate}
+    \item Suppose our homotopy is given by the following factorization.
+      \begin{equation*}
+        \begin{tikzcd}
+          X \amalg X
+          \arrow[d, swap, "i"]
+          \arrow[r, "{(f, g)}"]
+          & Y
+          \\
+          C
+          \arrow[ur, swap, "H"]
+        \end{tikzcd}
+      \end{equation*}
+      Post-composing with $h$ gives us the following
+      \begin{equation*}
+        \begin{tikzcd}
+          X \amalg X
+          \arrow[d, swap, "i"]
+          \arrow[r, "{(f, g)}"]
+          & Y
+          \arrow[r, "h"]
+          & Z
+          \\
+          C
+          \arrow[ur, swap, "H"]
+        \end{tikzcd}
+        \qquad \implies
+        \begin{tikzcd}
+          X \amalg X
+          \arrow[d, swap, "i"]
+          \arrow[r, "{(h \circ f, h \circ g)}"]
+          & Z
+          \\
+          C
+          \arrow[ur, swap, "h \circ H"]
+        \end{tikzcd}
+      \end{equation*}
+      But the second diagram is precisely a homotopy $h \circ f \sim h \circ g$.
+
+    \item Now suppose our homotopy is given by the following factorization.
+      \begin{equation*}
+        \begin{tikzcd}
+          & P
+          \arrow[d, "s"]
+          \\
+          X
+          \arrow[r, swap, "{(f, g)}"]
+          \arrow[ur, "H'"]
+          & Y \times Y
+        \end{tikzcd}
+      \end{equation*}
+
+      Pre-composing with $h$ yields the following.
+      \begin{equation*}
+        \begin{tikzcd}
+          && P
+          \arrow[d, "s"]
+          \\
+          W
+          \arrow[r, "h"]
+          & X
+          \arrow[r, swap, "{(f, g)}"]
+          \arrow[ur, "H'"]
+          & Y \times Y
+        \end{tikzcd}
+        \qquad\implies\qquad
+        \begin{tikzcd}
+          & P
+          \arrow[d, "s"]
+          \\
+          X
+          \arrow[r, swap, "{(f \circ h, g \circ h)}"]
+          \arrow[ur, "H' \circ h"]
+          & Y \times Y
+        \end{tikzcd}
+      \end{equation*}
+      This is preciesly a homotopy $f \circ h \sim g \circ f$.
+  \end{enumerate}
+\end{proof}
+
+\begin{corollary}
+  \label{cor:composition_of_homotopy_equivalences_is_homotopy_equivalence}
+  Let $X$, $Y$, and $Z$ be fibrant-cofibrant objects, and let $f$ and $g$ be homotopy equivalences as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "f"]
+      & Y
+      \arrow[r, "g"]
+      & Z
+    \end{tikzcd}
+  \end{equation*}
+  Then $g \circ f$ is a homotopy equivalence.
+\end{corollary}
+\begin{proof}
+  By definition, $f$ has a homotopy inverse $f'$ such that $f' \circ f \sim \id$ and $f \circ f' \sim \id$. Similarly, there is a $g'$ such that $g' \circ g \sim \id$ and $g \circ g' \sim \id$. But then
+  \begin{align*}
+    \id &\sim g' \circ g \\
+    &\sim f' \circ g' \circ g \\
+    &\sim f' \circ g' \circ g \circ f
+  \end{align*}
+  and
+  \begin{align*}
+    \id &\sim f' \circ f \\
+    &\sim g' \circ f' \circ f \circ g.
+  \end{align*}
+  so $f' \circ g'$ functions as a homotopy inverse to $g \circ f$.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:pre_whitehead}
+  Let $X$ and $Y$ be fibrant-cofibrant objects, and $f\colon X \to Y$ a weak equivalence.
+  \begin{enumerate}
+    \item If $f$ is a fibration, then it is a homotopy equivalence.
+
+    \item If $f$ is a cofibration, then it is a homotopy equivalence.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leavevmode
+  \begin{enumerate}
+    \item We have a lift as follows.
+      \begin{equation*}
+        \begin{tikzcd}
+          \emptyset
+          \arrow[r]
+          \arrow[d]
+          & X
+          \arrow[d, "f"]
+          \\
+          Y
+          \arrow[r, swap, "\id"]
+          \arrow[ur, dashed, "g"]
+          & Y
+        \end{tikzcd}
+      \end{equation*}
+      Thus, $f \circ g = \id_{Y}$.
+
+      Thus the diagram
+      \begin{equation*}
+        \begin{tikzcd}[row sep=huge, column sep=huge]
+          X \amalg X
+          \arrow[r, "{(g \circ f, \id)}"]
+          \arrow[d, swap, "i"]
+          & X
+          \arrow[d, "f"]
+          \\
+          C
+          \arrow[r, swap, "f \circ \sigma"]
+          & Y
+        \end{tikzcd}
+      \end{equation*}
+      commutes, because
+      \begin{align*}
+        f \circ (g \circ f, \id) &= (f \circ g \circ f, f) \\
+        &= (f, f) \\
+        &= (f \circ \sigma \circ i_{1}, f \circ \sigma \circ i_{2}) \\
+        &= f \circ \sigma \circ i.
+      \end{align*}
+
+      Since $f$ is a trivial fibration and $i$ is a cofibration, we have by \hyperref[item:MC_solve_some_lifting_problems]{Axiom~\ref*{item:MC_solve_some_lifting_problems}} a lift as follows.
+      \begin{equation*}
+        \begin{tikzcd}[row sep=large, column sep=large]
+          X \amalg X
+          \arrow[r, "{(g \circ f, \id)}"]
+          \arrow[d, swap, "i"]
+          & X
+          \arrow[d, "f"]
+          \\
+          C
+          \arrow[ur, dashed, "H"]
+          \arrow[r, swap, "f \circ \sigma"]
+          & Y
+        \end{tikzcd}
+      \end{equation*}
+      The upper triangle tells us that $H$ is a left homotopy between $g \circ f$ and $\id_{X}$.
+
+      Since $f \circ g = \id_{Y}$, the cylinder object $C$ itself functions as a homotopy $f \circ g \sim \id_{Y}$. Thus, $f$ is a homotopy equivalent.
+
+    \item The commutativity of the solid diagram
+      \begin{equation*}
+        \begin{tikzcd}[row sep=large, column sep=large]
+          X
+          \arrow[r, "s \circ f"]
+          \arrow[d, swap, "f"]
+          & P
+          \arrow[d, "p"]
+          \\
+          Y
+          \arrow[r, swap, "{(\id_{Y}, f \circ h)}"]
+          \arrow[ur, dashed]
+          & Y \times Y
+        \end{tikzcd}
+      \end{equation*}
+      together with the fact that $f$ is a trivial cofibration and $p$ is a fibration imply that there is a dashed lift. This exhibits a right homotopy $f \circ h \sim \id_{Y}$. But $h \circ f = \id_{X}$, so $h \circ f \sim \id_{X}$.
+
+      So far we have shown that the result holds if $f$ is a trivial fibration or a trivial cofibration.
+
+      Now suppose $f$ is merely a weak equivalence. Then we can factor
+      \begin{equation*}
+        f = g \circ h,
+      \end{equation*}
+      where $g$ is a fibration and $h$ is a trivial cofibration. But by \hyperref[item:MC_two_out_of_three]{Axiom~\ref*{item:MC_two_out_of_three}}, $g$ is also a trivial cofibration.
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}[Whitehead]
+  \label{thm:whitehead}
+  Let $f\colon X \to Y$ be a weak equivalence, and suppose that $X$ and $Y$ are fibrant-cofibrant. Then $f$ is a homotopy equivalence.
+\end{theorem}
+\begin{proof}
+  By \hyperref[item:MC_morphisms_factorize]{Axiom~\ref*{item:MC_morphisms_factorize}}, we are allowed to factor $f = p \circ i$, where $p$ is a fibration, $i$ is a cofibration, and at least one of $p$ and $i$ is a weak equivalence. By \hyperref[item:MC_two_out_of_three]{Axiom~\ref*{item:MC_two_out_of_three}}, both $i$ and $p$ are weak equivalences.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[rr, "f"]
+      \arrow[dr, swap, "\W \cap \cof \ni i"]
+      && Y
+      \\
+      & Z
+      \arrow[ur, swap, "p \in \W \cap \fib"]
+    \end{tikzcd}
+  \end{equation*}
+
+  By assumption, $X$ is cofibrant, i.e.\ the map $\emptyset \to X$ is a cofibration. The map $i\colon X \to Z$ is also a cofibration, so their composition must also be a cofibration. But this means that the map $\emptyset \to Z$ is also a cofibration, so $Z$ is cofibrant
+
+  Dually, the map $Y \to *$ is a fibration. Precomposing by $p$, we have that $Z$ is fibrant. Thus, $i$ and $p$ are homotopy equivalences by \hyperref[lemma:pre_whitehead]{Lemma~\ref*{lemma:pre_whitehead}}, parts 2 and 1 respectively. But by \hyperref[lemma:composition_with_any_morphism_preserves_homotopy_equivalence]{Lemma~\ref*{lemma:composition_with_any_morphism_preserves_homotopy_equivalence}}, their composition is also a homotopy equivalence.
+\end{proof}
+
+\begin{definition}[homotopy category of a model category]
+  \label{def:homopy_category}
+  Let $\mathcal{C}$ be a model category. The \defn{homotopy category} of $\mathcal{C}$, denoted $\mathrm{Ho}(\mathcal{C})$, is defined as follows.
+  \begin{itemize}
+    \item The objects of $\mathrm{Ho}(\mathcal{C})$ are the fibrant-cofibrant objects of $\mathcal{C}$.
+
+    \item The set of morphisms $X \to Y$ is the set of homotopy classes of $\mathcal{C}(X, Y)$.
+
+    \item Composition is given by the rule
+      \begin{equation*}
+        [f] \circ [g] \equiv [f \circ g].
+      \end{equation*}
+      This is well-defined by \hyperref[lemma:composition_with_any_morphism_preserves_homotopy_equivalence]{Lemma~\ref*{lemma:composition_with_any_morphism_preserves_homotopy_equivalence}}.
+  \end{itemize}
+\end{definition}
+
+\section{Fibrant-Cofibrant replacement}
+\label{sec:fibrant_cofibrant_replacement}
+
+Let $\mathcal{C}$ be a model category.
+
+In \hyperref[ssc:cofibrant_replacement]{Subsection~\ref*{ssc:cofibrant_replacement}}, we give a way of assigning to any object $X \in \mathcal{C}$ a (not necessarily unique) cofibrant object $QX$ to which it is weakly equivalent. We call any choice of such a cofibrant object a \emph{cofibrant replacement.}
+%and show that replacing objects by cofibrant replacements preserves left homotopy, in the sense that
+%\begin{equation*}
+%  X \overset{l}{\sim} Y \implies QX \overset{l}{\sim} QY.
+%\end{equation*}
+
+We also define the notion of cofibrant replacement on morphisms, i.e.\ a way of assigning
+\begin{equation*}
+  (f\colon X \to Y) \mapsto (Qf\colon QX \to QY).
+\end{equation*}
+Again, this assignment is not uniquely defined.
+
+Next we next prove that for any cofibrant replacements $Qf$ of $f$ and $Qg$ of $g$,
+\begin{equation*}
+  f \overset{l}{\sim} g \implies Qf \overset{l}{\sim} Qg,
+\end{equation*}
+showing that the cofibrant replacement of a morphism is uniquely defined if we restrict our attention to morphisms out of cofibrant objects $X$, and consider morphisms up to left homotopy. In this setting, we have the further nice property that cofibrant replacement respects composition in the sense that
+\begin{equation*}
+  Q(g \circ f) \overset{l}{\sim} Qg \circ Qf.
+\end{equation*}
+
+In \hyperref[ssc:fibrant_replacement]{Subsection~\ref*{ssc:fibrant_replacement}}, we study the dual notion, called \emph{fibrant replacement,} providing a method by which one can replace any object $X$ by a fibrant object $RX$ to which it is weakly equivalent.
+
+We again define a notion of cofibrant replacement on morphims, i.e. a way of assigning
+\begin{equation*}
+  (f\colon X \to Y) \mapsto (Rf\colon RX \to RY).
+\end{equation*}
+Then, restricting to morphisms whose domain $Y$ is fibrant, and considering morphisms up to right homotopy, we find that fibrant replacement becomes well-defined in the sense that
+\begin{equation*}
+  f \overset{r}{\sim} f' \implies Rf \overset{r}{\sim} Rf',
+\end{equation*}
+and preserves composition in the sense that $R(g \circ f) = Rg \circ Rf$.
+
+In \hyperref[ssc:fibrant_cofibrant_replacement]{Subsection~\ref*{ssc:fibrant_cofibrant_replacement}}, we prove two preliminary lemmas, which show the following.
+\begin{itemize}
+  \item The fibrant replacement of a cofibrant object is fibrant-cofibrant.
+
+  \item fibrant replacement takes left-homotopic morphisms $f$, $g\colon X \to Y$ with $X$ cofibrant to morphisms which are right homotopic.
+\end{itemize}
+The first implies that taking first the cofibrant and then fibrant replacement of any object $X$ yields an object $RQX$ which is fibrant-cofibrant. The second then implies that fibrant-cofibrant replacement gives a functor from $\mathcal{C}$ to $\mathrm{Ho}(\mathcal{C})$.
+
+\subsection{Cofibrant replacement}
+\label{ssc:cofibrant_replacement}
+
+\begin{definition}[cofibrant replacement]
+  \label{def:cofibrant_replacement}
+  Let $\mathcal{C}$ be a model category. For each $X \in \mathcal{C}$, a \defn{cofibrant replacement} of $X$ consists of a cofibrant object $QX$ and a trivial fibration $p_{X}\colon QX \to X$, defined as follows.
+  \begin{itemize}
+    \item If $X$ is cofibrant, define $QX = X$, and $p_{X} = \id_{X}$.
+
+    \item If $X$ is not cofibrant, pick a factorization of the unique morphism $\emptyset \to X$
+      \begin{equation*}
+        \emptyset \to QX \overset{p_{X}}{\to} X
+      \end{equation*}
+      where the map $\emptyset \to Qx$ is a cofibration and $p_{X}$ is a trivial fibration.
+  \end{itemize}
+
+  For a morphism $f\colon X \to Y$, a fibrant replacement of $f$ is any solution $Rf$ to the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \emptyset
+      \arrow[r]
+      \arrow[d]
+      & QY
+      \arrow[d, "p_{Y}"]
+      \\
+      QX
+      \arrow[r, swap, "f \circ p_{X}"]
+      \arrow[ur, dashed, "Qf"]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+\begin{lemma}
+  For any map $f\colon X \to Y$, any choice of cofibrant replacement $f \mapsto Qf$ respects left homotopy; that is, if $f \overset{l}{\sim} f'$, then $Qf \overset{l}{\sim} Qf'$.
+\end{lemma}
+\begin{proof}
+  Suppose we have lifts $Qf$ and $Qf'$ of $f$ and $f'$ respectively, and consider a left homotopy between them.
+  \begin{equation*}
+    \begin{tikzcd}
+      X \amalg X
+      \arrow[d, swap, "i"]
+      \arrow[r, "{(f, f')}"]
+      & Y
+      \\
+      C
+      \arrow[ur, swap, "H"]
+    \end{tikzcd}
+  \end{equation*}
+
+  Consider the following solid lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      QX \amalg QX
+      \arrow[r, "{(Qf, Qf')}"]
+      \arrow[d, swap, "i"]
+      & QY
+      \arrow[d, "p_{Y}"]
+      \\
+      C
+      \arrow[r, swap, "f \circ p_{X} \circ H"]
+      \arrow[ur, dashed]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  The outer square commutes because
+  \begin{align*}
+    p_{Y} \circ (Qf, Qf') &= (f \circ p_{X}, f' \circ p_{X})
+    \\
+    &= f \circ p_{X} \circ (f, f')
+    \\
+    &= f \circ p_{X} \circ H \circ i.
+  \end{align*}
+
+  The map $i$ is a cofibration by definition, and $p_{Y}$ is a trivial fibration. Thus, we get a dashed lift. But this is precisely a left homotopy between $Qf$ and $Qf'$.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:cofibrant_replacement_respects_composition}
+  We have
+  \begin{equation*}
+    Q(g \circ f) \overset{l}{\sim} Q(g) \circ Q(f).
+  \end{equation*}
+\end{corollary}
+\begin{proof}
+  Consider the following square.
+  \begin{equation*}
+    \begin{tikzcd}
+      *
+      \arrow[r]
+      \arrow[d]
+      & *
+      \arrow[r]
+      \arrow[d]
+      & QZ
+      \arrow[d, "p_{Z}"]
+      \\
+      *
+      \arrow[r]
+      \arrow[d]
+      & QY
+      \arrow[r, "g \circ p_{Y}"]
+      \arrow[d, "p_{Y}"]
+      & Z
+      \arrow[d, "\id"]
+      \\
+      QX
+      \arrow[r, swap, "f \circ p_{X}"]
+      & Y
+      \arrow[r, swap, "g"]
+      & Z
+    \end{tikzcd}
+  \end{equation*}
+  The outer square is the lifting problem defining $Q(g \circ f)$, and the top right and bottom left squares define $Qg$ and $Qf$ respectively. Thus, $Qg \circ Qf \overset{l}{\sim} Q(g \circ f)$.
+\end{proof}
+
+There is a dual notion.
+
+\subsection{Fibrant replacement}
+\label{ssc:fibrant_replacement}
+
+\begin{definition}[fibrant replacement]
+  \label{def:fibrant_replacement}
+  Let $\mathcal{C}$ be a model category. For each $X \in \mathcal{C}$, a \defn{fibrant replacement} of $X$ consists of a fibrant object $RX$ and a trivial cofibration $i_{X}\colon X \to RX$, defined as follows.
+  \begin{itemize}
+    \item If $X$ is fibrant, define $RX = X$, and $i_{X} = \id_{X}$.
+
+    \item If $X$ is not fibrant, pick factorization of the unique morphism $X \to *$
+      \begin{equation*}
+        X \overset{i_{X}}{\to} RX \to *
+      \end{equation*}
+      where the map $\emptyset \to Qx$ is a fibration and $i_{X}$ is a trivial cofibration.
+  \end{itemize}
+
+  For a morphism $f\colon X \to Y$, a fibrant replacement of $f$ is a solution $Rf$ to the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "i_{Y} \circ f"]
+      \arrow[d, swap, "i_{X}"]
+      & RY
+      \arrow[d]
+      \\
+      RX
+      \arrow[r]
+      \arrow[ur, dashed, "Rf"]
+      & *
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:fibrant_replacement_respects_right_homotopy}
+  For any map $f\colon X \to Y$, fibrant replacement $f \mapsto Rf$ respects right homotopy; that is, if $f \overset{r}{\sim} f'$, then $Rf \overset{r}{\sim} Rf'$.
+\end{lemma}
+\begin{proof}
+  Dual to
+\end{proof}
+
+\begin{corollary}
+  We have
+  \begin{equation*}
+    R(g \circ f) \overset{r}{\sim} R(g) \circ R(f).
+  \end{equation*}
+\end{corollary}
+\begin{proof}
+  Dual to
+\end{proof}
+
+\subsection{Fibrant-cofibrant replacement}
+\label{ssc:fibrant_cofibrant_replacement}
+
+\begin{lemma}
+  \label{lemma:fibrant_replacement_turns_left_homotopy_from_cofibrant_into_right_homotopy}
+  Suppose $f$, $f'\colon X \to Y$ are left homotopic, and that $X$ is cofibrant. Then the fibrant replacements $Rf$ and $Rf'$ are right homotopic.
+\end{lemma}
+\begin{proof}
+  Since $f$ and $f'$ are left homotopic, so are $i_{Y} \circ f$ and $i_{Y} \circ f'$. But since these are between a fibrant and a cofibrant object, they are right homotopic. Pick some right homotopy $H$ as follows.
+  \begin{equation*}
+    \begin{tikzcd}[row sep=huge, column sep=huge]
+      & P
+      \arrow[d, "p"]
+      \\
+      X
+      \arrow[ur, "H"]
+      \arrow[r, swap, "{(i_{Y} \circ f, i_{Y} \circ f')}"]
+      & RY \times RY
+    \end{tikzcd}
+  \end{equation*}
+
+  Consider the following solid lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "H"]
+      \arrow[d, swap, "i_{X}"]
+      & R
+      \arrow[d, "p"]
+      \\
+      RX
+      \arrow[r, swap, "{(Rf, Rf')}"]
+      \arrow[ur, dashed]
+      & RY \times RY
+    \end{tikzcd}
+  \end{equation*}
+  The outer square commutes because
+  \begin{equation*}
+    p \circ H = (i_{Y} \circ f, i_{Y} \circ f') = (Rf \circ i_{X}, Rf' \circ i_{X}).
+  \end{equation*}
+\end{proof}
+
+\begin{theorem}
+  There is a functor $\pi\colon \mathcal{C} \to \mathrm{Ho}(\mathcal{C})$, defined on objects by $X \mapsto RQX$ and on morphisms by $f \mapsto [RQf]$.
+\end{theorem}
+\begin{proof}
+  First, note that the assignment on objects is well-defined since $RQX$ is fibrant by definition and cofibrant because the composition
+  \begin{equation*}
+    \emptyset \to QX \overset{i_{X}}{\to} RQX
+  \end{equation*}
+  is a cofibration.
+
+  It remains to check that $\pi$ respects composition. To see this, note that
+  \begin{align*}
+    \pi(g \circ f) &= [RQ(g \circ f)] \\
+    &= [R(Qg \circ Qf)] \\
+    &= [RQ(g) \circ RQ(f)] \\
+    &= [RQ(g)] \circ [RQ(f)] \\
+    &= \pi(g) \circ \pi(f),
+  \end{align*}
+  where the second equality follows from \hyperref[cor:cofibrant_replacement_respects_composition]{Corollary~\ref*{cor:cofibrant_replacement_respects_composition}} and \hyperref[lemma:fibrant_replacement_turns_left_homotopy_from_cofibrant_into_right_homotopy]{Lemma~\ref*{lemma:fibrant_replacement_turns_left_homotopy_from_cofibrant_into_right_homotopy}} and the third follows from \hyperref[lemma:fibrant_replacement_respects_right_homotopy]{Lemma~\ref*{lemma:fibrant_replacement_respects_right_homotopy}}.
+\end{proof}
+
+\begin{theorem}
+  The homotopy category $\mathrm{Ho}(\mathcal{C})$, together with the map $\pi\colon \mathcal{C} \to \mathrm{Ho}(\mathcal{C})$, is the localization of $\mathcal{C}$ at $\mathcal{W} = \W$, the set of weak equivalences.
+\end{theorem}
+\begin{proof}
+  Define a category $\overline{\mathcal{C}}$ as follows.
+  \begin{itemize}
+    \item $\Obj(\overline{\mathcal{C}}) = \Obj(\mathcal{C})$
+
+    \item For each $X$, $Y \in \Obj(\overline{\mathcal{C}}), \overline{\mathcal{C}}(X, Y) = \mathrm{Ho}(\mathcal{C})(RQX, RQY)$.
+  \end{itemize}
+
+  We have the following commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}
+      \arrow[rr, "\pi"]
+      \arrow[dr, swap, "\bar{\pi}"]
+      && \mathrm{Ho}(\mathcal{C})
+      \\
+      & \overline{\mathcal{C}}
+      \arrow[ur, swap, "\xi"]
+    \end{tikzcd}
+  \end{equation*}
+  where $\bar{\pi}$ is the identity on objects and maps $f \mapsto [RQf]$, and $\xi$ acts on objects by taking $X \mapsto RQX$ and is the identity on morphisms.
+
+  Note that $\xi$ is surjective on objects and fully faithful, hence an equivalence of categories. Hence, we only need to show that $\overline{\mathcal{C}}$ satisfies the universal property for the localization.
+
+  Suppose that $F\colon \mathcal{C} \to \mathcal{D}$ is a functor which takes weak equivalences to isomorphisms in $\mathcal{D}$. If we can show that there exists a unique functor $\overline{F}\colon \overline{\mathcal{C}} \to \mathcal{D}$ such that $F = \overline{F} \circ \overline{\pi}$, then we are done.\footnote{Why?}
+
+  Suppose $f \overset{r}{\sim} g$. Pick some path object $P$, and a homotopy through $P$.
+  \begin{equation*}
+    \begin{tikzcd}
+      & P
+      \arrow[d, "p"]
+      \\
+      X
+      \arrow[r, swap, "{(\id, \id)}"]
+      \arrow[ur, "s"]
+      & X \times X
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      & P
+      \arrow[d, "p"]
+      \\
+      X
+      \arrow[r, swap, "{(f, g)}"]
+      \arrow[ur, "H"]
+      & Y \times Y
+    \end{tikzcd}
+  \end{equation*}
+  Putting these diagrams back to back and unfolding them, we have the following.
+  \begin{equation*}
+    \begin{tikzcd}
+      & Y
+      \\
+      X
+      \arrow[ur, "f"]
+      \arrow[r, "H"]
+      \arrow[dr, swap, "g"]
+      & P
+      \arrow[u, "p_{0}"]
+      \arrow[d, swap, "p_{1}"]
+      & Y
+      \arrow[ul, swap, "\id"]
+      \arrow[l, swap, "s"]
+      \arrow[dl, "\id"]
+      \\
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+
+  Consider the image in $\mathcal{D}$. Since $p_{0}$ and $p_{1}$ are weak equivalences, \hyperref[thm:whitehead]{Theorem~\ref*{thm:whitehead}} implies that they are sent to isomorphisms in $\mathcal{D}$. Thus, $F(p_{0}) = F(s)^{-1} = F(p_{1})$, so
+  \begin{align*}
+    F(f) &= F(p_{0}) \circ F(H) \\
+    &= F(p_{1}) \circ F(H) \\
+    &= F(g).
+  \end{align*}
+
+  Let $[g]\colon RQX \to RQY$ be a morphism in $\overline{\mathcal{C}}$. Pick a representative $g$. Consider the following commutative diagram.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "g"]
+      \arrow[d, leftarrow, swap, "p_{X}"]
+      & Y
+      \arrow[d, leftarrow, "p_{Y}"]
+      \\
+      QX
+      \arrow[r, "Qg"]
+      \arrow[d, swap, "i_{QX}"]
+      & QY
+      \arrow[d, "i_{QY}"]
+      \\
+      RQX
+      \arrow[r, "RQg"]
+      & RQY
+    \end{tikzcd}
+  \end{equation*}
+
+  Applying $F$, we find the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      F(X)
+      \arrow[r, "F(g)"]
+      \arrow[d, leftarrow, swap, "F(p_{X})"]
+      & F(Y)
+      \arrow[d, leftarrow, "F(p_{Y})"]
+      \\
+      F(QX)
+      \arrow[r, "F(Qg)"]
+      \arrow[d, swap, "F(i_{QX})"]
+      & F(QY)
+      \arrow[d, "F(i_{QY})"]
+      \\
+      F(RQX)
+      \arrow[r, "F(RQg)"]
+      & F(RQY)
+    \end{tikzcd}
+  \end{equation*}
+  But the vertical morphisms are isomorphisms, so
+  \begin{equation*}
+    F(RQg) = F(i_{QY}) \circ F(p_{Y})^{-1} \circ F(g) \circ F(p_{X}) \circ F(i_{QX})^{-1}.
+  \end{equation*}
+
+  In order to have $F = \bar{F} \circ \bar{\pi}$, we must have
+  \begin{equation*}
+    \overline{F}([RQg]) = F(RQg),
+  \end{equation*}
+  which specifies $\bar{F}$ completely.
+\end{proof}
+
+\section{Quillen adjunctions}
+\label{sec:quillen_adjunctions}
+
+\begin{proposition}
+  \label{prop:equivalent_conditions_for_quillen_adjunction}
+  Let $\mathcal{C}$ and $\mathcal{D}$ be model categories, and consider an adjunction
+  \begin{equation*}
+    F : \mathcal{C} \leftrightarrow \mathcal{D} : G.
+  \end{equation*}
+  The following are equivalent.
+  \begin{enumerate}
+    \item $F$ preserves cofibrations and trivial cofibrations.
+
+    \item $G$ preserves fibrations and trivial fibrations.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  By \hyperref[lemma:relations_between_lifting_properties_and_fibrations]{Lemma~\ref*{lemma:relations_between_lifting_properties_and_fibrations}}, a morphism is a cofibration (resp. trivial cofibration) if and only if it has the left lifting property with respect to all trivial fibrations (resp. fibrations). Thus, in order to show that $F$ preserves cofibrations (resp. trivial cofibrations), it suffices to show that if $f$ is a cofibration (resp. trivival cofibration) in $\mathcal{C}$, then $F(f)$ has the left lifting property with respect to all trivial fibrations (resp. fibrations).
+
+  Consider solid adjunct diagrams of the following form, with the first in $\mathsf{C}$ and the second in $D$.
+  \begin{equation*}
+    \begin{tikzcd}
+      F(c)
+      \arrow[r]
+      \arrow[d, swap, "F(f)"]
+      & d
+      \arrow[d, "g"]
+      \\
+      F(c')
+      \arrow[r]
+      \arrow[ur, dashed]
+      & d'
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      c
+      \arrow[r]
+      \arrow[d, swap, "f"]
+      & G(d)
+      \arrow[d, "G(g)"]
+      \\
+      c'
+      \arrow[r]
+      \arrow[ur, dashed]
+      & G(d')
+    \end{tikzcd}
+  \end{equation*}
+  Suppose that $f$ is a cofibration and that $F$ preserves cofibrations. Then the left-hand diagram has a lift for any trivial fibration $g$. But then its adjunct is a lift for the diagram on the right. But that means that $G(g) \in \cof\rlp = \fib \cap \W$.
+
+  Similarly, if $f$ is a trivial cofibration and $F$ preserves trivial cofibrations, then the left-hand diagram has a lift for any fibration $g$, whose adjunct is a lift for the diagram on the RHS, implying that $G(d) \in (\cof \cap \W)\rlp = \fib$.
+
+  The other statement is dual.
+\end{proof}
+
+\begin{definition}[Quillen adjunction]
+  \label{def:quillen_adjunction}
+  An adjunction of model categories satisfying the equivalent conditions in \hyperref[prop:equivalent_conditions_for_quillen_adjunction]{Proposition~\ref*{prop:equivalent_conditions_for_quillen_adjunction}} is known as a \defn{Quillen adjunction}.
+\end{definition}
+
+\begin{lemma}[Ken Brown's Lemma]
+  \label{lemma:ken_browns_lemma}
+  Let $F : \mathcal{C} \leftrightarrow \mathcal{D} : G$ be a Quillen adjunction.
+  \begin{enumerate}
+    \item The left adjoint $F$ preserves weak equivalences between cofibrant objects
+
+    \item The right adjoint $G$ preserves weak equivalences between fibrant objects.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  By \hyperref[prop:equivalent_conditions_for_quillen_adjunction]{Proposition~\ref*{prop:equivalent_conditions_for_quillen_adjunction}}. Let $A$ and $B$ be cofibrant objects, and $f\colon A \to B$ be a weak equivalence.
+
+  Pick for the map $(f, \id)\colon A \amalg B \to B$ a factorization
+  \begin{equation*}
+    A \amalg B \overset{i}{\to} C \overset{p}{\to} B,
+  \end{equation*}
+  where $i \in \cof$ and $p \in \fib \cap \W$.
+
+  Consider the following diagram.
+  \begin{equation*}
+    \begin{tikzcd}
+      \emptyset
+      \arrow[r]
+      \arrow[d]
+      & A
+      \arrow[dr, bend left, "f"]
+      \arrow[d, "i_{A}"]
+      \\
+      B
+      \arrow[r, swap, "i_{B}"]
+      & A \amalg B
+      \arrow[r, "{(f, \id)}"]
+      \arrow[d, swap, "q"]
+      & B
+      \\
+      & C
+      \arrow[ur, swap, "p"]
+    \end{tikzcd}
+  \end{equation*}
+
+  Because $A$ and $B$ are cofibrant, $i_{A}$ and $i_{B}$ are cofibrations. Thus, $q \circ i_{A}$ is a cofibration, so $C$ is cofibrant. Furthermore, we have that
+  \begin{equation*}
+    f = p \circ q \circ i_{A},\qquad \id_{B} = p \circ q \circ i_{B}.
+  \end{equation*}
+  By \hyperref[item:MC_two_out_of_three]{Axiom~\ref*{item:MC_two_out_of_three}}, we have that $q \circ i_{A}$ and $q \circ i_{B}$ are weak equivalences, hence trivial cofibrations.
+
+  Applying $F$, we find that
+  \begin{equation*}
+    F(f) = F(p) \circ F(q \circ i_{A}),\qquad F(\id) = F(p) \circ F(q \circ i_{B}).
+  \end{equation*}
+  We know that $F(\id_{B}) = \id_{F(b)}$ is a trivial cofibration, hence certainly a weak equivalence, and that $F(q \circ i_{B})$ and $F(q \circ i_{A})$ are a weak equivalence because $F$ preserves trivial cofibrations. Thus $F(p)$ is a weak equivalence, implying that
+  \begin{equation*}
+    F(f) = F(p) \circ F(q \circ i_{A})
+  \end{equation*}
+  is a weak equivalence.
+\end{proof}
+
+
+Given a Quillen adjunction
+\begin{equation*}
+  F : \mathcal{C} \leftrightarrow \mathcal{D} : G,
+\end{equation*}
+consider the full subcategory of all cofibrant objects $\mathcal{C}_{c} \subset \mathcal{C}$. There is an equivalence\footnote{Why?}
+\begin{equation*}
+  \mathcal{C}_{c}[\mathcal{W}^{-1}] \simeq \mathcal{C}{\mathcal{W}^{-1}}.
+\end{equation*}
+
+We will denote any inverse by
+\begin{equation*}
+  Q\colon \mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{C}_{c}[\mathcal{W}^{-1}].
+\end{equation*}
+
+Similarly, we will denote the functor
+\begin{equation*}
+  R\colon \mathcal{D}[\mathcal{W}^{-1}] \to \mathcal{D}_{f}[\mathcal{W}^{-1}].
+\end{equation*}
+
+\begin{definition}[left derived functor]
+  \label{def:left_derived_functor}
+  The \defn{left derived functor} $RG$ is the composite
+  \begin{equation*}
+    \mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{C}\ldots
+  \end{equation*}
+\end{definition}
+
+\begin{definition}[Quillen equivalence]
+  \label{def:quillen_equivalence}
+  A Quillen adjunction is called a \defn{Quillen equivalence} if $LF$, or equivalently $RG$, is an equivalence of localized categories.
+\end{definition}
+
+\begin{theorem}
+  The adjunction
+  \begin{equation*}
+    \abs{\cdot} : \SSet \leftrightarrow \mathbf{Top} : \Sing
+  \end{equation*}
+  is a Quillen adjunction.
+\end{theorem}
+
+\end{document}

@@ -1,0 +1,1173 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\newcommand{\ssmash}{\overset{\star}{\wedge}}
+
+\chapter{Infinity categories}
+\label{ch:infinity_categories}
+
+I will edit this chapter heavily. It is in desperate need of a good de-clawing.
+
+\section{Basic definitition}
+\label{sec:basic_definitions_infinity_categories}
+
+\begin{definition}[infinity category]
+  \label{def:infinity_category}
+  A simplicial set $\mathcal{C}$ is called an \defn{$\infty$-category} if each inner horn
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{n}_{i}
+      \arrow[r]
+      \arrow[d, hookrightarrow]
+      & \mathcal{C}
+      \\
+      \Delta^{n}
+      \arrow[ur, dashed]
+    \end{tikzcd}
+    \qquad 0 < i < n
+  \end{equation*}
+  has a filler.
+\end{definition}
+
+\begin{example}
+  \label{eg:nerve_of_category_is_infinity_category}
+  For any category $\mathcal{C}$, we have seen in \hyperref[prop:horn_fillers_in_nerve]{Proposition~\ref*{prop:horn_fillers_in_nerve}} the nerve $N(\mathcal{C})$ has \emph{unique} innner horn fillers, thus certainly has inner horn fillers.
+\end{example}
+
+\begin{example}
+  \label{eg:singular_set_of_topological_space_is_infinity_categeory}
+  For any topological space $X$, the singular set $\Sing(x)$ has \emph{all} horn fillers, hence certainly inner horn fillers.
+\end{example}
+
+In the previous chapter, we mainly worked with Kan complexes, so we used the Kan model structure on $\SSet$. There is, however, a different model structure on $\SSet$, which is better suited to infinity-categorical thinking.
+
+\section{The homotopy category of an infinity category}
+\label{sec:the_homotopy_category_of_an_infinity_category}
+
+We would like to be able to view infinity-categories as a generalization of categories. This means that we would like to be able to throw away data from an infinity category to get a regular category. This throwing-away process creates from any infinity category $\mathcal{C}$ the so-called \emph{homotopy category} $\h \mathcal{C}$. The homotopy category inherits a lot of information from the infinity category from whence it came.
+
+\begin{definition}[homotopy category]
+  \label{def:homotopy_category}
+  Let $\mathcal{C}$ be an $\infty$-category. Define a category $\h\mathcal{C}$, called the \defn{homotopy category of $\mathcal{C}$}, as follows.
+  \begin{itemize}
+    \item The objects $\ob(\mathcal{C})$ are the vertices $\mathcal{C}_{0}$.
+
+    \item For objects $x$ and $y$, the set $\mathcal{C}(x, y)$ consists of all edges $f$, $g$ with $d_{0}f = d_{0}g = y$ and $d_{1}f = d_{1}g = x$, modulo the equivalence relation
+      \begin{equation*}
+        f \sim g \iff \exists \sigma \in \mathcal{C}_{2}\quad \text{with}\quad d_{1}\sigma = g,\quad d_{2}\sigma = f, \quad \text{and}\quad d_{0}\sigma = s_{0}y.
+      \end{equation*}
+      \begin{equation*}
+        \sigma =
+        \begin{tikzcd}[column sep=small]
+          & y
+          \arrow[dr, "s_{0}y"]
+          \\
+          x
+          \arrow[rr, swap, "g"]
+          \arrow[ur, "f"]
+          && y
+        \end{tikzcd}
+      \end{equation*}
+
+    \item We have already seen in \hyperref[thm:homotopy_of_edges_is_equivalence_relation]{Theorem~\ref*{thm:homotopy_of_edges_is_equivalence_relation}} that this is an equivalence relation.
+
+    \item Composition is induced by inner horn fillings $\Lambda^{2}_{1} \to \Delta^{2}$; we define the composition $[f] \circ [g]$ to be $[h]$, where $h$ is some edge given to us by filling the following solid horn.
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          & y
+          \arrow[dr, "g"]
+          \\
+          x
+          \arrow[ur, "f"]
+          \arrow[rr, dashed, swap, "h"]
+          && z
+        \end{tikzcd}
+      \end{equation*}
+
+      To see that this is well-defined, i.e.\ respects equivalence classes, consider two fillings as follows.
+      \begin{equation*}
+        \sigma =
+        \begin{tikzcd}[column sep=small]
+          & y
+          \arrow[dr, "g"]
+          \\
+          x
+          \arrow[rr, swap, "h"]
+          \arrow[ur, "f"]
+          && z
+        \end{tikzcd}
+        ,\qquad \sigma' =
+        \begin{tikzcd}[column sep=small]
+          & y
+          \arrow[dr, "g"]
+          \\
+          x
+          \arrow[rr, swap, "h'"]
+          \arrow[ur, "f"]
+          && z
+        \end{tikzcd}.
+      \end{equation*}
+      We need to show that $h \sim h'$. We get this by filling the following horn.
+      \begin{equation*}
+        \begin{tikzcd}
+          y
+          \arrow[r, "g"]
+          & z
+          \arrow[d, "s_{0}z"]
+          \\
+          x
+          \arrow[u, "f"]
+          \arrow[ur, "h"]
+          \arrow[r, swap, "h'"]
+          & z
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}
+          y
+          \arrow[r, "g"]
+          \arrow[dr, "f"]
+          & z
+          \arrow[d, "s_{0}z"]
+          \\
+          x
+          \arrow[u, "f"]
+          \arrow[r, swap, "h'"]
+          & z
+        \end{tikzcd}
+      \end{equation*}
+
+      First suppose that $g_{1} \sim g_{2}$. Then filling the horn
+      \begin{equation*}
+        \begin{tikzcd}
+          x
+          \arrow[r, "f"]
+          \arrow[d, swap, "h_{2}"]
+          \arrow[dr, "h_{1}"]
+          & y
+          \arrow[d, "g_{1}"]
+          \\
+          z
+          \arrow[r, swap, "s_{0}z"]
+          & z
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}
+          x
+          \arrow[r, "f"]
+          \arrow[d, swap, "h_{2}"]
+          & y
+          \arrow[d, "g_{1}"]
+          \arrow[dl, swap, "g_{2}"]
+          \\
+          z
+          \arrow[r, swap, "s_{0}z"]
+          & z
+        \end{tikzcd}
+      \end{equation*}
+      tells us that $h_{1} \sim h_{2}$.
+
+      Now suppose that $f_{1} \sim f_{2}$. In this case we prove something stronger, i.e.\ that if $h$ is a filler for $g \circ f_{1}$, then it is also a filler for $g \circ f_{2}$. We find this from the following commutative diagram.
+      \begin{equation*}
+        \begin{tikzcd}
+          x
+          \arrow[r, "f_{1}"]
+          \arrow[d, swap, "f_{2}"]
+          \arrow[dr, "h"]
+          & y
+          \arrow[d, "g"]
+          \\
+          z
+          \arrow[r, swap, "g"]
+          & z
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}
+          x
+          \arrow[r, "f"]
+          \arrow[d, swap, "h_{2}"]
+          & y
+          \arrow[d, "g_{1}"]
+          \arrow[dl, swap, "g_{2}"]
+          \\
+          z
+          \arrow[r, swap, "s_{0}z"]
+          & z
+        \end{tikzcd}
+      \end{equation*}
+
+      This gives us a well-defined composition law. For any $x \in \mathcal{C}_{0}$, the identity on $x$ is $s_{0}x$; it is a left and right identity because the solid diagrams
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          & y
+          \arrow[dr, "s_{0}y"]
+          \\
+          x
+          \arrow[rr, dashed, swap, "f"]
+          \arrow[ur, "f"]
+          && y
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}[column sep=small]
+          & x
+          \arrow[dr, "g"]
+          \\
+          x
+          \arrow[ur, "s_{0}x"]
+          \arrow[rr, swap, dashed, "g"]
+          && y
+        \end{tikzcd}
+      \end{equation*}
+      can be filled by $s_{1}f$ and $s_{0}g$ respectively.
+
+      To see that composition is associative consider the horn
+      \begin{equation*}
+        \begin{tikzcd}[row sep=huge, column sep=huge]
+          x
+          \arrow[r, "f"]
+          \arrow[d, swap, "g \circ f"]
+          & y
+          \arrow[dl, swap, "g"]
+          \arrow[d, "h \circ g"]
+          \\
+          z
+          \arrow[r, swap, "h"]
+          & w
+        \end{tikzcd}
+        \qquad
+        \begin{tikzcd}[row sep=huge, column sep=huge]
+          x
+          \arrow[r, "f"]
+          \arrow[d, swap, "g \circ f"]
+          \arrow[dr, "(h \circ g) \circ f"]
+          & y
+          \arrow[d, "h \circ g"]
+          \\
+          z
+          \arrow[r, swap, "h"]
+          & w
+        \end{tikzcd}
+      \end{equation*}
+      where the bottom triangle on the right is unfilled. Filling it gives a homotopy
+      \begin{equation*}
+        [(f \circ g) \circ h] = [f \circ (g \circ h)].
+      \end{equation*}
+  \end{itemize}
+
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:properties_of_homotopy_category}
+  The following are properties of $\h\mathcal{C}$.
+  \begin{enumerate}
+    \item Let $\mathcal{C}$ be a small category. Then $\h N(\mathcal{C}) \simeq \mathcal{C}$.
+
+    \item For every topological space $X$,
+      \begin{equation*}
+        \h \Sing(X) \simeq \pi_{\geq 1} (X)
+      \end{equation*}
+
+    \item A simplicial set $X$ is the nerve of a category if and only if it has unique inner horn fillers.
+
+    \item For every Kan complex $K$, the infinity-category $\h K$ is a groupoid.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leavevmode
+  \begin{enumerate}
+    \item The 0-simplices of $N(\mathcal{C})$ are the objects of $\mathcal{C}$, and these are defined to be the objects of $\h N(\mathcal{C})$.
+
+      The 1-simplices of $N(\mathcal{C})$ are precisely the morphisms of $\mathcal{C}$. In particular, identity morphisms correspond to degenerate simplices. In passing to $\h N(\mathcal{C})$, two morphisms are identified if there is a 2-simplex between them in the sense described above. But this says precisely that the only identifications are of the form $f \circ \id = f$ for all $f$.
+
+      Simplices of degree 2 or higher are discarded.
+
+    \item The zero-simplices of both of these are the points of $X$, and the morphisms of both of these correspond to paths modulo homotopy.
+
+    \item Let $f$ be an edge. By filling an outer horn, we find a left inverse $g$. By filling again, we find a left inverse $h$ to this. But $h$ has to be $f$, so we are done.
+  \end{enumerate}
+\end{proof}
+
+\begin{theorem}
+  Denote by $\mathbf{qCat}$ the full subcategory of $\SSet$ on $\infty$-categories.
+  \begin{enumerate}
+    \item There is a functor $\h\colon \mathbf{qCat} \mapsto \mathbf{Cat}$ which sends $\mathcal{C} \to \h \mathcal{C}$.
+
+    \item There is an adjunction
+      \begin{equation*}
+        \h : \mathbf{qCat} \leftrightarrow \mathbf{Cat} : N,
+      \end{equation*}
+      where $N$ denotes the nerve (\hyperref[def:nerve_of_a_category]{Definition~\ref*{def:nerve_of_a_category}}).
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  $\,$
+  \begin{enumerate}
+    \item Let $f\colon X \to Y$ be a map of $\infty$-categories. We need to define a map $\h f\colon \h X \to \h Y$. On objects, this is easy, since $f_{0}\colon X_{0} \to Y_{0}$. On morphisms, we get a map $f_{1}\colon X_{1} \to Y_{1}$ which sends morphisms $x \to y$ to morphisms $f_{0}(x) \to f_{0}(y)$, as can be checked by substituting $d_{0}$ and $d_{1}$ into the downward arrows below.
+      \begin{equation*}
+        \begin{tikzcd}
+          X_{1}
+          \arrow[r, "f_{1}"]
+          \arrow[d]
+          & Y_{1}
+          \arrow[d]
+          \\
+          X_{0}
+          \arrow[r, swap, "f_{0}"]
+          & Y_{0}
+        \end{tikzcd}
+      \end{equation*}
+
+      We still have to check that the map $f_{1}$ respects equivalence classes. To this end, suppose $g \sim g'\colon x \to y$, i.e.\ there is a simplex as follows.
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          & y
+          \arrow[dr, "s_{0}y"]
+          \\
+          x
+          \arrow[ur, "g"]
+          \arrow[rr, swap, "g'"]
+          && y
+        \end{tikzcd}
+      \end{equation*}
+      Then we have a simplex as follows
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          & f_{0}(y)
+          \arrow[dr, "s_{0}(f_{0}(y)) = f_{1}(s_{0}(y))"]
+          \\
+          f_{0}(x)
+          \arrow[ur, "f_{1}(g)"]
+          \arrow[rr, swap, "f_{1}(g')"]
+          && f_{0}(y)
+        \end{tikzcd}
+      \end{equation*}
+      so $f_{1}(f) \sim f_{1}(g)$.
+
+      To see functoriality of $\h$, suppose that if $F\colon X \to Y$ and $G\colon Y \to Z$ are morphisms of simplicial sets. We need to check that $\h(G \circ F) = \h G \circ \h F$. This is clearly true on objects, and on morphisms we have
+      \begin{equation*}
+        \h(G \circ F)([f]) = [(G \circ F)(f)] = [G(F(f))] = \h G([F(f)]) = (\h G \circ \h F) ([f]).
+      \end{equation*}
+
+    \item We exhibit a unit-counit adjunction. We first define a natural transformation $\epsilon$ with components
+      \begin{equation*}
+        \epsilon_{X}\colon X \to N(\h X).
+      \end{equation*}
+  \end{enumerate}
+\end{proof}
+
+
+\section{The coherent nerve}
+\label{sec:the_coherent_nerve}
+
+%We already have the means of describing the theory of Kan complexes categorically, via the full subcategory $\mathbf{Kan} \subset \SSet$. However, it seems natural to want to be able to discuss not only the ordinary category of Kan complexes, but the infinity category of Kan complexes. The goal of this section is to lay the foundation for constructing the infinity category of Kan complexes, known as the \emph{category of spaces.}
+%
+%In \hyperref[ssc:topological_and_simplicial_enrichment]{Subsection~\ref*{ssc:topological_and_simplicial_enrichment}}, we note define the notions of topologically and simplicially enriched categories, and note that the singular set functor
+%\begin{equation*}
+%  \Sing\colon \mathbf{Top} \to \SSet
+%\end{equation*}
+%preserves products, and thus provides a functor turning topologically enriched categories into simplicially enriched categories. We call this functor the \emph{singular nerve,} and denote it by $\mathcal{T} \mapsto \Sing(\mathcal{T})$.
+%
+%In \hyperref[ssc:thickening]{Subsection~\ref*{ssc:thickening}}, we define a functor turning combinatorial simplices $[n]$ into simplicially enriched categories, called the \emph{thickening.} By currying $\mathbf{Cat}_{\Delta}$'s hom functor along the thickening, we find a simplicial nerve
+%\begin{equation*}
+%  N_{\Delta}(\mathcal{C}) = \mathbf{Cat}_{\Delta}(\mathfrak{C}(-), \mathcal{C})\colon \Delta\op \to \SSet.
+%\end{equation*}
+%
+%Since the mapping spaces between Kan complexes are themselves Kan complexes, the full subcategory $\mathbf{Kan} \subset \SSet$ can be thought of as simplicially enriched. Thus, applying the simplicial nerve gives us an infinity category known as the \emph{category of spaces.}
+%
+%By composing the singular nerve $\Sing$ with the simplicial nerve $N_{\Delta}$ we can turn any topologically enriched category into a simplicial set; we call this assignment the \emph{topological nerve.}
+
+\subsection{Topologically enriched categories}
+\label{ssc:topologically_enriched_categories}
+
+\begin{definition}[compactly generated Hausdorff space]
+  \label{def:compactly_generated_hausdorff_space}
+  A topological space $X$ is known as a \defn{compactly generated Hausdorff space} if for every subset $U \subset X$, the following are equivalent.
+  \begin{itemize}
+    \item $U$ is closed.
+
+    \item For each compact subset $C \subset X$, $C \cap U$ is closed
+  \end{itemize}
+
+  We denote the full subcategory of $\Top$ on compactly generated Hausdorff spaces by $\CGHaus$.
+\end{definition}
+
+Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techical one: the category $\Top$ is not Cartesian closed, and therefore is not a good candidate for an enriching category.
+
+\begin{definition}[topological category]
+  \label{def:topological_category}
+  A category enriched over $\CGHaus$ (with the Cartesian monoidal structure) is known as a \defn{topological category}.
+\end{definition}
+
+\subsection{Topological and simplicial enrichment}
+\label{ssc:topological_and_simplicial_enrichment}
+
+\begin{lemma}
+  The functor $\Sing\colon \CGHaus \to \SSet$ is strong monoidal.
+\end{lemma}
+\begin{proof}
+  To see this, we build a map
+  \begin{equation*}
+    \Phi_{X, Y}\colon \Sing(X \times Y) \to \Sing(X) \times \Sing(Y)
+  \end{equation*}
+  as follows.
+
+  \begin{align*}
+    \Sing(X \times Y) &\simeq \mathbf{Top}(\abs{\Delta^{\bullet}}, X \times Y) \\
+    &\simeq \mathbf{Top}(\abs{\Delta^{\bullet}}, X) \times \mathbf{Top}(\abs{\Delta^{\bullet}}, Y) \\
+    &\simeq \Sing(X) \times \Sing(Y).
+  \end{align*}
+
+  The singular set $\Sing(\abs{\Delta^{0}}) \simeq \Delta^{0}$, so we don't have any choice in defining $\phi$.
+\end{proof}
+
+\begin{definition}[simplicial category]
+  \label{def:simplicial_category}
+  A category enriched of simplicial sets (with the Cartesian monoidal structure) is called a \defn{simplicial category}. Denote the category whose objects are simplicial categories and whose morphisms are enriched functors by $\mathbf{Cat}_{\Delta}$.
+\end{definition}
+
+\begin{note}
+  This notation is potentially confusing! We are \emph{not} talking about the category of functors $\Delta\op \to \mathbf{Cat}$.
+\end{note}
+
+\begin{definition}[singular nerve]
+  \label{def:singular_nerve}
+  Let $\mathcal{T}$ be a topological category. By \hyperref[lemma:monoidal_functor_switches_enrichment]{Lemma~\ref*{lemma:monoidal_functor_switches_enrichment}}, we can use $\Sing\colon \mathbf{Top} \to \SSet$ to turn $\mathcal{T}$ into a simplicial category. We will call this the \defn{singular nerve} of $\mathcal{T}$ and denote it by $\Sing(\mathcal{T})$.
+\end{definition}
+
+\begin{definition}[topological nerve]
+  \label{def:topological_nerve}
+  Let $\mathcal{T}$ be a topological category. The \defn{topological nerve} of $\mathcal{T}$, denoted $N_{\mathrm{top}}(\mathcal{T})$, is the infinity category
+  \begin{equation*}
+    N_{\Delta} \circ \Sing(\mathcal{T}).
+  \end{equation*}
+\end{definition}
+
+\begin{joke}
+  How do you get a simplicially enriched category from a topologically enriched category? It's easy---just sing!
+\end{joke}
+
+\subsection{Thickening}
+\label{ssc:thickening}
+
+\begin{definition}[thickening]
+  \label{def:thickening}
+  The \defn{thickening functor} is the functor
+  \begin{equation*}
+    \mathfrak{C}\colon \Delta \to \mathbf{Cat}_{\Delta}
+  \end{equation*}
+  defined as follows.
+
+  It sends objects $[n]$ to the simplicially enriched category $\mathfrak{C}[\Delta^{n}]$ defined as follows.
+  \begin{itemize}
+    \item $\Obj(\mathfrak{C}[\Delta^{n}]) = \{0, \ldots, n\}$.
+
+    \item For $i$, $j \in \{0, \ldots, n\}$
+      \begin{equation*}
+        \mathfrak{C}[\Delta^{n}](i, j) = N(P_{i, j}),
+      \end{equation*}
+      where $P_{i, j}$ is the poset of subsets of $\{i, \ldots, j\}$ containing $i$ and $j$.
+
+    \item To define composition, we need a morphism of simplicial sets
+      \begin{equation*}
+        N(P_{i,j}) \times N(P_{j,k}) \to N(P_{i, k}).
+      \end{equation*}
+      We have a multiplication $P_{i,j} \times P_{j, k} \to P_{i, k}$ given by $(I, J) \mapsto I \cup J$. This induces the map we need.
+  \end{itemize}
+
+  A morphism $f\colon [m] \to [n]$ induces a functor $\mathfrak{C}[\Delta^{m}] \to \mathfrak{C}[\Delta^{n}]$ on objects by $i \mapsto f(i)$, and on hom-simplicial-sets $N(P_{i,j})$ as follows. On the underlying posets, we send
+  \begin{equation*}
+    P_{i,j} \supset \{ i, k_{1}, \ldots, k_{r-1}, j \} \mapsto \{f(i), f(k_{1}), \ldots, f(k_{r-1}), f(j)\} \subset P_{f(i),f(j)}.
+  \end{equation*}
+  This extends to a functor of poset categories, hence a morphism of nerves.
+\end{definition}
+
+\begin{definition}[simplicial nerve]
+  \label{def:simplicial_nerve}
+  Let $\mathcal{C}$ be a simplicial category. The \defn{simplicial nerve} of $\mathcal{C}$, denoted $N_{\Delta}$, is the functor
+  \begin{equation*}
+    N_{\Delta}(\mathcal{C}) = \mathbf{Cat}_{\Delta}(\mathfrak{C}(-), \mathcal{C})\colon \Delta\op \to \SSet.
+  \end{equation*}
+\end{definition}
+
+By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Theorem~\ref*{lemma:right_adjoint_to_yoneda_extension}}, we have an adjunction
+\begin{equation*}
+  \mathcal{Y}_{!}\mathfrak{C} : \SSet \leftrightarrow \SCat : N_{\Delta}.
+\end{equation*}
+By abuse of notation, we also denote $\mathcal{Y}_{!}\mathfrak{C}$ by $\mathfrak{C}$.
+
+\begin{proposition}
+  \label{prop:simplicial_nerve_of_category_enriched_in_kan_complexes_gives_infinity_category}
+  Let $\mathcal{C}$ be a simplicial category such that for all $x$, $y$ in $\mathcal{C}$, $\mathcal{C}(x, y)$ is a Kan complex. Then $N_{\Delta}( \mathcal{C} )$ is an $\infty$-category.
+\end{proposition}
+\begin{proof}
+  We need to show that we can solve the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{n}_{i}
+      \arrow[r]
+      \arrow[d, hookrightarrow]
+      & N_{\Delta}(\mathcal{C})
+      \\
+      \Delta^{n}
+      \arrow[ur, dashed]
+    \end{tikzcd}
+  \end{equation*}
+
+  Passing to adjuncts, we find the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathfrak{C}[\Lambda^{n}_{i}]
+      \arrow[r]
+      \arrow[d, hookrightarrow]
+      & \mathcal{C}
+      \\
+      \mathfrak{C}[\Delta^{n}]
+      \arrow[ur, dashed]
+    \end{tikzcd}
+  \end{equation*}
+\end{proof}
+
+\begin{example}
+  Let $\mathbf{Kan} \subset \SSet$ be the full subcategory on Kan complexes. We may consider $\mathbf{Kan}$ to be simplicially enriched by taking $\mathbf{Kan}(K, S) = \Maps(K, S)$.
+\end{example}
+
+\begin{definition}[category of spaces]
+  \label{def:category_of_spaces}
+  The \defn{$\infty$-category of spaces} is the category
+  \begin{equation*}
+    \mathcal{S} = N_{\Delta}(\textbf{Kan}).
+  \end{equation*}
+\end{definition}
+
+\section{Infinity-groupoids}
+\label{sec:infinity_groupoids}
+
+\begin{definition}[equivalence]
+  \label{def:equivalence}
+  A morphism $f\colon x \to y$ in an infinity category is said to be an \defn{equivalence} if the corresponding morphism in the homotopy category (\hyperref[def:homotopy_category]{Example~\ref*{def:homotopy_category}}) is an isomorphism.
+\end{definition}
+
+\begin{definition}[infinity-groupoid]
+  \label{def:infinity_groupoid}
+  An $\infty$-category is said to be an \defn{$\infty$-groupoid} if every morphism is an equivalence.
+\end{definition}
+
+\begin{theorem}
+  \label{thm:infinity_groupoid_iff_kan_complex}
+  The following are equivalent.
+  \begin{enumerate}
+    \item $\mathcal{C}$ is a Kan complex.
+
+    \item $\mathcal{C}$ is an infinity-groupoid.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  The direction 1$\implies$2 is obvious by \hyperref[lemma:properties_of_homotopy_category]{Lemma~\ref*{lemma:properties_of_homotopy_category}}. We will see why the other direction holds later.
+\end{proof}
+
+\begin{definition}[maximal infinity groupoid]
+  \label{def:maximal_infinity_groupoid}
+  Let $\mathcal{C}$ be an infinity category. The \defn{maximal infinity groupoid} in $\mathcal{C}$, denoted $\mathcal{C}^{\simeq} \subset \mathcal{C}$, is the simplicial subset of $\mathcal{C}$ consisting of simplices all of whose edges are equivalences.
+\end{definition}
+
+\section{Functors and diagrams}
+\label{sec:functors_and_diagrams}
+
+\begin{definition}[infinity-functor]
+  \label{def:infinity_functor}
+  An \defn{infinity-functor} (hereafter simply called \emph{functor}) between infinity-categories $\mathcal{C}$ and $\mathcal{D}$ is simply a map $\mathcal{C} \to \mathcal{D}$ of simplicial sets.
+\end{definition}
+
+Here we list some theorems which we will prove later, after we have some more advanced notions.
+
+\begin{proposition}
+  Let $K$ be a simplicial set and let $\mathcal{C}$ be an infinity category. Then the simplicial set $\Maps(K, \mathcal{C})$ is an infinity-category.
+\end{proposition}
+\begin{proof}
+  Later.
+\end{proof}
+
+\begin{definition}[homotopy coherent diagram]
+  \label{def:homotopy_coherent_diagram}
+  Let $\mathcal{T}$ be a topological category and $I$ an ordinary category. Let $\mathcal{C} = N_{\mathrm{top}}(\mathcal{T})$.
+\end{definition}
+
+\section{Limits in infinity categories}
+\label{sec:limits_in_infinity_categories}
+
+In this section, we build up the notions necessary to define the limit of a diagram.
+
+In \hyperref[ssc:joins]{Subsection~\ref*{ssc:joins}}, we define a monoidal product called the \emph{join} on the category of categories, and show that it reproduces cones and cocones. We then generalize the construction to the category of simpicial sets, and show\footnote{Well, if there's time.} that the two notions are compatible in the sense that the nerve is a monoidal functor between them; that is we have a natural isomorphism
+\begin{equation*}
+  N(\mathcal{C} \star \mathcal{D}) \simeq N(\mathcal{C}) \star N(\mathcal{D}).
+\end{equation*}
+
+In \hyperref[ssc:opposite_categories]{Subsection~\ref*{ssc:opposite_categories}}, we generalize the notion of the \emph{opposite category} to the context of simplicial sets, and note that it defines an \emph{opposite functor} on the category of simplicial sets, when one extends simplex category $\Delta$ in an appropriate way.
+
+In \hyperref[ssc:cones_and_cocones]{Subsection~\ref*{ssc:cones_and_cocones}}, we see that joins allow us to define the notion of a cone in an infinity-categorical context. We also define the infinity-categorical generalization of comma categories, and note that there is a duality between the join and the construction of over- and undercategories. We then show that over- and undercategories are `topologically' very simple---they are contractible Kan complexes.
+
+In \hyperref[ssc:initial_objects]{Subsection~\ref*{ssc:initial_objects}} and \hyperref[ssc:terminal_objects]{Subsection~\ref*{ssc:terminal_objects}}, we define the notion of initial (resp. terminal) object in an infinity-category $\mathcal{C}$. We set up our definitions in such a way that initial objects in an infinity category are initia objects in the homotopy category, and they are unique in the sense that their `convex hull' is a contractible Kan complex.
+
+In \hyperref[ssc:limits_and_colimits_in_infty_cats]{Subsection~\ref*{ssc:limits_and_colimits_in_infty_cats}}, we define when an object in an infinity category is a limit or colimit of a functor.
+
+\subsection{Joins}
+\label{ssc:joins}
+
+\begin{definition}[join of categories]
+  \label{def:join_of_categories}
+  Let $\mathcal{C}$ and $\mathcal{C}'$ be ordinary categories. The \defn{join} of $\mathcal{C}$ and $\mathcal{C}'$, denoted $\mathcal{C} \star \mathcal{C}'$, is the category with objects
+  \begin{equation*}
+    \ob(\mathcal{C} \star \mathcal{C}) = \ob(\mathcal{C}) \amalg \ob(\mathcal{C}')
+  \end{equation*}
+  and morphisms
+  \begin{equation*}
+    (\mathcal{C} \star \mathcal{C}')(x, y) =
+    \begin{cases}
+      \mathcal{C}(x, y), & x, y \in \mathcal{C} \\
+      \mathcal{C}'(x, y), & x, y \in \mathcal{C}' \\
+      \{*\}, & x \in \mathcal{C}, y \in \mathcal{C}' \\
+      \emptyset, & x \in \mathcal{C}', y \in \mathcal{C} \\
+    \end{cases}.
+  \end{equation*}
+\end{definition}
+
+\begin{example}
+  We have
+  \begin{equation*}
+    [m] \star [n] = [m + n + 1].
+  \end{equation*}
+\end{example}
+
+\begin{example}
+  Here is an alternative definition for the category of cones over a functor $F\colon \mathcal{C} \to \mathcal{D}$, given in terms of the join: it is the category
+  \begin{equation*}
+    \mathbf{Fun}_{F}(\Delta^{0} \star \mathcal{C}, \mathcal{D}),
+  \end{equation*}
+  i.e.\ the subcategory of $\mathbf{Fun}(\Delta^{0} \star \mathcal{C}, \mathcal{D})$ whose objects are functors which agree with $F$ when restricted to $\mathcal{C}$, and whose morphisms are natural transformations
+\end{example}
+
+\begin{definition}[join of simplicial sets]
+  \label{def:join_of_simplicial_sets}
+  Let $K$ and $K'$ be simplicial sets. Define the \defn{join} of $K$ and $K'$, denoted $K \star K'$ to be the simplicial set whose $n$-simplices are
+  \begin{equation*}
+    (K \star K')_{n} = \coprod_{[i] \oplus [j] \simeq [n]} K_{i} \times K'_{j},
+  \end{equation*}
+  and which acts on a morphism $\phi\colon [m] \to [n]$ by sending a simplex
+  \begin{equation*}
+    \sigma = (\alpha \in K_{i}, \beta \in K_{j}, [i] \oplus [j] \simeq [n]) \in (K \star K')_{n}
+  \end{equation*}
+  to a simplex
+  \begin{equation*}
+    \phi^{*}\sigma = (\psi^{*}_{1} \alpha, \psi^{*}_{2} \beta, \phi^{-1}([i]) \oplus \phi^{-1}([j]) \simeq [m]) \in (K \star K')_{m},
+  \end{equation*}
+  where
+  \begin{equation*}
+    \psi_{1} = \phi|_{\phi^{-1}([i])},\qquad\text{and}\qquad \phi_{2} = \phi|_{\phi^{-1}([j])}.
+  \end{equation*}
+
+  This is functorial since
+\end{definition}
+
+\begin{proposition}
+  The join of two $\infty$-categories is again an $\infty$-category.
+\end{proposition}
+
+\begin{proposition}
+  The join is functorial in each argument separately.
+\end{proposition}
+\begin{proof}
+  Given a map $f\colon K \to K'$ of simplicial sets, we need to specify a map
+  \begin{equation*}
+    (f, \id_{S})\colon K \star S \to K' \star S.
+  \end{equation*}
+  By the universal property of coproducts, we can do this by defining maps
+  \begin{equation*}
+    K_{i} \times S_{j} \to K'_{i} \times S_{j}
+  \end{equation*}
+  for each $[i] \oplus [j] \simeq [n]$. We have a map $f_{i}\colon K_{i} \to K'_{i}$, which gives a map $f_{i} \times \id$ as required. We need only check that this is a morphism of simplicial sets, i.e.\ makes the following square commute for each $\phi\colon [n] \to [m]$.
+  \begin{equation*}
+    \begin{tikzcd}
+      (K \star S)_{m}
+      \arrow[r]
+      \arrow[d]
+      & (K \star S)_{n}
+      \arrow[d]
+      \\
+      (K' \star S)_{m}
+      \arrow[r]
+      & (K' \star S)_{n}
+    \end{tikzcd}
+  \end{equation*}
+  Let $\sigma = (\alpha, \beta, [i] \oplus [j] \simeq [n]) \in (K \star S)_{m}$. We follow it around.
+  \begin{equation*}
+    \begin{tikzcd}
+      (\alpha, \beta)
+      \arrow[r, mapsto]
+      \arrow[d, mapsto]
+      & (\psi_{i}^{*}\alpha, \psi_{j}^{*}\beta)
+      \arrow[d, mapsto]
+      \\
+      (f_{i}(\alpha), \beta)
+      \arrow[r, mapsto]
+      & (f_{\phi^{-1}([i])}\psi_{i}^{*}\alpha \overset{!}{=} \psi_{i}^{*}(f_{i}\alpha), \beta)
+    \end{tikzcd}
+  \end{equation*}
+
+  The condition that $f_{\phi^{-1}([i])}\psi_{i}^{*}\alpha = \psi_{i}^{*}(f_{i}\alpha)$ is preciesely the condition that the following diagram commute, which it does by naturality of $f$.
+  \begin{equation*}
+    \begin{tikzcd}
+      K_{i}
+      \arrow[r, "\psi_{i}^{*}"]
+      \arrow[d, swap, "f_{i}"]
+      & K_{\phi^{-1}([i])}
+      \arrow[d, "f_{\phi^{-1}([i])}"]
+      \\
+      K'_{i}
+      \arrow[r, swap, "\psi_{i}^{*}"]
+      & K'_{\phi^{-1}([i])}
+    \end{tikzcd}
+  \end{equation*}
+
+  Functoriality in the second argument is exactly analogous.
+\end{proof}
+
+
+
+\subsection{Opposite categories}
+\label{ssc:opposite_categories}
+
+Henceforth, we have been considering the domain of simplicial sets to be the category of functors $\Delta\op \to \mathbf{Set}$. However, we have sometimes relaxed this when it was convenient to do so. For example, the $n$-simplex $\Delta^{n}$ was defined by
+\begin{equation*}
+  \Delta^{n} = \Delta(-, [n]).
+\end{equation*}
+We have notated the subsimplex missing the 0th vertex by $\Delta^{\{1, \ldots, n\}}$, despite the fact that $\{1, \ldots, n\}$ is not an object in $\Delta$, so it is not clear how to make sense of this; in particular, it does not make any sense to write
+\begin{equation*}
+  \Delta^{\{1, \ldots, n\}} = \Delta(-, \{1, \ldots, n\}).
+\end{equation*}
+What we are really doing is extending $\Delta$ to the category of finite, non-empty linearly ordered sets. We could do this because the inclusion functor $\Delta \hookrightarrow \mathbf{FinLinOrd}$ is an equivalence, so passing from $\Delta$ to $\mathbf{FinLinOrd}$ is just a shift of perspective.
+
+On $\mathbf{FinLinOrd}$, there is a map $\mathsf{Swap}$, which reverses the linear order. That is, it sends the set
+\begin{equation*}
+  \{0, \ldots, n\} \mapsto \{n, \ldots, 0\}.
+\end{equation*}
+Let us try to understand the behavior of $\mathsf{Swap}$. Any map
+\begin{equation*}
+  f\colon \{0, \ldots, n\} \to \{0, \ldots, m\}
+\end{equation*}
+can be drawn diagrammatically as follows
+\begin{equation*}
+  \begin{tikzcd}
+    0
+    \arrow[dr, mapsto]
+    & 0
+    \\
+    1
+    \arrow[dr, mapsto]
+    & 1
+    \\
+    \vdots
+    & \vdots
+    \\
+    n
+    \arrow[ur, mapsto]
+    & n
+    \\
+    & \vdots
+    \\
+    & m
+  \end{tikzcd}
+\end{equation*}
+The condition that the map $f$ be weakly monotonic is equivalent to the demand that none of the arrows in the above diagram cross. The swap operation turns the above diagram on its head, taking uncrossed arrows to uncrossed arrows. Thus, morphisms $f\colon [n] \to [m]$ are taken to morphisms $f\op\colon [\bar{n}] \to [\bar{m}]$. Furthermore, composition is respected because composition is done by stacking diagrams left to right.
+
+This discussion means that $\mathsf{Swap}$ is an endofunctor on $\mathbf{FinLinOrd}$, and further that it is an equivalence of categories, since $\mathsf{Swap}^{2} = \id$.\footnote{We are now solidly in evil territory. I wonder if there is a way out.}
+
+Let $\mathcal{C}$ and $\mathcal{D}$ be regular categories. Any endofunctor $E\colon \mathcal{C} \to \mathcal{C}$ gives an endofunctor on the functor category $[\mathcal{C}, \mathcal{D}]$ as follows.
+\begin{itemize}
+  \item On objects $F$, it is defined via the pullback.
+    \begin{equation*}
+      F \mapsto F \circ E
+    \end{equation*}
+
+  \item On morphisms $\eta$, it is defined via whiskering.
+    \begin{equation*}
+      \begin{tikzcd}[column sep=huge]
+        \mathcal{C}
+        \arrow[r, "E"]
+        &\mathcal{C}
+        \arrow[r, bend left, "F"{name=U}]
+        \arrow[r, bend right, swap, "F'"{name=D}]
+        & \mathcal{D}
+        \arrow[from=U, to=D, Rightarrow, "\eta"]
+      \end{tikzcd}
+      \qquad
+      \mapsto
+      \qquad
+      \begin{tikzcd}[column sep=huge]
+        \mathcal{C}
+        \arrow[r, bend left, "F \circ E"{name=U}]
+        \arrow[r, bend right, swap, "F \circ E'"{name=D}]
+        & \mathcal{D}
+        \arrow[from=U, to=D, Rightarrow, "E^{*}(\eta)"]
+      \end{tikzcd}
+    \end{equation*}
+
+\end{itemize}
+\begin{definition}[opposite functor]
+  \label{def:opposite_functor}
+  We call the pullback by $\mathsf{Swap}$ the \defn{opposite functor}, and denote it by $(-)\op$.
+\end{definition}
+
+\begin{theorem}
+  For any simplicial sets $K$ and $S$, we have
+  \begin{equation*}
+    (K \star S)\op = S\op \star K\op.
+  \end{equation*}
+\end{theorem}
+\begin{proof}
+
+\end{proof}
+
+\subsection{Cones and cocones}
+\label{ssc:cones_and_cocones}
+
+\begin{definition}[left cone, right cone]
+  \label{def:left_cone_right_cone}
+  let $K$ be a simplicial set, and let $x \in K$.
+  \begin{itemize}
+    \item The \defn{left cone} of $x$ is the simplicial set
+      \begin{equation*}
+        x^{\triangleleft} = \Delta^{0} \star x.
+      \end{equation*}
+
+    \item The \defn{right cone} of $x$ is the simplicial set
+      \begin{equation*}
+        x^{\triangleright} = x \star \Delta^{0}.
+      \end{equation*}
+  \end{itemize}
+\end{definition}
+
+
+\begin{definition}[overcategory, undercategory]
+  \label{def:overcategory}
+  Let $K$ and $S$ be simplicial sets and let $p\colon K \to S$ be a morphism.
+  \begin{itemize}
+    \item The \defn{overcategory} $S_{p/}$ is the category whose $n$-simplices are
+      \begin{equation*}
+        (S_{p/})_{n} = \{\text{maps }f\colon K \star \Delta^{n} \to \mathcal{C} \text{ satisfying }F|_{K} = p\}.
+      \end{equation*}
+
+    \item The \defn{undercategory} $S_{/p}$ is the category whose $n$-simplices are
+      \begin{equation*}
+        (S_{/p})_{n} = \{\text{maps }f\colon \Delta^{n} \star K \to \mathcal{C} \text{ satisfying }F|_{K} = p\}.
+      \end{equation*}
+  \end{itemize}
+\end{definition}
+
+\begin{theorem}
+  There is a pair of adjoint functors
+  \begin{equation*}
+    K \star - : \SSet \leftrightarrow (\SSet)_{/p} : /p
+  \end{equation*}
+  More explicitly, given a map $p\colon X \to \mathcal{C}$, there is a natural bijection
+  \begin{equation*}
+    \Hom_{p}(K \star X, \mathcal{C}) \simeq \Hom(K, \mathcal{C}_{/p}),
+  \end{equation*}
+\end{theorem}
+
+\begin{corollary}
+  A map
+\end{corollary}
+
+For regular categories, it is possible to define colimits as limits in opposite categories; the two notions are equivalent. In infinity categories, this is also the case.
+
+In the Kan model structure, trivial fibrations are Kan fibrations which are also homotopy equivalences. However, we have immediately that $\W \cap \fib = \cof\rlp$, i.e.\ trivial Kan fibrations are precisely those morphisms of simplicial sets that have the right lifting property with respect to monomorphisms. However, since $\cof$ is saturated, this is equivalent to having the left lifting property with respect to boundary inclusions.
+
+\begin{lemma}
+  \label{lemma:under_over_categories_of_kan_complex_are_contractible}
+  Let $\mathcal{C}$ be a Kan complex, and $x \in \mathcal{C}$. Then $\mathcal{C}_{/x}$ and $\mathcal{C}_{x/}$ are contractible Kan complexes.
+\end{lemma}
+\begin{proof}
+  We need to show that we can solve lifting problems of the following form.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{n}
+      \arrow[r]
+      \arrow[d]
+      & \mathcal{C}_{/x}
+      \arrow[d]
+      \\
+      \Delta^{n}
+      \arrow[r]
+      \arrow[ur, dashed]
+      & \{*\}
+    \end{tikzcd}
+  \end{equation*}
+
+  Consider
+\end{proof}
+
+\subsection{Initial objects}
+\label{ssc:initial_objects}
+
+
+\begin{definition}[initial object]
+  \label{def:initial_object}
+  Let $\mathcal{C}$ be an $\infty$-category and $x \in \mathcal{C}$ an object. We say that $x$ is an \defn{initial object} if the map
+  \begin{equation*}
+    \mathcal{C}_{x/} \to \mathcal{C};\qquad \Delta^{0} \star \Delta^{n} \to \Delta^{n}
+  \end{equation*}
+  is a trivial Kan fibration.
+\end{definition}
+
+We would like initial/terminal objects to be objects that have an edge to each other object, and we would like this edge to be unique in some sense. Demanding uniqueness on the nose, however, would go agains the spirit of the theory of infinity categories.
+
+We have, however, the following.
+\begin{proposition}
+  Let $\mathcal{C}$ be an $\infty$-category, and let $x$ be an initial object in $\mathcal{C}$. Then for each other object $y \in \mathcal{C}$, there is an edge $x \to y$.
+
+  Furthermore, this edge is unique up to homotopy.
+\end{proposition}
+\begin{proof}
+  Consider the following solid lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \emptyset
+      \arrow[r]
+      \arrow[d]
+      & \mathcal{C}_{x/}
+      \arrow[d]
+      \\
+      \Delta^{0}
+      \arrow[ur, dashed]
+      \arrow[r, "y"]
+      & \mathcal{C}
+    \end{tikzcd}
+  \end{equation*}
+  The left-hand arrow is a boundary inclusion $\partial \Delta^{0} \to \Delta^{0}$, so we can find a dashed lift, giving us a zero-simplex in $\mathcal{C}_{x/}$. But by definition, a zero simplex in $\mathcal{C}_{x/}$ is a 1-simplex $\sigma\colon \Delta^{0} \star \Delta^{0} \to \mathcal{C}$ such that $\sigma|_{\text{first factor}} = x$. Furthermore, the commutativity of the lower triangle tells us that $\sigma|_{\text{second factor}} = y$, i.e.\ $\sigma$ is an edge $x \to y$.
+
+  Now suppose we have two edges $f$, $g\colon x \to y$. These give us the following solid lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{1}
+      \arrow[r, "{(f, g)}"]
+      \arrow[d, hookrightarrow]
+      & \mathcal{C}_{x/}
+      \arrow[d]
+      \\
+      \Delta^{1}
+      \arrow[r, swap, "\id_{y}"]
+      \arrow[ur, dashed]
+      & \mathcal{C}
+    \end{tikzcd}
+  \end{equation*}
+
+  Again, this is a boundary inclusion, giving us a dashed lift, i.e.\ a 2-simplex $\alpha$ in $\mathcal{C}$ whose 0th vertex is $x$. The commutativity of the upper square tells us that $d_{2}\alpha = f$ and $d_{0}\alpha = g$, and the commutativity of the lower square tells us that $d_{1}\alpha = \id_{y}$. Thus, we have the following simplex in $\mathcal{C}$.
+  \begin{equation*}
+    \alpha =
+    \begin{tikzcd}
+      & y
+      \arrow[dr, "\id_{y}"]
+      \\
+      x
+      \arrow[ur, "f"]
+      \arrow[rr, swap, "g"]
+      && y
+    \end{tikzcd}
+  \end{equation*}
+  But this provides precisely a homotopy $f \to g$.
+\end{proof}
+
+\begin{corollary}
+  Let $\mathcal{C}$ be an $\infty$-category. If $x$ is an initial object in $\mathcal{C}$, then $x$ is also initial in $\h\mathcal{C}$.
+\end{corollary}
+
+One might expect that these conditions were equivalent. However, that is not the case; an object can be initial in $\h \mathcal{C}$ without being initial in $\mathcal{C}$.
+
+\begin{example}
+  Take any simply connected space $X$ such that there exists a point $x \in X$ with $\pi_{2}(X, x)$ non-trivial. Then there is a 2-simplex $\alpha\colon \Delta^{2} \to \Sing(X)$ with boundary $\partial \alpha = x$ which is not homotopy equivalent to $x$.
+
+  Since a 2-simplex with its zeroth vertex $x$ is equivalently a map $\Delta^{1} \to \mathcal{C}_{x/}$, this data organizes into the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{2}
+      \arrow[r, "{(x,x,\alpha)}"]
+      \arrow[d]
+      & \Sing(X)_{x/}
+      \arrow[d]
+      \\
+      \Delta^{2}
+      \arrow[ur, dashed]
+      \arrow[r, swap, "x"]
+      & \Sing(X)
+    \end{tikzcd}
+  \end{equation*}
+
+  The solution to this lifting problem would give us a homotopy from $\alpha$ to $x$. However, by assumption, there is no such homotopy. Thus, $x$ is not initial in $\Sing(X)$. However, every point $x \in X$ is initial in $\h \Sing(X)$ because $\h \Sing(X) \simeq \pi_{\geq 1}(X)$, and there is exactly one homotopy class of paths between any two points of $X$ because $X$ is simply connected.
+\end{example}
+
+Suppose we are given any two initial objects in an infinity category. We have seen that we can find an edge between them, and that given two edge between them, we can find a homotopy. In turn, given homotopies, we can find a higher homotopy between them, etc. One might therefore think of the set of all initial objects as forming the vertices of some polyhedron, and the filling conditions above telling us that the polyhedron in question has no gaps; that is, that it is homotopy equivalent to the point. This intuition turns out to be correct.
+
+\begin{theorem}
+  Let $\mathcal{C}$ be a simplicial set with at least one initial object, and let $\mathcal{C}'$ be the simplicial subset consisting of all simplices all of whose vertices are initial objects in $\mathcal{C}$. Then $\mathcal{C}'$ is a contractible Kan complex.
+\end{theorem}
+\begin{proof}
+  The statment that $\mathcal{C}'$ is contractible means that the map $\mathcal{C}' \to *$ is a weak equivalence. The fact that it is a Kan complex means precisely that the map $\mathcal{C}' \to *$ is a fibration. Therefore, we need to check that the map $\mathcal{C}' \to *$ is a trivial fibration, i.e.\ has the right lifting property with respect to all boundary fillings.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{n}
+      \arrow[r]
+      \arrow[d, hookrightarrow]
+      & \mathcal{C'}
+      \\
+      \Delta^{n}
+      \arrow[ur, dashed]
+    \end{tikzcd}
+  \end{equation*}
+
+  For $n = 0$, the lifting problem demands that there exists at least one initial object, which is true by assumption.
+
+  For $n \geq 1$, consider an $n$-boundary $\beta\colon \partial \Delta^{n} \to \mathcal{C}'$. Denote by $x$ the 0th vertex; by assumption, this is an initial object. By forgetting the $0$th face, we can consider this as a boundary inclusion
+  \begin{equation*}
+    \partial \Delta^{\{1, \ldots, n\}} \to \mathcal{C}_{x/}
+  \end{equation*}
+  making the following diagram commute.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{\{1, \ldots, n\}}
+      \arrow[r]
+      \arrow[d]
+      & \mathcal{C}_{x/}
+      \arrow[d]
+      \\
+      \Delta^{\{1, \ldots, n\}}
+      \arrow[r, swap, "d_{0}\beta"]
+      & \mathcal{C}
+    \end{tikzcd}
+  \end{equation*}
+  However, we can find a lift, i.e.\ a map $\Delta^{\{1, \ldots, n\}} \to \mathcal{C}_{x/}$, i.e.\ an $n$-simplex in $\mathcal{C}$ which fills $\beta$.
+\end{proof}
+
+\subsection{Terminal objects}
+\label{ssc:terminal_objects}
+
+\begin{definition}[terminal object]
+  \label{def:terminal_object}
+  Let $\mathcal{C}$ be an $\infty$-category and $x \in \mathcal{C}$ an object. We say that $x$ is a \defn{terminal object} if the map
+  \begin{equation*}
+    \mathcal{C}_{/x} \to \mathcal{C};\qquad \Delta^{n} \star \Delta^{0} \mapsto \Delta^{n}
+  \end{equation*}
+  is a trivial Kan fibration.
+\end{definition}
+
+
+The theory of terminal objects is completely dual to that of initial objects. For that reason, we list only results here.
+
+Let $\mathcal{C}$ be an infinity category.
+\begin{itemize}
+  \item If $y$ is a terminal object in $\mathcal{C}$, for each object $x \in \mathcal{C}$ there is an edge $x \to y$, which is unique up to homotopy.
+
+  \item These homotopies are in turn unique up to homotopy.
+
+  \item Terminal objects in an $\infty$-category are always terminal in the homotopy category; however, the converse is not true.
+
+  \item The simplicial subset of all simplices whose vertices are terminal is a contractible Kan complex.
+\end{itemize}
+
+\subsection{limits and colimits}
+\label{ssc:limits_and_colimits_in_infty_cats}
+
+\begin{definition}[limit cone]
+  \label{def:limit_cone}
+  Let $\mathcal{C}$ be an infinity category, $K$ a simplicial set, and $p\colon K \to \mathcal{C}$ a diagram.
+  \begin{itemize}
+    \item A \defn{colimit cone} for $p$ is an initial object in the category $\mathcal{C}_{p/}$.
+
+    \item A \defn{limit cone} for $p$ is a terminal object in the category $\mathcal{C}_{/p}$.
+  \end{itemize}
+\end{definition}
+
+Suppose that $I$ and $\mathcal{D}$ are regular categories, and let $F\colon I \to \mathcal{D}$ be a functor. Passing to nerves, we get a functor $N(F)$ between infinity categories. Let us try and understand what a limit cone for $N(F)$ means in this context.
+
+First, let us understand the zero-simplices of $N(\mathcal{D}_{/F})$. By definition, zero-simplices are given by maps
+\begin{equation*}
+  \sigma\colon \Delta^{0} \star N(I) \to N(\mathcal{D}) \qquad\text{such that } \sigma|_{N(I)} = N(F).
+\end{equation*}
+By the monoidality of the nerve with respect to the join, such a map is the nerve of a functor
+\begin{equation*}
+  \tilde{\sigma}\colon \{*\} \star I \to \mathcal{D} \qquad\text{such that } \tilde{\sigma}|_{I} = F.
+\end{equation*}
+But this is precisely a natural transformation from the constant functor $\sigma|_{\{*\}} \to \mathcal{D}$ to $F$.
+
+Similarly, a 1-simplex $\tau$ is a map
+\begin{equation*}
+  \tau\colon \Delta^{1} \star N(I) \to N(\mathcal{D})\qquad\text{such that }\tau|_{N(I)} = N(F).
+\end{equation*}
+This is the nerve of a functor
+\begin{equation*}
+  \tilde{\tau}\colon \{\bullet \to *\} \star I \to \mathcal{D}\qquad \text{such that } \tilde{\tau}|_{I} = F
+\end{equation*}
+Such functors are precisely morphisms of cones.
+
+\begin{corollary}
+  Limit and colimit cones are unique up to contractible choice.
+\end{corollary}
+\begin{proof}
+  \hyperref[thm:initial_terminal_in_infty_cats_unique_up_to_contractible_choice]{Theorem~\ref*{thm:initial_terminal_in_infty_cats_unique_up_to_contractible_choice}}.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:initial_terminal_in_infty_cats_unique_up_to_contractible_choice}
+  Let $S$ be a simpicial set, $\mathcal{C}$ an infinity category, and $p\colon K \to C$ a map of simplicial sets.
+  \begin{enumerate}
+    \item There is an equivalence of categories
+      \begin{equation*}
+        (\mathcal{C}_{/p})\op \simeq (\mathcal{C}\op)_{p\op/}.
+      \end{equation*}
+
+    \item The limit of $p$ in $\mathcal{C}$ is the colimit of $p\op$ in $\mathcal{C}\op$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  \leavevmode
+  \begin{enumerate}
+    \item First we show the result on simplices. The $n$-simplices of $(\mathcal{C}\op)_{p\op/}$ are
+      \begin{align*}
+        \{ f\colon K\op \star \Delta^{n} \to \mathcal{C}\op \mid f|_{K\op} = p\op \} &\simeq \{ f\op\colon (\Delta^{n})\op \star K \to \mathcal{C} | f\op|_{K} = p \}
+      \end{align*}
+      But these are precisely the $n$-simplices of $(\mathcal{C}_{/p})\op$. Thus, the map on $n$-simplices is given by $f \mapsto f\op$.
+
+      Let $f\colon [m] \to [n]$. We need to check that the following naturality square commutes.
+      \begin{equation*}
+        \begin{tikzcd}
+          (\otimes{\mathcal{C}}{^{\mathrm{op}}_{p\op/}})_{n}
+          \arrow[rrr, "\mathrm{op}"]
+          \arrow[ddd]
+          &&& (\mathcal{C}_{/p})_{n}\op
+          \arrow[ddd]
+          \\
+          & f
+          \arrow[r, mapsto]
+          \arrow[d, mapsto]
+          & f\op
+          \arrow[d, mapsto]
+          \\
+          & f \circ(\id_{K\op} \star \phi)
+          \arrow[r, mapsto]
+          & f\op \circ (\phi\op \star \id_{K})
+          \\
+          (\otimes{\mathcal{C}}{^{\mathrm{op}}_{p\op/}})_{m}
+          \arrow[rrr, swap, "\mathrm{op}"]
+          &&& (\mathcal{C}_{/p})_{m}\op
+        \end{tikzcd}
+      \end{equation*}
+      But it does.
+
+    \item Let $x$ be a colimit of $p\op$ in $\mathcal{C}\op$. Then the map
+      \begin{equation*}
+        \mathcal{C}_{x/}\op \to \mathcal{C}\op
+      \end{equation*}
+      is a trivial Kan fibration. Now consider the map
+  \end{enumerate}
+\end{proof}
+
+\end{document}
