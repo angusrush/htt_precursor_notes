@@ -391,12 +391,28 @@ We would like to be able to view infinity-categories as a generalization of cate
   We denote the full subcategory of $\Top$ on compactly generated Hausdorff spaces by $\CGHaus$.
 \end{definition}
 
-Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techical one: the category $\Top$ is not Cartesian closed, and therefore is not a good candidate for an enriching category.
+Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techical one: the category $\Top$ is not Cartesian closed, and therefore is not a good candidate for an enriching category. The other reason is that the geometric realization of any simplicial set is a compactly generated Hausdorff, and therefore we are entitled to
 
 \begin{definition}[topological category]
   \label{def:topological_category}
   A category enriched over $\CGHaus$ (with the Cartesian monoidal structure) is known as a \defn{topological category}.
 \end{definition}
+
+\begin{example}
+  Consider the category $\mathcal{C}$, whose objects are CW complexes, and whose hom-spaces $\Hom_{\mathcal{C}}(X, Y)$ consist of the set of continuous functions $X \to Y$ taken with the compact-open topology.
+\end{example}
+
+\subsection{Simplicially enriched categories}
+\label{ssc:simplicially_enriched_categories}
+
+\begin{definition}[simplicial category]
+  \label{def:simplicial_category}
+  A category enriched over $\SSet$ (with the Cartesian monoidal structure) is called a \defn{simplicial category}. Denote the category whose objects are simplicial categories and whose morphisms are enriched functors by $\mathbf{Cat}_{\Delta}$.
+\end{definition}
+
+\begin{theorem}
+  The category
+\end{theorem}
 
 \subsection{Topological and simplicial enrichment}
 \label{ssc:topological_and_simplicial_enrichment}
@@ -420,10 +436,7 @@ Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techica
   The singular set $\Sing(\abs{\Delta^{0}}) \simeq \Delta^{0}$, so we don't have any choice in defining $\phi$.
 \end{proof}
 
-\begin{definition}[simplicial category]
-  \label{def:simplicial_category}
-  A category enriched of simplicial sets (with the Cartesian monoidal structure) is called a \defn{simplicial category}. Denote the category whose objects are simplicial categories and whose morphisms are enriched functors by $\mathbf{Cat}_{\Delta}$.
-\end{definition}
+
 
 \begin{note}
   This notation is potentially confusing! We are \emph{not} talking about the category of functors $\Delta\op \to \mathbf{Cat}$.
@@ -525,6 +538,7 @@ By abuse of notation, we also denote $\mathcal{Y}_{!}\mathfrak{C}$ by $\mathfrak
       \arrow[ur, dashed]
     \end{tikzcd}
   \end{equation*}
+  We can always solve this lifting problem, because
 \end{proof}
 
 \begin{example}

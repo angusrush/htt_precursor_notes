@@ -793,7 +793,13 @@ Before we prove that such an internal hom exists, let us assume that $\SSet$ adm
       & C
     \end{tikzcd}
   \end{equation*}
-  i.e.\ if for each $f\colon A \to \Maps(B, C)$ there is a unique map $\tilde{f}\colon A \times B \to C$ making the above diagram commute.
+  i.e.\ that for each $f\colon A \to \Maps(B, C)$ there is a unique map $\tilde{f}\colon A \times B \to C$ making the above diagram commute. The direction $f \mapsto \tilde{f}$ is obvious, following immediately from the above composition.
+
+  Now suppose that we are given a map $\tilde{f}$. Let us construct $f$. The condition that the diagram commute tells us, level-wise, that
+  \begin{equation*}
+    \tilde{f}_{n}(b, a) \overset{!}{=} (\ev_{B})_{n}(b, f_{n}(a)) = f_{n}(a)(\id_{\Delta^{n}}, b).
+  \end{equation*}
+  Thus, we have no choice in how $f$ behaves when its first slot is filled with an identity map.
 \end{proof}
 
 \begin{note}
@@ -827,8 +833,6 @@ The $n$-simplices of $\tilde{C}$ are then given by maps of the $\mathcal{C}$-mod
   \tilde{C}_{n} = \mathcal{C}(\alpha([n]), C).
 \end{equation*}
 In fact, by the functoriality of hom this construction gives us a functor $\mathcal{C} \to \SSet$ taking $C \mapsto \tilde{C}$.
-
-Recall that we imagine simplicial sets as being made of simplices glued together along shared edges. The functor $\alpha$ gives us a model of an $n$-simplex internal to $\mathcal{C}$, and the functor translates
 
 The alert reader will remember that we have already defined two cosimplicial objects: the \emph{realization functor} $\rho$ (\hyperref[def:realization_functor]{Definition~\ref*{def:realization_functor}}) and the \emph{categorification functor} $\chi$ (\hyperref[def:categorification_functor]{Definition~\ref*{def:categorification_functor}}). We said that they would provide a connection between the theory of simplicial sets and the theory of topological spaces and categories respectively. Indeed, these are the cosimplicial objects we will use.
 
