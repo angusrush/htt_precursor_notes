@@ -8,7 +8,7 @@
 \section{Simplices as topological spaces and categories}
 \label{sec:simplices_as_topological_spaces_and_categories}
 
-One of the main ingredients in the study of higher category theory is the interplay between topology, simplicial geometry, and category theory.
+One of the main themes in the study of higher category theory is the interplay between topology, simplicial geometry, and category theory.
 
 \begin{equation*}
   \begin{aligned}
@@ -416,7 +416,7 @@ Simplicial sets are functors, but the functorial notation is often unnecessarily
 \section{What sort of data does a simplicial set give us?}
 \label{sec:what_sort_of_data_does_a_simplicial_set_give_us}
 
-Let $K$ be a simplicial set. We have seen that evaluating $K$ on the object $[n]$ gives a set, whose interpretation is the set of $n$-simplices making up $K$. We have claimed that the functoriality of $K$ provides instructions for how these simplices should be glued together. In this section we will investigate this claim.
+Let $K$ be a simplicial set. We have seen that evaluating $K$ on the object $[n]$ gives a set, which we interpret as the set of $n$-simplices making up $K$. We have claimed that the functoriality of $K$ provides instructions for how these simplices should be glued together. In this section we will investigate this claim.
 
 First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] \to [m]$ by understanding how it behaves on simpler functions, known as the \emph{face} and \emph{degeneracy functions.}
 
@@ -621,11 +621,7 @@ The face and degeneracy functions are interesting because they generate all morp
   Similarly, $d_{0}$ takes the edge between $0$ and $1$ to the vertex $1$, and the full 2-simplex to the edge between 1 and 2.
 \end{example}
 
-This is a general feature: the $i$th degeneracy map deletes the $i$th vertex.
-
-
-
-The $i$th degeneracy map copies the $i$th vertex.
+This is a general feature: the $i$th face $d_{i}$ map deletes the $i$th vertex.
 
 \begin{theorem}[simplicial identites]
   \label{thm:simplicial_identities}
@@ -1448,6 +1444,8 @@ A priori, it is not clear that this condition is interesting. However, we will n
   \end{enumerate}
 \end{proposition}
 \begin{proof}
+  There are no inner horns in degrees $0$ or $1$, so we start with a $(2,1)$-horn.
+
   Consider a horn
   \begin{equation*}
     \begin{tikzcd}
@@ -1471,7 +1469,7 @@ A priori, it is not clear that this condition is interesting. However, we will n
     \end{tikzpicture}
   \end{equation*}
 
-  We are forced to send $012$ to a triangle
+  When we map the horn $\Lambda^{2}_{1}$ into $N(\mathcal{C})$, we find two morphisms as follows.
   \begin{equation*}
     \begin{tikzcd}[column sep=small]
       & a
@@ -1479,12 +1477,22 @@ A priori, it is not clear that this condition is interesting. However, we will n
       \\
       b
       \arrow[ur, "f"]
-      \arrow[rr, swap, "g \circ f"]
       && c
     \end{tikzcd}
   \end{equation*}
+  A map of a 2-simplex into $N(\mathcal{C})$ consists of a commuting triangle in $\mathcal{C}$. Such a map making the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{2}_{1}
+      \arrow[r]
+      \arrow[d, hookrightarrow]
+      & N(\mathcal{C})
+      \\
+      \Delta^{2}
+      \arrow[ur, dashed]
+    \end{tikzcd}
+  \end{equation*}
 \end{proof}
-To do: finish this.
 
 \section{Kan fibrations}
 \label{sec:kan_fibrations}

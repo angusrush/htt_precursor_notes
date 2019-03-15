@@ -7,7 +7,32 @@
 \chapter{Infinity categories}
 \label{ch:infinity_categories}
 
-I will edit this chapter heavily. It is in desperate need of a good de-clawing.
+\begin{note}
+  I will edit this chapter heavily. It is in desperate need of a good de-clawing.
+\end{note}
+
+\begin{lemma}
+  Let $K$ be a simplicial set. Then $K$ is the nerve of some category if and only if $K$ has unique inner horn fillers. That is, the following are equivalent.
+  \begin{itemize}
+    \item There exists a category $\mathcal{C}$ and an isomorphism $K \simeq N(\mathcal{C})$.
+
+    \item Every lifting problem
+      \begin{equation*}
+        \begin{tikzcd}
+          \Lambda^{n}_{i}
+          \arrow[r]
+          \arrow[d, hookrightarrow]
+          & N(\mathcal{C})
+          \\
+          \Delta^{n}
+          \arrow[ur, dashed]
+        \end{tikzcd}
+      \end{equation*}
+  \end{itemize}
+\end{lemma}
+\begin{proof}
+  First, suppose that $K = N(\mathcal{C})$ for some category $\mathcal{C}$. Then
+\end{proof}
 
 \section{Basic definitition}
 \label{sec:basic_definitions_infinity_categories}

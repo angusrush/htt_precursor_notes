@@ -10,16 +10,14 @@
 \section{The fibration zoo}
 \label{sec:the_fibration_zoo}
 
-In what follows, the already seemingly infinite list of different notions of fibration will grow. Clearly, this is something that we can no longer bandy about. In order to have some hope of keeping them straight, we list the ones we already know here.
+One thinks of fibrations as a vast generalization of the notion of the projection $V \to M$ of a fiber bundle. In a fiber bundle, each fiber is isomorphic. Different notions of fibration relax this condition. For example
 
-A bit of motivation will be helpful. One thinks of fibrations as a vast generalization of the notion of the projection $V \to M$ of a fiber bundle. In a fiber bundle, each fiber is isomorphic. Different notions of fibration relax this condition. For example
-
-In \hyperref[ssc:fibrations_in_ordinary_category_theory]{Subsection~\ref*{ssc:fibrations_in_ordinary_category_theory}}, we study functors from one category $\mathcal{C}$ to another category $\mathcal{D}$, and define when such functors exhibit $\mathcal{C}$ as being \emph{(co)fibered in groupoids} over $\mathcal{D}$. Roughly, (co)fibration in groupoids is a regularity condition on the fibers of $F$: it says that the fibers are groupoids, and that we can lift morphims between objects of $\mathcal{D}$ to functors between the fibers over them in a pseudofunctorial way. In the case of cofibration, this lifting is covariant; in the case of fibration, it is contravariant.
+In \hyperref[ssc:cofibrancy_in_groupoids]{Subsection~\ref*{ssc:cofibrancy_in_groupoids}}, we study functors from one category $\mathcal{C}$ to another category $\mathcal{D}$, and define when such functors exhibit $\mathcal{C}$ as being \emph{(co)fibered in groupoids} over $\mathcal{D}$. Roughly, (co)fibration in groupoids is a regularity condition on the fibers of $F$: it says that the fibers are groupoids, and that we can lift morphims between objects of $\mathcal{D}$ to functors between the fibers over them in a pseudofunctorial way. In the case of cofibration, this lifting is covariant; in the case of fibration, it is contravariant.
 
 We then provide a generalization, the notion of a \emph{coCartesian fibration.} A coCartesian fibration is one whose
 
-\subsection{Fibrations in ordinary category theory}
-\label{ssc:fibrations_in_ordinary_category_theory}
+\subsection{Cofibrancy in groupoids}
+\label{ssc:cofibrancy_in_groupoids}
 
 \begin{definition}[cofibrant in groupoids]
   \label{def:cofibrant_in_groupoids}
@@ -119,6 +117,58 @@ we can lift $\bar{h}$ to a morphism $h$ in $\mathcal{C}$ making the following di
     && c''
   \end{tikzcd}
 \end{equation*}
+
+\begin{lemma}
+  \label{lemma:cofibered_in_groupoids_morphism_mapped_to_identity_is_isomorphism}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor exhibiting $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Let $f$ be a morphism in $\mathcal{C}$ such that $F(f) = \id$. Then $f$ is an isomorphism.
+\end{lemma}
+\begin{proof}
+  Let $f\colon c \to c'$ in $\mathcal{C}_{d}$ be a morphism such that $F(f) = \id_{d}$. Then we can form the following commutative diagram.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      & c'
+      \\
+      c
+      \arrow[ur, "f"]
+      \arrow[rr, swap, "\id"]
+      & & c
+    \end{tikzcd}
+  \end{equation*}
+  When mapped to $\mathcal{D}$, we find the following very simple diagram, with a dashed filler.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      & d
+      \arrow[dr, dashed, "\id"]
+      \\
+      d
+      \arrow[ur, "\id"]
+      \arrow[rr, swap, "\id"]
+      && d
+    \end{tikzcd}
+  \end{equation*}
+
+  Lifting this gives us a left inverse $\tilde{f}$ to $f$. Pulling the same trick with $\tilde{f}$ gives us a left inverse $\hat{f}$ to $\tilde{f}$. Then
+  \begin{align*}
+    f \circ \tilde{f} &= \id \\
+    \hat{f} \circ f \circ \tilde{f} &= \hat{f} \\
+    \hat{f} &= f,
+  \end{align*}
+  so $\tilde{f}$ is both a left and a right inverse for $f$, i.e.\ $f$ is an isomorphism.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:fibers_of_fibration_in_groupoids_are_groupoids}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ exhibit $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Then the fibers of $F$ are groupoids.
+\end{corollary}
+\begin{proof}
+  The morphisms in the fiber $\mathcal{C}_{d}$ are precisely those which are mapped to the identity $\id_{d}$.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:cofibered_in_groupoids_morphism_mapped_to_equivalence_is_equivalence}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor exhibiting $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Let $f$ be a morphism in $\mathcal{C}$ such that $F(f)$ is an equivalence. Then $f$ is an equivalence.
+\end{lemma}
+
 
 \begin{definition}[coCartesian morphism]
   \label{def:cocartesian_morphismfibration}
@@ -687,49 +737,6 @@ The above discussion means that the Grothendieck construction defines the follow
   \end{itemize}
 
 \end{example}
-
-\begin{lemma}
-  \label{lemma:cofibered_in_groupoids_morphism_mapped_to_identity_is_isomorphism}
-  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor exhibiting $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Let $f$ be a morphism in $\mathcal{C}$ such that $F(f) = \id$. Then $f$ is an isomorphism.
-\end{lemma}
-\begin{proof}
-  Let $f\colon c \to c'$ in $\mathcal{C}_{d}$ be a morphism such that $F(f) = \id_{d}$. Then we can form the following commutative diagram.
-  \begin{equation*}
-    \begin{tikzcd}[column sep=small]
-      & c'
-      \\
-      c
-      \arrow[ur, "f"]
-      \arrow[rr, swap, "\id"]
-      & & c
-    \end{tikzcd}
-  \end{equation*}
-  When mapped to $\mathcal{D}$, we find the following very simple diagram, with a dashed filler.
-  \begin{equation*}
-    \begin{tikzcd}[column sep=small]
-      & d
-      \arrow[dr, dashed, "\id"]
-      \\
-      d
-      \arrow[ur, "\id"]
-      \arrow[rr, swap, "\id"]
-      && d
-    \end{tikzcd}
-  \end{equation*}
-
-  Lifting this gives us a left inverse $\tilde{f}$ to $f$. Pulling the same trick with $\tilde{f}$ gives us a left inverse $\hat{f}$ to $\tilde{f}$. Then
-  \begin{align*}
-    f \circ \tilde{f} &= \id \\
-    \hat{f} \circ f \circ \tilde{f} &= \hat{f} \\
-    \hat{f} &= f,
-  \end{align*}
-  so $\tilde{f}$ is both a left and a right inverse for $f$, i.e.\ $f$ is an isomorphism.
-\end{proof}
-
-\begin{lemma}
-  \label{lemma:cofibered_in_groupoids_morphism_mapped_to_equivalence_is_equivalence}
-  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor exhibiting $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Let $f$ be a morphism in $\mathcal{C}$ such that $F(f)$ is an equivalence. Then $f$ is an equivalence.
-\end{lemma}
 
 
 \section{The starred smash}

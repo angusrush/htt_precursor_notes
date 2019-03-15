@@ -257,7 +257,7 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
   \begin{equation*}
     F \simeq (\mathcal{Y}^{*} \circ \mathcal{Y}_{!})(F) \simeq (\mathcal{Y}_{!}\mathcal{Y})(F).
   \end{equation*}
-  This is the following Kan extension.
+  The functor $\mathcal{Y}_{!}\mathcal{Y}$ comes from the following Kan extension.
   \begin{equation*}
     \begin{tikzcd}
       \mathcal{C}
@@ -266,10 +266,10 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
       && \mathbf{Set}_{\mathcal{C}}
       \\
       & \mathbf{Set}_{\mathcal{C}}
-      \arrow[ur, swap, "\mathcal{Y}_{!} \circ \mathcal{Y}"]
+      \arrow[ur, swap, "\mathcal{Y}_{!} \mathcal{Y}"]
     \end{tikzcd}
   \end{equation*}
-  The colimit formula then tells us that
+  The colimit formula for left Kan extensions (\hyperref[fact:pointwise_formula_kan_extensions]{Fact~\ref*{fact:pointwise_formula_kan_extensions}}) then tells us that
   \begin{equation*}
     F \simeq \colim \left[ (\mathcal{Y}/F) \overset{\mathcal{U}}{\to} \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right]
   \end{equation*}

@@ -168,7 +168,7 @@ To simplify terminology, we will use the following terms.
   \item We will call an object $Y \in \mathcal{C}$ \emph{fibrant} if the unique morphism $X \to *$ is a fibration.
 \end{itemize}
 
-\begin{lemma}
+\begin{lemma}[lifting lemma]
   \label{lemma:retract_argument}
   Let $\mathcal{C}$ be any category, and let $f = p \circ i$ be a morphism in $\mathcal{C}$.
   \begin{enumerate}
@@ -215,6 +215,8 @@ To simplify terminology, we will use the following terms.
     \end{tikzcd}
   \end{equation*}
   This exhibits $f$ as a retract of $i$.
+
+  The second case is dual.
 \end{proof}
 
 The axioms for a model category are over-specified, in the sense that providing $\W$ and either $\fib$ and $\cof$ is sufficient to derive the other one.
@@ -236,6 +238,8 @@ The axioms for a model category are over-specified, in the sense that providing 
   Now suppose $f \in \llp\fib$. By \hyperref[item:MC_morphisms_factorize]{Axiom~\ref*{item:MC_morphisms_factorize}}, we can always find a factorization $f = p \circ i$, where $p$ is a fibration and $i$ is a trivial cofibration.
 
   By \hyperref[item:MC_solve_some_lifting_problems]{Axiom~\ref*{item:MC_solve_some_lifting_problems}}, $f$ has the left lifting property with respect to $p$, so by \hyperref[lemma:retract_argument]{Lemma~\ref*{lemma:retract_argument}}, $f$ is a retract of $i$. But since by \hyperref[item:MC_closed_under_retracts]{Axiom~\ref*{item:MC_closed_under_retracts}} both $\W$ and $\cof$ are closed under retracts, $f$ is also a trivial cofibration as needed.
+
+  From 4, 3 follows immediately. The proof of 1 is precisely the same as that of 4, and 2 follows from 1 immediately.
 \end{proof}
 
 \begin{corollary}
