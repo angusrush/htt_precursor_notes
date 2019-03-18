@@ -259,7 +259,7 @@ These categories and functors may seem too simple to be of any real use, but one
 \section{Simplicial sets}
 \label{sec:simplicial_sets}
 
-A simplicial set is thought of as a collection of simplices of various degrees, glued together along their faces. That is, it is, for each $n \in \N$, a collection of simplices of degree $n$, together with rules for how to glue them. This data can be specified efficiently in the following way.
+A simplicial set is thought of as a collection of standard simplices of various degrees, glued together along their faces. That is, a simplicial set consists of, for each $n \in \N$, a collection of simplices of degree $n$, together with rules for how to glue them together. This data can be specified efficiently in the following way.
 
 \begin{definition}[simplicial set]
   \label{def:simplicial_set}
@@ -298,7 +298,7 @@ The claim is that the standard $n$-simplex can be interpreted geometrically, as 
 \end{equation*}
 Specifically, we should interpret $\Delta^{2}([n])$ as the set of $n$-simplices contained in $\Delta^{2}$. Naïvely, we would expect three 0-simplices, three 1-simplices, and one 2-simplex.
 
-However, the only way to find out what we actually have is to begin calculating. First, we calculate $\Delta^{2}([0])$:
+However, the only way to find out what we actually have is to begin calculating. First, we calculate $\Delta^{2}([0]) = \SSet([0], [2])$:
 \begin{equation*}
   \Delta^{2}([0]) = \{0 \mapsto 0, 0 \mapsto 1, 0 \mapsto 2\}.
 \end{equation*}
@@ -319,24 +319,26 @@ We recognize these as degenerate faces. The only nondegenerate face will be $\{0
 Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for $k > n$; it is simply filled with an enormous number of degenerate simplices.\footnote{To be precise, with $\begin{pmatrix} n+k+1 \\ k \end{pmatrix}$ simplices.}
 
 \begin{example}
-  Let $\mathcal{J} \subseteq \mathcal{P}((\{0, 1, \ldots, n\}))$. Then there is a simplicial set $\Delta^{\mathcal{J}}$ whose morphisms are a subset
+  Denote the power set of a set $X$ by $\mathcal{P}(X)$. Let $\mathcal{J} \subseteq \mathcal{P}(\{0, 1, \ldots, n\})$. Then there is a simplicial set $\Delta^{\mathcal{J}}$ whose morphisms are defined to be the subset
   \begin{equation*}
     \Delta^{\mathcal{J}}([n]) \subseteq \Delta([m], [n])
   \end{equation*}
   consisting of those $f$ such that $\mathrm{im}(f) \subset J$ for some $J \in \mathcal{J}$.
 
-  Here are some specific examples of $\mathcal{J}$ which will be useful to us. We will denote the power set of a set $X$ by $\mathcal{P}(X)$.
-  \begin{itemize}
+  Here are some specific examples of $\mathcal{J}$ which will be useful to us. \begin{itemize}
     \item If $\mathcal{J} = \mathcal{P}(\{0, \ldots, n\})$, then
       \begin{equation*}
-        \Delta^{\mathcal{J}}([n]) = \Delta^{n}.
+        \Delta^{\mathcal{J}}([n]) = \Delta^{n},
       \end{equation*}
+      the standard $n$-simplex.
 
     \item If
       \begin{equation*}
         \mathcal{J} = \mathcal{P}(\{0, 1, \ldots, n\}) \smallsetminus \{\{0, 1, \ldots, n\}\},
       \end{equation*}
       then the simplicial set we obtain is called the \emph{boundary} of $\Delta^{n}$, and denoted $\partial \Delta^{n}$.
+
+      The sets $\Delta^{n}([i])$ and $\partial \Delta^{n}([i])$ are the same for $i < n$. 
 
     \item Fix some $i$ such that $0 \leq i \leq n$. Then with
       \begin{equation*}
@@ -512,7 +514,7 @@ The face and degeneracy functions are interesting because they generate all morp
 \begin{proof}[Sketch of proof]
   Since $\phi$ is by definition nondecreasing, we can specify it by, starting from $0$, a sequence 
 \end{proof}
- 
+
 \begin{definition}[degeneracy map]
   \label{def:degeneracy_map}
   Let $X\colon \Delta\op \to \mathbf{Set}$ be a simplicial set. Corresponding to the degeneracy function $\sigma_{k}\colon [n] \to [n-1]$ there is a corresponding map
@@ -1003,7 +1005,7 @@ The goal of this section is to derive and understand the following formula for t
   \end{equation*}
 
   Let $f$ be a morphism $[m] \to [n]$. Then by the contravariance of any simplicial set $K$, $f$ induces a morphism $f^{*}\colon K_{n} \to K_{m}$. Similarly, by the covariance of  the geometric realization functor $\rho\colon \Delta \to \mathbf{Top}$ (defined in \hyperref[def:realization_functor]{Definition~\ref*{def:realization_functor}}), $f$ induces a map $f_{*}\colon \abs{\Delta^{m}} \to \abs{\Delta^{n}}$.
-  
+
   By the coequalizer formula for colimits (\hyperref[fact:limit_colimit_formula]{Fact~\ref*{fact:limit_colimit_formula}}), we can express the above colimit as the following coequalizer.
   \begin{equation*}
     \begin{tikzcd}[row sep=huge, column sep=huge]
@@ -1020,7 +1022,7 @@ The goal of this section is to derive and understand the following formula for t
   \begin{equation*}
     A_{f} = \iota_{\abs{\Delta^{m}}},\qquad B_{f} = \iota_{\abs{\Delta^{n}}} \circ  f_{*}.
   \end{equation*}
-  
+
   Recall that any morphism $g \in \mathrm{Morph}(\Delta\downarrow K)$ is defined by making the following diagram commute.
   \begin{equation*}
     g\colon [m] \to [n];\qquad
@@ -1034,9 +1036,9 @@ The goal of this section is to derive and understand the following formula for t
       & K
     \end{tikzcd}
   \end{equation*}
-  
+
   This means that such a morphism contains two pieces of data: a morphism $g\colon [m] \to [n]$, and a morphism $f'\colon \Delta^{n} \to K$. The other morphism $f$ must be the composite $f' \circ \Delta^{g}$.
-  
+
   This means that we are really taking the coproduct over two things: morphisms $[m] \to [n]$, and morphisms $\Delta^{n} \to K$. But by the Yoneda lemma
   \begin{equation*}
     \SSet(\Delta^{n}, K) \simeq K_{n},
