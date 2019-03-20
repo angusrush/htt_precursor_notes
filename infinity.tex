@@ -380,6 +380,7 @@ We would like to be able to view infinity-categories as a generalization of cate
   \end{enumerate}
 \end{proof}
 
+Note that we have made good on our promise, made in \hyperref[sec:simplicial_sets_from_cosimplicial_objects]{Section~\ref*{sec:simplicial_sets_from_cosimplicial_objects}}, to give a partial description of the left adjoint to the nerve $N$ given by the Yoneda extension $\mathcal{Y}_{!}\chi$; when restricted to $\infty$-categories, it is the given by the functor $\h$.
 
 \section{The coherent nerve}
 \label{sec:the_coherent_nerve}
@@ -489,7 +490,7 @@ Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techica
 
 \begin{definition}[thickening]
   \label{def:thickening}
-  The \defn{thickening functor} is the functor
+  We define a cosimplicial object called the \emph{thickening} to be the functor
   \begin{equation*}
     \mathfrak{C}\colon \Delta \to \mathbf{Cat}_{\Delta}
   \end{equation*}
@@ -517,7 +518,16 @@ Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techica
     P_{i,j} \supset \{ i, k_{1}, \ldots, k_{r-1}, j \} \mapsto \{f(i), f(k_{1}), \ldots, f(k_{r-1}), f(j)\} \subset P_{f(i),f(j)}.
   \end{equation*}
   This extends to a functor of poset categories, hence a morphism of nerves.
+
+  Taking the Yoneda extension of the thickening, we find a functor $\mathfrak{C}\colon \SSet \to \SCat$, called the \defn{thickening}.
 \end{definition}
+
+By the usual theory of cosimplicial objects (explained in \hyperref[sec:simplicial_sets_from_cosimplicial_objects]{Section~\ref*{sec:simplicial_sets_from_cosimplicial_objects}}) we have the following results.
+
+\begin{lemma}
+  \label{lemma:thickening_preserves_colimits}
+  The thickening $\mathfrak{C}$ preserves colimits.
+\end{lemma}
 
 \begin{definition}[simplicial nerve]
   \label{def:simplicial_nerve}
@@ -531,7 +541,6 @@ By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Theorem~\ref*{lemma:right_
 \begin{equation*}
   \mathcal{Y}_{!}\mathfrak{C} : \SSet \leftrightarrow \SCat : N_{\Delta}.
 \end{equation*}
-By abuse of notation, we also denote $\mathcal{Y}_{!}\mathfrak{C}$ by $\mathfrak{C}$.
 
 \begin{proposition}
   \label{prop:simplicial_nerve_of_category_enriched_in_kan_complexes_gives_infinity_category}
@@ -563,11 +572,10 @@ By abuse of notation, we also denote $\mathcal{Y}_{!}\mathfrak{C}$ by $\mathfrak
       \arrow[ur, dashed]
     \end{tikzcd}
   \end{equation*}
-  We can always solve this lifting problem, because
 \end{proof}
 
 \begin{example}
-  Let $\mathbf{Kan} \subset \SSet$ be the full subcategory on Kan complexes. We may consider $\mathbf{Kan}$ to be simplicially enriched by taking $\mathbf{Kan}(K, S) = \Maps(K, S)$.
+  Let $\mathbf{Kan} \subset \SSet$ be the full subcategory on Kan complexes. We may consider $\mathbf{Kan}$ to be simplicially enriched by taking $\mathbf{Kan}(K, S) = \Maps(K, S)$. We have seen in \hyperref[cor:mapping_space_to_kan_complex_is_kan_complex]{Corollary~\ref*{cor:mapping_space_to_kan_complex_is_kan_complex}} that each mapping space is a Kan complex. Thus, the simplicial nerve $N_{\Delta}(\textbf{Kan})$ is an $\infty$-category.
 \end{example}
 
 \begin{definition}[category of spaces]

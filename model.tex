@@ -1905,7 +1905,7 @@ There is a dual notion.
 \end{proof}
 
 \begin{theorem}
-  The homotopy category $\mathrm{Ho}(\mathcal{C})$, together with the map $\pi\colon \mathcal{C} \to \mathrm{Ho}(\mathcal{C})$, is the localization of $\mathcal{C}$ at $\mathcal{W} = \W$, the set of weak equivalences.
+  The homotopy category $\mathrm{Ho}(\mathcal{C})$, together with the map $\pi\colon \mathcal{C} \to \mathrm{Ho}(\mathcal{C})$, is the localization of $\mathcal{C}$ at $\mathcal{W} = \W$, the set of weak equivalences. That is, there is an equivalence of categories $\mathcal{C}[\mathcal{W}^{-1}] \simeq \mathrm{Ho}(\mathcal{C})$.
 \end{theorem}
 \begin{proof}
   Define a category $\overline{\mathcal{C}}$ as follows.
@@ -2053,9 +2053,9 @@ There is a dual notion.
   \end{enumerate}
 \end{proposition}
 \begin{proof}
-  By \hyperref[lemma:relations_between_lifting_properties_and_fibrations]{Lemma~\ref*{lemma:relations_between_lifting_properties_and_fibrations}}, a morphism is a cofibration (resp. trivial cofibration) if and only if it has the left lifting property with respect to all trivial fibrations (resp. fibrations). Thus, in order to show that $F$ preserves cofibrations (resp. trivial cofibrations), it suffices to show that if $f$ is a cofibration (resp. trivival cofibration) in $\mathcal{C}$, then $F(f)$ has the left lifting property with respect to all trivial fibrations (resp. fibrations).
+  By \hyperref[lemma:relations_between_lifting_properties_and_fibrations]{Lemma~\ref*{lemma:relations_between_lifting_properties_and_fibrations}}, a morphism is a cofibration if and only if it has the left lifting property with respect to all trivial fibrations. Thus, in order to show that $F$ preserves cofibrations, it suffices to show that if $f$ is a cofibration in $\mathcal{C}$, then $F(f)$ has the left lifting property with respect to all trivial fibrations.
 
-  Consider solid adjunct diagrams of the following form, with the first in $\mathsf{C}$ and the second in $D$.
+  Consider solid adjunct diagrams of the following form, with the first in $\mathcal{D}$ and the second in $\mathcal{C}$.
   \begin{equation*}
     \begin{tikzcd}
       F(c)
@@ -2083,7 +2083,7 @@ There is a dual notion.
       & G(d')
     \end{tikzcd}
   \end{equation*}
-  Suppose that $f$ is a cofibration and that $F$ preserves cofibrations. Then the left-hand diagram has a lift for any trivial fibration $g$. But then its adjunct is a lift for the diagram on the right. But that means that $G(g) \in \cof\rlp = \fib \cap \W$.
+  Suppose that $f$ is a cofibration and that $F$ preserves cofibrations. Then the left-hand diagram has a lift for any trivial fibration $g$. The adjunct of this lift is a lift for the diagram on the right. This means that $G(g) \in \cof\rlp = \fib \cap \W$.
 
   Similarly, if $f$ is a trivial cofibration and $F$ preserves trivial cofibrations, then the left-hand diagram has a lift for any fibration $g$, whose adjunct is a lift for the diagram on the RHS, implying that $G(d) \in (\cof \cap \W)\rlp = \fib$.
 
@@ -2135,7 +2135,9 @@ There is a dual notion.
     \end{tikzcd}
   \end{equation*}
 
-  Because $A$ and $B$ are cofibrant, $i_{A}$ and $i_{B}$ are cofibrations. Thus, $q \circ i_{A}$ is a cofibration, so $C$ is cofibrant. Furthermore, we have that
+  Because $A$ and $B$ are cofibrant, $i_{A}$ and $i_{B}$ are cofibrations. Thus, $q \circ i_{A}$ is a cofibration, so $C$ is cofibrant. 
+  
+  Note that by commutativity, we have
   \begin{equation*}
     f = p \circ q \circ i_{A},\qquad \id_{B} = p \circ q \circ i_{B}.
   \end{equation*}
@@ -2157,9 +2159,9 @@ Given a Quillen adjunction
 \begin{equation*}
   F : \mathcal{C} \leftrightarrow \mathcal{D} : G,
 \end{equation*}
-consider the full subcategory of all cofibrant objects $\mathcal{C}_{c} \subset \mathcal{C}$. There is an equivalence\footnote{Why?}
+consider the full subcategory of all cofibrant objects $\mathcal{C}_{c} \subset \mathcal{C}$. Since the full subcategory of $\mathcal{C}$ on fibrant-cofibrant objects is the same as the full subcategory of $\mathcal{C}_{c}$ on fibrant-cofibrant objects, there is an equivalence
 \begin{equation*}
-  \mathcal{C}_{c}[\mathcal{W}^{-1}] \simeq \mathcal{C}{\mathcal{W}^{-1}}.
+  \mathcal{C}_{c}[\mathcal{W}^{-1}] \simeq \mathcal{C}[\mathcal{W}^{-1}].
 \end{equation*}
 
 We will denote any inverse by
@@ -2167,18 +2169,52 @@ We will denote any inverse by
   Q\colon \mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{C}_{c}[\mathcal{W}^{-1}].
 \end{equation*}
 
-Similarly, we will denote the functor
+Dually, we get a functor
 \begin{equation*}
-  R\colon \mathcal{D}[\mathcal{W}^{-1}] \to \mathcal{D}_{f}[\mathcal{W}^{-1}].
+  R\colon \mathcal{D}[\mathcal{W}^{-1}] \to \mathcal{D}_{f}[\mathcal{W}^{-1}],
 \end{equation*}
+where $\mathcal{D}_{f}$ is the full subcategory of $\mathcal{D}$ on fibrant objects.
 
-\begin{definition}[left derived functor]
+\begin{definition}[derived functor]
   \label{def:left_derived_functor}
-  The \defn{left derived functor} $RG$ is the composite
+  Let
   \begin{equation*}
-    \mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{C}\ldots
+    F : \mathcal{C} \leftrightarrow \mathcal{D} : G
   \end{equation*}
+  be a Quillen adjunction.
+  \begin{itemize}
+    \item The \defn{left derived functor} $LF$ is the composite
+      \begin{equation*}
+        \begin{tikzcd}
+          \mathcal{C}[\mathcal{W}^{-1}]
+          \arrow[r, "Q"]
+          & \mathcal{C}_{c}[\mathcal{W}^{-1}]
+          \arrow[r, "F"]
+          & \mathcal{D}[\mathcal{W}^{-1}].
+        \end{tikzcd}
+      \end{equation*}
+
+    \item The \defn{right derived functor} $RG$ is the composite
+      \begin{equation*}
+        \begin{tikzcd}
+          \mathcal{D}[\mathcal{W}^{-1}]
+          \arrow[r, "R"]
+          & \mathcal{D}_{f}[\mathcal{W}^{-1}]
+          \arrow[r, "G"]
+          & \mathcal{C}[\mathcal{W}^{-1}].
+        \end{tikzcd}
+      \end{equation*}
+  \end{itemize} 
 \end{definition}
+
+\begin{proposition}
+  \label{prop:derived_functors_form_adjunction}
+  Let
+  \begin{equation*}
+    \mathcal{C} : F \leftrightarrow \mathcal{G} : \mathcal{D}
+  \end{equation*}
+  be a Quillen adjunction. Then there is an adjunction of derived functors
+\end{proposition}
 
 \begin{definition}[Quillen equivalence]
   \label{def:quillen_equivalence}
