@@ -251,6 +251,7 @@ The axioms for a model category are over-specified, in the sense that providing 
 \end{proof}
 
 \begin{example}
+  \label{eg:model_categories}
   The following are examples of model structures.
   \begin{enumerate}
     \item The category $\mathbf{Top}$ carries the so-called \emph{Quillen model structure,} with
@@ -840,6 +841,7 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
 \end{definition}
 
 \begin{example}
+  \label{eg:cylinder_objects_in_sset}
   In $\SSet$ equipped with the Kan model structure, the object $\Delta^{1} \times S$ always functions as a cylinder object over $S$.
   \begin{equation*}
     \begin{tikzcd}
@@ -1626,12 +1628,24 @@ Composition on the left and on the right preserves homotopy equivalence.
   \end{itemize}
 \end{definition}
 
+\begin{example}
+  Consider the category $\SSet$ together with the Kan model structure (\hyperref[eg:model_categories]{Example~\ref*{eg:model_categories}}). We have seen (in \hyperref[eg:cylinder_objects_in_sset]{Example~\ref*{eg:cylinder_objects_in_sset}}) that for any simplicial set $S$, the object $\Delta^{1} \times S$ functions as a cylinder object for $S$, implying that the homotopy theory in the model structure on $\SSet$ agrees with the standard homotopy theory on $\SSet$.
+
+  In the Kan model structure $\SSet$, the fibrant objects are Kan complexes, and every object is cofibrant. Therefore, the fibrant-cofibrant objects are simply Kan complexes.
+
+  The homotopy category $\mathrm{Ho}(\SSet)$ therefore is simply
+  \begin{equation*}
+    \{(\text{Kan complexes})\}/(\text{homotopy equivalences}).
+  \end{equation*}
+  We will meet this category later. It is called the \emph{homotopy category of spaces.}
+\end{example}
+
 \section{Fibrant-Cofibrant replacement}
 \label{sec:fibrant_cofibrant_replacement}
 
 Let $\mathcal{C}$ be a model category.
 
-In \hyperref[ssc:cofibrant_replacement]{Subsection~\ref*{ssc:cofibrant_replacement}}, we give a way of assigning to any object $X \in \mathcal{C}$ a (not necessarily unique) cofibrant object $QX$ to which it is weakly equivalent. We call any choice of such a cofibrant object a \emph{cofibrant replacement.}
+In \hyperref[ssc:cofibrant_replacement]{Subsection~\ref*{ssc:cofibrant_replacement}}, we give a way of assigning to any object $X \in \mathcal{C}$ a (not necessarily unique) cofibrant object $QX$ to which it is weakly equivalent. We call any choice of such at cofibrant object a \emph{cofibrant replacement.}
 %and show that replacing objects by cofibrant replacements preserves left homotopy, in the sense that
 %\begin{equation*}
 %  X \overset{l}{\sim} Y \implies QX \overset{l}{\sim} QY.

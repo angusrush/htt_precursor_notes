@@ -572,6 +572,23 @@ By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Theorem~\ref*{lemma:right_
       \arrow[ur, dashed]
     \end{tikzcd}
   \end{equation*}
+
+  We can view the simplicial category $\mathfrak{C}[\Lambda^{n}_{i}]$ as a subcategory of $\mathfrak{C}[\Delta^{n}]$, where the only data missing\footnote{Why?} is the mapping space
+  \begin{equation*}
+    \mathfrak{C}[\Delta^{n}](0, n).
+  \end{equation*}
+  Therefore, a solution to the above lifting problem need only fill in this information. This means we need only solve the corresponding lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathfrak{C}[\Lambda^{n}_{i}](0, n)
+      \arrow[r]
+      \arrow[d, hookrightarrow]
+      & \mathcal{C}(0, n)
+      \\
+      \mathfrak{C}[\Delta^{n}](0, n)
+      \arrow[ur, dashed]
+    \end{tikzcd}
+  \end{equation*}
 \end{proof}
 
 \begin{example}
@@ -584,6 +601,22 @@ By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Theorem~\ref*{lemma:right_
   \begin{equation*}
     \mathcal{S} = N_{\Delta}(\textbf{Kan}).
   \end{equation*}
+\end{definition}
+
+\section{Mapping spaces}
+\label{sec:mapping_spaces}
+
+\begin{definition}[mapping spaces of a simplicial set]
+  \label{def:mapping_spaces_of_a_simplicial_set}
+  Let $S$ be any simplicial set. For any $x$, $y \in S_{0}$, define the mapping space
+  \begin{equation*}
+    \Maps_{S}(x, y)
+  \end{equation*}
+  to be the object
+  \begin{equation*}
+    \h \left( \mathfrak{C}[S](x, y) \right)
+  \end{equation*}
+  in the homotopy category of spaces $\mathcal{H}$.
 \end{definition}
 
 \section{Infinity-groupoids}
@@ -617,8 +650,28 @@ By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Theorem~\ref*{lemma:right_
   Let $\mathcal{C}$ be an infinity category. The \defn{maximal infinity groupoid} in $\mathcal{C}$, denoted $\mathcal{C}^{\simeq} \subset \mathcal{C}$, is the simplicial subset of $\mathcal{C}$ consisting of simplices all of whose edges are equivalences.
 \end{definition}
 
-\section{Functors and diagrams}
-\label{sec:functors_and_diagrams}
+\section{Functors between infinity categories}
+\label{sec:functors_between_infinity_categories}
+
+In this section, we build up the notions necessary to work with functors between infinity-categories.
+
+In \hyperref[ssc:functors_and_diagrams]{Subsection~\ref*{ssc:functors_and_diagrams}}, we define functors between infinity-categories.
+
+In \hyperref[ssc:joins]{Subsection~\ref*{ssc:joins}}, we define a monoidal product called the \emph{join} on the category of categories, and show that it reproduces cones and cocones. We then generalize the construction to the category of simpicial sets, and show\footnote{Well, if there's time.} that the two notions are compatible in the sense that the nerve is a monoidal functor between them; that is we have a natural isomorphism
+\begin{equation*}
+  N(\mathcal{C} \star \mathcal{D}) \simeq N(\mathcal{C}) \star N(\mathcal{D}).
+\end{equation*}
+
+In \hyperref[ssc:opposite_categories]{Subsection~\ref*{ssc:opposite_categories}}, we generalize the notion of the \emph{opposite category} to the context of simplicial sets, and note that it defines an \emph{opposite functor} on the category of simplicial sets, when one extends simplex category $\Delta$ in an appropriate way.
+
+In \hyperref[ssc:cones_and_cocones]{Subsection~\ref*{ssc:cones_and_cocones}}, we see that joins allow us to define the notion of a cone in an infinity-categorical context. We also define the infinity-categorical generalization of comma categories, and note that there is a duality between the join and the construction of over- and undercategories. We then show that over- and undercategories are `topologically' very simple---they are contractible Kan complexes.
+
+In \hyperref[ssc:initial_objects]{Subsection~\ref*{ssc:initial_objects}} and \hyperref[ssc:terminal_objects]{Subsection~\ref*{ssc:terminal_objects}}, we define the notion of initial (resp. terminal) object in an infinity-category $\mathcal{C}$. We set up our definitions in such a way that initial objects in an infinity category are initia objects in the homotopy category, and they are unique in the sense that their `convex hull' is a contractible Kan complex.
+
+In \hyperref[ssc:limits_and_colimits_in_infty_cats]{Subsection~\ref*{ssc:limits_and_colimits_in_infty_cats}}, we define when an object in an infinity category is a limit or colimit of a functor.
+
+\subsection{Functors and diagrams}
+\label{ssc:functors_and_diagrams}
 
 \begin{definition}[infinity-functor]
   \label{def:infinity_functor}
@@ -638,24 +691,6 @@ Here we list some theorems which we will prove later, after we have some more ad
   \label{def:homotopy_coherent_diagram}
   Let $\mathcal{T}$ be a topological category and $I$ an ordinary category. Let $\mathcal{C} = N_{\mathrm{top}}(\mathcal{T})$.
 \end{definition}
-
-\section{Limits in infinity categories}
-\label{sec:limits_in_infinity_categories}
-
-In this section, we build up the notions necessary to define the limit of a diagram.
-
-In \hyperref[ssc:joins]{Subsection~\ref*{ssc:joins}}, we define a monoidal product called the \emph{join} on the category of categories, and show that it reproduces cones and cocones. We then generalize the construction to the category of simpicial sets, and show\footnote{Well, if there's time.} that the two notions are compatible in the sense that the nerve is a monoidal functor between them; that is we have a natural isomorphism
-\begin{equation*}
-  N(\mathcal{C} \star \mathcal{D}) \simeq N(\mathcal{C}) \star N(\mathcal{D}).
-\end{equation*}
-
-In \hyperref[ssc:opposite_categories]{Subsection~\ref*{ssc:opposite_categories}}, we generalize the notion of the \emph{opposite category} to the context of simplicial sets, and note that it defines an \emph{opposite functor} on the category of simplicial sets, when one extends simplex category $\Delta$ in an appropriate way.
-
-In \hyperref[ssc:cones_and_cocones]{Subsection~\ref*{ssc:cones_and_cocones}}, we see that joins allow us to define the notion of a cone in an infinity-categorical context. We also define the infinity-categorical generalization of comma categories, and note that there is a duality between the join and the construction of over- and undercategories. We then show that over- and undercategories are `topologically' very simple---they are contractible Kan complexes.
-
-In \hyperref[ssc:initial_objects]{Subsection~\ref*{ssc:initial_objects}} and \hyperref[ssc:terminal_objects]{Subsection~\ref*{ssc:terminal_objects}}, we define the notion of initial (resp. terminal) object in an infinity-category $\mathcal{C}$. We set up our definitions in such a way that initial objects in an infinity category are initia objects in the homotopy category, and they are unique in the sense that their `convex hull' is a contractible Kan complex.
-
-In \hyperref[ssc:limits_and_colimits_in_infty_cats]{Subsection~\ref*{ssc:limits_and_colimits_in_infty_cats}}, we define when an object in an infinity category is a limit or colimit of a functor.
 
 \subsection{Joins}
 \label{ssc:joins}
@@ -911,7 +946,7 @@ Let $\mathcal{C}$ and $\mathcal{D}$ be regular categories. Any endofunctor $E\co
 \end{definition}
 
 \begin{theorem}
-  There is a pair of adjoint functors
+  There is a pair of almost adjoint functors
   \begin{equation*}
     K \star - : \SSet \leftrightarrow (\SSet)_{/p} : /p
   \end{equation*}
@@ -919,6 +954,7 @@ Let $\mathcal{C}$ and $\mathcal{D}$ be regular categories. Any endofunctor $E\co
   \begin{equation*}
     \Hom_{p}(K \star X, \mathcal{C}) \simeq \Hom(K, \mathcal{C}_{/p}),
   \end{equation*}
+  where $\Hom_{p}$ denotes the set of maps $f\colon K \star X \to \mathcal{C}$ such that $f|_{K} = p$.
 \end{theorem}
 
 \begin{corollary}
