@@ -692,128 +692,6 @@ Here we list some theorems which we will prove later, after we have some more ad
   Let $\mathcal{T}$ be a topological category and $I$ an ordinary category. Let $\mathcal{C} = N_{\mathrm{top}}(\mathcal{T})$.
 \end{definition}
 
-\subsection{Joins}
-\label{ssc:joins}
-
-\begin{definition}[join of categories]
-  \label{def:join_of_categories}
-  Let $\mathcal{C}$ and $\mathcal{C}'$ be ordinary categories. The \defn{join} of $\mathcal{C}$ and $\mathcal{C}'$, denoted $\mathcal{C} \star \mathcal{C}'$, is the category with objects
-  \begin{equation*}
-    \ob(\mathcal{C} \star \mathcal{C}) = \ob(\mathcal{C}) \amalg \ob(\mathcal{C}')
-  \end{equation*}
-  and morphisms
-  \begin{equation*}
-    (\mathcal{C} \star \mathcal{C}')(x, y) =
-    \begin{cases}
-      \mathcal{C}(x, y), & x, y \in \mathcal{C} \\
-      \mathcal{C}'(x, y), & x, y \in \mathcal{C}' \\
-      \{*\}, & x \in \mathcal{C}, y \in \mathcal{C}' \\
-      \emptyset, & x \in \mathcal{C}', y \in \mathcal{C} \\
-    \end{cases}.
-  \end{equation*}
-\end{definition}
-
-\begin{example}
-  We have
-  \begin{equation*}
-    [m] \star [n] = [m + n + 1].
-  \end{equation*}
-\end{example}
-
-\begin{example}
-  Here is an alternative definition for the category of cones over a functor $F\colon \mathcal{C} \to \mathcal{D}$, given in terms of the join: it is the category
-  \begin{equation*}
-    \mathbf{Fun}_{F}(\Delta^{0} \star \mathcal{C}, \mathcal{D}),
-  \end{equation*}
-  i.e.\ the subcategory of $\mathbf{Fun}(\Delta^{0} \star \mathcal{C}, \mathcal{D})$ whose objects are functors which agree with $F$ when restricted to $\mathcal{C}$, and whose morphisms are natural transformations
-\end{example}
-
-\begin{definition}[join of simplicial sets]
-  \label{def:join_of_simplicial_sets}
-  Let $K$ and $K'$ be simplicial sets. Define the \defn{join} of $K$ and $K'$, denoted $K \star K'$ to be the simplicial set whose $n$-simplices are
-  \begin{equation*}
-    (K \star K')_{n} = \coprod_{[i] \oplus [j] \simeq [n]} K_{i} \times K'_{j},
-  \end{equation*}
-  and which acts on a morphism $\phi\colon [m] \to [n]$ by sending a simplex
-  \begin{equation*}
-    \sigma = (\alpha \in K_{i}, \beta \in K_{j}, [i] \oplus [j] \simeq [n]) \in (K \star K')_{n}
-  \end{equation*}
-  to a simplex
-  \begin{equation*}
-    \phi^{*}\sigma = (\psi^{*}_{1} \alpha, \psi^{*}_{2} \beta, \phi^{-1}([i]) \oplus \phi^{-1}([j]) \simeq [m]) \in (K \star K')_{m},
-  \end{equation*}
-  where
-  \begin{equation*}
-    \psi_{1} = \phi|_{\phi^{-1}([i])},\qquad\text{and}\qquad \phi_{2} = \phi|_{\phi^{-1}([j])}.
-  \end{equation*}
-
-  This is functorial since
-\end{definition}
-
-\begin{proposition}
-  The join of two $\infty$-categories is again an $\infty$-category.
-\end{proposition}
-
-\begin{proposition}
-  The join is functorial in each argument separately.
-\end{proposition}
-\begin{proof}
-  Given a map $f\colon K \to K'$ of simplicial sets, we need to specify a map
-  \begin{equation*}
-    (f, \id_{S})\colon K \star S \to K' \star S.
-  \end{equation*}
-  By the universal property of coproducts, we can do this by defining maps
-  \begin{equation*}
-    K_{i} \times S_{j} \to K'_{i} \times S_{j}
-  \end{equation*}
-  for each $[i] \oplus [j] \simeq [n]$. We have a map $f_{i}\colon K_{i} \to K'_{i}$, which gives a map $f_{i} \times \id$ as required. We need only check that this is a morphism of simplicial sets, i.e.\ makes the following square commute for each $\phi\colon [n] \to [m]$.
-  \begin{equation*}
-    \begin{tikzcd}
-      (K \star S)_{m}
-      \arrow[r]
-      \arrow[d]
-      & (K \star S)_{n}
-      \arrow[d]
-      \\
-      (K' \star S)_{m}
-      \arrow[r]
-      & (K' \star S)_{n}
-    \end{tikzcd}
-  \end{equation*}
-  Let $\sigma = (\alpha, \beta, [i] \oplus [j] \simeq [n]) \in (K \star S)_{m}$. We follow it around.
-  \begin{equation*}
-    \begin{tikzcd}
-      (\alpha, \beta)
-      \arrow[r, mapsto]
-      \arrow[d, mapsto]
-      & (\psi_{i}^{*}\alpha, \psi_{j}^{*}\beta)
-      \arrow[d, mapsto]
-      \\
-      (f_{i}(\alpha), \beta)
-      \arrow[r, mapsto]
-      & (f_{\phi^{-1}([i])}\psi_{i}^{*}\alpha \overset{!}{=} \psi_{i}^{*}(f_{i}\alpha), \beta)
-    \end{tikzcd}
-  \end{equation*}
-
-  The condition that $f_{\phi^{-1}([i])}\psi_{i}^{*}\alpha = \psi_{i}^{*}(f_{i}\alpha)$ is preciesely the condition that the following diagram commute, which it does by naturality of $f$.
-  \begin{equation*}
-    \begin{tikzcd}
-      K_{i}
-      \arrow[r, "\psi_{i}^{*}"]
-      \arrow[d, swap, "f_{i}"]
-      & K_{\phi^{-1}([i])}
-      \arrow[d, "f_{\phi^{-1}([i])}"]
-      \\
-      K'_{i}
-      \arrow[r, swap, "\psi_{i}^{*}"]
-      & K'_{\phi^{-1}([i])}
-    \end{tikzcd}
-  \end{equation*}
-
-  Functoriality in the second argument is exactly analogous.
-\end{proof}
-
-
 
 \subsection{Opposite categories}
 \label{ssc:opposite_categories}
@@ -908,6 +786,154 @@ Let $\mathcal{C}$ and $\mathcal{D}$ be regular categories. Any endofunctor $E\co
 \begin{proof}
 
 \end{proof}
+
+\subsection{Joins}
+\label{ssc:joins}
+
+\begin{definition}[join of categories]
+  \label{def:join_of_categories}
+  Let $\mathcal{C}$ and $\mathcal{C}'$ be ordinary categories. The \defn{join} of $\mathcal{C}$ and $\mathcal{C}'$, denoted $\mathcal{C} \star \mathcal{C}'$, is the category with objects
+  \begin{equation*}
+    \ob(\mathcal{C} \star \mathcal{C}) = \ob(\mathcal{C}) \amalg \ob(\mathcal{C}')
+  \end{equation*}
+  and morphisms
+  \begin{equation*}
+    (\mathcal{C} \star \mathcal{C}')(x, y) =
+    \begin{cases}
+      \mathcal{C}(x, y), & x, y \in \mathcal{C} \\
+      \mathcal{C}'(x, y), & x, y \in \mathcal{C}' \\
+      \{*\}, & x \in \mathcal{C}, y \in \mathcal{C}' \\
+      \emptyset, & x \in \mathcal{C}', y \in \mathcal{C} \\
+    \end{cases}.
+  \end{equation*}
+\end{definition}
+
+\begin{example}
+  Here is an alternative definition for the category of cones over a functor $F\colon \mathcal{C} \to \mathcal{D}$, given in terms of the join: it is the category
+  \begin{equation*}
+    \mathbf{Fun}_{F}(\Delta^{0} \star \mathcal{C}, \mathcal{D}),
+  \end{equation*}
+  i.e.\ the subcategory of $\mathbf{Fun}(\Delta^{0} \star \mathcal{C}, \mathcal{D})$ whose objects are functors which agree with $F$ when restricted to $\mathcal{C}$, and whose morphisms are natural transformations
+\end{example}
+
+\begin{example}
+  We have
+  \begin{equation*}
+    [m] \star [n] = [m + n + 1].
+  \end{equation*}
+  This operation makes $\hat{\Delta}$ into a monoidal category, where $\hat{\Delta}$ includes the empty ordinal, denoted $[-1]$.
+\end{example}
+
+Our next goal is to extend $\star$ from $\Delta$ to $\SSet$. One might hope that this could be accomplished by Yoneda extension, and indeed one would be right. The general case of this is known as \emph{Day convolution.}
+
+For any simplicial set $K$, extend the domain of $K$ to $\hat{\Delta}$ by defining $K([-1]) = \emptyset$. Given any simplicial sets $K$ and $S$, we can define in this way a functor
+\begin{equation*}
+  K \bar{\otimes} S\colon \hat{\Delta}\op \times \hat{\Delta}\op \to \Set;\qquad ([m], [n]) \mapsto K([m]) \times S([n]).
+\end{equation*}
+
+\begin{definition}[join of simplicial sets]
+  \label{def:join_of_simplicial_sets}
+  Let $K$ and $S$ be simplicial sets. The \defn{join} $K \star S$ of $K$ and $S$ is given by the following left Kan extension
+  \begin{equation*}
+    \begin{tikzcd}
+      \hat{\Delta}\op \times \hat{\Delta}\op
+      \arrow[rr, "K \bar{\otimes} S"]
+      \arrow[dr, swap, "\star\op"]
+      && \Set
+      \\
+      & \hat(\Delta)\op
+      \arrow[ur, swap, "K \star S"]
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+\begin{theorem}
+  We can compute the join by the following formula.
+  \begin{equation*}
+    (K \star K')_{n} = \coprod_{[i] \oplus [j] \simeq [n]} K_{i} \times K'_{j},
+  \end{equation*}
+\end{theorem}
+
+and which acts on a morphism $\phi\colon [m] \to [n]$ by sending a simplex
+
+\begin{equation*}
+  \sigma = (\alpha \in K_{i}, \beta \in K_{j}, [i] \oplus [j] \simeq [n]) \in (K \star K')_{n}
+\end{equation*}
+to a simplex
+\begin{equation*}
+  \phi^{*}\sigma = (\psi^{*}_{1} \alpha, \psi^{*}_{2} \beta, \phi^{-1}([i]) \oplus \phi^{-1}([j]) \simeq [m]) \in (K \star K')_{m},
+\end{equation*}
+where
+\begin{equation*}
+  \psi_{1} = \phi|_{\phi^{-1}([i])},\qquad\text{and}\qquad \phi_{2} = \phi|_{\phi^{-1}([j])}.
+\end{equation*}
+
+This is functorial since
+
+\begin{proposition}
+  The join of two $\infty$-categories is again an $\infty$-category.
+\end{proposition}
+
+\begin{proposition}
+  The join is functorial in each argument separately.
+\end{proposition}
+\begin{proof}
+  Given a map $f\colon K \to K'$ of simplicial sets, we need to specify a map
+  \begin{equation*}
+    (f, \id_{S})\colon K \star S \to K' \star S.
+  \end{equation*}
+  By the universal property of coproducts, we can do this by defining maps
+  \begin{equation*}
+    K_{i} \times S_{j} \to K'_{i} \times S_{j}
+  \end{equation*}
+  for each $[i] \oplus [j] \simeq [n]$. We have a map $f_{i}\colon K_{i} \to K'_{i}$, which gives a map $f_{i} \times \id$ as required. We need only check that this is a morphism of simplicial sets, i.e.\ makes the following square commute for each $\phi\colon [n] \to [m]$.
+  \begin{equation*}
+    \begin{tikzcd}
+      (K \star S)_{m}
+      \arrow[r]
+      \arrow[d]
+      & (K \star S)_{n}
+      \arrow[d]
+      \\
+      (K' \star S)_{m}
+      \arrow[r]
+      & (K' \star S)_{n}
+    \end{tikzcd}
+  \end{equation*}
+  Let $\sigma = (\alpha, \beta, [i] \oplus [j] \simeq [n]) \in (K \star S)_{m}$. We follow it around.
+  \begin{equation*}
+    \begin{tikzcd}
+      (\alpha, \beta)
+      \arrow[r, mapsto]
+      \arrow[d, mapsto]
+      & (\psi_{i}^{*}\alpha, \psi_{j}^{*}\beta)
+      \arrow[d, mapsto]
+      \\
+      (f_{i}(\alpha), \beta)
+      \arrow[r, mapsto]
+      & (f_{\phi^{-1}([i])}\psi_{i}^{*}\alpha \overset{!}{=} \psi_{i}^{*}(f_{i}\alpha), \beta)
+    \end{tikzcd}
+  \end{equation*}
+
+  The condition that $f_{\phi^{-1}([i])}\psi_{i}^{*}\alpha = \psi_{i}^{*}(f_{i}\alpha)$ is preciesely the condition that the following diagram commute, which it does by naturality of $f$.
+  \begin{equation*}
+    \begin{tikzcd}
+      K_{i}
+      \arrow[r, "\psi_{i}^{*}"]
+      \arrow[d, swap, "f_{i}"]
+      & K_{\phi^{-1}([i])}
+      \arrow[d, "f_{\phi^{-1}([i])}"]
+      \\
+      K'_{i}
+      \arrow[r, swap, "\psi_{i}^{*}"]
+      & K'_{\phi^{-1}([i])}
+    \end{tikzcd}
+  \end{equation*}
+
+  Functoriality in the second argument is exactly analogous.
+\end{proof}
+
+
 
 \subsection{Cones and cocones}
 \label{ssc:cones_and_cocones}
