@@ -753,7 +753,11 @@ Before we prove that such an internal hom exists, let us assume that $\SSet$ adm
   \begin{equation*}
     \SSet(\Delta^{n}, [B, C]) \simeq [B, C]_{n},
   \end{equation*}
-  natural in $n$. Thus the internal hom, should it exist, must be given by a functor
+  natural in $n$. Thus the internal hom, should it exist, must be given level-wise by
+  \begin{equation*}
+    [B, C]_{n} \simeq \SSet(B \times \Delta^{n}, C).
+  \end{equation*}
+  The naturality of the Yoneda embedding now implies that this level-wise isomorphism must really be a natural isomorphism, i.e.\ that
   \begin{equation*}
     [B, C] \simeq \SSet(B \times \Delta^{\bullet}, C).
   \end{equation*}
@@ -820,7 +824,7 @@ In this section, we define two ways of creating a simplicial set out of existing
 \end{equation*}
 where $\mathcal{C}$ is some locally small category. 
 
-The idea is as follows. Given any object $C$ in $\mathcal{C}$, we can define a corresponding simplicial set $\tilde{C}$ by first Yoneda embedding, and then composing the resulting hom functor with $\alpha$:
+The idea is as follows. Given such a functor $\alpha\colon \Delta \to \mathcal{C}$ and any object $C$ in $\mathcal{C}$, we can define a corresponding simplicial set $\tilde{C}$ by first Yoneda embedding, and then composing the resulting hom functor with $\alpha$:
 \begin{equation*}
   C \mapsto \tilde{C} = \mathcal{C}(\alpha(-), C).
 \end{equation*}
@@ -832,9 +836,9 @@ The $n$-simplices of $\tilde{C}$ are then given by maps of the $\mathcal{C}$-mod
 \end{equation*}
 In fact, by the functoriality of hom this construction gives us a functor $\mathcal{C} \to \SSet$ taking $C \mapsto \tilde{C}$.
 
-The alert reader will remember that we have already defined two cosimplicial objects: the \emph{realization functor} $\rho$ (\hyperref[def:realization_functor]{Definition~\ref*{def:realization_functor}}) and the \emph{categorification functor} $\chi$ (\hyperref[def:categorification_functor]{Definition~\ref*{def:categorification_functor}}). We said that they would provide a connection between the theory of simplicial sets and the theory of topological spaces and categories respectively. Indeed, these are the cosimplicial objects we will use.
+The alert reader will remember that we have already defined two cosimplicial objects: the \emph{realization functor} $\rho\colon \Delta \to \Top$ (\hyperref[def:realization_functor]{Definition~\ref*{def:realization_functor}}) and the \emph{categorification functor} $\chi\colon \Delta \to \mathbf{Cat}$. (\hyperref[def:categorification_functor]{Definition~\ref*{def:categorification_functor}}). We said that they would provide a connection between the theory of simplicial sets and the theory of topological spaces and categories respectively. Indeed, these are the cosimplicial objects we will use.
 
-The power of defining simplicial sets via cosimplicial objects comes from \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}, which provides us immediately with a right adjoint. This right adjoint provides a weak inverse, i.e.\ a way of constructing from any simplicial set $K$ an object of the category $\mathcal{C}$.
+The power of defining simplicial sets via cosimplicial objects comes from \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}, which provides us immediately with a right adjoint to the functor $\widetilde{(-)}$. This right adjoint provides a weak inverse, i.e.\ a way of constructing from any simplicial set $K$ an object of the category $\mathcal{C}$.
 
 \subsection{Nerves}
 \label{ssc:nerves}
@@ -1161,51 +1165,51 @@ To define $\abs{\,\cdot\,}$ on morphisms, let $f \in \SSet(K, K')$. Then $f$ is,
   \end{equation*}
 \end{proof}
 
-We can explicitly compute the colimit of any diagram $G\colon I \to \mathcal{C}$ as a coequalizer between coproducts.\footnote{The notation here needs some explanation. By the universal property for coproducts, providing a map out of a coproduct is equivalent to providing a map out of each summand. The labels on the morphisms we are drawing are really to be understood summand-by-summand, but the map we mean is the one guaranteed to us by the universal property, which is a bona-fide morphism between the objects.}
-\begin{equation*}
-  \begin{tikzcd}[row sep=huge, column sep=huge]
-    \coprod\limits_{\substack{f \in \mathrm{Morph}(I)\\ f\colon i \to j}} G(i)
-    \arrow[r, shift left=1.75, "\iota_{G(i)}"]
-    \arrow[r, shift right=1.75, swap, "\iota_{G(j)} \circ G(f)"]
-    & \coprod\limits_{i \in I} G(i)
-  \end{tikzcd}
-\end{equation*}
-With $G$ our functor $\abs{F}$, we find the first line of the below diagram.
-\begin{equation*}
-  \begin{tikzcd}[row sep=huge, column sep=huge]
-    \coprod\limits_{\substack{f \in \mathrm{Morph}(\Delta/K) \\ f\colon [m] \to [n]}} \abs{\Delta^{m}}
-    \arrow[r, shift left=1.75, "\iota_{\abs{\Delta^{m}}}"]
-    \arrow[r, swap, shift right=1.75, "\iota_{\abs{\Delta^{n}}} \circ  f_{*}"]
-    \arrow[d, "\alpha"]
-    &
-    \coprod\limits_{\substack{([n], \alpha) \in \ob(\Delta/K) \\ \alpha: \Delta^{n} \to K}} \abs{\Delta^{n}}
-    \arrow[r]
-    \arrow[d, "\beta"]
-    & \mathrm{coeq}
-    \arrow[d]
-    \\
-    \coprod\limits_{f\colon [m] \to [n]} K_{n} \times \abs{\Delta^{m}}
-    \arrow[r, shift left=1.75, "f^{*} \times \mathrm{id}"]
-    \arrow[r, shift right=1.75, swap, "\mathrm{id} \times f_{*}"]
-    & \coprod\limits_{n \geq 0} K_{n} \times \abs{\Delta^{n}}
-    \arrow[r]
-    & \abs{K}
-  \end{tikzcd}
-\end{equation*}
-
-Note that we have not really done anything: this is simply a re-indexing of the coproduct.
-
-Similarly, in the second coproduct we pick up one copy of $\abs{\Delta^{n}}$ for every $\alpha\colon \Delta^{n} \to K$. Again, the Yoneda lemma tells us this means we pick up one copy of $\abs{\Delta^{n}}$ for every element of $K_{n}$, so we can write our coproduct as
-\begin{equation*}
-  \coprod_{[n] \in \Delta}\left( \coprod_{x \in K_{n}} \abs{\Delta^{n}} \right) = \coprod_{n \in \N} K_{n} \times \abs{\Delta^{n}}.
-\end{equation*}
-Again, this is only a re-indexing. We have still to figure out how to write the maps from our coequalizer in this new notation.
-
-Recall that we really have one map for each summand in the first coproduct, which we turn in to a single map using the universal property for coproducts. Take the copy of $\abs{\Delta^{m}}$ corresponding to the morphism $\Delta^{m} \overset{\Delta^{g}}{\to} \Delta^{n} \overset{f'}{\to} K$. This is mapped to the copy of $\abs{\Delta^{m}}$ corresponding to the domain of $\Delta^{g}$
-
-Recall that we really have one map for each summand in the first coproduct, which we turn in to a single map using the universal property for coproducts. Take the copy of $\abs{\Delta^{m}}$ corresponding to the morphism $\Delta^{m} \overset{\Delta^{g}}{\to} \Delta^{n} \overset{f'}{\to} K$. This is mapped to the copy of $\abs{\Delta^{m}}$ corresponding to the object $([m], f)$ using the canonical injection $\iota_{\abs{\Delta^{m}}}$.
-
-To finish.
+%We can explicitly compute the colimit of any diagram $G\colon I \to \mathcal{C}$ as a coequalizer between coproducts.\footnote{The notation here needs some explanation. By the universal property for coproducts, providing a map out of a coproduct is equivalent to providing a map out of each summand. The labels on the morphisms we are drawing are really to be understood summand-by-summand, but the map we mean is the one guaranteed to us by the universal property, which is a bona-fide morphism between the objects.}
+%\begin{equation*}
+%  \begin{tikzcd}[row sep=huge, column sep=huge]
+%    \coprod\limits_{\substack{f \in \mathrm{Morph}(I)\\ f\colon i \to j}} G(i)
+%    \arrow[r, shift left=1.75, "\iota_{G(i)}"]
+%    \arrow[r, shift right=1.75, swap, "\iota_{G(j)} \circ G(f)"]
+%    & \coprod\limits_{i \in I} G(i)
+%  \end{tikzcd}
+%\end{equation*}
+%With $G$ our functor $\abs{F}$, we find the first line of the below diagram.
+%\begin{equation*}
+%  \begin{tikzcd}[row sep=huge, column sep=huge]
+%    \coprod\limits_{\substack{f \in \mathrm{Morph}(\Delta/K) \\ f\colon [m] \to [n]}} \abs{\Delta^{m}}
+%    \arrow[r, shift left=1.75, "\iota_{\abs{\Delta^{m}}}"]
+%    \arrow[r, swap, shift right=1.75, "\iota_{\abs{\Delta^{n}}} \circ  f_{*}"]
+%    \arrow[d, "\alpha"]
+%    &
+%    \coprod\limits_{\substack{([n], \alpha) \in \ob(\Delta/K) \\ \alpha: \Delta^{n} \to K}} \abs{\Delta^{n}}
+%    \arrow[r]
+%    \arrow[d, "\beta"]
+%    & \mathrm{coeq}
+%    \arrow[d]
+%    \\
+%    \coprod\limits_{f\colon [m] \to [n]} K_{n} \times \abs{\Delta^{m}}
+%    \arrow[r, shift left=1.75, "f^{*} \times \mathrm{id}"]
+%    \arrow[r, shift right=1.75, swap, "\mathrm{id} \times f_{*}"]
+%    & \coprod\limits_{n \geq 0} K_{n} \times \abs{\Delta^{n}}
+%    \arrow[r]
+%    & \abs{K}
+%  \end{tikzcd}
+%\end{equation*}
+%
+%Note that we have not really done anything: this is simply a re-indexing of the coproduct.
+%
+%Similarly, in the second coproduct we pick up one copy of $\abs{\Delta^{n}}$ for every $\alpha\colon \Delta^{n} \to K$. Again, the Yoneda lemma tells us this means we pick up one copy of $\abs{\Delta^{n}}$ for every element of $K_{n}$, so we can write our coproduct as
+%\begin{equation*}
+%  \coprod_{[n] \in \Delta}\left( \coprod_{x \in K_{n}} \abs{\Delta^{n}} \right) = \coprod_{n \in \N} K_{n} \times \abs{\Delta^{n}}.
+%\end{equation*}
+%Again, this is only a re-indexing. We have still to figure out how to write the maps from our coequalizer in this new notation.
+%
+%Recall that we really have one map for each summand in the first coproduct, which we turn in to a single map using the universal property for coproducts. Take the copy of $\abs{\Delta^{m}}$ corresponding to the morphism $\Delta^{m} \overset{\Delta^{g}}{\to} \Delta^{n} \overset{f'}{\to} K$. This is mapped to the copy of $\abs{\Delta^{m}}$ corresponding to the domain of $\Delta^{g}$
+%
+%Recall that we really have one map for each summand in the first coproduct, which we turn in to a single map using the universal property for coproducts. Take the copy of $\abs{\Delta^{m}}$ corresponding to the morphism $\Delta^{m} \overset{\Delta^{g}}{\to} \Delta^{n} \overset{f'}{\to} K$. This is mapped to the copy of $\abs{\Delta^{m}}$ corresponding to the object $([m], f)$ using the canonical injection $\iota_{\abs{\Delta^{m}}}$.
+%
+%To finish.
 
 \begin{example}
   Let $n \geq 0$ and let $\mathcal{K} \subset \mathcal{P}(\{0, \ldots, n\})$ be an abstract simplicial complex. Then by \hyperref[lemma:geometrical_realization_is_a_colimit]{Lemma~\ref*{lemma:geometrical_realization_is_a_colimit}},
