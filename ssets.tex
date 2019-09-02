@@ -265,8 +265,9 @@ A simplicial set is thought of as a collection of standard simplices of various 
   \label{def:simplicial_set}
   A \defn{simplicial set} is a functor $\Delta\op \to \mathbf{Set}$. The category of simplicial sets is the category of such functors, i.e.\
   \begin{equation*}
-    \mathbf{Cat}(\Delta\op, \mathbf{Set}) = \SSet.
+    \mathbf{Fun}(\Delta\op, \mathbf{Set}).
   \end{equation*}
+  We denote this category by $\SSet$.
 \end{definition}
 
 As discussed briefly in \hyperref[sec:yoneda_extensions]{Section~\ref*{sec:yoneda_extensions}}, one thinks of the image under the Yoneda embedding of the object $[n]$ as an $n$-simplex, called the \emph{standard $n$-simplex,} and more general simplicial sets as being built by gluing standard simplices together.
@@ -418,7 +419,7 @@ Simplicial sets are functors, but the functorial notation is often unnecessarily
 \section{What sort of data does a simplicial set give us?}
 \label{sec:what_sort_of_data_does_a_simplicial_set_give_us}
 
-Let $K$ be a simplicial set. We have seen that evaluating $K$ on the object $[n]$ gives a set, which we interpret as the set of $n$-simplices making up $K$. We have claimed that the functoriality of $K$ provides instructions for how these simplices should be glued together. In this section we will investigate this claim.
+Let $K$ be a simplicial set. By definition evaluating $K$ on the object $[n]$ gives a set, which we interpret as the set of $n$-simplices making up $K$. We have claimed that the functoriality of $K$ provides instructions for how these simplices should be glued together. In this section we will investigate this claim.
 
 First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] \to [m]$ by understanding how it behaves on simpler functions, known as the \emph{face} and \emph{degeneracy functions.}
 
@@ -655,7 +656,7 @@ This is a general feature: the $i$th face $d_{i}$ map deletes the $i$th vertex.
 \section{Basic properties of the category of simplicial sets}
 \label{sec:basic_properties_of_the_category_of_simplicial_sets}
 
-The category of simplicial sets is a category of functors whose codomain is $\mathbf{Set}$. Any functor category inherits a lot of structure from it codomain category. In the case of $\SSet$, the category $\mathbf{Set}$ has an enormous amount of structure. In this section we list some of the structure $\SSet$ inherits from $\Set$.
+Any functor category inherits a lot of structure from it codomain category. In the case of $\SSet$, the codomain category is $\mathbf{Set}$, which has an enormous amount of structure. In this section we collect some of the structure $\SSet$ inherits from $\Set$.
 
 \subsection{Existence of limits and colimits}
 \label{ssc:existence_of_limits_and_colimits}
@@ -725,7 +726,7 @@ The fact that limits and colimits are computed pointwise implies immediately tha
 \label{ssc:cartesian_closure}
 
 \begin{note}
-  At the moment, the order of a lot of Cartesian products in this section is a bit out of whack, since I'm straddling two different conventions. This is okay for now because $(\SSet, \times)$ is a symmetric monoidal category.
+  At the moment, the order of a lot of Cartesian products in this section is a bit out of whack, since I'm straddling two different conventions. I'll fix this if I have time.
 \end{note}
 
 Thanks to \hyperref[prop:sset_has_limits_colimits]{Proposition~\ref*{prop:sset_has_limits_colimits}}, the category $\SSet$ has products. It turns out that it also has exponential objects (i.e.\ an internal hom with respect to the Cartesian product). This makes it into a \emph{Cartesian closed category.}
@@ -824,7 +825,7 @@ In this section, we define two ways of creating a simplicial set out of existing
 \end{equation*}
 where $\mathcal{C}$ is some locally small category. 
 
-The idea is as follows. Given such a functor $\alpha\colon \Delta \to \mathcal{C}$ and any object $C$ in $\mathcal{C}$, we can define a corresponding simplicial set $\tilde{C}$ by first Yoneda embedding, and then composing the resulting hom functor with $\alpha$:
+The idea is as follows. Given such a functor $\alpha\colon \Delta \to \mathcal{C}$ and any object $C \in \mathcal{C}$, we can define a corresponding simplicial set $\tilde{C}$ by first Yoneda embedding, and then composing the resulting hom functor with $\alpha$:
 \begin{equation*}
   C \mapsto \tilde{C} = \mathcal{C}(\alpha(-), C).
 \end{equation*}
@@ -882,7 +883,7 @@ which is tantamount to picking out morphisms in $\mathcal{C}$. Functors in $\mat
   \end{tikzcd}
 \end{equation*}
 
-For $n \geq 2$, $N(\mathcal{C})([n])$ picks out chains of morphisms,
+In general, $N(\mathcal{C})([n])$ picks out chains of morphisms,
 \begin{equation*}
   \begin{tikzcd}
     X_{0}
@@ -906,7 +907,7 @@ To summarize, one pictures the construction of the nerve of a category $\mathcal
 
   \item Our multidigraph has lots of little triangles formed by morphisms. We fill in each of the commuting triangles with a 2-simplex.
 
-  \item Now we proceed inductively. Given the set of $(n-1)$-simplices of $N(\mathcal{C})$, we add an n-simplex whenever we have all the $(n-1)$-simplices forming its boundary.
+  \item Now we proceed inductively. Given the set of $(n-1)$-simplices of $N(\mathcal{C})$, we add an $n$-simplex whenever we have all the $(n-1)$-simplices forming its boundary.
 \end{enumerate}
 Note that the $n$-simplices for $n > 2$ don't tell us very much; we add them whenever we have their boundaries. This is known as \emph{2-coskeletality,} and is a reflection of the fact that categories only have objects and morphisms, and no higher data. We will meet the notion of coskeletality in \hyperref[sec:skeletons_and_coskeletons]{Section~\ref*{sec:skeletons_and_coskeletons}}.
 
@@ -923,7 +924,7 @@ Note that the $n$-simplices for $n > 2$ don't tell us very much; we add them whe
   The nerve is of the form $\mathcal{C} \mapsto \SSet(\chi(-), \mathcal{C})$. The result follows from \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}.
 \end{proof}
 
-The functor $\mathcal{Y}_{!}\chi$ provides a way of constructing, from any simplicial set, a category. We will not say too much about it now. Rather, we will come back to it later, when we have the tools to understand it properly.
+The functor $\mathcal{Y}_{!}\chi$ provides a way of constructing, from any simplicial set, a category. We will not say too much about it now. Rather, we will come back to it (in a slightly weaker form) in \hyperref[sec:the_homotopy_category_of_an_infinity_category]{Section~\ref*{sec:the_homotopy_category_of_an_infinity_category}}, when we have the tools to understand it properly.
 
 \subsection{Singular sets}
 \label{ssc:singular_sets}
@@ -983,7 +984,7 @@ In \hyperref[ssc:singular_sets]{Subsection~\ref*{ssc:singular_sets}}, we saw tha
   \Sing\colon \mathbf{Top} \to \SSet;\qquad \Sing(X) = \mathbf{Top}(\rho(-), X).
 \end{equation*}
 
-We then saw that $\Sing$ had a left adjoint, the geometric realization functor, which provides a weak inverse to $\Sing$. The geometric realization had the following formula.
+We then saw that $\Sing$ has a left adjoint, the geometric realization functor, which provides a weak inverse to $\Sing$. The geometric realization has the following formula.
 \begin{equation*}
   \abs{K} = (\mathcal{Y}_{!}\rho)(K).
 \end{equation*}
@@ -1004,13 +1005,14 @@ The goal of this section is to derive and understand the following formula for t
 \end{theorem}
 \begin{proof}
   By the colimit formula for left Kan extensions (\hyperref[fact:pointwise_formula_kan_extensions]{Fact~\ref*{fact:pointwise_formula_kan_extensions}}), we can write
-  \begin{equation*}
+  \begin{equation}
+    \label{eq:colimit_formula_for_geometric_realization}
     \abs{K} = \colim\left[ (\Delta \downarrow K) \to \Delta \overset{\rho}{\to} \mathbf{Top} \right].
-  \end{equation*}
+  \end{equation}
 
-  Let $f$ be a morphism $[m] \to [n]$. Then by the contravariance of any simplicial set $K$, $f$ induces a morphism $f^{*}\colon K_{n} \to K_{m}$. Similarly, by the covariance of  the geometric realization functor $\rho\colon \Delta \to \mathbf{Top}$ (defined in \hyperref[def:realization_functor]{Definition~\ref*{def:realization_functor}}), $f$ induces a map $f_{*}\colon \abs{\Delta^{m}} \to \abs{\Delta^{n}}$.
+  Let $f$ be a morphism $[m] \to [n]$. Then by the contravariance of any simplicial set $K$, $f$ induces a morphism $f^{*}\colon K_{n} \to K_{m}$. Similarly, by the covariance of  the geometric realization functor $\rho\colon \Delta \to \mathbf{Top}$, $f$ induces a map $f_{*}\colon \abs{\Delta^{m}} \to \abs{\Delta^{n}}$.
 
-  By the coequalizer formula for colimits (\hyperref[fact:limit_colimit_formula]{Fact~\ref*{fact:limit_colimit_formula}}), we can express the above colimit as the following coequalizer.
+  By the coequalizer formula for colimits (\hyperref[fact:limit_colimit_formula]{Fact~\ref*{fact:limit_colimit_formula}}), we can express the colimit in \hyperref[eq:colimit_formula_for_geometric_realization]{Equation~\ref*{eq:colimit_formula_for_geometric_realization}} as the following coequalizer.
   \begin{equation*}
     \begin{tikzcd}[row sep=huge, column sep=huge]
       \coprod\limits_{\substack{f \in \mathrm{Morph}(\Delta/K) \\ f\colon [m] \to [n]}} \abs{\Delta^{m}}
@@ -1022,12 +1024,12 @@ The goal of this section is to derive and understand the following formula for t
       & \mathrm{coeq}
     \end{tikzcd}
   \end{equation*}
-  where $A$ and $B$ are defined by their components
+  Here, the morphisms $A$ and $B$ are defined via the univeral property for coproducts by their components
   \begin{equation*}
     A_{f} = \iota_{\abs{\Delta^{m}}},\qquad B_{f} = \iota_{\abs{\Delta^{n}}} \circ  f_{*}.
   \end{equation*}
 
-  Recall that any morphism $g \in \mathrm{Morph}(\Delta\downarrow K)$ is defined by making the following diagram commute.
+  Let us understand the first coproduct, taken over the set of morphisms in $(\Delta \downarrow K)$. Recall that a morphism $([m], f) \to ([n], f')$ in $\mathrm{Morph}(\Delta\downarrow K)$ is a morphism $g\colon [m] \to [n]$ making the following diagram commute.
   \begin{equation*}
     g\colon [m] \to [n];\qquad
     \begin{tikzcd}
@@ -1041,7 +1043,13 @@ The goal of this section is to derive and understand the following formula for t
     \end{tikzcd}
   \end{equation*}
 
-  This means that such a morphism contains two pieces of data: a morphism $g\colon [m] \to [n]$, and a morphism $f'\colon \Delta^{n} \to K$. The other morphism $f$ must be the composite $f' \circ \Delta^{g}$.
+  This means that morphisms in $(\Delta \downarrow K)$ can be uniquely parametrized by the following pieces of data. 
+  \begin{itemize}
+    \item A morphism $g\colon [m] \to [n]$. 
+
+    \item A morphism $f'\colon \Delta^{n} \to K$. 
+  \end{itemize}
+  The other morphism $f$ must be the composite $f' \circ \Delta^{g}$.
 
   This means that we are really taking the coproduct over two things: morphisms $[m] \to [n]$, and morphisms $\Delta^{n} \to K$. But by the Yoneda lemma
   \begin{equation*}

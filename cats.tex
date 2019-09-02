@@ -395,6 +395,37 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
   We know that the Yoneda embedding is fully faithful. Thus, by \hyperref[thm:kan_extension_along_fully_faithful_functor_counit_isomorphism]{Theorem~\ref*{thm:kan_extension_along_fully_faithful_functor_counit_isomorphism}}, we have that the unit is an isomorphism. Also, by \hyperref[thm:yoneda_extension_of_restriction_preserves_colimits]{Theorem~\ref*{thm:yoneda_extension_of_restriction_preserves_colimits}}, the counit is an isomorphism, so the above adjunction is in fact an equivalence of categories.
 \end{proof}
 
+\section{Day convolution}
+\label{sec:day_convolution}
+
+Let $(\mathcal{C}, \otimes)$ be a monoidal category. The category $\Set_{\mathcal{C}}$ of functors from $\mathcal{C}\op$ to $\Set$ inherits a monoidal structure as follows.
+
+Given functors $F$, $G\colon \mathcal{C} \to \Set$, we can define a functor
+\begin{equation*}
+  F \bar{\times} G\colon \mathcal{C}\op \times \mathcal{C}\op \to \Set;\qquad (c, d) \mapsto F(c) \times G(d).
+\end{equation*}
+
+\begin{definition}[Day convolution]
+  \label{def:day_convolution}
+  The \defn{Day convolution} of $F$ and $G$, denoted $F \otimes G$, is given by the left Kan extension of $F \bar{\times} G$ along $\otimes\op$.
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}\op \times \mathcal{C}\op
+      \arrow[rr, "F \bar{\times} G"]
+      \arrow[dr, swap, "\otimes\op"]
+      && \Set
+      \\
+      & \mathcal{C}\op
+      \arrow[ur, swap, "F \otimes G"]
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+The colimit formula for left Kan extensions tells us that
+\begin{equation*}
+  (F \otimes G)(c) = \colim \left[ (c \downarrow \otimes\op) \to \mathcal{C}\op \times \mathcal{C}\op \overset{F \bar{\times} G}{\to} \Set \right]
+\end{equation*}
+
 \section{Enriched category theory}
 \label{sec:enriched_category_theory}
 

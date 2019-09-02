@@ -7,9 +7,11 @@
 \chapter{Infinity categories}
 \label{ch:infinity_categories}
 
-\begin{note}
-  I will edit this chapter heavily. It is in desperate need of a good de-clawing.
-\end{note}
+In \hyperref[ssc:nerves]{Subsection~\ref*{ssc:nerves}}, we constructed a functor
+\begin{equation*}
+  N\colon \mathbf{Cat} \to \SSet
+\end{equation*}
+which sends any category to a simplicial likeness.
 
 \begin{lemma}
   Let $K$ be a simplicial set. Then $K$ is the nerve of some category if and only if $K$ has unique inner horn fillers. That is, the following are equivalent.
@@ -28,10 +30,22 @@
           \arrow[ur, dashed]
         \end{tikzcd}
       \end{equation*}
+      has a unique solution.
   \end{itemize}
 \end{lemma}
 \begin{proof}
-  First, suppose that $K = N(\mathcal{C})$ for some category $\mathcal{C}$. Then
+  First, suppose that $K = N(\mathcal{C})$ for some category $\mathcal{C}$. The first inner horn for which we have to provide a unique lift is
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{2}_{1}
+      \arrow[r]
+      \arrow[d, hook]
+      & N(\mathcal{C})
+      \\
+      \Delta^{2}
+      \arrow[ur, dashed]
+    \end{tikzcd}
+  \end{equation*}
 \end{proof}
 
 \section{Basic definitition}
@@ -62,7 +76,7 @@
 
 \begin{example}
   \label{eg:singular_set_of_topological_space_is_infinity_categeory}
-  For any topological space $X$, the singular set $\Sing(x)$ has \emph{all} horn fillers, hence certainly inner horn fillers.
+  For any topological space $X$, the singular set $\Sing(X)$ has \emph{all} horn fillers, hence certainly inner horn fillers.
 \end{example}
 
 In the previous chapter, we mainly worked with Kan complexes, so we used the Kan model structure on $\SSet$. There is, however, a different model structure on $\SSet$, which is better suited to infinity-categorical thinking.
@@ -380,7 +394,7 @@ We would like to be able to view infinity-categories as a generalization of cate
   \end{enumerate}
 \end{proof}
 
-Note that we have made good on our promise, made in \hyperref[sec:simplicial_sets_from_cosimplicial_objects]{Section~\ref*{sec:simplicial_sets_from_cosimplicial_objects}}, to give a partial description of the left adjoint to the nerve $N$ given by the Yoneda extension $\mathcal{Y}_{!}\chi$; when restricted to $\infty$-categories, it is the given by the functor $\h$.
+Note that we have made good on our promise, made in \hyperref[sec:simplicial_sets_from_cosimplicial_objects]{Section~\ref*{sec:simplicial_sets_from_cosimplicial_objects}}, to give a partial description of the left adjoint to the nerve $N$ given by the Yoneda extension $\mathcal{Y}_{!}\chi$: when restricted to $\infty$-categories, it is the given by the functor $\h$.
 
 \section{The coherent nerve}
 \label{sec:the_coherent_nerve}
@@ -480,10 +494,6 @@ Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techica
     N_{\Delta} \circ \Sing(\mathcal{T}).
   \end{equation*}
 \end{definition}
-
-\begin{joke}
-  How do you get a simplicially enriched category from a topologically enriched category? It's easy---just sing!
-\end{joke}
 
 \subsection{Thickening}
 \label{ssc:thickening}
@@ -696,17 +706,13 @@ Here we list some theorems which we will prove later, after we have some more ad
 \subsection{Opposite categories}
 \label{ssc:opposite_categories}
 
-Henceforth, we have been considering the domain of simplicial sets to be the category of functors $\Delta\op \to \mathbf{Set}$. However, we have sometimes relaxed this when it was convenient to do so. For example, the $n$-simplex $\Delta^{n}$ was defined by
-\begin{equation*}
-  \Delta^{n} = \Delta(-, [n]).
-\end{equation*}
-We have notated the subsimplex missing the 0th vertex by $\Delta^{\{1, \ldots, n\}}$, despite the fact that $\{1, \ldots, n\}$ is not an object in $\Delta$, so it is not clear how to make sense of this; in particular, it does not make any sense to write
+Henceforth, we have been considering the domain of simplicial sets to be the simplex category $\Delta$. However, we have sometimes relaxed this when it was convenient to do so. For example, we have notated the subsimplex of $\Delta^{n}$ missing the 0th vertex by $\Delta^{\{1, \ldots, n\}}$, despite the fact that $\{1, \ldots, n\}$ is not an object in $\Delta$, so it is not clear how to make sense of this; in particular, it does not make any sense to write
 \begin{equation*}
   \Delta^{\{1, \ldots, n\}} = \Delta(-, \{1, \ldots, n\}).
 \end{equation*}
-What we are really doing is extending $\Delta$ to the category of finite, non-empty linearly ordered sets. We could do this because the inclusion functor $\Delta \hookrightarrow \mathbf{FinLinOrd}$ is an equivalence, so passing from $\Delta$ to $\mathbf{FinLinOrd}$ is just a shift of perspective.
+One way of atoning for this transgressions it to extend the simplex category $\Delta$ to the category of finite, non-empty linearly ordered sets, denoted $\mathbf{FinLinOrd}$; the category $\Delta$ is then the skeleton of $\mathbf{FinLinOrd}$. The inclusion functor $\Delta \hookrightarrow \mathbf{FinLinOrd}$ is an equivalence, so passing from $\Delta$ to $\mathbf{FinLinOrd}$ is just a shift of perspective.
 
-On $\mathbf{FinLinOrd}$, there is a map $\mathsf{Swap}$, which reverses the linear order. That is, it sends the set
+On $\mathbf{FinLinOrd}$, there is a functor $\mathsf{Swap}$, which reverses the linear order. That is, it sends the set
 \begin{equation*}
   \{0, \ldots, n\} \mapsto \{n, \ldots, 0\}.
 \end{equation*}
@@ -716,7 +722,7 @@ Let us try to understand the behavior of $\mathsf{Swap}$. Any map
 \end{equation*}
 can be drawn diagrammatically as follows
 \begin{equation*}
-  \begin{tikzcd}
+  \begin{tikzcd}[row sep=small]
     0
     \arrow[dr, mapsto]
     & 0
@@ -737,9 +743,9 @@ can be drawn diagrammatically as follows
     & m
   \end{tikzcd}
 \end{equation*}
-The condition that the map $f$ be weakly monotonic is equivalent to the demand that none of the arrows in the above diagram cross. The swap operation turns the above diagram on its head, taking uncrossed arrows to uncrossed arrows. Thus, morphisms $f\colon [n] \to [m]$ are taken to morphisms $f\op\colon [\bar{n}] \to [\bar{m}]$. Furthermore, composition is respected because composition is done by stacking diagrams left to right.
+The condition that the map $f$ be weakly monotonic is equivalent to the condition that none of the arrows in the above diagram cross. The swap operation turns the above diagram on its head, taking uncrossed arrows to uncrossed arrows. Thus, morphisms $f\colon [n] \to [m]$ are taken to morphisms $f\op\colon [\bar{n}] \to [\bar{m}]$. Furthermore, composition is respected because composition is done by stacking diagrams left to right.
 
-This discussion means that $\mathsf{Swap}$ is an endofunctor on $\mathbf{FinLinOrd}$, and further that it is an equivalence of categories, since $\mathsf{Swap}^{2} = \id$.\footnote{We are now solidly in evil territory. I wonder if there is a way out.}
+This discussion means that $\mathsf{Swap}$ is an endofunctor on $\mathbf{FinLinOrd}$, and further that it is an equivalence of categories, since $\mathsf{Swap}^{2} = \id$.
 
 Let $\mathcal{C}$ and $\mathcal{D}$ be regular categories. Any endofunctor $E\colon \mathcal{C} \to \mathcal{C}$ gives an endofunctor on the functor category $[\mathcal{C}, \mathcal{D}]$ as follows.
 \begin{itemize}
@@ -790,6 +796,8 @@ Let $\mathcal{C}$ and $\mathcal{D}$ be regular categories. Any endofunctor $E\co
 \subsection{Joins}
 \label{ssc:joins}
 
+In \hyperref[ssc:opposite_categories]{Subsection~\ref*{ssc:opposite_categories}}, we expanded the simplex category $\Delta$ to the category $\mathbf{FinLinOrd}$, which allowed us to
+
 \begin{definition}[join of categories]
   \label{def:join_of_categories}
   Let $\mathcal{C}$ and $\mathcal{C}'$ be ordinary categories. The \defn{join} of $\mathcal{C}$ and $\mathcal{C}'$, denoted $\mathcal{C} \star \mathcal{C}'$, is the category with objects
@@ -808,6 +816,8 @@ Let $\mathcal{C}$ and $\mathcal{D}$ be regular categories. Any endofunctor $E\co
   \end{equation*}
 \end{definition}
 
+One imagines the join of two categories as follows.
+
 \begin{example}
   Here is an alternative definition for the category of cones over a functor $F\colon \mathcal{C} \to \mathcal{D}$, given in terms of the join: it is the category
   \begin{equation*}
@@ -817,35 +827,22 @@ Let $\mathcal{C}$ and $\mathcal{D}$ be regular categories. Any endofunctor $E\co
 \end{example}
 
 \begin{example}
-  We have
+  Interpreting the linearly ordered set $[n]$ as a category, we have
   \begin{equation*}
     [m] \star [n] = [m + n + 1].
   \end{equation*}
-  This operation makes $\hat{\Delta}$ into a monoidal category, where $\hat{\Delta}$ includes the empty ordinal, denoted $[-1]$.
+  Thus, on $\Delta$ the join agrees with the ordinal sum.
 \end{example}
+This looks tantalizingly like a monoidal structure on the simplex category $\Delta$. Unfortunately, there is no unit object. This can be remedied by adding an object $[-1] = \emptyset$ to $\Delta$. We will denote this category by $\hat{\Delta}$. This gives us a monoidal category $(\hat{\Delta}, \star)$.
 
-Our next goal is to extend $\star$ from $\Delta$ to $\SSet$. One might hope that this could be accomplished by Yoneda extension, and indeed one would be right. The general case of this is known as \emph{Day convolution.}
-
-For any simplicial set $K$, extend the domain of $K$ to $\hat{\Delta}$ by defining $K([-1]) = \emptyset$. Given any simplicial sets $K$ and $S$, we can define in this way a functor
-\begin{equation*}
-  K \bar{\otimes} S\colon \hat{\Delta}\op \times \hat{\Delta}\op \to \Set;\qquad ([m], [n]) \mapsto K([m]) \times S([n]).
-\end{equation*}
+The Day convolution (\hyperref[def:day_convolution]{Definition~\ref*{def:day_convolution}}) allows us to extend $\star$ from $\hat{\Delta}$ to $\mathbf{Set}_{\hat{\Delta}}$.
 
 \begin{definition}[join of simplicial sets]
   \label{def:join_of_simplicial_sets}
-  Let $K$ and $S$ be simplicial sets. The \defn{join} $K \star S$ of $K$ and $S$ is given by the following left Kan extension
-  \begin{equation*}
-    \begin{tikzcd}
-      \hat{\Delta}\op \times \hat{\Delta}\op
-      \arrow[rr, "K \bar{\otimes} S"]
-      \arrow[dr, swap, "\star\op"]
-      && \Set
-      \\
-      & \hat(\Delta)\op
-      \arrow[ur, swap, "K \star S"]
-    \end{tikzcd}
-  \end{equation*}
+  Let $K$ and $S$ be simplicial sets. The \defn{join} of $K$ and $S$, denoted $K \star S$, is the Day convolution of $K$ and $S$.
 \end{definition}
+
+Of course, this gives a functor $\hat{\Delta}\op \to \Set$; to get a simplicial set, one simply forgets the data of the empty set of $(-1)$-simplices.
 
 \begin{theorem}
   We can compute the join by the following formula.
@@ -853,6 +850,12 @@ For any simplicial set $K$, extend the domain of $K$ to $\hat{\Delta}$ by defini
     (K \star K')_{n} = \coprod_{[i] \oplus [j] \simeq [n]} K_{i} \times K'_{j},
   \end{equation*}
 \end{theorem}
+\begin{proof}
+  The colimit formula for Kan extensions tells us that
+  \begin{equation*}
+    (K \star S)_{n} = \colim\left[ ([n] \downarrow \star\op) \to \hat{\Delta}\op \times \hat{\Delta}\op \to \Set \right]
+  \end{equation*}
+\end{proof}
 
 and which acts on a morphism $\phi\colon [m] \to [n]$ by sending a simplex
 
@@ -989,8 +992,6 @@ This is functorial since
 
 For regular categories, it is possible to define colimits as limits in opposite categories; the two notions are equivalent. In infinity categories, this is also the case.
 
-In the Kan model structure, trivial fibrations are Kan fibrations which are also homotopy equivalences. However, we have immediately that $\W \cap \fib = \cof\rlp$, i.e.\ trivial Kan fibrations are precisely those morphisms of simplicial sets that have the right lifting property with respect to monomorphisms. However, since $\cof$ is saturated, this is equivalent to having the left lifting property with respect to boundary inclusions.
-
 \begin{lemma}
   \label{lemma:under_over_categories_of_kan_complex_are_contractible}
   Let $\mathcal{C}$ be a Kan complex, and $x \in \mathcal{C}$. Then $\mathcal{C}_{/x}$ and $\mathcal{C}_{x/}$ are contractible Kan complexes.
@@ -1018,19 +1019,17 @@ In the Kan model structure, trivial fibrations are Kan fibrations which are also
 \subsection{Initial objects}
 \label{ssc:initial_objects}
 
+We would like initial objects in an infinity category to be objects that have an edge to each other object, and we would like this edge to be unique in some sense. Demanding uniqueness on the nose, however, would go agains the spirit of the theory of infinity categories. The right notion, not obviously, turns out to be the following.
 
 \begin{definition}[initial object]
   \label{def:initial_object}
   Let $\mathcal{C}$ be an $\infty$-category and $x \in \mathcal{C}$ an object. We say that $x$ is an \defn{initial object} if the map
   \begin{equation*}
-    \mathcal{C}_{x/} \to \mathcal{C};\qquad \Delta^{0} \star \Delta^{n} \to \Delta^{n}
+    \mathcal{C}_{x/} \to \mathcal{C};\qquad \Delta^{0} \star \Delta^{n} \overset{\text{restrict}}{\to} \Delta^{n}
   \end{equation*}
   is a trivial Kan fibration.
 \end{definition}
 
-We would like initial/terminal objects to be objects that have an edge to each other object, and we would like this edge to be unique in some sense. Demanding uniqueness on the nose, however, would go agains the spirit of the theory of infinity categories.
-
-We have, however, the following.
 \begin{proposition}
   Let $\mathcal{C}$ be an $\infty$-category, and let $x$ be an initial object in $\mathcal{C}$. Then for each other object $y \in \mathcal{C}$, there is an edge $x \to y$.
 
@@ -1114,13 +1113,25 @@ One might expect that these conditions were equivalent. However, that is not the
   The solution to this lifting problem would give us a homotopy from $\alpha$ to $x$. However, by assumption, there is no such homotopy. Thus, $x$ is not initial in $\Sing(X)$. However, every point $x \in X$ is initial in $\h \Sing(X)$ because $\h \Sing(X) \simeq \pi_{\geq 1}(X)$, and there is exactly one homotopy class of paths between any two points of $X$ because $X$ is simply connected.
 \end{example}
 
-Suppose we are given any two initial objects in an infinity category. We have seen that we can find an edge between them, and that given two edge between them, we can find a homotopy. In turn, given homotopies, we can find a higher homotopy between them, etc. One might therefore think of the set of all initial objects as forming the vertices of some polyhedron, and the filling conditions above telling us that the polyhedron in question has no gaps; that is, that it is homotopy equivalent to the point. This intuition turns out to be correct.
+We have now shown the following. 
+\begin{itemize}
+  \item Given two initial objects $x$, $y$ in $\mathcal{C}$, that we can find an edge $x \to y$. 
+    
+  \item Given two such edges, we can find a homotopy betweem them.
+
+  \item Given two such homotopies, we can find a higher homotopy between them. 
+
+  \item Etc. 
+\end{itemize}
+Thinking of the set of all initial objects as forming the vertices of some polyhedron, the filling conditions above can intuitively be interpreted as telling us that the polyhedron in question can be filled in with higher data, such that the resulting object has no holes; that is, that it is homotopy equivalent to the point. This intuition turns out to be correct.
 
 \begin{theorem}
   Let $\mathcal{C}$ be a simplicial set with at least one initial object, and let $\mathcal{C}'$ be the simplicial subset consisting of all simplices all of whose vertices are initial objects in $\mathcal{C}$. Then $\mathcal{C}'$ is a contractible Kan complex.
 \end{theorem}
 \begin{proof}
-  The statment that $\mathcal{C}'$ is contractible means that the map $\mathcal{C}' \to *$ is a weak equivalence. The fact that it is a Kan complex means precisely that the map $\mathcal{C}' \to *$ is a fibration. Therefore, we need to check that the map $\mathcal{C}' \to *$ is a trivial fibration, i.e.\ has the right lifting property with respect to all boundary fillings.
+  The statment that $\mathcal{C}'$ is contractible means that the map $\mathcal{C}' \to *$ is a weak equivalence. The fact that it is a Kan complex means precisely that the map $\mathcal{C}' \to *$ is a fibration. Therefore, we need to check that the map $\mathcal{C}' \to *$ is a trivial fibration. 
+  
+  In the Kan model structure, trivial fibrations are Kan fibrations which are also homotopy equivalences. However, we have immediately that $\W \cap \fib = \cof\rlp$, i.e.\ trivial Kan fibrations are precisely those morphisms of simplicial sets that have the right lifting property with respect to monomorphisms. However, since the set of monomorphisms is the saturated hull of the set of boundary inclusions, this is equivalent to having the left lifting property with respect to boundary inclusions
   \begin{equation*}
     \begin{tikzcd}
       \partial \Delta^{n}
@@ -1130,7 +1141,7 @@ Suppose we are given any two initial objects in an infinity category. We have se
       \\
       \Delta^{n}
       \arrow[ur, dashed]
-    \end{tikzcd}
+    \end{tikzcd}.
   \end{equation*}
 
   For $n = 0$, the lifting problem demands that there exists at least one initial object, which is true by assumption.
@@ -1182,7 +1193,7 @@ Let $\mathcal{C}$ be an infinity category.
   \item The simplicial subset of all simplices whose vertices are terminal is a contractible Kan complex.
 \end{itemize}
 
-\subsection{limits and colimits}
+\subsection{Limits and colimits}
 \label{ssc:limits_and_colimits_in_infty_cats}
 
 \begin{definition}[limit cone]
