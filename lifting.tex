@@ -762,6 +762,24 @@ Saturatedness is a very powerful property. We will generally make use of it by p
   \end{enumerate}
 \end{proof}
 
+We get a similar, but dual and slightly weaker result for sets with the right lifting property.
+
+\begin{proposition}
+  \label{prop:properties_of_right_lifting_property}
+  Let $\mathcal{M}$ be any set of morphisms in $\mathcal{C}$. The set $\mathcal{M}\rlp$ has the following properties.
+  \begin{enumerate}
+    \item $\mathcal{M}\rlp$ contains all isomorphisms.
+
+    \item $\mathcal{M}\rlp$ is closed under \emph{finite} composition.
+
+    \item $\mathcal{M}\rlp$ is closed under retracts.
+
+    \item $\mathcal{M}\rlp$ is closed under pullbacks.
+
+    \item $\mathcal{M}\rlp$ is closed under small products.
+  \end{enumerate}
+\end{proposition}
+
 \begin{corollary}
   \label{cor:saturated_hull_contained_in_left_perp_of_right_perp}
   Let $\mathcal{M}$ be a set of morphisms in $\mathcal{C}$. Then
@@ -1335,10 +1353,10 @@ The main use of the small object argument is to prove the following.
       \arrow[d, swap, "\id \times g"]
       & A' \times B
       \arrow[ddr, bend left, "\id \times g"]
-      \arrow[d, hookrightarrow]
+      \arrow[d]
       \\
       A \times B'
-      \arrow[r, hookrightarrow]
+      \arrow[r]
       \arrow[rrd, swap, bend right, "f \times \id"]
       & A' \times B \coprod_{A \times B} A \times B'
       \arrow[dr, dashed, "f \wedge g"]
@@ -1433,10 +1451,10 @@ We will need this horrible lemma several times.
       \arrow[dr, "a"]
       \\
       A \times B'
-      \arrow[rr, near end, swap, crossing over, "b"]
+      \arrow[rr, near end, crossing over, "c"]
       \arrow[dr, swap, "\alpha \times \id_{B}"]
       && X
-      \arrow[d, "c"]
+      \arrow[d, "b"]
       \\
       & A' \times B'
       \arrow[ur, dashed, "\ell"]
@@ -1444,7 +1462,7 @@ We will need this horrible lemma several times.
       & Y
     \end{tikzcd}
   \end{equation*}
-  Re-arranging to avoid overlaps, we have
+  Re-arranging to avoid overlaps, we find the following diagram.
   \begin{equation*}
     \begin{tikzcd}
       & A \times B
@@ -1455,19 +1473,39 @@ We will need this horrible lemma several times.
       \arrow[dddr, bend right, swap, "a"]
       \arrow[dr, swap, "\id_{A'} \times \beta"]
       && A \times B'
-      \arrow[dddl, bend left, "b"]
+      \arrow[dddl, bend left, "c"]
       \arrow[dl, "\alpha \times \id_{B'}"]
       \\
       & A' \times B'
       \arrow[d, swap, "d"]
+      \arrow[dd, bend left, dashed, "\ell"]
       \\
       & Y
       \\
       & X
-      \arrow[u, "c"]
-      \arrow[uu, bend right, dashed, swap, "\ell"]
+      \arrow[u, "b"]
     \end{tikzcd}
-    \qquad
+  \end{equation*}
+
+  This diagram is made of three commuting squares and one triangle, which tell us the following.
+  \begin{enumerate}
+    \item The top square commutes trivially.
+
+    \item The outer square tells us that $a \circ (\alpha \times \id_{B}) = c \circ (\id_{A} \times \beta)$.
+
+    \item The left square tells us that $b \circ a = d \circ (\id_{A'} \times \beta)$.
+
+    \item The right square tells us that $b \circ c = d \circ (\alpha \times \id_{B'})$.
+
+    \item The triangle involving the lift tells us that $d = b \circ \ell$.
+  \end{enumerate}
+
+  We will denote the adjuncts to $a$, $c$, $d$, and $\ell$ by
+  \begin{equation*}
+    \tilde{a}\colon B \to [A', X],\qquad \tilde{c}\colon B' \to [A, X],\qquad \tilde{d}\colon B' \to [A', Y],\qquad \tilde{\ell}\colon B' \to [A', X].
+  \end{equation*}
+  Expanding the second diagram in the same way as the first, we find the following.
+  \begin{equation*}
     \begin{tikzcd}[column sep=small]
       & B'
       \arrow[dd, bend left, dashed, "\tilde{\ell}"]
@@ -1490,23 +1528,6 @@ We will need this horrible lemma several times.
       & \Maps(A, Y)
     \end{tikzcd}
   \end{equation*}
-  The top square commutes trivially.
-
-  This diagram is made of four commuting squares.
-  \begin{enumerate}
-    \item $a \circ (\alpha \times \id_{B}) = c \circ (\id_{A} \times \beta)$
-
-    \item $b \circ c = d \circ (\alpha \times \id_{B'})$
-
-    \item $b \circ a = d \circ (\id_{A'} \times \beta)$
-  \end{enumerate}
-
-  Taking adjuncts, define
-  \begin{equation*}
-    \tilde{a}\colon B \to [A', X],\qquad \tilde{c}\colon B' \to [A, X],\qquad \tilde{d}\colon B' \to [A', X].
-  \end{equation*}
-
-  Similarly, expanding the product in the second diagram into its cocone
 \end{proof}
 
 \begin{lemma}
@@ -1565,14 +1586,14 @@ We will need this horrible lemma several times.
   \begin{align*}
     \mathcal{M}_{1} &= \left\{ \Lambda^{n}_{i} \to \Delta^{n} \mid n > 0,\ 0 \leq i \leq n \right\} \\
     \mathcal{M}_{2} &= \left\{ \{e\} \times \Delta^{n} \coprod_{\{e\} \times \partial \Delta^{n}} \Delta^{1} \times \partial\Delta^{n} \to \Delta^{1} \times \Delta^{n} \Biggm| n \geq 0,\ e = 0,\, 1 \right\} \\
-    \mathcal{M}_{3} &= \left\{ \{e\} \times S \coprod_{\{e\} \times K} \Delta^{1} \times K \to \Delta^{1} \times S \Biggm| K \to S\ \text{monic},\ e = 0,\, 1 \right\}
+    \mathcal{M}_{3} &= \left\{ \{e\} \times S \coprod_{\{e\} \times S} \Delta^{1} \times S \to \Delta^{1} \times S' \Biggm| S \to S'\ \text{monic},\ e = 0,\, 1 \right\}
   \end{align*}
   Each of these sets generate the set of all anodyne morphisms in the sense that
   \begin{equation*}
     \overline{\mathcal{M}}_{1} = \overline{\mathcal{M}}_{2} = \overline{\mathcal{M}}_{3} = \{\text{anodyne morphisms}\}.
   \end{equation*}
 \end{theorem}
-\begin{proof}[Sketch of proof]
+\begin{proof}
   We will show that
   \begin{equation*}
     \mathcal{M}_{2} \subset \overline{\mathcal{M}}_{1},\qquad \mathcal{M}_{1} \subset \overline{\mathcal{M}}_{3},\qquad \text{and}\qquad \overline{\mathcal{M}}_{2} = \overline{\mathcal{M}}_{3}.
@@ -1581,6 +1602,8 @@ We will need this horrible lemma several times.
   \begin{equation*}
     \overline{\mathcal{M}}_{2} \subset \overline{\mathcal{M}}_{1} \subset \overline{\mathcal{M}}_{3} \subset \overline{\mathcal{M}}_{2}.
   \end{equation*}
+
+  
 \end{proof}
 
 This theorem gives us 

@@ -943,16 +943,16 @@ This is functorial since
 
 \begin{definition}[left cone, right cone]
   \label{def:left_cone_right_cone}
-  let $K$ be a simplicial set, and let $x \in K$.
+  let $K$ be a simplicial set. The \defn{left cone} of $K$ is the simplicial set
   \begin{itemize}
-    \item The \defn{left cone} of $x$ is the simplicial set
+    \item The \defn{left cone} of $K$ is the simplicial set
       \begin{equation*}
-        x^{\triangleleft} = \Delta^{0} \star x.
+        K^{\triangleleft} = \Delta^{0} \star K.
       \end{equation*}
 
-    \item The \defn{right cone} of $x$ is the simplicial set
+    \item The \defn{right cone} of $K$ is the simplicial set
       \begin{equation*}
-        x^{\triangleright} = x \star \Delta^{0}.
+        K^{\triangleright} = K \star \Delta^{0}.
       \end{equation*}
   \end{itemize}
 \end{definition}
@@ -1025,9 +1025,20 @@ We would like initial objects in an infinity category to be objects that have an
   \label{def:initial_object}
   Let $\mathcal{C}$ be an $\infty$-category and $x \in \mathcal{C}$ an object. We say that $x$ is an \defn{initial object} if the map
   \begin{equation*}
-    \mathcal{C}_{x/} \to \mathcal{C};\qquad \Delta^{0} \star \Delta^{n} \overset{\text{restrict}}{\to} \Delta^{n}
+    \mathcal{C}_{x/} \to \mathcal{C}
   \end{equation*}
-  is a trivial Kan fibration.
+  is a trivial Kan fibration. More specifically, this map takes an $n$-simplex
+  \begin{equation*}
+    \Delta^{n} \to \mathcal{C}_{x/},
+  \end{equation*}
+  i.e.\ a map
+  \begin{equation*}
+    \Delta^{0} \star \Delta^{n} \to \mathcal{C},
+  \end{equation*}
+  to the pullback
+  \begin{equation*}
+    \Delta^{n} \hookrightarrow \Delta^{0} \star \Delta^{n} \to \mathcal{C}.
+  \end{equation*}
 \end{definition}
 
 \begin{proposition}
@@ -1289,5 +1300,19 @@ Such functors are precisely morphisms of cones.
       is a trivial Kan fibration. Now consider the map
   \end{enumerate}
 \end{proof}
+
+Let $\mathcal{C}$ be a category, and let $p\colon K \to \mathcal{C}$ be a diagram with a colimit $x \in \mathcal{C}_{/p}$. Let $f\colon \mathcal{C} \to \mathcal{D}$ be a map of $\infty$-categories. We say that $f$ preserves the colimit of the diagram $p$ if,
+
+\section{Cofinal maps}
+\label{sec:cofinal_maps}
+
+\begin{definition}[cofinal map]
+  \label{def:cofinal_map}
+  Let $\mathcal{C}$ be an $\infty$-category, let $K$ be a simplicial set, and let $p\colon K \to \mathcal{C}$ be a diagram. We say that $p$ is \defn{cofinal} if, for any right fibration $X \to T$, the induced map
+  \begin{equation*}
+    \Maps_{T}(T, X) \to \Maps_{T}(S, X)
+  \end{equation*}
+  is a homotopy equivalence.
+\end{definition}
 
 \end{document}
