@@ -1407,7 +1407,7 @@ The main use of the small object argument is to prove the following.
   \end{enumerate}
 \end{proof}
 
-We will need this horrible lemma several times.
+We will need this lemma many times.
 \begin{lemma}
   \label{lemma:equivalent_lifting_problems}
   The following lifting problems are equivalent.
@@ -1487,15 +1487,15 @@ We will need this horrible lemma several times.
     \end{tikzcd}
   \end{equation*}
 
-  This diagram is made of three commuting squares and one triangle, which tell us the following.
+  This diagram is made of several commuting squares and one triangle, which tell us the following.
   \begin{enumerate}
     \item The top square commutes trivially.
-
-    \item The outer square tells us that $a \circ (\alpha \times \id_{B}) = c \circ (\id_{A} \times \beta)$.
 
     \item The left square tells us that $b \circ a = d \circ (\id_{A'} \times \beta)$.
 
     \item The right square tells us that $b \circ c = d \circ (\alpha \times \id_{B'})$.
+
+    \item The outer square tells us that $a \circ (\alpha \times \id_{B}) = c \circ (\id_{A} \times \beta)$.
 
     \item The triangle involving the lift tells us that $d = b \circ \ell$.
   \end{enumerate}
