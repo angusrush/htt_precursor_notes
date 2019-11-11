@@ -21,7 +21,7 @@ One often encounters problems of the following form.
       & D
     \end{tikzcd}
   \end{equation*}
-  construct a dashed arrow making everything commute.
+  construct a dashed arrow making the triangles formed commute.
   \begin{equation*}
     \begin{tikzcd}
       A
@@ -180,7 +180,7 @@ Saturatedness is a very powerful property. We will generally make use of it by p
   \begin{enumerate}
     \item Clearly, every isomorphism is a monomorphism.
 
-    \item Since coproducts are computed pointwise (\hyperref[cor:limits_computed_pointwise]{Corollary~\ref*{cor:limits_computed_pointwise}}) it suffices to check that every pushout of monos is mono in $\mathbf{Set}$.
+    \item Since colimits are computed pointwise (\hyperref[cor:limits_computed_pointwise]{Corollary~\ref*{cor:limits_computed_pointwise}}) it suffices to check that every pushout of monos is mono in $\mathbf{Set}$.
 
     \item Consider simplicial sets and maps as follows, with $i$ a monomorphism.
       \begin{equation*}
@@ -983,7 +983,7 @@ It turns out that under some conditions, we have an equality
 \section{The Small Object Argument}
 \label{sec:the_small_object_argument}
 
-The small object argument is the following statement.
+The small object argument is the proof of following statement.
 
 \begin{lemma}
   \label{lemma:small_object_argument}
@@ -1014,9 +1014,9 @@ The small object argument is the following statement.
       B
       \arrow[r]
       & Y
-    \end{tikzcd}
+    \end{tikzcd},
   \end{equation*}
-  is certainly more than specified by the data of the objects $A$ and $B$, the morphsim $i\colon A \to B$, the map $A_{j} \to X$, and the map $B \to Y$. Therefore, the collection of all such commuting diagrams is indexed by a small set.\footnote{I believe this, but I don't understand it.} Denote this set by $J$. We can write the set of all commuting squares as follows.
+  with $i$ in $\mathcal{M}$, is certainly completely specified by the data of the morphsim $i\colon A \to B$, the map $A \to X$, and the map $B \to Y$. Therefore, the collection of all such commuting diagrams is indexed by a small set. Denote this set by $J$. We can write the set of all commuting squares as follows.
   \begin{equation*}
     \left\{
       \begin{tikzcd}
@@ -1054,10 +1054,11 @@ The small object argument is the following statement.
       & Y
     \end{tikzcd}
   \end{equation*}
-  No consider the pushout.
+  Now consider the following pushout.
   \begin{equation*}
     \begin{tikzcd}
       \coprod_{j \in J} A_{j}
+      \arrow[dr, phantom, "\ulcorner", very near end]
       \arrow[r]
       \arrow[d, swap, "\amalg_{j} i_{j}"]
       & X

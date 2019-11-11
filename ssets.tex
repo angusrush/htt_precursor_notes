@@ -259,7 +259,7 @@ These categories and functors may seem too simple to be of any real use, but one
 \section{Simplicial sets}
 \label{sec:simplicial_sets}
 
-A simplicial set is thought of as a collection of standard simplices of various degrees, glued together along their faces. That is, a simplicial set consists of, for each $n \in \N$, a collection of simplices of degree $n$, together with rules for how to glue them together. This data can be specified efficiently in the following way.
+A simplicial set is thought of as a collection of standard simplices of various degrees, glued together along their faces. That is, a simplicial set consists of, for each $n \in \N$, a collection of simplices of degree $n$, together with data specifying which faces should be identified with other faces, and how. This data can be specified efficiently in the following way.
 
 \begin{definition}[simplicial set]
   \label{def:simplicial_set}
@@ -270,9 +270,7 @@ A simplicial set is thought of as a collection of standard simplices of various 
   We denote this category by $\SSet$.
 \end{definition}
 
-As discussed briefly in \hyperref[sec:yoneda_extensions]{Section~\ref*{sec:yoneda_extensions}}, one thinks of the image under the Yoneda embedding of the object $[n]$ as an $n$-simplex, called the \emph{standard $n$-simplex,} and more general simplicial sets as being built by gluing standard simplices together.
-
-Specifically, for any simplicial set $K$ we should interpret $K([n])$ as the set of $n$-simplices contained in $K$. The gluing conditions come from functoriality. We will investigate this in \hyperref[sec:what_sort_of_data_does_a_simplicial_set_give_us]{Section~\ref*{sec:what_sort_of_data_does_a_simplicial_set_give_us}}.
+As discussed briefly in \hyperref[sec:yoneda_extensions]{Section~\ref*{sec:yoneda_extensions}}, one thinks of the image under the Yoneda embedding of the object $[n]$ as an $n$-simplex, called the \emph{standard $n$-simplex.} One imagines more general simplicial sets as being built by gluing standard simplices together along their faces. Specifically, for any simplicial set $K$ we should interpret $K([n])$ as the set of $n$-simplices of $K$. The gluing conditions come from functoriality. We will investigate this in \hyperref[sec:what_sort_of_data_does_a_simplicial_set_give_us]{Section~\ref*{sec:what_sort_of_data_does_a_simplicial_set_give_us}}.
 
 \begin{definition}[standard simplex]
   \label{eg:standard_simplex}
@@ -317,7 +315,7 @@ Continuing, we find
 \end{equation*}
 We recognize these as degenerate faces. The only nondegenerate face will be $\{0,1,2\}$.
 
-Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for $k > n$; it is simply filled with an enormous number of degenerate simplices.\footnote{To be precise, with $\begin{pmatrix} n+k+1 \\ k \end{pmatrix}$ simplices.}
+Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for $k > n$; it is simply filled with an enormous number of degenerate simplices.\footnote{To be precise, $\begin{pmatrix} n+k+1 \\ k \end{pmatrix}$ simplices.}
 
 \begin{example}
   Denote the power set of a set $X$ by $\mathcal{P}(X)$. Let $\mathcal{J} \subseteq \mathcal{P}(\{0, 1, \ldots, n\})$. Then there is a simplicial set $\Delta^{\mathcal{J}}$ whose morphisms are defined to be the subset
@@ -339,7 +337,7 @@ Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for 
       \end{equation*}
       then the simplicial set we obtain is called the \emph{boundary} of $\Delta^{n}$, and denoted $\partial \Delta^{n}$.
 
-      The sets $\Delta^{n}([i])$ and $\partial \Delta^{n}([i])$ are the same for $i < n$. 
+      The sets $\Delta^{n}([i])$ and $\partial \Delta^{n}([i])$ are the same for $i < n$.
 
     \item Fix some $i$ such that $0 \leq i \leq n$. Then with
       \begin{equation*}
@@ -398,7 +396,7 @@ Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for 
 
 \begin{definition}[inner, outer horn]
   \label{def:inner_outer_horn}
-  If $i = 0$ or $i = n$, then we say that $\Delta^{n}_{i}$ is an \defn{outer horn}. Otherwise, if $0 < i < n$, we say that $\Lambda^{n}_{i}$ is an \defn{inner horn}.
+  If $i = 0$ or $i = n$, then we say that $\Lambda^{n}_{i}$ is an \defn{outer horn}. Otherwise, if $0 < i < n$, we say that $\Lambda^{n}_{i}$ is an \defn{inner horn}.
 \end{definition}
 
 \begin{definition}[simplicial complex]
@@ -411,15 +409,17 @@ Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for 
   \begin{equation*}
     \mathcal{K} \mapsto \Delta^{\mathcal{K}}.
   \end{equation*}
-  What would have been called the simplices of $\mathcal{K}$ correspond to the nondegenerate elements of the simplicial complex. Note however that there are many simplicial sets which are not obtained from simplicial complexes in this way.
+  What would have been called the simplices of $\mathcal{K}$ correspond to the nondegenerate elements of the simplicial set $\Delta^{\mathcal{K}}$.
+
+  Note that there are many simplicial sets which are not obtained from simplicial complexes in this way. That is, the theory of simplicial sets is a strict generalization of that of simplicial complexes.
 \end{example}
 
-Simplicial sets are functors, but the functorial notation is often unnecessarily burdensome. Therefore, it is standard to denote the $n$-simplices of a simplicial set $K$ by $K_{n}$ rather than $K([n])$. This is the notation that we will use from now on unless it will be confusing.
+Simplicial sets are functors, but the functorial notation is often unnecessarily burdensome. Therefore, it is standard to denote the $n$-simplices of a simplicial set $K$ by $K_{n}$ rather than $K([n])$. This is the notation that we will use from now on.
 
 \section{What sort of data does a simplicial set give us?}
 \label{sec:what_sort_of_data_does_a_simplicial_set_give_us}
 
-Let $K$ be a simplicial set. By definition evaluating $K$ on the object $[n]$ gives a set, which we interpret as the set of $n$-simplices making up $K$. We have claimed that the functoriality of $K$ provides instructions for how these simplices should be glued together. In this section we will investigate this claim.
+Let $K$ be a simplicial set. By definition evaluating $K$ on the object $[n]$ gives a set $K_{n}$, which we interpret as the set of $n$-simplices making up $K$. We have claimed that the functoriality of $K$ provides instructions for how these simplices should be glued together. In this section we will shine some light on this claim.
 
 First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] \to [m]$ by understanding how it behaves on simpler functions, known as the \emph{face} and \emph{degeneracy functions.}
 
@@ -444,15 +444,15 @@ First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] 
     \arrow[r, mapsto]
     & k-2
     \\
-    k-1 
+    k-1
     \arrow[r, mapsto]
     & k-1
     \\
-    k 
+    k
     \arrow[r, mapsto]
     & k
     \\
-    k+1 
+    k+1
     \arrow[ur, mapsto]
     & k+1
     \\
@@ -485,15 +485,15 @@ First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] 
     \arrow[r, mapsto]
     & k-2
     \\
-    k-1 
+    k-1
     \arrow[r, mapsto]
     & k-1
     \\
-    k 
+    k
     \arrow[r, mapsto]
     & k
     \\
-    k+1 
+    k+1
     \arrow[dr, mapsto]
     & k+1
     \\
@@ -513,7 +513,7 @@ The face and degeneracy functions are interesting because they generate all morp
   Let $\phi\colon [n] \to [m]$ be a weakly monotonic function. Then $\phi$ can be written as a composition of face and degeneracy maps.
 \end{proposition}
 \begin{proof}[Sketch of proof]
-  Since $\phi$ is by definition nondecreasing, we can specify it by, starting from $0$, a sequence 
+  Since $\phi$ is by definition nondecreasing, we can specify it by, starting from $0$, a sequence
 \end{proof}
 
 \begin{definition}[degeneracy map]
@@ -656,17 +656,17 @@ This is a general feature: the $i$th face $d_{i}$ map deletes the $i$th vertex.
 \section{Basic properties of the category of simplicial sets}
 \label{sec:basic_properties_of_the_category_of_simplicial_sets}
 
-Any functor category inherits a lot of structure from it codomain category. In the case of $\SSet$, the codomain category is $\mathbf{Set}$, which has an enormous amount of structure. In this section we collect some of the structure $\SSet$ inherits from $\Set$.
+Any functor category inherits a lot of structure from it codomain category. In the case of $\SSet = \Fun(\Delta\op, \Set)$, we are especially lucky, as $\Set$ has an enormous amount of structure. In this section we note some of the structure $\SSet$ inherits from $\Set$.
 
 \subsection{Existence of limits and colimits}
 \label{ssc:existence_of_limits_and_colimits}
 
 \begin{proposition}
   \label{prop:sset_has_limits_colimits}
-  The category $\SSet$ has small limits and colimits, which are computed pointwise.
+  The category $\SSet$ has small limits and colimits. These are computed level-wise, i.e.\ $n$-simplicices of a (co)limit of a diagram of simplicial sets are given by the the limit of the diagram's restriction to $n$-simplices.
 \end{proposition}
 \begin{proof}
-  The category $\mathbf{Set}$ has small limits and colimits, which implies by \hyperref[thm:functor_categories_complete_cocomplete]{Theorem~\ref*{thm:functor_categories_complete_cocomplete}} that any functor category $\mathrm{Fun}(\mathcal{C}, \mathbf{Set})$ does.
+  The category $\mathbf{Set}$ has small limits and colimits, which implies by \hyperref[thm:functor_categories_complete_cocomplete]{Theorem~\ref*{thm:functor_categories_complete_cocomplete}} that any functor category $\Fun(\mathcal{C}, \Set)$ does.
 
   Limits and colimits are computed pointwise thanks to \hyperref[cor:monos_epis_in_functor_category_preserved_pointwise]{Corollary~\ref*{cor:monos_epis_in_functor_category_preserved_pointwise}}.
 \end{proof}
@@ -731,36 +731,36 @@ The fact that limits and colimits are computed pointwise implies immediately tha
 
 Thanks to \hyperref[prop:sset_has_limits_colimits]{Proposition~\ref*{prop:sset_has_limits_colimits}}, the category $\SSet$ has products. It turns out that it also has exponential objects (i.e.\ an internal hom with respect to the Cartesian product). This makes it into a \emph{Cartesian closed category.}
 
-Before we prove that such an internal hom exists, let us assume that $\SSet$ admits an internal hom $[A, B]$, and see where we end up. 
+Before we prove that such an internal hom exists, let us assume that $\SSet$ admits an internal hom $\Maps(A, B)$, and see where we end up.
 
 \begin{lemma}
   \label{lemma:form_of_internal_hom}
-  Let $B$, $C$ be simplicial sets. Should it exist, the internal hom $[B, C]$ must be given, up to natural isomorphism, by the functor
+  Let $B$, $C$ be simplicial sets. Should it exist, the internal hom $\Maps(B, C)$ must be given, up to natural isomorphism, by the functor
   \begin{equation*}
     \SSet(B \times \Delta^{\bullet}, C),
   \end{equation*}
   where $\Delta^{\bullet}$ denotes the Yoneda embedding $\Delta \hookrightarrow \SSet$.
 \end{lemma}
 \begin{proof}
-  By definition, $[B, C]$ needs to be part of a hom-set adjunction
+  By definition, $\Maps(B, C)$ needs to be part of a hom-set adjunction
   \begin{equation*}
-    \SSet(A \times B, C) \simeq \SSet(A, [B, C]).
+    \SSet(A \times B, C) \simeq \SSet(A, \Maps(B, C)).
   \end{equation*}
   In particular, when $A = \Delta^{n}$, we have that
   \begin{equation*}
-    \SSet(\Delta^{n} \times B, C) \simeq \SSet(\Delta^{n}, [B, C]).
+    \SSet(\Delta^{n} \times B, C) \simeq \SSet(\Delta^{n}, \Maps(B, C)).
   \end{equation*}
   However, by the Yoneda lemma, there is an isomorphism
   \begin{equation*}
-    \SSet(\Delta^{n}, [B, C]) \simeq [B, C]_{n},
+    \SSet(\Delta^{n}, \Maps(B, C)) \simeq \Maps(B, C)_{n},
   \end{equation*}
   natural in $n$. Thus the internal hom, should it exist, must be given level-wise by
   \begin{equation*}
-    [B, C]_{n} \simeq \SSet(B \times \Delta^{n}, C).
+    \Maps(B, C)_{n} \simeq \SSet(B \times \Delta^{n}, C).
   \end{equation*}
   The naturality of the Yoneda embedding now implies that this level-wise isomorphism must really be a natural isomorphism, i.e.\ that
   \begin{equation*}
-    [B, C] \simeq \SSet(B \times \Delta^{\bullet}, C).
+    \Maps(B, C) \simeq \SSet(B \times \Delta^{\bullet}, C).
   \end{equation*}
 \end{proof}
 
@@ -769,40 +769,55 @@ Before we prove that such an internal hom exists, let us assume that $\SSet$ adm
   \begin{equation*}
     \Maps(B, C) = \SSet(B \times \Delta^{\bullet}, C),
   \end{equation*}
-  functions as the internal hom $[B, C]$. Specifically, for each simplicial set $A$, there is a natural bijection
+  is a model for the internal hom $\Maps(B, C)$. That is, for each simplicial set $B$, there is a bijection
   \begin{equation*}
-    \SSet(A \times B, C) \simeq \SSet(A, \Maps(B, C)).
+    \SSet(A \times B, C) \simeq \SSet(A, \Maps(B, C)),
   \end{equation*}
+  natural in $A$ and $C$.
 \end{theorem}
 \begin{proof}
   First, we define a family of morphisms which turn out to be the components of the counit. Consider a map
   \begin{equation*}
-    \mathrm{ev}_{B}\colon B \times \Maps(B, C) \to C
+    \mathrm{ev}_{C}\colon \Maps(B, C) \times B \to C
   \end{equation*}
   defined level-wise by
   \begin{equation*}
-    (\mathrm{ev}_{B})_{n}\colon B_{n} \times \SSet(\Delta^{n} \times B, C) \to C_{n}\qquad (b, f) \mapsto f(\id_{\Delta^{n}}, b).
+    (\mathrm{ev}_{C})_{n}\colon \SSet(\Delta^{n} \times B, C) \times B_{n} \to C_{n}\qquad (f, b) \mapsto f(\id_{\Delta^{n}}, b).
   \end{equation*}
 
-  We will be done if we can show that there is a bijection between morphisms $f$ and $\tilde{f}$ as follows,
+  We will be done if we can show that there is a bijection between morphisms $f$ and $\tilde{f}$ as follows.
   \begin{equation*}
     \begin{tikzcd}
-      B \times A
-      \arrow[rr, "\id_{B} \times f"]
+      A \times B
+      \arrow[rr, "f \times \id_{B}"]
       \arrow[dr, swap, "\tilde{f}"]
-      && B \times \Maps(B, C)
-      \arrow[dl, "\mathrm{ev}_{B}"]
+      && \Maps(B, C) \times B
+      \arrow[dl, "\mathrm{ev}_{C}"]
       \\
       & C
     \end{tikzcd}
   \end{equation*}
-  i.e.\ that for each $f\colon A \to \Maps(B, C)$ there is a unique map $\tilde{f}\colon A \times B \to C$ making the above diagram commute. The direction $f \mapsto \tilde{f}$ is obvious, following immediately from the above composition.
+  This amounts to showing that for each $\tilde{f}\colon A \times B \to C$ there is a unique map $f\colon A \to \Maps(B, C)$ making the above diagram commute. (The direction $f \mapsto \tilde{f}$ is obvious; it is given by the above composition.)
 
   Now suppose that we are given a map $\tilde{f}$. Let us construct $f$. The condition that the diagram commute tells us, level-wise, that
   \begin{equation*}
-    \tilde{f}_{n}(b, a) \overset{!}{=} (\ev_{B})_{n}(b, f_{n}(a)) = f_{n}(a)(\id_{\Delta^{n}}, b).
+    \tilde{f}_{n}(a, b) \overset{!}{=} (\ev_{C})_{n}(f_{n}(a), b) = f_{n}(a)(\id_{\Delta^{n}}, b).
   \end{equation*}
-  Thus, we have no choice in how $f$ behaves when its first slot is filled with an identity map.
+  Thus, we have no choice in how $f_{n}(a)$ behaves when its first slot is filled with an identity map.
+
+  We want $(\ev_{B})_{n}$ to be natural in both $B$ and $n$. Naturality in $B$ implies that the square
+  \begin{equation*}
+    \begin{tikzcd}
+      (\Maps(B, B) \times B)
+      \arrow[r, "\ev_{B}"]
+      \arrow[d]
+      & B
+      \\
+      \Maps(B, C) \times B
+      \arrow[r, "\ev_{C}"]
+      & C
+    \end{tikzcd}
+  \end{equation*}
 \end{proof}
 
 \begin{note}
@@ -814,32 +829,32 @@ Before we prove that such an internal hom exists, let us assume that $\SSet$ adm
   i.e.\ maps $K \to S$ correspond to vertices of $\Maps(K, S)$.
 \end{note}
 
-\section{Simplicial sets from cosimplicial objects}
+\section{Constructing simplicial sets from cosimplicial objects}
 \label{sec:simplicial_sets_from_cosimplicial_objects}
 
 So far, all the concrete examples of simplicial sets we have seen have been of the form $\Delta^{\mathcal{K}}$ for some $\mathcal{K} \subset \mathcal{P}(\{0, \ldots, n\})$. These examples are useful, but not very interesting in their own right.
 
-In this section, we define two ways of creating a simplicial set out of existing mathematical data; in one case, a category, and in the other, a topological space. We will do this via \emph{cosimplicial objects}, i.e.\ functors
+In this section, we define two ways of creating a simplicial set out of existing mathematical data; in one case, a category, and in the other, a topological space. We will do this using \emph{cosimplicial objects}, i.e.\ functors
 \begin{equation*}
   \alpha\colon \Delta \to \mathcal{C}
 \end{equation*}
-where $\mathcal{C}$ is some locally small category. 
+where $\mathcal{C}$ is some locally small category.
 
-The idea is as follows. Given such a functor $\alpha\colon \Delta \to \mathcal{C}$ and any object $C \in \mathcal{C}$, we can define a corresponding simplicial set $\tilde{C}$ by first Yoneda embedding, and then composing the resulting hom functor with $\alpha$:
+The idea is as follows. Given such a functor $\alpha\colon \Delta \to \mathcal{C}$ and any object $C \in \mathcal{C}$, we can define a corresponding simplicial set $\mathcal{N}(C)$ by first Yoneda embedding, and then composing the resulting hom functor with $\alpha$:
 \begin{equation*}
-  C \mapsto \tilde{C} = \mathcal{C}(\alpha(-), C).
+  C \mapsto \mathcal{N}(C) = \mathcal{C}(\alpha(-), C).
 \end{equation*}
-That $\tilde{C}$ is a simplicial set follows immediately from the contravariance of the first slot of the hom functor.
+That $\mathcal{N}(C)$ is a simplicial set follows immediately from the contravariance of the first slot of the hom functor.
 
-The $n$-simplices of $\tilde{C}$ are then given by maps of the $\mathcal{C}$-model of the $n$-simplex into $C$:
+The $n$-simplices of $\mathcal{N}(C)$ are then given by maps of the $\mathcal{C}$-model of the $n$-simplex into $C$:
 \begin{equation*}
-  \tilde{C}_{n} = \mathcal{C}(\alpha([n]), C).
+  \mathcal{N}(C)_{n} = \mathcal{C}(\alpha([n]), C).
 \end{equation*}
-In fact, by the functoriality of hom this construction gives us a functor $\mathcal{C} \to \SSet$ taking $C \mapsto \tilde{C}$.
+In fact, by the functoriality of hom this construction gives us a functor $\mathcal{C} \to \SSet$ taking $C \mapsto \mathcal{N}(C)$.
 
 The alert reader will remember that we have already defined two cosimplicial objects: the \emph{realization functor} $\rho\colon \Delta \to \Top$ (\hyperref[def:realization_functor]{Definition~\ref*{def:realization_functor}}) and the \emph{categorification functor} $\chi\colon \Delta \to \mathbf{Cat}$. (\hyperref[def:categorification_functor]{Definition~\ref*{def:categorification_functor}}). We said that they would provide a connection between the theory of simplicial sets and the theory of topological spaces and categories respectively. Indeed, these are the cosimplicial objects we will use.
 
-The power of defining simplicial sets via cosimplicial objects comes from \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}, which provides us immediately with a right adjoint to the functor $\widetilde{(-)}$. This right adjoint provides a weak inverse, i.e.\ a way of constructing from any simplicial set $K$ an object of the category $\mathcal{C}$.
+The power of defining simplicial sets via cosimplicial objects comes from \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}, which provides us immediately with a right adjoint to the functor $\mathcal{N}$. This right adjoint provides a weak inverse, i.e.\ a way of constructing from any simplicial set $K$ an object of the category $\mathcal{C}$.
 
 \subsection{Nerves}
 \label{ssc:nerves}
@@ -938,7 +953,7 @@ The functor $\mathcal{Y}_{!}\chi$ provides a way of constructing, from any simpl
   is called the \defn{singular set} of $X$, and denoted $\Sing(X)$.
 \end{definition}
 
-Unlike the nerve, which creates a reasonably faithful simplicial likeness of any category, the singular set creates a grotesque caricature. Consider, for example, the geometric 2-simplex $|\Delta^{2}|$. We would hope that the singular set of $\abs{\Delta^{2}}$ would be something like $\Delta^{2}$, but alas, it is a monstrosity. Rather than three 0-simplices, there are uncountably many, one for each continuous map of the point $\abs{\Delta^{0}}$ into $\abs{\Delta^{2}}$. Similarly, there is a 1-simplex for each continuous map of the interval into $\abs{\Delta^{2}}$.
+Unlike the nerve, which creates a reasonably faithful simplicial likeness of any category, the singular set creates a grotesque caricature. Consider, for example, the geometric 2-simplex $|\Delta^{2}|$. We would hope that the singular set of $\abs{\Delta^{2}}$ would be something like $\Delta^{2}$, but alas: rather than three 0-simplices, there are uncountably many, one for each continuous map of the point $\abs{\Delta^{0}}$ into $\abs{\Delta^{2}}$. Similarly, there is a 1-simplex for each continuous map of the interval into $\abs{\Delta^{2}}$.
 
 However, things are not as hopeless as they may appear. We will later see that these extra simplices are in some sense superficial, and that the simplicial set $\Sing(\abs{\Delta^{2}})$ is, in an appropriate sense, equivalent to $\Delta^{2}$.
 
@@ -975,6 +990,8 @@ However, \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:ri
 \begin{proof}
   \hyperref[lemma:colimit_of_comma_category]{Lemma~\ref*{lemma:colimit_of_comma_category}}.
 \end{proof}
+
+The objects of the category $(\Delta \downarrow K)$ consist of all morphisms $\Delta^{n} \to K$ for any $n$. This is simply the set of all simplices of $K$. The morphisms between simplices are all ways of mapping simplices into each other which
 
 \section{Geometric realization}
 \label{sec:geometric_realization}
@@ -1043,11 +1060,11 @@ The goal of this section is to derive and understand the following formula for t
     \end{tikzcd}
   \end{equation*}
 
-  This means that morphisms in $(\Delta \downarrow K)$ can be uniquely parametrized by the following pieces of data. 
+  This means that morphisms in $(\Delta \downarrow K)$ can be uniquely parametrized by the following pieces of data.
   \begin{itemize}
-    \item A morphism $g\colon [m] \to [n]$. 
+    \item A morphism $g\colon [m] \to [n]$.
 
-    \item A morphism $f'\colon \Delta^{n} \to K$. 
+    \item A morphism $f'\colon \Delta^{n} \to K$.
   \end{itemize}
   The other morphism $f$ must be the composite $f' \circ \Delta^{g}$.
 
