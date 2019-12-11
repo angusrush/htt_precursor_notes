@@ -710,15 +710,15 @@ Henceforth, we have been considering the domain of simplicial sets to be the sim
 \begin{equation*}
   \Delta^{\{1, \ldots, n\}} = \Delta(-, \{1, \ldots, n\}).
 \end{equation*}
-One way of atoning for this transgressions it to extend the simplex category $\Delta$ to the category of finite, non-empty linearly ordered sets, denoted $\mathbf{FinLinOrd}$; the category $\Delta$ is then the skeleton of $\mathbf{FinLinOrd}$. The inclusion functor $\Delta \hookrightarrow \mathbf{FinLinOrd}$ is an equivalence, so passing from $\Delta$ to $\mathbf{FinLinOrd}$ is just a shift of perspective.
+One way of atoning for this transgression is to extend the simplex category $\Delta$ to the category of finite, non-empty linearly ordered sets, denoted $\mathbf{FinLinOrd}$; the category $\Delta$ is then the skeleton of $\mathbf{FinLinOrd}$. The inclusion functor $\Delta \hookrightarrow \mathbf{FinLinOrd}$ is an equivalence, so passing from $\Delta$ to $\mathbf{FinLinOrd}$ is just a shift of perspective.
 
 On $\mathbf{FinLinOrd}$, there is a functor $\mathsf{Swap}$, which reverses the linear order. That is, it sends the set
 \begin{equation*}
-  \{0, \ldots, n\} \mapsto \{n, \ldots, 0\}.
+  [n] = \{0, \ldots, n\} \mapsto \{n, \ldots, 0\} = [\bar{n}].
 \end{equation*}
-Let us try to understand the behavior of $\mathsf{Swap}$. Any map
+Let us try to understand the behavior of $\mathsf{Swap}$. Any map $f\colon [n] \to [m]$, say
 \begin{equation*}
-  f\colon \{0, \ldots, n\} \to \{0, \ldots, m\}
+  f\colon [3] \to [4],
 \end{equation*}
 can be drawn diagrammatically as follows
 \begin{equation*}
@@ -731,16 +731,14 @@ can be drawn diagrammatically as follows
     \arrow[dr, mapsto]
     & 1
     \\
-    \vdots
-    & \vdots
+    2
+    & 2
     \\
-    n
+    3
     \arrow[ur, mapsto]
-    & n
+    & 3
     \\
-    & \vdots
-    \\
-    & m
+    & 4
   \end{tikzcd}
 \end{equation*}
 The condition that the map $f$ be weakly monotonic is equivalent to the condition that none of the arrows in the above diagram cross. The swap operation turns the above diagram on its head, taking uncrossed arrows to uncrossed arrows. Thus, morphisms $f\colon [n] \to [m]$ are taken to morphisms $f\op\colon [\bar{n}] \to [\bar{m}]$. Furthermore, composition is respected because composition is done by stacking diagrams left to right.
