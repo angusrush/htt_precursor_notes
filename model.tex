@@ -274,13 +274,22 @@ The axioms for a model category are over-specified, in the sense that providing 
 
       Note that in this case, $\W \cap \cof = \llp\fib = \{\text{anodyne morphisms}\}$.
 
-    \item For any small ring $R$, the category $\mathbf{Ch}(R)$ of chain complexes of small left $R$-modules has a model structure, called the \emph{projective model structure,} with
+    \item For any small ring $R$, the category $\mathbf{Ch}_{\geq}(R)$ of bounded-below chain complexes of small left $R$-modules has a model structure, called the \emph{projective model structure,} with
       \begin{itemize}
         \item $\W = $ Quasi-isomorphisms
 
-        \item $\fib = $ morphisms $f$ of complexes such that $f_{n}$ is a surjection for all $n$
+        \item $\fib = $ morphisms $f$ of complexes such that $f_{n}$ is an epimorphism for all $n \geq 0$
 
-        \item $\cof =$ $\llp(\fib \cap \W)$.
+        \item $\cof = $ morphisms $f$ of complexes such that $f_{n}$ is a monomorphism for all $n \geq 0$, and $\coker f_{n}$ is projective for all $n \geq 0$.
+      \end{itemize}
+
+    \item For any small ring $R$, the category $\mathbf{Ch}^{\leq}(R)$ of bounded-below cochain complexes of small left $R$-modules has a model structure, called the \emph{injective model structure,} with
+      \begin{itemize}
+        \item $\W = $ Quasi-isomorphisms
+
+        \item $\fib = $ morphisms $f$ of complexes such that $f_{n}$ is an epimorphism for all $n \geq 0$, and $\ker f_{n}$ injective for all $n \geq 0$.
+
+        \item $\cof = $ morphisms $f$ of complexes such that $f_{n}$ is a monomorphism for all $n \geq 0$.
       \end{itemize}
   \end{enumerate}
 \end{example}
@@ -842,7 +851,7 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
 
 \begin{example}
   \label{eg:cylinder_objects_in_sset}
-  In $\SSet$ equipped with the Kan model structure, the object $\Delta^{1} \times S$ always functions as a cylinder object over $S$.
+  In $\SSet$ equipped with the Kan model structure, for each simplicial set $S$ there is a cylinder object, given by $\Delta^{1} \times S$.
   \begin{equation*}
     \begin{tikzcd}
       S \amalg S
@@ -855,7 +864,7 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
     \end{tikzcd}
   \end{equation*}
 
-  In this case, $i$ is a cofibration because it is an inclusion (hence a monomorphism as required) and $\pi_{2}$ is a weak equivalence (i.e.\ a homotopy equivalence) because
+  In this case, $i$ is a cofibration because it is an inclusion (hence a monomorphism as required) and $\pi_{2}$ is a weak equivalence (i.e.\ a homotopy equivalence) with homotopy inverse $s \mapsto (0, s)$.
 \end{example}
 
 \begin{example}
@@ -872,7 +881,34 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
       \arrow[ur, swap, "\pi"]
     \end{tikzcd}
   \end{equation*}
-  The map $i$ is obviously injective on objects, and the map $\pi$ is an equivalence since the map $c \mapsto (c, 0)$ functions as a weak inverse.
+  The map $i$ is obviously injective on objects, and the map $\pi$ is an equivalence since the map $c \mapsto (c, 0)$ is a weak inverse.
+\end{example}
+
+\begin{example}
+  Let $R$ be a small ring, and consider the category $\mathbf{Ch}_{\geq}(R)$ with the projective model structure of \hyperref[ssc:a_model_structure_on_the_category_of_categories]{Subsection~\ref*{ssc:a_model_structure_on_the_category_of_categories}}. Denote by $I_{\bullet}$ the chain complex\footnote{This is, under the Dold-Kan correspondence, the chain complex corresponding to the unit interval.}
+  \begin{equation*}
+    \begin{tikzcd}
+      \cdots
+      \arrow[r]
+      & 0
+      \arrow[r]
+      & R
+      \arrow[r, "{( \id, -\id )}"]
+      & R \oplus R
+    \end{tikzcd}.
+  \end{equation*}
+  Then each chain complex $A_{\bullet}$ has a cylinder object
+  \begin{equation*}
+    \begin{tikzcd}
+      A \oplus A
+      \arrow[d]
+      \arrow[r, "{(\id, \id)}"]
+      & A
+      \\
+      A \otimes I
+      \arrow[ur]
+    \end{tikzcd}.
+  \end{equation*}
 \end{example}
 
 \begin{definition}[left homotopy]
@@ -895,6 +931,10 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
     f \overset{l}{\sim} g.
   \end{equation*}
 \end{definition}
+
+\begin{example}
+  In the projective model structure on $\mathbf{Ch}_{\geq 0}(R)$, a homotopy with respect to the 
+\end{example}
 
 \begin{lemma}
   \label{lemma:cylinder_injections_are_trivial_cofibrations}
@@ -1629,15 +1669,11 @@ Composition on the left and on the right preserves homotopy equivalence.
 \end{definition}
 
 \begin{example}
-  Consider the category $\SSet$ together with the Kan model structure (\hyperref[eg:model_categories]{Example~\ref*{eg:model_categories}}). We have seen (in \hyperref[eg:cylinder_objects_in_sset]{Example~\ref*{eg:cylinder_objects_in_sset}}) that for any simplicial set $S$, the object $\Delta^{1} \times S$ functions as a cylinder object for $S$, implying that the homotopy theory in the model structure on $\SSet$ agrees with the standard homotopy theory on $\SSet$.
+  Consider the category $\SSet$ together with the Kan model structure (\hyperref[eg:model_categories]{Example~\ref*{eg:model_categories}}). We have seen (in \hyperref[eg:cylinder_objects_in_sset]{Example~\ref*{eg:cylinder_objects_in_sset}}) that for any simplicial set $S$, the object $\Delta^{1} \times S$ is a cylinder object for $S$. Following our proofs through, one finds that the homotopy theory in the model structure on $\SSet$ agrees with the homotopy theory on $\SSet$ we have worked out in \hyperref[ch:simplicial_homotopy]{Chapter~\ref*{ch:simplicial_homotopy}}.
 
   In the Kan model structure $\SSet$, the fibrant objects are Kan complexes, and every object is cofibrant. Therefore, the fibrant-cofibrant objects are simply Kan complexes.
 
-  The homotopy category $\mathrm{Ho}(\SSet)$ therefore is simply
-  \begin{equation*}
-    \{(\text{Kan complexes})\}/(\text{homotopy equivalences}).
-  \end{equation*}
-  We will meet this category later. It is called the \emph{homotopy category of spaces.}
+  The homotopy category $\mathrm{Ho}(\SSet)$ therefore simply has objects given by Kan complex, and morphisms given by equivalence classes of morphisms under homotopy. We will meet this category later. It is called the \emph{homotopy category of spaces.}
 \end{example}
 
 \section{Fibrant-Cofibrant replacement}
@@ -1655,20 +1691,18 @@ We also define the notion of cofibrant replacement on morphisms, i.e.\ a way of 
 \begin{equation*}
   (f\colon X \to Y) \mapsto (Qf\colon QX \to QY).
 \end{equation*}
-Again, this assignment is not uniquely defined.
+Again, this assignment is not uniquely defined, so cofibrant does not yield a functor, as one might hope.
 
 Next we next prove that for any cofibrant replacements $Qf$ of $f$ and $Qg$ of $g$,
 \begin{equation*}
   f \overset{l}{\sim} g \implies Qf \overset{l}{\sim} Qg,
 \end{equation*}
-showing that the cofibrant replacement of a morphism is uniquely defined if we restrict our attention to morphisms out of cofibrant objects $X$, and consider morphisms up to left homotopy. In this setting, we have the further nice property that cofibrant replacement respects composition in the sense that
+showing that the cofibrant replacement of a morphism is uniquely defined up to homotopy if we restrict our attention to morphisms out of cofibrant objects $X$. In this setting, we have the further nice property that cofibrant replacement respects composition in the sense that
 \begin{equation*}
   Q(g \circ f) \overset{l}{\sim} Qg \circ Qf.
 \end{equation*}
 
-In \hyperref[ssc:fibrant_replacement]{Subsection~\ref*{ssc:fibrant_replacement}}, we study the dual notion, called \emph{fibrant replacement,} providing a method by which one can replace any object $X$ by a fibrant object $RX$ to which it is weakly equivalent.
-
-We again define a notion of cofibrant replacement on morphims, i.e. a way of assigning
+In \hyperref[ssc:fibrant_replacement]{Subsection~\ref*{ssc:fibrant_replacement}}, we study the dual notion, called \emph{fibrant replacement,} providing a method by which one can replace any object $X$ by a fibrant object $RX$ to which it is weakly equivalent. We then again define a notion of cofibrant replacement on morphims, i.e. a way of assigning
 \begin{equation*}
   (f\colon X \to Y) \mapsto (Rf\colon RX \to RY).
 \end{equation*}
@@ -1680,11 +1714,11 @@ and preserves composition in the sense that $R(g \circ f) = Rg \circ Rf$.
 
 In \hyperref[ssc:fibrant_cofibrant_replacement]{Subsection~\ref*{ssc:fibrant_cofibrant_replacement}}, we prove two preliminary lemmas, which show the following.
 \begin{itemize}
-  \item The fibrant replacement of a cofibrant object is fibrant-cofibrant.
+  \item The fibrant replacement of a cofibrant object is both fibrant and cofibrant.
 
   \item fibrant replacement takes left-homotopic morphisms $f$, $g\colon X \to Y$ with $X$ cofibrant to morphisms which are right homotopic.
 \end{itemize}
-The first implies that taking first the cofibrant and then fibrant replacement of any object $X$ yields an object $RQX$ which is fibrant-cofibrant. The second then implies that fibrant-cofibrant replacement gives a functor from $\mathcal{C}$ to $\mathrm{Ho}(\mathcal{C})$.
+The first lemma implies that taking first the cofibrant and then fibrant replacement of any object $X$ yields an object $RQX$ which is both fibrant and cofibrant; one calls such objects \emph{fibrant-cofibrant,} and the act of replacing an object by a weakly equivalent fibrant-cofibrant one \emph{fibrant-cofibrant replacement.} The second lemma then implies that fibrant-cofibrant replacement gives a functor from $\mathcal{C}$ to $\mathrm{Ho}(\mathcal{C})$.
 
 \subsection{Cofibrant replacement}
 \label{ssc:cofibrant_replacement}
@@ -1718,6 +1752,10 @@ The first implies that taking first the cofibrant and then fibrant replacement o
     \end{tikzcd}
   \end{equation*}
 \end{definition}
+
+\begin{example}
+  Consider the category $\mathbf{Ch}_{\geq}(R)$ of bounded-below chain complexes of modules over a ring $R$. Let $M$ be an $R$-module, considered as a chain complex concentrated in degree 0. A cofibrant replacement for $M$ is a chain complex of projective modules $P^{M}$ together with a trivial fibration $P^{M} \to M$. This is the same thing as a projective resolution of $M$.
+\end{example}
 
 \begin{lemma}
   For any map $f\colon X \to Y$, any choice of cofibrant replacement $f \mapsto Qf$ respects left homotopy; that is, if $f \overset{l}{\sim} f'$, then $Qf \overset{l}{\sim} Qf'$.
@@ -1945,7 +1983,7 @@ There is a dual notion.
 
   Note that $\xi$ is surjective on objects and fully faithful, hence an equivalence of categories. Hence, we only need to show that $\overline{\mathcal{C}}$ satisfies the universal property for the localization.
 
-  Suppose that $F\colon \mathcal{C} \to \mathcal{D}$ is a functor which takes weak equivalences to isomorphisms in $\mathcal{D}$. If we can show that there exists a unique functor $\overline{F}\colon \overline{\mathcal{C}} \to \mathcal{D}$ such that $F = \overline{F} \circ \overline{\pi}$, then we are done.\footnote{Why?}
+  Suppose that $F\colon \mathcal{C} \to \mathcal{D}$ is a functor which takes weak equivalences to isomorphisms in $\mathcal{D}$. If we can show that there exists a unique functor $\overline{F}\colon \overline{\mathcal{C}} \to \mathcal{D}$ such that $F = \overline{F} \circ \overline{\pi}$, then we are done.
 
   Suppose $f \overset{r}{\sim} g$. Pick some path object $P$, and a homotopy through $P$.
   \begin{equation*}
@@ -2067,7 +2105,7 @@ There is a dual notion.
   \end{enumerate}
 \end{proposition}
 \begin{proof}
-  By \hyperref[lemma:relations_between_lifting_properties_and_fibrations]{Lemma~\ref*{lemma:relations_between_lifting_properties_and_fibrations}}, a morphism is a cofibration if and only if it has the left lifting property with respect to all trivial fibrations. Thus, in order to show that $F$ preserves cofibrations, it suffices to show that if $f$ is a cofibration in $\mathcal{C}$, then $F(f)$ has the left lifting property with respect to all trivial fibrations.
+  Suppose 2.\ holds. By \hyperref[lemma:relations_between_lifting_properties_and_fibrations]{Lemma~\ref*{lemma:relations_between_lifting_properties_and_fibrations}}, a morphism is a cofibration if and only if it has the left lifting property with respect to all trivial fibrations. Thus, in order to show that $F$ preserves cofibrations, it suffices to show that if $f$ is a cofibration in $\mathcal{C}$, then $F(f)$ has the left lifting property with respect to all trivial fibrations.
 
   Consider solid adjunct diagrams of the following form, with the first in $\mathcal{D}$ and the second in $\mathcal{C}$.
   \begin{equation*}
@@ -2173,12 +2211,12 @@ Given a Quillen adjunction
 \begin{equation*}
   F : \mathcal{C} \leftrightarrow \mathcal{D} : G,
 \end{equation*}
-consider the full subcategory of all cofibrant objects $\mathcal{C}_{c} \subset \mathcal{C}$. Since the full subcategory of $\mathcal{C}$ on fibrant-cofibrant objects is the same as the full subcategory of $\mathcal{C}_{c}$ on fibrant-cofibrant objects, there is an equivalence
+consider the full subcategory of all cofibrant objects $\mathcal{C}_{c} \subset \mathcal{C}$. Since the full subcategory of $\mathcal{C}$ on fibrant-cofibrant objects is the same as the full subcategory of $\mathcal{C}_{c}$ on fibrant-cofibrant objects, there is an equivalence of categories
 \begin{equation*}
   \mathcal{C}_{c}[\mathcal{W}^{-1}] \simeq \mathcal{C}[\mathcal{W}^{-1}].
 \end{equation*}
 
-We will denote any inverse by
+We will denote any weak inverse by
 \begin{equation*}
   Q\colon \mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{C}_{c}[\mathcal{W}^{-1}].
 \end{equation*}
@@ -2228,6 +2266,9 @@ where $\mathcal{D}_{f}$ is the full subcategory of $\mathcal{D}$ on fibrant obje
     \mathcal{C} : F \leftrightarrow \mathcal{G} : \mathcal{D}
   \end{equation*}
   be a Quillen adjunction. Then there is an adjunction of derived functors
+  \begin{equation*}
+    LF : \mathcal{C}[\mathcal{W}^{-1}] \leftrightarrow \mathcal{D}[\mathcal{W}^{-1}] : RG.
+  \end{equation*}
 \end{proposition}
 
 \begin{definition}[Quillen equivalence]

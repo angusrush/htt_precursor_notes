@@ -168,7 +168,7 @@ Denote by $\mathcal{C}$ a category with small colimits.
   \end{enumerate}
 \end{definition}
 
-Saturatedness is a very powerful property. We will generally make use of it by proving that a certain collection of morphisms in a category is saturated, allowing us to use the closure properties.
+Saturatedness is a very powerful property. By showing that a certain set of morphisms is saturated, which is often possible based on general principles, the closure properties allow you to manipulate the morphisms in very powerful ways.
 
 \begin{example}
   \label{eg:monomorphisms_are_saturated}
@@ -226,15 +226,13 @@ Saturatedness is a very powerful property. We will generally make use of it by p
   \begin{equation*}
     \mathcal{M} = \{\partial \Delta^{n} \hookrightarrow \Delta^{n} \mid n \geq 0\}.
   \end{equation*}
-  The saturated hull $\overline{\mathcal{M}}$ is the set of monomorphisms.
+  We claim that the saturated hull $\overline{\mathcal{M}}$ is the set of monomorphisms. Note that by \hyperref[eg:monomorphisms_are_saturated]{Example~\ref*{eg:monomorphisms_are_saturated}}, the set of all monomorphisms is saturated.
 
-  Note that by \hyperref[eg:monomorphisms_are_saturated]{Example~\ref*{eg:monomorphisms_are_saturated}}, the set of all monomorphisms is saturated.
-
-  Consider some monomorphism $f\colon X \to Y$. Our goal is to construct $f$ from boundary inclusions using pushouts, retracts, countable composition, and coproducts.
+  To see this, consider some monomorphism $f\colon X \to Y$. We think of $f$ as including $X$ as a subobject of $Y$. Our goal is to construct $f$ from boundary inclusions using pushouts, retracts, countable composition, and coproducts.
 
   Take the coproduct
   \begin{equation*}
-    X^{0} \equiv X \amalg \left( \coprod_{\Delta^{0} \in Y_{0} \smallsetminus f_{0}(X_{0})} \Delta^{0} \right) = X \amalg \left\{ \substack{\text{0-skeleton of $Y$ which}\\\text{is not hit by $f$}} \right\}.
+    X^{0} \equiv X \amalg \left( \coprod_{\Delta^{0} \in Y_{0} \smallsetminus f_{0}(X_{0})} \Delta^{0} \right) = X \amalg \left\{ \substack{\text{0-skeleton of $Y$ which}\\\text{is not part of $X$}} \right\}.
   \end{equation*}
   Since $\partial \Delta^{0} = \emptyset$, we can build a map $g^{0}\colon X \hookrightarrow X^{0}$ as a coproduct of boundary fillings.
   \begin{equation*}
@@ -263,13 +261,13 @@ Saturatedness is a very powerful property. We will generally make use of it by p
   To summarize: we have a factorization $f^{0}\colon X^{0} \to Y$ which is an isomorphism on 0-simplices. It is trivially an isomorphism on all 0-cells (i.e.\ boundaries of 0-simplices), i.e.\ inclusions $\partial \Delta^{0} = \emptyset \hookrightarrow X \to Y$. In fact, since $\partial \Delta^{1} = \Delta^{0} \amalg \Delta^{0}$, it is an isomorphism on all 1-cells (i.e.\ boundaries of 1-simplices). Thus, we have the following solid maps. We call the pushout $X^{1}$.
   \begin{equation*}
     \begin{tikzcd}
-      \coprod_{\Delta^{1} \in Y_{1} \smallsetminus f_{1}(X_{1})} \partial \Delta^{1}
-      \arrow[r, hookrightarrow]
+      \displaystyle\coprod_{\substack{\Delta^{1} \in Y_{1} \smallsetminus f_{1}(X_{1}) \\ \text{nondegenerate}}} \partial \Delta^{1}
+      \arrow[r]
       \arrow[d, hookrightarrow]
       & X^{0}
       \arrow[d, dashed, "g^{1}"]
       \\
-      \coprod_{\Delta^{1} \in Y_{1} \smallsetminus f_{1}(X_{1})} \Delta^{1}
+      \displaystyle\coprod_{\substack{\Delta^{1} \in Y_{1} \smallsetminus f_{1}(X_{1}) \\ \text{nondegenerate}}} \Delta^{1}
       \arrow[r, dashed]
       & X^{1}
     \end{tikzcd}
@@ -278,7 +276,7 @@ Saturatedness is a very powerful property. We will generally make use of it by p
 
   Schematically, we have
   \begin{equation*}
-    X^{1} = X \amalg \left\{ \substack{\text{1-skeleton of $Y$ which}\\\text{is not hit by $f$}} \right\}.
+    X^{1} = X^{0} \coprod_{\substack{\text{0-skeleton} \\ \text{of $Y$}}} \left\{ \substack{\text{1-skeleton of $Y$ which}\\\text{is not in $X$}} \right\}.
   \end{equation*}
   Thus, we have a commutative diagram
   \begin{equation*}
@@ -298,7 +296,7 @@ Saturatedness is a very powerful property. We will generally make use of it by p
   \end{equation*}
   where $g^{1} \in \overline{\mathcal{M}}$ and $f^{1}$ is a monomorphism and an isomorphism on 1-simplices.
 
-  We continue this process, constructing sets $X^{2}$, $X^{3}$, etc., at each step adding another level of the skeleton via boundary inclusions and pushouts. At the $k$th step, we have a simplicial set $X^{k}$ and a factorization
+  We continue this process, constructing sets $X^{2}$, $X^{3}$, etc., at each step adding another level of the skeleton via boundary inclusions of nondegenerate simplices and pushouts. At the $k$th step, we have a simplicial set $X^{k}$ and a factorization
   \begin{equation*}
     \begin{tikzcd}
       X
@@ -318,9 +316,9 @@ Saturatedness is a very powerful property. We will generally make use of it by p
 
   By construction, we have
   \begin{equation*}
-    \colim_{n \in \N} X^{n} \equiv X^{\infty} = Y.
+    \colim_{n \in \N} X^{n} \equiv X^{\infty} = Y,
   \end{equation*}
-  The countable composition of the $g$s is equal to $f$, and we get a factorization
+  since the map $f^{\infty}$ is an isomorphism on $n$-simplices for all $n$. The countable composition of the $g$s is equal to $f$, and we get a factorization
   \begin{equation*}
     \begin{tikzcd}
       X
@@ -337,7 +335,7 @@ Saturatedness is a very powerful property. We will generally make use of it by p
 
 \begin{definition}[lifting property]
   \label{def:lifting_property}
-  Let $i\colon A \to B$ and $p\colon K \to S$ be morphisms in $\mathcal{C}$. Suppose that for every commuting square
+  Let $\mathcal{C}$ be a category, and let $i\colon A \to B$ and $p\colon K \to S$ be morphisms in $\mathcal{C}$. Suppose that for every commuting square
   \begin{equation*}
     \begin{tikzcd}
       A
@@ -368,9 +366,9 @@ Saturatedness is a very powerful property. We will generally make use of it by p
   \end{equation*}
   commute. Then we say either of the following, which are equivalent.
   \begin{itemize}
-    \item The morphism $i$ has the \defn{left lifting property} with respect to $p$.
+    \item The morphism $i$ has the \defn{left lifting property} with respect to the morphism $p$.
 
-    \item The morphism $p$ hs the \defn{right lifting property} with respect to $i$.
+    \item The morphism $p$ hs the \defn{right lifting property} with respect to the morphism $i$.
   \end{itemize}
 
   For any set of morphisms $\mathcal{M}$ we define two sets, $_{\perp}\mathcal{M}$ and $M_{\perp}$ as follows.
@@ -419,6 +417,8 @@ Saturatedness is a very powerful property. We will generally make use of it by p
   \end{equation*}
   Checking \hyperref[def:kan_fibration]{Definition~\ref*{def:kan_fibration}}, we see that this says precisely that $g$ is a Kan fibration. That is, $\mathcal{M}_{\perp}$ is the set of all Kan fibrations.
 \end{example}
+
+Checking that a set of morphisms is saturated by checking each condition individually is difficult and time-consuming. The next theorem provides a very efficient way of producing saturated sets of morphisms.
 
 \begin{theorem}
   \label{thm:left_perp_is_saturated}
@@ -798,6 +798,8 @@ It turns out that under some conditions, we have an equality
 
 \section{Compact objects}
 \label{sec:compact_objects}
+
+In many situations, objects which obey some sort of finiteness condition are especially well-behaved. In the situation of lifting problems, the small object argument, due to Quillen, guarantees us that any set of morphisms whose domains are small provides a \emph{weak factorization system.}
 
 \begin{definition}[filtered poset]
   \label{def:filtered_poset}
@@ -1594,21 +1596,199 @@ We will need this lemma many times.
   \end{equation*}
 \end{theorem}
 \begin{proof}
-  We will show that
-  \begin{equation*}
-    \mathcal{M}_{2} \subset \overline{\mathcal{M}}_{1},\qquad \mathcal{M}_{1} \subset \overline{\mathcal{M}}_{3},\qquad \text{and}\qquad \overline{\mathcal{M}}_{2} = \overline{\mathcal{M}}_{3}.
-  \end{equation*}
+  We will show the following inclusions.
+  \begin{enumerate}
+    \item $\mathcal{M}_{2} \subset \overline{\mathcal{M}}_{1}$
+
+    \item $\mathcal{M}_{1} \subset \overline{\mathcal{M}}_{3}$
+
+    \item $\overline{\mathcal{M}}_{2} = \overline{\mathcal{M}}_{3}$
+  \end{enumerate}
   This will imply that
   \begin{equation*}
     \overline{\mathcal{M}}_{2} \subset \overline{\mathcal{M}}_{1} \subset \overline{\mathcal{M}}_{3} \subset \overline{\mathcal{M}}_{2}.
   \end{equation*}
+  \begin{enumerate}
+    \item Consider a morphism in $\mathcal{M}_{2}$ with $e = 0$, i.e.\ an inclusion
+      \begin{equation*}
+        C^{0} = \{0\} \times \Delta^{n} \coprod_{\{0\} \times \partial \Delta^{n}} \Delta^{1} \times \Delta^{n} \hookrightarrow \Delta^{1} \times \Delta^{n} = C.
+      \end{equation*}
+      We can draw $C = N([1] \times [n])$ as follows.
+      \begin{equation*}
+        \begin{tikzcd}
+          10
+          \arrow[r]
+          & 11
+          \arrow[r]
+          & 12
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & 1(n-1)
+          \arrow[r]
+          & 1n
+          \\
+          00
+          \arrow[u]
+          \arrow[r]
+          & 01
+          \arrow[u]
+          \arrow[r]
+          & 02
+          \arrow[u]
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & 0(n-1)
+          \arrow[u]
+          \arrow[r]
+          & 0n
+          \arrow[u]
+        \end{tikzcd}
+      \end{equation*}
 
-  It is easy to see that $\overline{M}_{2} \subset \overline{M}_{3}$, since the inclusion $\partial \Delta^{n} \hookrightarrow \Delta^{n}$ is a 
+      An $(n+1)$-simplex in $C$ is a map of posets $[n+1] \to [1] \times [n]$. A $(n+1)$-simplex is nondegenerate if and only if it is a monomorphism. There are exactly $n+1$ of these, of the form
+      \begin{equation*}
+        \begin{tikzcd}[row sep=small, column sep=small]
+          &&& 1i
+          \arrow[r]
+          & 1(i+1)
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & 1n
+          \\
+          00
+          \arrow[r]
+          & 01
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & 0i
+          \arrow[u]
+        \end{tikzcd}
+      \end{equation*}
+      We denote the above $(n+1)$-simplex by $\sigma_{i}$.
+
+      Consider the nondegenerate $(n+1)$-simplex $\sigma_{n}$ given by
+      \begin{equation*}
+        \sigma_{n} =\ \ 
+        \begin{tikzcd}[row sep=small, column sep=small]
+          &&&& 1n
+          \\
+          00 
+          \arrow[r] 
+          & 01 
+          \arrow[r] 
+          & 02 
+          \arrow[r] 
+          & \cdots 
+          \arrow[r] 
+          & 0n 
+          \arrow[u]
+        \end{tikzcd}.
+      \end{equation*}
+      The $i$th face of $\sigma_{n}$ is given by skipping over the $i$th vertex of $\sigma_{n}$. For example, $d_{1}\sigma_{n}$ is in blue below.
+      \begin{equation*}
+        \begin{tikzcd}[row sep=small, column sep=small]
+          &&&& 1n
+          \\
+          00 
+          \arrow[r] 
+          \arrow[rr, bend left, color = blue]
+          & 01 
+          \arrow[r] 
+          & 02 
+          \arrow[r, color=blue] 
+          & \cdots 
+          \arrow[r, color=blue] 
+          & 0n 
+          \arrow[u, color=blue]
+        \end{tikzcd}
+      \end{equation*}
+      We see that each of the faces $d_{0} \sigma_{n}$, $d_{1} \sigma_{n}$, etc., is in $C^{0}$, except $d_{n}\sigma_{n}$.
+      \begin{equation*}
+        \begin{tikzcd}[row sep=small, column sep=small]
+          &&&& 1n
+          \\
+          00 
+          \arrow[r, color=blue] 
+          & \cdots 
+          \arrow[r, color=blue]
+          & 0(n-2)
+          \arrow[r, color=blue] 
+          & 0(n-1) 
+          \arrow[r]
+          \arrow[ur, color=blue] 
+          & 0n 
+          \arrow[u]
+        \end{tikzcd}
+      \end{equation*}
+      This says precisely that $\sigma_{n} \cap C^{0} \cong \Lambda^{n+1}_{n}$, giving us a pushout
+      \begin{equation*}
+        \begin{tikzcd}[column sep=huge]
+          \Lambda^{n+1}_{n}
+          \arrow[r, "{(d_{0} \sigma_{n}, \ldots, d_{n-2} \sigma_{n}, -, d_{n} \sigma_{n})}"]
+          \arrow[d]
+          & C^{0}
+          \arrow[d, hook]
+          \\
+          \Delta^{n}
+          \arrow[r, "\sigma_{n}"]
+          & C^{1} = C^{0} \cup \sigma_{n}
+        \end{tikzcd}
+      \end{equation*}
+      exhibiting $C^{0} \hookrightarrow C^{1} = C^{0} \cup \sigma_{n}$ as a pushout of a horn inclusion. Hence, this inclusion is in $\overline{\mathcal{M}}_{1}$.
+
+      Reasoning along the same lines shows that $\sigma_{n-1}$ has two faces missing from $C^{0}$: $d_{n}\sigma_{n-1}$ and $d_{n-1} \sigma_{n-1}$. However, $d_{n-2} \sigma_{n-2}$ is in $C^{1}$, so we again have a pushout
+      \begin{equation*}
+        \begin{tikzcd}[column sep=huge]
+          \Lambda^{n+1}_{n-1}
+          \arrow[r, "{(\ldots, d_{n-2} \sigma_{n-1}, -, d_{n} \sigma_{n-1}, \ldots)}"]
+          \arrow[d]
+          & C^{1}
+          \arrow[d, hook]
+          \\
+          \Delta^{n}
+          \arrow[r, "\sigma_{n}"]
+          & C^{2} = C^{1} \cup \sigma_{n-1}
+        \end{tikzcd}
+      \end{equation*}
+
+      Proceeding, we see that we have a string of inclusions
+      \begin{equation*}
+        C^{0} \hookrightarrow C^{1} \hookrightarrow \cdots \hookrightarrow C^{n} = C,
+      \end{equation*}
+      where $C^{i} \hookrightarrow C^{i+1}$ is given by a pushout
+      \begin{equation*}
+        \begin{tikzcd}
+          \Lambda^{n+1}_{n-i}
+          \arrow[r]
+          \arrow[d]
+          & C^{i}
+          \arrow[d, hook]
+          \\
+          \Delta^{n+1}
+          \arrow[r]
+          & C^{i+1} = C^{i} \cup \sigma_{n-i}
+        \end{tikzcd}.
+      \end{equation*}
+      Thus, the inclusion $C^{0} \hookrightarrow C$ is a composition of morphisms in $\overline{\mathcal{M}}_{1}$, hence is in $\overline{\mathcal{M}}_{1}$
+
+      The case $e = 1$ is dual.
+
+    \item 
+
+    \item 
+  \end{enumerate}
+
+  It is easy to see that $\overline{M}_{2} \subset \overline{M}_{3}$ since the inclusion $\partial \Delta^{n} \hookrightarrow \Delta^{n}$ is monic, so $\mathcal{M}_{2} \subset \mathcal{M}_{3}$. Conversely,
 \end{proof}
 
 This theorem gives us 
 
 \begin{corollary}
+  \label{cor:smash_of_monic_and_anodyne_is_anodyne}
   Let $f$ be anodyne, and let $g\colon X \to Y$ be a monomorphism. Then $f \wedge g$ is anodyne.
 \end{corollary}
 \begin{proof}
@@ -1683,6 +1863,8 @@ This theorem gives us
       & S
     \end{tikzcd}
   \end{equation*}
+
+  The vertical arrow on the left is the smash product $i \wedge j$. By \hyperref[cor:smash_of_monic_and_anodyne_is_anodyne]{Corollary~\ref*{cor:smash_of_monic_and_anodyne_is_anodyne}}, this is anodyne. By assumption, $p$ is a Kan fibration, so the lift exists.
 \end{proof}
 
 \begin{corollary}
@@ -1696,8 +1878,6 @@ This theorem gives us
   \end{equation*}
   is a Kan fibration. But by \hyperref[cor:kan_fibration_to_point_is_kan_complex]{Corollary~\ref*{cor:kan_fibration_to_point_is_kan_complex}}, this means that $\Maps(B, K)$ is a Kan complex.
 \end{proof}
-
-$\Obj(\mathsf{C})$
 
 \begin{corollary}
   \label{cor:maps_functor_preserves_kan_fibrations_in_first_slot}
