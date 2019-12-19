@@ -109,7 +109,9 @@ Denote by $\mathcal{C}$ a category with small colimits.
       \end{equation*}
       with $i \in \mathcal{S}$, then $i' \in \mathcal{S}$.
 
-    \item $\mathcal{S}$ is closed under retracts, i.e.\ for any commutative diagram
+    \item $\mathcal{S}$ is closed under retracts,
+      \footnote{An object $X_{0}$ in some category is a retract of an object $X$ if the identity on $X_{0}$ factors as $X_{0} \hookrightarrow X \hookrightarrow X_{0}$. For example, any topological space is a retract of the point. This axiom says that $\mathcal{S}$ is closed under retracts in the category of morphisms $\mathrm{Fun}([1], \mathcal{C})$.}
+      i.e.\ for any commutative diagram
       \begin{equation*}
         \begin{tikzcd}
           A
@@ -168,7 +170,7 @@ Denote by $\mathcal{C}$ a category with small colimits.
   \end{enumerate}
 \end{definition}
 
-Saturatedness is a very powerful property. By showing that a certain set of morphisms is saturated, which is often possible based on general principles, the closure properties allow you to manipulate the morphisms in very powerful ways.
+Saturatedness is a useful property. By showing that a certain set of morphisms is saturated, which is often possible based on general principles, the closure properties allow you to manipulate the morphisms in powerful ways.
 
 \begin{example}
   \label{eg:monomorphisms_are_saturated}
@@ -799,7 +801,7 @@ It turns out that under some conditions, we have an equality
 \section{Compact objects}
 \label{sec:compact_objects}
 
-In many situations, objects which obey some sort of finiteness condition are especially well-behaved. In the situation of lifting problems, the small object argument, due to Quillen, guarantees us that any set of morphisms whose domains are small provides a \emph{weak factorization system.}
+In many situations, objects which obey some sort of finiteness condition are especially well-behaved. In the situation of lifting problems, the small object argument, due to Quillen, guarantees us that any set of morphisms whose domains are small provides a weak factorization system.
 
 \begin{definition}[filtered poset]
   \label{def:filtered_poset}
@@ -1609,11 +1611,15 @@ We will need this lemma many times.
     \overline{\mathcal{M}}_{2} \subset \overline{\mathcal{M}}_{1} \subset \overline{\mathcal{M}}_{3} \subset \overline{\mathcal{M}}_{2}.
   \end{equation*}
   \begin{enumerate}
-    \item Consider a morphism in $\mathcal{M}_{2}$ with $e = 0$, i.e.\ an inclusion
+    \item Fix a morphism $i$ in $\mathcal{M}_{2}$ with $e = 0$, i.e.\ an inclusion
       \begin{equation*}
-        C^{0} = \{0\} \times \Delta^{n} \coprod_{\{0\} \times \partial \Delta^{n}} \Delta^{1} \times \Delta^{n} \hookrightarrow \Delta^{1} \times \Delta^{n} = C.
+        \begin{tikzcd}
+          C^{0} = \{0\} \times \Delta^{n} \coprod_{\{0\} \times \partial \Delta^{n}} \Delta^{1} \times \Delta^{n}
+          \arrow[r, hook, "i"]
+          & \Delta^{1} \times \Delta^{n} = C.
+        \end{tikzcd}
       \end{equation*}
-      We can draw $C = N([1] \times [n])$ as follows.
+      Consider the poset $[1] \times [n]$, which we can draw as follows.
       \begin{equation*}
         \begin{tikzcd}
           10
@@ -1646,8 +1652,7 @@ We will need this lemma many times.
           \arrow[u]
         \end{tikzcd}
       \end{equation*}
-
-      An $(n+1)$-simplex in $C$ is a map of posets $[n+1] \to [1] \times [n]$. A $(n+1)$-simplex is nondegenerate if and only if it is a monomorphism. There are exactly $n+1$ of these, of the form
+      The simplicial set $C$ is the nerve of this poset. An $(n+1)$-simplex in $C$ is thus given by a map of posets $[n+1] \to [1] \times [n]$. An $(n+1)$-simplex is nondegenerate if and only if it is a monomorphism. There are exactly $n+1$ nondegenerate simplices in $\Delta^{1} \times \Delta^{n}$, of the form
       \begin{equation*}
         \begin{tikzcd}[row sep=small, column sep=small]
           &&& 1i
@@ -1706,7 +1711,7 @@ We will need this lemma many times.
           \arrow[u, color=blue]
         \end{tikzcd}
       \end{equation*}
-      We see that each of the faces $d_{0} \sigma_{n}$, $d_{1} \sigma_{n}$, etc., is in $C^{0}$, except $d_{n}\sigma_{n}$.
+      Each of the faces $d_{0} \sigma_{n}$, $d_{1} \sigma_{n}$, etc., is in $C^{0}$, except $d_{n}\sigma_{n}$.
       \begin{equation*}
         \begin{tikzcd}[row sep=small, column sep=small]
           &&&& 1n
@@ -1724,21 +1729,21 @@ We will need this lemma many times.
           \arrow[u]
         \end{tikzcd}
       \end{equation*}
-      This says precisely that $\sigma_{n} \cap C^{0} \cong \Lambda^{n+1}_{n}$, giving us a pushout
+      This means that $\sigma_{n} \cap C^{0} \cong \Lambda^{n+1}_{n}$, giving us a pushout
       \begin{equation*}
         \begin{tikzcd}[column sep=huge]
           \Lambda^{n+1}_{n}
           \arrow[r, "{(d_{0} \sigma_{n}, \ldots, d_{n-2} \sigma_{n}, -, d_{n} \sigma_{n})}"]
           \arrow[d]
           & C^{0}
-          \arrow[d, hook]
+          \arrow[d, hook, "i_{0}"]
           \\
           \Delta^{n}
           \arrow[r, "\sigma_{n}"]
           & C^{1} = C^{0} \cup \sigma_{n}
         \end{tikzcd}
       \end{equation*}
-      exhibiting $C^{0} \hookrightarrow C^{1} = C^{0} \cup \sigma_{n}$ as a pushout of a horn inclusion. Hence, this inclusion is in $\overline{\mathcal{M}}_{1}$.
+      exhibiting $i_{0}$ as a pushout of a horn inclusion. Hence, $i_{0}$ is in $\overline{\mathcal{M}}_{1}$.
 
       Reasoning along the same lines shows that $\sigma_{n-1}$ has two faces missing from $C^{0}$: $d_{n}\sigma_{n-1}$ and $d_{n-1} \sigma_{n-1}$. However, $d_{n-2} \sigma_{n-2}$ is in $C^{1}$, so we again have a pushout
       \begin{equation*}
@@ -1747,7 +1752,7 @@ We will need this lemma many times.
           \arrow[r, "{(\ldots, d_{n-2} \sigma_{n-1}, -, d_{n} \sigma_{n-1}, \ldots)}"]
           \arrow[d]
           & C^{1}
-          \arrow[d, hook]
+          \arrow[d, hook, "i_{1}"]
           \\
           \Delta^{n}
           \arrow[r, "\sigma_{n}"]
@@ -1755,9 +1760,19 @@ We will need this lemma many times.
         \end{tikzcd}
       \end{equation*}
 
-      Proceeding, we see that we have a string of inclusions
+      Proceeding inductively, we see that we have a string of inclusions
       \begin{equation*}
-        C^{0} \hookrightarrow C^{1} \hookrightarrow \cdots \hookrightarrow C^{n} = C,
+        \begin{tikzcd}
+          C^{0}
+          \arrow[r, hook, "i_{0}"]
+          & C^{1}
+          \arrow[r, hook, "i_{1}"]
+          & C^{2}
+          \arrow[r, hook, "i_{2}"]
+          & \cdots
+          \arrow[r, hook, "i_{n-1}"]
+          & C^{n}
+        \end{tikzcd}
       \end{equation*}
       where $C^{i} \hookrightarrow C^{i+1}$ is given by a pushout
       \begin{equation*}
@@ -1773,16 +1788,66 @@ We will need this lemma many times.
           & C^{i+1} = C^{i} \cup \sigma_{n-i}
         \end{tikzcd}.
       \end{equation*}
-      Thus, the inclusion $C^{0} \hookrightarrow C$ is a composition of morphisms in $\overline{\mathcal{M}}_{1}$, hence is in $\overline{\mathcal{M}}_{1}$
+      The composition of these is $i$. Each $i_{k}$ is in $\overline{\mathcal{M}}_{1}$, so $i$ is a composition of morphisms in $\overline{\mathcal{M}}_{1}$, hence is in $\overline{\mathcal{M}}_{1}$
 
       The case $e = 1$ is dual.
 
-    \item 
+    \item Consider the map $i\colon [n] \to [1] \times [n]$ sending $i$ to $(i, 0)$, and the map $r\colon [1] \times [n] \to [n]$ as follows.
+      \begin{equation*}
+        \begin{tikzcd}
+          0
+          \arrow[r]
+          & 1
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & k
+          \arrow[r]
+          & k + 1
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & n
+          \\
+          0
+          \arrow[r]
+          \arrow[u]
+          & 1
+          \arrow[r]
+          \arrow[u]
+          & \cdots
+          \arrow[r]
+          & k
+          \arrow[r]
+          \arrow[u]
+          & k
+          \arrow[r]
+          \arrow[u]
+          & \cdots
+          \arrow[r]
+          & k
+          \arrow[u]
+        \end{tikzcd}
+      \end{equation*}
 
-    \item 
+    \item For any morphisms $i\colon A \to A'$ in $\SSet$, the set
+      \begin{equation*}
+        \{f\colon B \to B' \mid f \wedge i \in \overline{\mathcal{M}}_{2}\}
+      \end{equation*}
+      is saturated because by \hyperref[lemma:equivalent_lifting_problems]{Lemma~\ref*{lemma:equivalent_lifting_problems}} it is given by
+      \begin{equation*}
+        \llp\{\Maps(A', X) \to \Maps(A, Y) \times_{\Maps(A', Y)} \Maps(A', X) \mid X \to Y \text{ Kan fibration}\}.
+      \end{equation*}
+
+
+      \begin{equation*}
+        \mathcal{E} = \{\{e\} \to \Delta^{1} \mid e = 0, 1\}.
+      \end{equation*}
+      Then
+
+      It is easy to see that $\overline{\mathcal{M}}_{2} \subset \overline{\mathcal{M}}_{3}$ since the inclusion $\partial \Delta^{n} \hookrightarrow \Delta^{n}$ is monic.
   \end{enumerate}
 
-  It is easy to see that $\overline{M}_{2} \subset \overline{M}_{3}$ since the inclusion $\partial \Delta^{n} \hookrightarrow \Delta^{n}$ is monic, so $\mathcal{M}_{2} \subset \mathcal{M}_{3}$. Conversely,
 \end{proof}
 
 This theorem gives us 
