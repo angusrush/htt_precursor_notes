@@ -805,8 +805,12 @@ In many situations, objects which obey some sort of finiteness condition are esp
 
 \begin{definition}[filtered poset]
   \label{def:filtered_poset}
-  A poset $(I, \leq)$ is called \defn{filtered} if every finite subset of $I$ has an upper bound.
+  A poset $(I, \leq)$ is called \defn{filtered} (or \emph{$\aleph_{0}$-filtered}) if every finite subset of $I$ has an upper bound. 
+
+  More generally, the poset $(I, \leq)$ is \defn{$\kappa$-filtered}, for some regular cardinal $\kappa$, if every subset of $I$ cardinality less than $\kappa$ has an upper bound.
 \end{definition}
+
+In this chapter, we will only worry about $\aleph_{0}$-filtered posets.
 
 \begin{example}
   \label{eg:poset_of_finite_subsets}
@@ -886,7 +890,7 @@ In many situations, objects which obey some sort of finiteness condition are esp
   \begin{equation*}
     \tilde{\mathcal{Y}}\colon X \mapsto \mathcal{C}(X, -)
   \end{equation*}
-  commutes with small colimits.
+  commutes with small filtered colimits.
 \end{lemma}
 \begin{proof}
   Suppose that $\tilde{\mathcal{Y}}$ commutes with small filtered colimits. Then there is a bijection
@@ -899,14 +903,6 @@ In many situations, objects which obey some sort of finiteness condition are esp
   \begin{equation*}
     \mathcal{C}(X, Y_{i}) \hookrightarrow \mathcal{C}(X, Y_{j}),
   \end{equation*}
-  we can think of $\colim_{i \in I} \mathcal{C}(X, Y_{i})$ as some sort of limit (in the analysis-y sense)
-  \begin{equation*}
-    \text{``}\lim_{i \to \infty} \mathcal{C}(X, Y_{i})\text{''}.
-  \end{equation*}
-
-  Given a morphism $X \to Y_{\infty}$, the bijection \hyperref[eq:bijection_from_colimit_commutation]{Equation~\ref*{eq:bijection_from_colimit_commutation}} gives us an element of the colimit $\colim_{i \in I}\mathcal{C}(X, Y_{i})$
-
-  To be continued\dots
 \end{proof}
 
 \begin{example}
@@ -1673,7 +1669,7 @@ We will need this lemma many times.
           \arrow[u]
         \end{tikzcd}
       \end{equation*}
-      We denote the above $(n+1)$-simplex by $\sigma_{i}$.
+      for $0 \leq i \leq n$. We denote the above $(n+1)$-simplex by $\sigma_{i}$.
 
       Consider the nondegenerate $(n+1)$-simplex $\sigma_{n}$ given by
       \begin{equation*}

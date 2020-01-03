@@ -8,7 +8,7 @@
 \section{Simplices as topological spaces and categories}
 \label{sec:simplices_as_topological_spaces_and_categories}
 
-One of the main themes in the study of higher category theory is the interplay between topology, simplicial geometry, and category theory.
+One of the main themes in the study of higher category theory is the interplay between ordinary topology, simplicial topology, and category theory.
 
 \begin{equation*}
   \begin{aligned}
@@ -76,7 +76,7 @@ The fundamental topological object we will study is the \emph{geometrical $n$-si
   \end{equation*}
 \end{definition}
 
-In simplicial geometry, one replaces these topological models of simplices by combinatorial models of simplices. These live in a category.
+In simplicial topology, one studies spaces glued out of geometrical simplices by replacing the topological simplices by combinatorial models of simplices. These live in a category.
 
 \begin{definition}[simplex category]
   \label{def:simplex_category}
@@ -419,50 +419,12 @@ Simplicial sets are functors, but the functorial notation is often unnecessarily
 \section{What sort of data does a simplicial set give us?}
 \label{sec:what_sort_of_data_does_a_simplicial_set_give_us}
 
+\subsection{Face and degeneracy maps}
+\label{ssc:face_and_degeneracy_maps}
+
 Let $K$ be a simplicial set. By definition evaluating $K$ on the object $[n]$ gives a set $K_{n}$, which we interpret as the set of $n$-simplices making up $K$. We have claimed that the functoriality of $K$ provides instructions for how these simplices should be glued together. In this section we will shine some light on this claim.
 
 First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] \to [m]$ by understanding how it behaves on simpler functions, known as the \emph{face} and \emph{degeneracy functions.}
-
-\begin{definition}[degeneracy function]
-  \label{def:degeneracy_function_simplicial_category}
-  Let $n > 0$. For every $i$ with $0 \leq i \leq n$, there is a function
-  \begin{equation*}
-    \sigma_{k}\colon [n] \to [n - 1];\qquad j \mapsto
-    \begin{cases}
-      j, & j \leq k \\
-      j - 1, & j > k
-    \end{cases}
-  \end{equation*}
-  called the \defn{$i$th degeneracy function}.
-\end{definition}
-\begin{equation*}
-  \sigma_{k} \quad = \quad
-  \begin{tikzcd}[row sep=tiny]
-    \vdots & \vdots
-    \\
-    k-2
-    \arrow[r, mapsto]
-    & k-2
-    \\
-    k-1
-    \arrow[r, mapsto]
-    & k-1
-    \\
-    k
-    \arrow[r, mapsto]
-    & k
-    \\
-    k+1
-    \arrow[ur, mapsto]
-    & k+1
-    \\
-    k+2
-    \arrow[ur, mapsto]
-    & k+2
-    \\
-    \vdots & \vdots
-  \end{tikzcd}
-\end{equation*}
 
 \begin{definition}[face function]
   \label{def:face_function_simplicial_category}
@@ -505,25 +467,7 @@ First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] 
   \end{tikzcd}
 \end{equation*}
 
-If we were being pedantic, we would denote these functions $\sigma^{n}_{k}$ and $\partial^{n}_{i}$ instead of $\sigma_{k}$ and $\partial_{i}$, but keeping track of these indices turns out to be more confusing than elucidating, so no one does.
-
-The face and degeneracy functions are interesting because they generate all morphisms; that is, any morphism $\phi\colon [n] \to [m]$ can be written as a composition of face and degeneracy functions.
-
-\begin{proposition}
-  Let $\phi\colon [n] \to [m]$ be a weakly monotonic function. Then $\phi$ can be written as a composition of face and degeneracy maps.
-\end{proposition}
-\begin{proof}[Sketch of proof]
-  Since $\phi$ is by definition nondecreasing, we can specify it by, starting from $0$, a sequence
-\end{proof}
-
-\begin{definition}[degeneracy map]
-  \label{def:degeneracy_map}
-  Let $X\colon \Delta\op \to \mathbf{Set}$ be a simplicial set. Corresponding to the degeneracy function $\sigma_{k}\colon [n] \to [n-1]$ there is a corresponding map
-  \begin{equation*}
-    s_{k}\colon X_{n-1} \to X_{n}.
-  \end{equation*}
-  This map is also known as the \defn{$k$th degeneracy map}.
-\end{definition}
+Applying a simplicial set to the $i$th face function gives a map from $k$-simplices to $(k-1)$-simplices.
 
 \begin{definition}[face map]
   \label{def:face_map}
@@ -533,12 +477,99 @@ The face and degeneracy functions are interesting because they generate all morp
   \end{equation*}
   This map is also known as the \defn{$i$th face map}.
 \end{definition}
+
+If we were being pedantic, we would denote the face functions by $\partial^{n}_{i}$ instead of $\partial_{i}$, but keeping track of these indices turns out to be more confusing than elucidating.
+
+We have said that we should view simplicial sets as built by gluing simplices of all different degrees together along their faces. Face maps specify in which way we should do this gluing. Recall that our simplices have ordered vertices---the vertices of an $n$-simplex run from $0$ to $n$. The $i$th face map takes an $n$-simplex to its $i$th face; that is, the face opposite the vertex labelled by $i$.
+
 \begin{example}
   Consider the simplicial set $\Delta^{2}$, and the map
   \begin{equation*}
-    d_{0}\colon \Delta^{2}_{1} \to \Delta^{2}_{0}.
+    d_{0}\colon \Delta^{2}_{1} \to \Delta^{2}_{0}
   \end{equation*}
-  Let $f \in \Delta^{2}_{1} = \Delta([1], [2])$. For example, take
+  taking the six 1-simplices of $\Delta^{2}$ (three of which are degenerate) to the three 0-simplices.
+
+  Take $\sigma \in \Delta^{2}_{2}$ given by the identity
+  \begin{equation*}
+    \sigma \colon\quad
+    \begin{tikzcd}[row sep=tiny]
+      0
+      \arrow[mapsto, r]
+      & 0
+      \\
+      1
+      \arrow[mapsto, r]
+      & 1
+      \\
+      2
+      \arrow[mapsto, r]
+      & 2
+    \end{tikzcd}.
+  \end{equation*}
+  This corresponds to the single nondegenerate 2-simplex in $\Delta^{2}$, which is what we intuitively think of as the `whole' 2-simplex.
+  \begin{equation*}
+    \begin{tikzpicture}[line join = round, scale=2.5, line cap = round]
+      \coordinate (2) at (1,0);
+      \coordinate (1) at (0.5, 0.7);
+      \coordinate (0) at (0,0);
+
+      \draw[densely dotted,] (0)--(2);
+      \draw[fill=gray,fill opacity=.5] (1)--(0)--(2)--cycle;
+      \draw (1)--(0);
+      \draw (1)--(2);
+    \end{tikzpicture}
+  \end{equation*}
+  Applying $d_{1}$ corresponds to pulling back by $\partial_{1}$ as follows.
+  \begin{equation*}
+    d_{1}\sigma = \sigma \circ \partial_{1} = \quad
+    \begin{tikzcd}[row sep=tiny]
+      0
+      \arrow[mapsto, r]
+      & 0
+      \arrow[mapsto, r]
+      & 0
+      \\
+      1
+      \arrow[rd, mapsto]
+      & 1
+      \arrow[r, mapsto]
+      & 1
+      \\
+      & 2
+      \arrow[r, mapsto]
+      & 2
+    \end{tikzcd}
+    \quad = \quad
+    \begin{tikzcd}[row sep=tiny]
+      0
+      \arrow[r, mapsto]
+      & 0
+      \\
+      1
+      \arrow[rd, mapsto]
+      & 1
+      \\
+      & 2
+    \end{tikzcd}
+  \end{equation*}
+
+  \begin{equation*}
+    \begin{tikzpicture}[dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=2]
+      \coordinate[draw, dot, label=210:0] (0) at (0,0);
+      \coordinate[label=90:1] (1) at (0.5,0.7);
+      \coordinate[draw, dot, label=-30:2] (2) at (1,0);
+
+      \begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{to}}}]
+        \draw[dashed, postaction={decorate}] (0)--(1);
+        \draw[postaction={decorate}] (0)--(2);
+        \draw[dashed, postaction={decorate}] (1)--(2);
+      \end{scope}
+    \end{tikzpicture}
+  \end{equation*}
+
+  Similarly, $d_{0}$ takes the edge between $0$ and $1$ to the vertex $1$, and the edge from $0$ and $2$ to the vertex $2$. Put more concisely, and as should now be clear from the form of $\partial_{0}$, we can see that $d_{0}$ takes any 1-simplex from $a$ to $b$ to the zero-simplex $b$. That is, taking the vertices of a 1-simplex as numbered in order, \emph{$d_{0}$ deletes the zeroth vertex.}
+
+  Let $f \in \Delta^{2}_{1} = \Delta([1], [2])$ be one of the six 1-simplices. For example, take
   \begin{equation*}
     f\colon\quad
     \begin{tikzcd}[row sep=tiny]
@@ -553,7 +584,7 @@ The face and degeneracy functions are interesting because they generate all morp
       & 2
     \end{tikzcd}
   \end{equation*}
-  corresponding to the solid edge.
+  corresponding to the solid edge from 1 to 2.
   \begin{equation*}
     \begin{tikzpicture}[dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=2]
       \coordinate[label=210:0] (0) at (0,0);
@@ -567,7 +598,7 @@ The face and degeneracy functions are interesting because they generate all morp
       \end{scope}
     \end{tikzpicture}
   \end{equation*}
-  Which element of $\Delta^{2}_{0}$ does $d_{0}$ send this to? We can draw $\partial_{0}$ like this.
+  Which element of $\Delta^{2}_{0}$ does the face map $d_{0}$ send $f$ to? Recall that $d_{0}$ comes from the face function $\partial_{0}$, which we can draw like this.
   \begin{equation*}
     \partial_{0}\colon \quad
     \begin{tikzcd}[row sep=tiny]
@@ -606,7 +637,7 @@ The face and degeneracy functions are interesting because they generate all morp
     \end{tikzcd}
   \end{equation*}
 
-  Therefore, $d_{0}$ takes the edge between $0$ and $2$ to the vertex $2$.
+  Therefore, $d_{0}$ takes the edge between $1$ and $2$ to the vertex $2$.
   \begin{equation*}
     \begin{tikzpicture}[dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=2]
       \coordinate[label=210:0] (0) at (0,0);
@@ -621,10 +652,75 @@ The face and degeneracy functions are interesting because they generate all morp
     \end{tikzpicture}
   \end{equation*}
 
-  Similarly, $d_{0}$ takes the edge between $0$ and $1$ to the vertex $1$, and the full 2-simplex to the edge between 1 and 2.
 \end{example}
 
-This is a general feature: the $i$th face $d_{i}$ map deletes the $i$th vertex.
+This is a general feature: the $i$th face $d_{i}$ map acts on an $n$-simplex by deleting the $i$th vertex, returning the $(n-1)$-simplex opposite.
+
+So we understand how the face maps work, at least on $n$-simplices.
+
+\begin{definition}[degeneracy function]
+  \label{def:degeneracy_function_simplicial_category}
+  Let $n > 0$. For every $i$ with $0 \leq i \leq n$, there is a function
+  \begin{equation*}
+    \sigma_{k}\colon [n] \to [n - 1];\qquad j \mapsto
+    \begin{cases}
+      j, & j \leq k \\
+      j - 1, & j > k
+    \end{cases}
+  \end{equation*}
+  called the \defn{$i$th degeneracy function}.
+\end{definition}
+\begin{equation*}
+  \sigma_{k} \quad = \quad
+  \begin{tikzcd}[row sep=tiny]
+    \vdots & \vdots
+    \\
+    k-2
+    \arrow[r, mapsto]
+    & k-2
+    \\
+    k-1
+    \arrow[r, mapsto]
+    & k-1
+    \\
+    k
+    \arrow[r, mapsto]
+    & k
+    \\
+    k+1
+    \arrow[ur, mapsto]
+    & k+1
+    \\
+    k+2
+    \arrow[ur, mapsto]
+    & k+2
+    \\
+    \vdots & \vdots
+  \end{tikzcd}
+\end{equation*}
+
+\begin{definition}[degeneracy map]
+  \label{def:degeneracy_map}
+  Let $X\colon \Delta\op \to \mathbf{Set}$ be a simplicial set. Corresponding to the degeneracy function $\sigma_{k}\colon [n] \to [n-1]$ there is a corresponding map
+  \begin{equation*}
+    s_{k}\colon X_{n-1} \to X_{n}.
+  \end{equation*}
+  This map is also known as the \defn{$k$th degeneracy map}.
+\end{definition}
+
+Henceforth, most of the simplices we have been talking about have been \emph{nondegenerate.} However, simplicial sets also contain degenerate simplices. Recall, for example, that the standard 2-simplex actually contains six 1-simplices, three of which correspond to the edges of the triangle, and three of which correspond to edges which are `bunched up' at the vertices. The nondegenerate edges correspond to the injective maps $[1] \to [2]$, and the degenerate edges correspond to the constant maps.
+
+The $i$th degeneracy map takes an $(n-1)$-simplex to a degenerate $n$-simplex
+
+The face and degeneracy functions are interesting because they generate all morphisms; that is, any morphism $\phi\colon [n] \to [m]$ can be written as a composition of face and degeneracy functions.
+
+\begin{proposition}
+  \label{prop:face_and_degeneracy_maps_generate_all_maps}
+  Let $\phi\colon [n] \to [m]$ be a weakly monotonic function. Then $\phi$ can be written as a composition of face and degeneracy maps.
+\end{proposition}
+\begin{proof}[Sketch of proof]
+  Since $\phi$ is by definition nondecreasing, we can specify it by, starting from $0$, a sequence
+\end{proof}
 
 \begin{theorem}[simplicial identites]
   \label{thm:simplicial_identities}
@@ -638,13 +734,6 @@ This is a general feature: the $i$th face $d_{i}$ map deletes the $i$th vertex.
   \end{align*}
 \end{theorem}
 
-\begin{corollary}
-  We have immediately that
-  \begin{equation*}
-    d_{i} \circ d_{j} = d_{j} \circ d_{i+1},\qquad i+1 > j.
-  \end{equation*}
-\end{corollary}
-
 \begin{fact}
   The definition of a simplicial set is equivalent to the definition the following data.
   \begin{itemize}
@@ -652,6 +741,23 @@ This is a general feature: the $i$th face $d_{i}$ map deletes the $i$th vertex.
     \item The face and degeneracy maps satisfying the simplicial identities.
   \end{itemize}
 \end{fact}
+
+\subsection{Morphisms of simplicial sets; simplices and the Yoneda lemma}
+\label{ssc:morphisms_of_simplicial_sets_simplices_and_the_yoneda_lemma}
+
+So far, we have talked a lot about simplicial sets, namely functors $\Delta\op \to \Set$. From category theory, we know that the natural notion of a morphism of simplicial sets is a natural transformation between functors. However, simplicial sets are geometric objects, and we have some idea, on a geometrical level, of what we would like morphisms between them to look like. Fortunately, these notions coincide.
+
+Consulting the definition of a simplicial set, one sees that a morphism between simplicial sets $f\colon X \to Y$ should consist of, for each $n \geq 0$, a map $f_{n}\colon X_{n} \to Y_{n}$, compatible with the morphisms in $\Delta$. In fact, because of \hyperref[prop:face_and_degeneracy_maps_generate_all_maps]{Proposition~\ref*{prop:face_and_degeneracy_maps_generate_all_maps}}, it suffices to demand that the $f_{i}$ should be compatible with face and degeneracy maps.
+
+What am I trying to say?
+\begin{enumerate}
+  \item Morphims of simplicial sets. These are what you'd expect; $n$-simplices are sent to $n$-simplices in such a way that
+
+  \item Fully faithfulness: restricting to maps between standard simplices gives a copy of $\Delta$ in $\SSet$.
+
+  \item The $n$-simplices of a simplicial set $X$ are in natural bijection to maps of the standard $n$-simplex into $X$.
+\end{enumerate}
+
 
 \section{Basic properties of the category of simplicial sets}
 \label{sec:basic_properties_of_the_category_of_simplicial_sets}
@@ -706,6 +812,10 @@ Any functor category inherits a lot of structure from it codomain category. In t
     \end{tikzpicture}
   \end{equation*}
   Continuing in the same way, one finds that there are two non-degenerate 2-simplices, filling the above triangles. Thus, as one might expect, the product of two intervals is a square.
+\end{example}
+
+\begin{example}[pushouts]
+  \hyperref[cor:limits_computed_pointwise]{Corollary~\ref*{cor:limits_computed_pointwise}} also immediately implies that $\SSet$ has pushouts, which we can also compute poinwise. Recall that we think of pushouts as given by gluing, at least when
 \end{example}
 
 The fact that limits and colimits are computed pointwise implies immediately that morphisms of simplicial sets are computed pointwise.
@@ -992,6 +1102,8 @@ However, \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:ri
 \end{proof}
 
 The objects of the category $(\Delta \downarrow K)$ consist of all morphisms $\Delta^{n} \to K$ for any $n$. This is simply the set of all simplices of $K$. The morphisms between simplices are all ways of mapping simplices into each other which
+
+This vindicates the assertion that we have been making all along: that a simplicial set should be viewed as being built by gluing together its simplices.
 
 \section{Geometric realization}
 \label{sec:geometric_realization}

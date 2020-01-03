@@ -8,6 +8,24 @@
 \section{Localization of categories}
 \label{sec:localization_of_categories}
 
+Many areas of mathematics have a notion of \emph{weak equivalence,} i.e.\ a class of morphisms which are not isomorphisms but which one wants to think of as equivalences.
+\begin{itemize}
+  \item In topology, one often wants to study spaces up to homotopy equivalence.
+
+  \item In homological algebra, one is often interested in chain complexes only up to quasi-isomorphism.
+
+  \item In ordinary category theory, one wants to consider two categories to be the same if they are equivalent.
+\end{itemize}
+
+The difficulty in treating these classes of morphisms as equivalences is that we would like equivalences to be invertible, whereas morphisms belonging to the above classes are in general not invertible. Therefore, we would like to solve the following problem: given a category $\mathcal{C}$ and a set of morphisms $\W$ in $\mathcal{C}$, how can we change $\mathcal{C}$ so as to make each morphism in $\W$ an isomorphism? There are two ways that one could go about this.
+\begin{enumerate}
+  \item One could freely add formal inverses for all morphisms in $\W$. This is, modulo issues of size, always possible, but difficult to work with. This is analogous to the localization of a ring.
+
+  \item One can try to find a replacement for each object of $\mathcal{C}$ such that weak equivalences between these objects turn out to be invertible. This is what one does in homological algebra by taking projective resolutions.
+\end{enumerate}
+
+Whatever approach one takes, the result is called a the localization of $\mathcal{C}$ by $\W$.
+
 \begin{definition}[localization of a category]
   \label{def:localization_of_a_category}
   Let $\mathcal{C}$ be a category, and $\mathcal{W}$ a set of morphisms of $\mathcal{C}$. The \defn{localization of $\mathcal{C}$ at $\mathcal{W}$} is a pair $(\mathcal{C}[\mathcal{W}^{-1}], \pi)$ where $\mathcal{C}([\mathcal{W}^{-1}])$ is a category and $\pi\colon \mathcal{C} \to \mathcal{C}[\mathcal{W}^{-1}]$ is a functor, such that the following conditions hold.
@@ -17,18 +35,18 @@
 
     \item For any category $\mathcal{A}$ and functor $F\colon \mathcal{C} \to \mathcal{A}$ such that $F(w)$ is an isomorphism for all $w \in \mathcal{W}$, there exists a functor $\tilde{F}\colon \mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{A}$ and a natural isomorphism $\tilde{F} \circ \pi \Rightarrow F$.
       \begin{equation*}
-        \begin{tikzcd}
+        \begin{tikzcd}[column sep=small]
           \mathcal{C}
-          \arrow[r, swap, ""'{name=A}, swap, "F"]
-          \arrow[d, swap, "\pi"]
-          & \mathcal{A}
+          \arrow[rr, swap, ""'{name=A}, swap, "F"]
+          \arrow[dr, swap, "\pi"]
+          && \mathcal{A}
           \\
-          \mathcal{C}[\mathcal{W}^{-1}]
+          &\mathcal{C}[\mathcal{W}^{-1}]
           \arrow[ur, swap, "\exists\tilde{F}"]
-          \arrow[from=A, Rightarrow]
+          \arrow[from=A, Leftarrow]
         \end{tikzcd}
       \end{equation*}
-      Note that the above diagram is not required to commute.
+      Note that the above diagram is not required to commute on the nose.
 
     \item For every category $\mathcal{A}$, the pullback functor
       \begin{equation*}
@@ -40,14 +58,14 @@
 
 Note that by the third axiom, the functor $\tilde{F}$ is guaranteed to be unique up to isomorphism: fully faithfulness tells us precisely that functors $\mathcal{C} \to \mathcal{A}$ and functors $\mathcal{C}[\mathcal{W}^{-1}] \to \mathcal{A}$ sending $\mathcal{W}$ to isomorphisms are in bijection up to isomorphism
 
-The idea behind the localization of a category is very similar to that of a ring. Roughly speaking, in localizing a category $\mathcal{C}$ at a set of morphisms $\mathcal{W}$, one adds just enough morphisms to $\mathcal{C}$ so that all the morphisms in $\mathcal{W}$ have inverses. Of course in adding any morphism to a category, one also has to freely add in compositions with other morphisms. For this reason, the localization of a category is in general unwieldy. Furthermore, one runs into size-theoretic issues: even if $\mathcal{C}$ is a small category, one cannot in general be sure that $\mathcal{C}[\mathcal{W}^{-1}]$ is small.
+%The idea behind the localization of a category is very similar to that of a ring. Roughly speaking, in localizing a category $\mathcal{C}$ at a set of morphisms $\mathcal{W}$, one adds just enough morphisms to $\mathcal{C}$ so that all the morphisms in $\mathcal{W}$ have inverses. Of course in adding any morphism to a category, one also has to freely add in compositions with other morphisms. For this reason, the localization of a category is in general unwieldy. Furthermore, one runs into size-theoretic issues: even if $\mathcal{C}$ is a small category, one cannot in general be sure that $\mathcal{C}[\mathcal{W}^{-1}]$ is small.
 
-There is an explicit construction of the localization of a category, but it is extremely unweildy to work with. Fortunately, model categories provide a way of computing and working with localizations which is practical and avoids issues of size.
+As previously alluded to, there is an explicit construction of the localization of a category at any set of weak equivalences, but it is difficult to work with. Fortunately, model categories provide a way of computing and working with localizations which is practical and avoids issues of size.
 
 \section{Model categories}
 \label{sec:model_categories}
 
-Model categories provide a setting in which one can define a purely category-theoretic form of homotopy theory.
+Model categories provide a distillation of the structures appearing in various flavors of homotopy theory.
 
 \begin{definition}[model category]
   \label{def:model_category}
@@ -168,6 +186,8 @@ To simplify terminology, we will use the following terms.
   \item We will call an object $Y \in \mathcal{C}$ \emph{fibrant} if the unique morphism $X \to *$ is a fibration.
 \end{itemize}
 
+We will see some examples of model categories after a few lemmas.
+
 \begin{lemma}[lifting lemma]
   \label{lemma:retract_argument}
   Let $\mathcal{C}$ be any category, and let $f = p \circ i$ be a morphism in $\mathcal{C}$.
@@ -231,7 +251,7 @@ The axioms for a model category are over-specified, in the sense that providing 
   \end{enumerate}
 \end{lemma}
 \begin{proof}
-  We prove 4. The proof of 1 is mutatis mutandis equivalent.
+  We prove 4. The proof of 1 is the same, mutatis mutandis.
 
   Let $f \in \cof \cap \W$. Then by \hyperref[item:MC_solve_some_lifting_problems]{Axiom~\ref*{item:MC_solve_some_lifting_problems}}, $f \in \llp\fib$.
 
@@ -283,14 +303,14 @@ The axioms for a model category are over-specified, in the sense that providing 
         \item $\cof = $ morphisms $f$ of complexes such that $f_{n}$ is a monomorphism for all $n \geq 0$, and $\coker f_{n}$ is projective for all $n \geq 0$.
       \end{itemize}
 
-    \item For any small ring $R$, the category $\mathbf{Ch}^{\leq}(R)$ of bounded-below cochain complexes of small left $R$-modules has a model structure, called the \emph{injective model structure,} with
-      \begin{itemize}
-        \item $\W = $ Quasi-isomorphisms
+    %\item For any small ring $R$, the category $\mathbf{Ch}^{\leq}(R)$ of bounded-below cochain complexes of small left $R$-modules has a model structure, called the \emph{injective model structure,} with
+    %  \begin{itemize}
+    %    \item $\W = $ Quasi-isomorphisms
 
-        \item $\fib = $ morphisms $f$ of complexes such that $f_{n}$ is an epimorphism for all $n \geq 0$, and $\ker f_{n}$ injective for all $n \geq 0$.
+    %    \item $\fib = $ morphisms $f$ of complexes such that $f_{n}$ is an epimorphism for all $n \geq 0$, and $\ker f_{n}$ injective for all $n \geq 0$.
 
-        \item $\cof = $ morphisms $f$ of complexes such that $f_{n}$ is a monomorphism for all $n \geq 0$.
-      \end{itemize}
+    %    \item $\cof = $ morphisms $f$ of complexes such that $f_{n}$ is a monomorphism for all $n \geq 0$.
+    %  \end{itemize}
   \end{enumerate}
 \end{example}
 
@@ -302,7 +322,7 @@ The axioms for a model category are over-specified, in the sense that providing 
 \subsection{A model structure on the category of categories}
 \label{ssc:a_model_structure_on_the_category_of_categories}
 
-In general, proving that three sets of morphisms form the fibrations, cofibrations, and weak equivalences of a model structure is in general an immense undertaking. There are a few model structures, however, which are somewhat simple.
+Proving that three sets of morphisms form the fibrations, cofibrations, and weak equivalences of a model structure can be an immense undertaking. There are a few model structures, however, which are simple enough that the conditions can be checked relatively simply.
 
 Consider the category $I$ with the following objects and morphisms (excluding identity morphisms).
 \begin{equation*}
@@ -360,7 +380,7 @@ First suppose that $G$ is an equivalence of categories. We need to show that $F$
     & \mathcal{B}
   \end{tikzcd}
 \end{equation*}
-Since both $S \circ R$ and $U \circ T$ compose to the identity, $T$ and $R$ are injective on objects and morphisms (in the on-the-nose, evil sense), and $S$ and $U$ are similarly surjective. Thus $G$ is:
+Since both $S \circ R$ and $U \circ T$ compose to the identity, $T$ and $R$ are injective on objects and morphisms, and $S$ and $U$ are similarly surjective. Thus $G$ is:
 \begin{itemize}
   \item \textbf{Essentially surjective:} We can map any $b \in \mathcal{B}$ to $\mathcal{D}$ with $T$, then lift it to something in $\mathcal{C}$ using $G$'s weak inverse, which we'll call $G ^{-1}$. Mapping the result of this to $\mathcal{A}$ with $S$ gives us an object
     \begin{equation*}
@@ -849,6 +869,13 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
   such that $i$ is a cofibration and $\sigma$ is a weak equivalence.
 \end{definition}
 
+In any model category, every object $A$ admits a cylinder object. \hyperref[item:MC_morphisms_factorize]{Axiom~\ref*{item:MC_morphisms_factorize}} guarantees that we can find an object $C$ and maps $i$ and $c$ as above where $i$ is a cofibration and $\sigma$ is a trivial fibration, hence certainly a fibration. However, many model categories have an object such $I$ such that any object $A$ has a cylinder object built from $A$ and $I$, for example by taking the product $A \times I$.
+
+\begin{example}
+  \label{eg:cylinder_objects_in_top}
+  In the category $\Top$ with the Quillen model structure of \hyperref[eg:model_categories]{Example~\ref*{eg:model_categories}}, for each object $X$ there is a cylinder object $X \times I$, where $I$ is the unit interval $[0, 1]$.
+\end{example}
+
 \begin{example}
   \label{eg:cylinder_objects_in_sset}
   In $\SSet$ equipped with the Kan model structure, for each simplicial set $S$ there is a cylinder object, given by $\Delta^{1} \times S$.
@@ -885,7 +912,7 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
 \end{example}
 
 \begin{example}
-  Let $R$ be a small ring, and consider the category $\mathbf{Ch}_{\geq}(R)$ with the projective model structure of \hyperref[ssc:a_model_structure_on_the_category_of_categories]{Subsection~\ref*{ssc:a_model_structure_on_the_category_of_categories}}. Denote by $I_{\bullet}$ the chain complex\footnote{This is, under the Dold-Kan correspondence, the chain complex corresponding to the unit interval.}
+  Let $R$ be a small ring, and consider the category $\mathbf{Ch}_{\geq}(R)$ with the projective model structure of \hyperref[ssc:a_model_structure_on_the_category_of_categories]{Subsection~\ref*{ssc:a_model_structure_on_the_category_of_categories}}. Denote by $I_{\bullet}$ the chain complex\footnote{This is the chain complex corresponding, under the Dold-Kan correspondence, to the unit interval.}
   \begin{equation*}
     \begin{tikzcd}
       \cdots
@@ -933,7 +960,15 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
 \end{definition}
 
 \begin{example}
-  In the projective model structure on $\mathbf{Ch}_{\geq 0}(R)$, a homotopy with respect to the 
+  In the projective model structure on $\mathbf{Ch}_{\geq 0}(R)$, a left homotopy with respect to the cylinder object of \hyperref[eg:cylinder_objects_in_model_structure_on_cat]{Example~\ref*{eg:cylinder_objects_in_model_structure_on_cat}} is a chain homotopy.
+\end{example}
+
+\begin{example}
+  In the Quillen model structure on $\Top$ with cylinder objects as in \hyperref[eg:cylinder_objects_in_top]{Example~\ref*{eg:cylinder_objects_in_top}}, a left homotopy between $f$ and $g$ is a homotopy in the standard sense.
+\end{example}
+
+\begin{example}
+  In the Kan model structure on $\SSet$ with cylinder objects as in \hyperref[eg:cylinder_objects_in_sset]{Example~\ref*{eg:cylinder_objects_in_sset}}, left homotopy reproduces \hyperref[def:homotopy]{Definition~\ref*{def:homotopy}}.
 \end{example}
 
 \begin{lemma}
@@ -1007,7 +1042,7 @@ Finally, we define the homotopy category $\mathrm{Ho}(\mathcal{C})$ of a model c
       \arrow[ur, swap, "f \circ \sigma"]
     \end{tikzcd}
   \end{equation*}
-  This means precisely that $f \circ \sigma$ functions as a left homotopy from $f$ to itself.
+  This means that $f \circ \sigma$ is a left homotopy from $f$ to itself.
 
   Next, we show that left homotopy is symmetric. First, we note that in any category with coproducts, there is a natural isomorphism $\mathrm{swap}_{A}\colon A \amalg A \to A \amalg A$ which switches the components. Because $\cof$ is saturated and thus contains all isomorphisms, $\mathrm{swap}_{A}$ is a cofibration. This gives us a new factorization exhibiting $C$ as a cylinder object of $A$.
   \begin{equation*}
@@ -1288,7 +1323,7 @@ There is a dual notion to left fibrations, called right fibrations. The theory o
 \subsection{Homotopy equivalents}
 \label{ssc:homotopy_equivalents}
 
-Under certain conditions, namely when the domain and codomain are fibrant-cofibrant, left and right homotopy are equivalent.
+Fix objects $A$ and $B$ in a model category, and consider maps $A \to B$. In this section we will show that under certain conditions, namely when $A$ and $B$ are both fibrant-cofibrant, left and right homotopy are equivalent.
 
 \begin{lemma}
   \label{lemma:left_homotopy_implies_right_homotopy}
@@ -1380,7 +1415,7 @@ Under certain conditions, namely when the domain and codomain are fibrant-cofibr
 \end{proof}
 
 \begin{corollary}
-  Let $f$, $g\colon A \to B$ be morphisms, and suppose that $A$ is cofibrant and $B$ is fibrant. Then TFAE.
+  Let $f$, $g\colon A \to B$ be morphisms, and suppose that $A$ is cofibrant and $B$ is fibrant. Then the following are equivalent.
   \begin{enumerate}
     \item $f$ and $g$ are left homotopic.
 
@@ -1411,7 +1446,7 @@ The above result shows that when considering morphisms between a cofibrant objec
   Let $f\colon X \to Y$ be a morphism with $X$ and $Y$ fibrant-cofibrant. We say that $f$ is a \defn{homotopy equivalence} if there exists a morphism $g\colon Y \to X$ such that $g \circ f \sim \id_{X}$ and $f \circ g \sim \id_{Y}$.
 \end{definition}
 
-Composition on the left and on the right preserves homotopy equivalence.
+The next lemma shows that given a homotopy equivalence, the result of pre- or post-composing with any morphism is again a homotopy equivalence.
 \begin{lemma}
   \label{lemma:composition_with_any_morphism_preserves_homotopy_equivalence}
   Let $f$, $g\colon X \to Y$ be homotopy equivalent morphisms between fibrant-cofibrant objects, and let $W$ and $Z$ be fibrant-cofibrant. Then the following hold.
@@ -1716,7 +1751,7 @@ In \hyperref[ssc:fibrant_cofibrant_replacement]{Subsection~\ref*{ssc:fibrant_cof
 \begin{itemize}
   \item The fibrant replacement of a cofibrant object is both fibrant and cofibrant.
 
-  \item fibrant replacement takes left-homotopic morphisms $f$, $g\colon X \to Y$ with $X$ cofibrant to morphisms which are right homotopic.
+  \item Fibrant replacement takes left-homotopic morphisms $f$, $g\colon X \to Y$ with $X$ cofibrant to morphisms which are right homotopic.
 \end{itemize}
 The first lemma implies that taking first the cofibrant and then fibrant replacement of any object $X$ yields an object $RQX$ which is both fibrant and cofibrant; one calls such objects \emph{fibrant-cofibrant,} and the act of replacing an object by a weakly equivalent fibrant-cofibrant one \emph{fibrant-cofibrant replacement.} The second lemma then implies that fibrant-cofibrant replacement gives a functor from $\mathcal{C}$ to $\mathrm{Ho}(\mathcal{C})$.
 
@@ -1758,6 +1793,7 @@ The first lemma implies that taking first the cofibrant and then fibrant replace
 \end{example}
 
 \begin{lemma}
+  \label{lemma:cofibrant_replacement_respects_left_homotopy}
   For any map $f\colon X \to Y$, any choice of cofibrant replacement $f \mapsto Qf$ respects left homotopy; that is, if $f \overset{l}{\sim} f'$, then $Qf \overset{l}{\sim} Qf'$.
 \end{lemma}
 \begin{proof}
@@ -1880,7 +1916,7 @@ There is a dual notion.
   For any map $f\colon X \to Y$, fibrant replacement $f \mapsto Rf$ respects right homotopy; that is, if $f \overset{r}{\sim} f'$, then $Rf \overset{r}{\sim} Rf'$.
 \end{lemma}
 \begin{proof}
-  Dual to
+  Dual to \hyperref[lemma:cofibrant_replacement_respects_left_homotopy]{Lemma~\ref*{lemma:cofibrant_replacement_respects_left_homotopy}}.
 \end{proof}
 
 \begin{corollary}
@@ -1890,7 +1926,7 @@ There is a dual notion.
   \end{equation*}
 \end{corollary}
 \begin{proof}
-  Dual to
+  Dual to \hyperref[cor:cofibrant_replacement_respects_composition]{Corollary~\ref*{cor:cofibrant_replacement_respects_composition}}
 \end{proof}
 
 \subsection{Fibrant-cofibrant replacement}
@@ -2187,8 +2223,8 @@ There is a dual notion.
     \end{tikzcd}
   \end{equation*}
 
-  Because $A$ and $B$ are cofibrant, $i_{A}$ and $i_{B}$ are cofibrations. Thus, $q \circ i_{A}$ is a cofibration, so $C$ is cofibrant. 
-  
+  Because $A$ and $B$ are cofibrant, $i_{A}$ and $i_{B}$ are cofibrations. Thus, $q \circ i_{A}$ is a cofibration, so $C$ is cofibrant.
+
   Note that by commutativity, we have
   \begin{equation*}
     f = p \circ q \circ i_{A},\qquad \id_{B} = p \circ q \circ i_{B}.
@@ -2256,7 +2292,7 @@ where $\mathcal{D}_{f}$ is the full subcategory of $\mathcal{D}$ on fibrant obje
           & \mathcal{C}[\mathcal{W}^{-1}].
         \end{tikzcd}
       \end{equation*}
-  \end{itemize} 
+  \end{itemize}
 \end{definition}
 
 \begin{proposition}

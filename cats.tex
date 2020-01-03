@@ -149,7 +149,11 @@ The theory of infinity categories rests on the shoulders of the theory of ordina
 
 \begin{corollary}
   \label{cor:limits_computed_pointwise}
-  Limits and colimits are computed pointwise.
+  Limits and colimits in functor categories are computed pointwise. That is, for any functor $F\colon J \to [\mathcal{C}, \mathcal{D}]$ and any $j \in J$,
+  \begin{equation*}
+    (\lim F)(j) = \lim (Fj),
+  \end{equation*}
+  where the first limit is taken in $[\mathcal{C}, \mathcal{D}]$, and the second is taken in $\mathcal{D}$.
 \end{corollary}
 
 \begin{corollary}
