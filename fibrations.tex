@@ -52,6 +52,63 @@ One might hope that the fibers of an inner fibration would be $\infty$-cateories
   \end{itemize}
 \end{definition}
 
+\begin{proposition}
+  Let $p\colon K \to S$ be an inner fibration. A morphism $f\colon x \to y$ in $K$ is $p$-Cartesian if and only if for every $n \geq 2$ and every solid commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      \Delta^{\{n-1, n\}}
+      \arrow[d, hook]
+      \arrow[dr, "f"]
+      \\
+      \Lambda_{n}^{n}
+      \arrow[r]
+      \arrow[d, hook]
+      & X
+      \arrow[d, "p"]
+      \\
+      \Delta^{n}
+      \arrow[r]
+      \arrow[ur, dashed]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  admits a dashed lift.
+\end{proposition}
+\begin{proof}
+  We show that the conditions are equivalent. An edge $f\colon x \to y$ is cartesian if and only if we can find lifts of the form.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{n}
+      \arrow[r]
+      \arrow[d, hook]
+      & K_{/f}
+      \arrow[d]
+      \\
+      \Delta^{n}
+      \arrow[ur, dashed]
+      \arrow[r]
+      & K_{/y} \underset{S_{/f(y)}}{\times} S_{/p(f)}
+    \end{tikzcd}
+  \end{equation*}
+
+  Using the adjunction \hyperref[thm:almost_adjunction_for_undercategories]{Theorem~\ref*{thm:almost_adjunction_for_undercategories}} and the reasoning of \hyperref[lemma:equivalent_lifting_problems]{Lemma~\ref*{lemma:equivalent_lifting_problems}}, we find that this is equivalent to the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{n} \star \Delta^{1} \coprod\limits_{\partial \Delta^{n} \star \Delta^{\{1\}}} \Delta^{n} \star \Delta^{\{1\}}
+      \arrow[r]
+      \arrow[d, hook]
+      & K
+      \arrow[d]
+      \\
+      \Delta^{n} \star \Delta^{1}
+      \arrow[r]
+      \arrow[ur, dashed]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  where the component $\Delta^{1} \to K$ is $f$. But, working out which simplices in $\Delta^{n+2}$ we have, we find that this is precisely what we needed to show.
+\end{proof}
+
 \begin{theorem}
   Let $f$ be a trivial fibration. Then $f$ is a Kan fibration.
 \end{theorem}
@@ -852,7 +909,7 @@ The reader has probably guessed the next sentence: ``There is a dual notion.''
   has a solution
 
   By a result analogous to \hyperref[lemma:equivalent_lifting_problems]{Odious Lemma~\ref*{lemma:equivalent_lifting_problems}}, we have immediately that such a lifting problem is equivalent to the following.
-  
+
 \end{proof}
 
 

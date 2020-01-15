@@ -987,16 +987,16 @@ The small object argument is the proof of following statement.
 
 \begin{lemma}
   \label{lemma:small_object_argument}
-  Let $\mathcal{C}$ be a locally small category with small colimits. Let $\mathcal{M}$ be a small set of morphisms in $\mathcal{C}$ such that for each $i\colon A \to B \in \mathcal{M}$, the domain $A$ of $i$ is compact. Then every morphism $f\colon X \to Y$ in $\mathcal{C}$ admits a factorization
+  Let $\mathcal{C}$ be a locally small category with small colimits. Let $\mathcal{M}$ be a small set of morphisms in $\mathcal{C}$ such that for each $i\colon A \to B \in \mathcal{M}$, the domain $A$ of $i$ is compact.\footnote{If $\mathcal{C}$ is presentable, then this condition is satisfied vacuously, since every object is small.} Then every morphism $f\colon X \to Y$ in $\mathcal{C}$ admits a factorization
   \begin{equation*}
     \begin{tikzcd}[column sep=tiny]
       X
       \arrow[rr, "f"]
       \arrow[rd, swap, near start, "h"]
       && Y
-      \arrow[ld, near start, "g"]
       \\
       & Z
+      \arrow[ur, swap, near end, "g"]
     \end{tikzcd}
   \end{equation*}
   with $h \in \overline{\mathcal{M}}$ and $g \in \mathcal{M}_{\perp}$.
@@ -1227,7 +1227,7 @@ The small object argument is the proof of following statement.
   This gives us a map $B \to X_{j+1} \to X_{\infty}$ which makes the diagram commute. We have solved the lifting problem!
 \end{proof}
 
-The main use of the small object argument is to prove the following.
+One important use of the small object argument is to prove the following.
 
 \begin{corollary}
   \label{cor:saturated_hull_is_left_perp_of_right_perp}
