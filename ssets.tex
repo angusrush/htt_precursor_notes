@@ -270,7 +270,7 @@ A simplicial set is thought of as a collection of standard simplices of various 
   We denote this category by $\SSet$.
 \end{definition}
 
-As discussed briefly in \hyperref[sec:yoneda_extensions]{Section~\ref*{sec:yoneda_extensions}}, one thinks of the image under the Yoneda embedding of the object $[n]$ as an $n$-simplex, called the \emph{standard $n$-simplex.} One imagines more general simplicial sets as being built by gluing standard simplices together along their faces. Specifically, for any simplicial set $K$ we should interpret $K([n])$ as the set of $n$-simplices of $K$. The gluing conditions come from functoriality. We will investigate this in \hyperref[sec:what_sort_of_data_does_a_simplicial_set_give_us]{Section~\ref*{sec:what_sort_of_data_does_a_simplicial_set_give_us}}.
+As discussed briefly in \hyperref[sec:yoneda_extensions]{Section~\ref*{sec:yoneda_extensions}}, one thinks of the image under the Yoneda embedding of the object $[n]$ as an $n$-simplex, called the \emph{standard $n$-simplex.} One imagines more general simplicial sets as being built by gluing standard simplices together along their faces. Specifically, for any simplicial set $K$ we should interpret $K([n])$ as the set of $n$-simplices of $K$. The gluing conditions come from functoriality. We will investigate this in \hyperref[sec:which_data_does_a_simplicial_set_give_us]{Section~\ref*{sec:which_data_does_a_simplicial_set_give_us}}.
 
 \begin{definition}[standard simplex]
   \label{eg:standard_simplex}
@@ -318,13 +318,14 @@ We recognize these as degenerate faces. The only nondegenerate face will be $\{0
 Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for $k > n$; it is simply filled with an enormous number of degenerate simplices.\footnote{To be precise, $\binom{n+k+1}{k}$ simplices.}
 
 \begin{example}
-  Denote the power set of a set $X$ by $\mathcal{P}(X)$. Let $\mathcal{J} \subseteq \mathcal{P}(\{0, 1, \ldots, n\})$. Then there is a simplicial set $\Delta^{\mathcal{J}}$ whose morphisms are defined to be the subset
+  Let $X$ be a set. Denote the power set of $X$ by $\mathcal{P}(X)$. Let $\mathcal{J} \subseteq \mathcal{P}(\{0, 1, \ldots, n\})$. There is a simplicial set $\Delta^{\mathcal{J}}$ whose $n$-simplices are defined to be
   \begin{equation*}
     \Delta^{\mathcal{J}}([n]) \subseteq \Delta([m], [n])
   \end{equation*}
   consisting of those $f$ such that $\mathrm{im}(f) \subset J$ for some $J \in \mathcal{J}$.
 
-  Here are some specific examples of $\mathcal{J}$ which will be useful to us. \begin{itemize}
+  Here are some specific examples of $\mathcal{J}$ which will be useful to us.
+  \begin{itemize}
     \item If $\mathcal{J} = \mathcal{P}(\{0, \ldots, n\})$, then
       \begin{equation*}
         \Delta^{\mathcal{J}}([n]) = \Delta^{n},
@@ -343,7 +344,7 @@ Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for 
       \begin{equation*}
         \mathcal{J} = \mathcal{P}(\{0, 1, \ldots, n\}) \smallsetminus \{\{0, 1, \ldots, n\}, \{0, 1, \ldots, i - 1, i + 1, \ldots, n\}\},
       \end{equation*}
-      we obtain the \emph{$i$th horn} of $\Delta^{n}$, and denoted $\Lambda^{n}_{i}$.
+      we obtain the \emph{$i$th horn} of $\Delta^{n}$, which we denote $\Lambda^{n}_{i}$.
 
       For example, the $2$-simplices in the horn $\Lambda^{2}_{1}$ consists of the subset of monotone functions $[2] \to [2]$ whose range lies entirely within one of the sets $\{0,1,2,01, 12, 22\}$. That is
       \begin{equation*}
@@ -416,8 +417,8 @@ Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for 
 
 Simplicial sets are functors, but the functorial notation is often unnecessarily burdensome. Therefore, it is standard to denote the $n$-simplices of a simplicial set $K$ by $K_{n}$ rather than $K([n])$. This is the notation that we will use from now on.
 
-\section{What sort of data does a simplicial set give us?}
-\label{sec:what_sort_of_data_does_a_simplicial_set_give_us}
+\section{Which data does a simplicial set give us?}
+\label{sec:which_data_does_a_simplicial_set_give_us}
 
 \subsection{Face and degeneracy maps}
 \label{ssc:face_and_degeneracy_maps}
@@ -428,15 +429,14 @@ First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] 
 
 \begin{definition}[face function]
   \label{def:face_function_simplicial_category}
-  Let $n \geq 0$. For any $k$ with $0 \leq k < n$, there is a function
+  Let $n \geq 0$. For any $k$ with $0 \leq k < n$, we the \defn{$i$th face function},
   \begin{equation*}
     \partial_{i}\colon [n - 1] \to [n];\qquad j \to
     \begin{cases}
       j, & j < i \\
       j + 1, & j \geq i
-    \end{cases}
+    \end{cases}.
   \end{equation*}
-  called the \defn{$i$th face function}.
 \end{definition}
 \begin{equation*}
   \sigma_{k} \quad = \quad
@@ -467,7 +467,7 @@ First, we note that we can understand how $K$ acts on morphisms $\phi\colon [n] 
   \end{tikzcd}
 \end{equation*}
 
-Applying a simplicial set to the $i$th face function gives a map from $k$-simplices to $(k-1)$-simplices.
+Applying a simplicial set $K$ to the $i$th face function gives a map from $K_{n}$ to $K_{n-1}$.
 
 \begin{definition}[face map]
   \label{def:face_map}
@@ -480,14 +480,10 @@ Applying a simplicial set to the $i$th face function gives a map from $k$-simpli
 
 If we were being pedantic, we would denote the face functions by $\partial^{n}_{i}$ instead of $\partial_{i}$, but keeping track of these indices turns out to be more confusing than elucidating.
 
-We have said that we should view simplicial sets as built by gluing simplices of all different degrees together along their faces. Face maps specify in which way we should do this gluing. Recall that our simplices have ordered vertices---the vertices of an $n$-simplex run from $0$ to $n$. The $i$th face map takes an $n$-simplex to its $i$th face; that is, the face opposite the vertex labelled by $i$.
+Acting on an $n$-simplex $\sigma$ with a face map gives one of the $(n-1)$-simplices making up the boundary of $\sigma$. Recall that our combinatorial models for simplices have ordered vertices---the vertices of an $n$-simplex run from $0$ to $n$. The $i$th face map takes an $n$-simplex to its $i$th face; that is, the face opposite the vertex labelled by $i$.
 
 \begin{example}
-  Consider the simplicial set $\Delta^{2}$, and the map
-  \begin{equation*}
-    d_{0}\colon \Delta^{2}_{1} \to \Delta^{2}_{0}
-  \end{equation*}
-  taking the six 1-simplices of $\Delta^{2}$ (three of which are degenerate) to the three 0-simplices.
+  Consider the simplicial set $K = \Delta^{2}$.
 
   Take $\sigma \in \Delta^{2}_{2}$ given by the identity
   \begin{equation*}
@@ -567,7 +563,7 @@ We have said that we should view simplicial sets as built by gluing simplices of
     \end{tikzpicture}
   \end{equation*}
 
-  Similarly, $d_{0}$ takes the edge between $0$ and $1$ to the vertex $1$, and the edge from $0$ and $2$ to the vertex $2$. Put more concisely, and as should now be clear from the form of $\partial_{0}$, we can see that $d_{0}$ takes any 1-simplex from $a$ to $b$ to the zero-simplex $b$. That is, taking the vertices of a 1-simplex as numbered in order, \emph{$d_{0}$ deletes the zeroth vertex.}
+  Similarly, $d_{0}$ takes $\sigma$ to the edge between $1$ and $2$, and $d_{2}$ takes $\sigma$ to the edge between $0$ and $1$.
 
   Let $f \in \Delta^{2}_{1} = \Delta([1], [2])$ be one of the six 1-simplices. For example, take
   \begin{equation*}
@@ -598,7 +594,7 @@ We have said that we should view simplicial sets as built by gluing simplices of
       \end{scope}
     \end{tikzpicture}
   \end{equation*}
-  Which element of $\Delta^{2}_{0}$ does the face map $d_{0}$ send $f$ to? Recall that $d_{0}$ comes from the face function $\partial_{0}$, which we can draw like this.
+  Again we compute. The face map $d_{0}$ comes from the face function $\partial_{0}$, which we can draw like this.
   \begin{equation*}
     \partial_{0}\colon \quad
     \begin{tikzcd}[row sep=tiny]
@@ -651,6 +647,9 @@ We have said that we should view simplicial sets as built by gluing simplices of
       \end{scope}
     \end{tikzpicture}
   \end{equation*}
+
+  Put more concisely, and as should now be clear from the form of $\partial_{0}$, we can see that $d_{0}$ takes any 1-simplex from $a$ to $b$ to the zero-simplex $b$. That is, taking the vertices of a 1-simplex as numbered in order, \emph{$d_{0}$ deletes the zeroth vertex.vertex}
+
 
 \end{example}
 
@@ -708,7 +707,7 @@ So we understand how the face maps work, at least on $n$-simplices.
   This map is also known as the \defn{$k$th degeneracy map}.
 \end{definition}
 
-Henceforth, most of the simplices we have been talking about have been \emph{nondegenerate.} However, simplicial sets also contain degenerate simplices. Recall, for example, that the standard 2-simplex actually contains six 1-simplices, three of which correspond to the edges of the triangle, and three of which correspond to edges which are `bunched up' at the vertices. The nondegenerate edges correspond to the injective maps $[1] \to [2]$, and the degenerate edges correspond to the constant maps.
+Up until now, most of the simplices we have been talking about have been \emph{nondegenerate.} However, simplicial sets also contain degenerate simplices. Recall, for example, that the standard 2-simplex actually contains six 1-simplices, three of which correspond to the edges of the triangle, and three of which correspond to edges which are `bunched up' at the vertices. The nondegenerate edges correspond to the injective maps $[1] \to [2]$, and the degenerate edges correspond to the constant maps.
 
 The $i$th degeneracy map takes an $(n-1)$-simplex to a degenerate $n$-simplex
 
@@ -745,7 +744,7 @@ The face and degeneracy functions are interesting because they generate all morp
 \subsection{Morphisms of simplicial sets; simplices and the Yoneda lemma}
 \label{ssc:morphisms_of_simplicial_sets_simplices_and_the_yoneda_lemma}
 
-So far, we have talked a lot about simplicial sets, namely functors $\Delta\op \to \Set$. From category theory, one feels that the natural notion of a morphism of simplicial sets should be that of a natural transformation between functors. However, simplicial sets are geometric objects, and we have some idea, on a geometrical level, of what we would like morphisms between them to look like. Fortunately, these notions coincide.
+So far, we have talked a lot about simplicial sets, i.e.\ functors $\Delta\op \to \Set$. From category theory, one feels that the natural notion of a morphism of simplicial sets should be that of a natural transformation. However, simplicial sets are geometric objects, and we have some idea, on a geometrical level, of what we would like morphisms between them to look like. Fortunately, these notions coincide.
 
 Consulting the definition of a simplicial set, one sees that a morphism between simplicial sets $f\colon X \to Y$ should consist of, for each $n \geq 0$, a map $f_{n}\colon X_{n} \to Y_{n}$, compatible with the morphisms in $\Delta$. In fact, because of \hyperref[prop:face_and_degeneracy_maps_generate_all_maps]{Proposition~\ref*{prop:face_and_degeneracy_maps_generate_all_maps}}, it suffices to demand that the $f_{i}$ should be compatible with face and degeneracy maps.
 
@@ -886,48 +885,39 @@ Before we prove that such an internal hom exists, let us assume that $\SSet$ adm
   natural in $A$ and $C$.
 \end{theorem}
 \begin{proof}
-  First, we define a family of morphisms which turn out to be the components of the counit. Consider a map
+  We define two mutually inverse maps. First, let $f\colon A \times B \to C$. We define a map $\tilde{f}\colon A \to \Maps(B, C)$ level-wise as follows: for any $\sigma \in A_{n}$, define $\tilde{f}_{n}(\sigma)\colon \Delta^{n} \times B \to C$ to be the composition
   \begin{equation*}
-    \mathrm{ev}_{C}\colon \Maps(B, C) \times B \to C
+    \begin{tikzcd}
+      \Delta^{n} \times B
+      \arrow[r, "\sigma \times B"]
+      & A \times B
+      \arrow[r, "f"]
+      & C.
+    \end{tikzcd}
+  \end{equation*}
+
+  Now we define a map in the other direction. First, we define a family of morphisms which turn out to be the components of the counit. Consider a map
+  \begin{equation*}
+    \mathrm{ev}\colon \Maps(B, C) \times B \to C
   \end{equation*}
   defined level-wise by
   \begin{equation*}
-    (\mathrm{ev}_{C})_{n}\colon \SSet(\Delta^{n} \times B, C) \times B_{n} \to C_{n}\qquad (f, b) \mapsto f(\id_{\Delta^{n}}, b).
+    \mathrm{ev}_{n}\colon \SSet(\Delta^{n} \times B, C) \times B_{n} \to C_{n}\qquad (f, b) \mapsto f_{n}(\id_{\Delta^{n}}, b).
   \end{equation*}
 
-  We will be done if we can show that there is a bijection between morphisms $f$ and $\tilde{f}$ as follows.
-  \begin{equation*}
+  The, given $\tilde{f}\colon A \to \Maps(B, C)$, we define $f\colon A \times B \to C$ to be the composition
+  \begin{equation}
+    \label{eq:triangle_for_cartesian_closure}
     \begin{tikzcd}
       A \times B
-      \arrow[rr, "f \times \id_{B}"]
-      \arrow[dr, swap, "\tilde{f}"]
-      && \Maps(B, C) \times B
-      \arrow[dl, "\mathrm{ev}_{C}"]
-      \\
-      & C
+      \arrow[r, "\tilde{f} \times B"]
+      & \Maps(B, C) \times B
+      \arrow[r, "\mathrm{ev}"]
+      & C.
     \end{tikzcd}
-  \end{equation*}
-  This amounts to showing that for each $\tilde{f}\colon A \times B \to C$ there is a unique map $f\colon A \to \Maps(B, C)$ making the above diagram commute. (The direction $f \mapsto \tilde{f}$ is obvious; it is given by the above composition.)
+  \end{equation}
 
-  Now suppose that we are given a map $\tilde{f}$. Let us construct $f$. The condition that the diagram commute tells us, level-wise, that
-  \begin{equation*}
-    \tilde{f}_{n}(a, b) \overset{!}{=} (\ev_{C})_{n}(f_{n}(a), b) = f_{n}(a)(\id_{\Delta^{n}}, b).
-  \end{equation*}
-  Thus, we have no choice in how $f_{n}(a)$ behaves when its first slot is filled with an identity map.
-
-  We want $(\ev_{B})_{n}$ to be natural in both $B$ and $n$. Naturality in $B$ implies that the square
-  \begin{equation*}
-    \begin{tikzcd}
-      (\Maps(B, B) \times B)
-      \arrow[r, "\ev_{B}"]
-      \arrow[d]
-      & B
-      \\
-      \Maps(B, C) \times B
-      \arrow[r, "\ev_{C}"]
-      & C
-    \end{tikzcd}
-  \end{equation*}
+  It is not \emph{too} hard to show that these are really mutually inverse and check naturality.
 \end{proof}
 
 \begin{note}
@@ -936,7 +926,7 @@ Before we prove that such an internal hom exists, let us assume that $\SSet$ adm
   \begin{equation*}
     \Maps(K, S)_{0} = \SSet(K \times \Delta^{0}, S) = \SSet(K, S),
   \end{equation*}
-  i.e.\ maps $K \to S$ correspond to vertices of $\Maps(K, S)$.
+  i.e.\ maps $K \to S$ correspond to vertices of $\Maps(K, S)$. The 1-simplices of $\Maps(K, S)$ corrspond to maps $\Delta^{1} \times K \to S$, i.e.\ homotopies between maps, and so on.
 \end{note}
 
 \section{Constructing simplicial sets from cosimplicial objects}
