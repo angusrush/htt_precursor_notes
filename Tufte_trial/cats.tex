@@ -1,0 +1,522 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Category-theoretic preliminaries}
+\label{ch:category_theoretic_preliminaries}
+
+The theory of infinity categories rests on the shoulders of the theory of ordinary category theory. In this chapter, we recall some category-theoretic results that we will use.
+
+\section{Formulae for limits and Kan extensions}
+\label{sec:formulae_for_limits_and_kan_extensions}
+
+\begin{fact}
+  \label{fact:limit_colimit_formula}
+  Let $\mathcal{C}$ be a small category, and let $\mathcal{D}$ be locally small. Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor.
+  \begin{itemize}
+    \item If $\mathcal{D}$ has small products and equalizers, then $\lim F$ is given by the following equalizer,
+      \begin{equation*}
+        \begin{tikzcd}
+          \lim F
+          \arrow[r, hookrightarrow]
+          & \prod\limits_{c \in \mathcal{C}} F(c)
+          \arrow[r, shift left, "R"]
+          \arrow[r, shift right, swap, "S"]
+          & \prod\limits_{\alpha \in \mathrm{Mor}(\mathcal{C})} F(\mathrm{codom}(\alpha))
+        \end{tikzcd}
+      \end{equation*}
+      where the morphisms $R$ and $S$ are defined by their components
+      \begin{equation*}
+        R_{\alpha} = \pi_{F(\mathrm{codom}(\alpha))}\colon \prod\limits_{c \in \mathcal{C}} F(c) \to F(\mathrm{codom}(\alpha))
+      \end{equation*}
+      and
+      \begin{equation*}
+        S_{\alpha} = F(\alpha) \circ \pi_{\mathrm{dom}(\alpha)}\colon \prod\limits_{c \in \mathcal{C}} F(c) \to F(\mathrm{codom}(\alpha))
+      \end{equation*}
+
+    \item If $\mathcal{D}$ has small coproducts and coequalizers, then $\colim F$ is given by the following coequalizer,
+      \begin{equation*}
+        \begin{tikzcd}
+          \coprod\limits_{\alpha \in \mathrm{Mor}(\mathcal{C})} F(\mathrm{dom}(\alpha))
+          \arrow[r, shift left, "A"]
+          \arrow[r, swap, shift right, "B"]
+          & \coprod\limits_{c \in \mathcal{C}} F(c)
+          \arrow[r, twoheadrightarrow]
+          & \colim F
+        \end{tikzcd}
+      \end{equation*}
+      where the morphisms $A$ and $B$ are defined by their components
+      \begin{equation*}
+        A_{\alpha} = \iota_{F(\mathrm{dom}(\alpha))}\colon F(\mathrm{dom}(\alpha)) \to \coprod_{c \in \mathcal{C}} F(c)
+      \end{equation*}
+      and
+      \begin{equation*}
+        B_{\alpha} = \iota_{\mathrm{codom}(\alpha)} \circ F(\alpha) \colon F(\mathrm{dom}(\alpha)) \to \coprod_{c \in \mathcal{C}} F(c)
+      \end{equation*}
+  \end{itemize}
+\end{fact}
+
+\begin{fact}
+  \label{fact:pointwise_formula_kan_extensions}
+  Consider categories and functors as follows,
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}
+      \arrow[dr, swap, "F"]
+      \arrow[rr, "D"]
+      && \mathcal{D}
+      \\
+      & \mathcal{C}'
+    \end{tikzcd}
+  \end{equation*}
+  where $\mathcal{C}$ is small. 
+  \begin{itemize}
+    \item If $\mathcal{D}$ has all small colimits, then the left Kan extension $F_{!}D$ exists and has values
+      \begin{equation*}
+        (F_{!}D)(c') = \colim \left[ \begin{tikzcd} (c' \downarrow F) \arrow[r] & \mathcal{C} \arrow[r, "D"] & \mathcal{D} \end{tikzcd} \right].
+      \end{equation*}
+
+    \item If $\mathcal{D}$ has all small limits, then the right Kan extension $F_{*}D$ exists and has values
+      \begin{equation*}
+        (F_{*}D)(c') = \lim \left[ \begin{tikzcd} (F \downarrow c') \arrow[r] & \mathcal{C} \arrow[r, "D"] & \mathcal{D} \end{tikzcd} \right].
+      \end{equation*}
+  \end{itemize}
+\end{fact}
+
+\section{Limits in functor categories}
+\label{sec:limits_in_functor_categories}
+
+\begin{theorem}
+  \label{thm:limit_over_category_with_initial_object_is_that}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor.
+
+  \begin{itemize}
+    \item If $\mathcal{C}$ has an initial object $i$, then $\lim F = F(i)$.
+
+    \item If $\mathcal{C}$ has a terminal object $i$, then $\colim F = F(i)$.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  We prove the first; the second is dual.
+
+  For each $c \in \mathcal{C}$, we get a unique morphism $i \to c$. Sticking these into $F$ gives us a cone $\alpha_{c}\colon F(i) \to F(c)$ under $F(i)$.
+
+  Now let $(d, \epsilon)$ be any other cone over $F$. In particular, $\epsilon$ has a component
+  \begin{equation*}
+    \epsilon_{i}\colon d \to F(i).
+  \end{equation*}
+  In order to show that $\alpha$ is a limit cone, we need only show that this is the only possible morphism $d \to F(i)$ such that the triangles
+  \begin{equation*}
+    \begin{tikzcd}
+      & d
+      \arrow[ddl, bend right, swap, "\epsilon_{j}"]
+      \arrow[d, "\epsilon_{i}"]
+      \\
+      & F(i)
+      \arrow[dl, "\alpha_{c}"]
+      \\
+      F(c)
+    \end{tikzcd}
+  \end{equation*}
+  commute for all $c$. Let $f\colon d \to F(i)$ be any other such morphism. The triangle above must in particular commute when $c = i$, so $\alpha_{i} = F(\id_{i}) = \id_{F(i)}$.
+  \begin{equation*}
+    \begin{tikzcd}
+      & d
+      \arrow[ddl, bend right, swap, "\epsilon_{i}"]
+      \arrow[d, "f"]
+      \\
+      & F(i)
+      \arrow[dl, "\id_{F(i)}"]
+      \\
+      F(i)
+    \end{tikzcd}
+  \end{equation*}
+  Thus, $f = \epsilon_{i}$.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:functor_categories_complete_cocomplete}
+  Let $\mathcal{C}$ and $\mathcal{D}$ be categories, with $\mathcal{D}$ small and $\mathcal{C}$ locally small.
+  \begin{itemize}
+    \item If $\mathcal{D}$ is complete, then so is $[\mathcal{C}, \mathcal{D}]$.
+
+    \item If $\mathcal{D}$ is cocomplete, then so is $[\mathcal{C}, \mathcal{D}]$.
+  \end{itemize}
+\end{theorem}
+\begin{proof}[Sketch of proof]
+  A cone in a functor category is built out of natural transformations. Evaluating on a component gives a cone in the target category. A cone in a functor category is a limit cone if and only if each component is a limit cone.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:limits_computed_pointwise}
+  Limits and colimits in functor categories are computed pointwise. That is, for any functor $F\colon J \to [\mathcal{C}, \mathcal{D}]$ and any $j \in J$,
+  \begin{equation*}
+    (\lim F)(j) = \lim (Fj),
+  \end{equation*}
+  where the first limit is taken in $[\mathcal{C}, \mathcal{D}]$, and the second is taken in $\mathcal{D}$.
+\end{corollary}
+
+\begin{corollary}
+  \label{cor:monos_epis_in_functor_category_preserved_pointwise}
+  A morphism $\eta\colon F \to G$ in a functor category is a monomorphism (resp. epimorphism) if and only if each component $\eta_{x}$ is a monomorphism (resp. epimorphism).
+\end{corollary}
+\begin{proof}
+  A morphism $\eta\colon F \to G$ is a monomorphism if and only if the square
+  \begin{equation*}
+    \begin{tikzcd}
+      F
+      \arrow[r, "\id"]
+      \arrow[d, swap, "\id"]
+      & F
+      \arrow[d, "\eta"]
+      \\
+      F
+      \arrow[r, swap, "\eta"]
+      & G
+    \end{tikzcd}
+  \end{equation*}
+  is a pullback square. But by \hyperref[cor:limits_computed_pointwise]{Corollary~\ref*{cor:limits_computed_pointwise}}, the above square is a pullback square if and only if its components are pullback squares, which in turn is true if and only if each component is a monomorphism.
+
+  The epimorphism case is dual.
+\end{proof}
+
+\section{Properties of Kan extensions}
+\label{sec:properties_of_kan_extensions}
+
+\begin{theorem}
+  \label{thm:kan_extension_along_fully_faithful_functor_counit_isomorphism}
+  Let $\mathcal{C}$ be a small category, and $\mathcal{D}$ locally small. Let $F\colon \mathcal{C} \to \mathcal{C'}$ be fully faithful.
+  \begin{itemize}
+    \item If $\mathcal{D}$ has small limits, then the counit
+      \begin{equation*}
+        \eta\colon F^{*} \circ F_{*} \Rightarrow \id_{\mathcal{C}'}
+      \end{equation*}
+      is a natural isomorphism.
+
+    \item If $\mathcal{D}$ has small colimits, then the unit
+      \begin{equation*}
+        \epsilon\colon \id_{\mathcal{D}} \Rightarrow F^{*} \circ F_{!}
+      \end{equation*}
+      is a natural isomorphism.
+  \end{itemize}
+\end{theorem}
+\begin{proof}
+  We need to show that each component
+  \begin{equation*}
+    \eta_{G}\colon (F^{*} \circ F_{*})(G) \Rightarrow \id_{\mathcal{C}'}
+  \end{equation*}
+  is a natural isomorphism. By definition of the pullback, we have
+  \begin{equation*}
+    (F^{*} \circ F_{*})(G) = F^{*}(F_{*}G) = F_{*}G \circ F.
+  \end{equation*}
+
+  Consider some $c' \in \mathcal{C}'$. By the limit formula for Kan extensions, we can express $F_{*}G(c')$ as
+  \begin{equation*}
+    F_{*}G(c') = \lim_{c \in (F / c')} G(c).
+  \end{equation*}
+  In particular, if $c' = F(c)$ for some $c$, we have
+  \begin{equation*}
+    F_{*}G(F(c)) = \lim_{c \in (F / F(c))} G(c) = \lim\left[ (F / F(c)) \to \mathcal{C} \to \mathcal{D} \right].
+  \end{equation*}
+  Since the object $(c, \id_{F(c)})$ is initial in $(F / F(c))$ we have by \hyperref[thm:limit_over_category_with_initial_object_is_that]{Theorem~\ref*{thm:limit_over_category_with_initial_object_is_that}} that
+  \begin{equation*}
+    \lim\left[ (F / F(c)) \to \mathcal{C} \to \mathcal{D} \right] = G(c).
+  \end{equation*}
+  Thus, we have
+  \begin{equation*}
+    (F^{*} \circ F_{*})(G)(c) \simeq G(c)
+  \end{equation*}
+  for all $c \in \mathcal{C}$
+\end{proof}
+
+\begin{corollary}
+  Let $\mathcal{C}$ be a small category, and $\mathcal{D}$ locally small. Let $F\colon \mathcal{C} \to \mathcal{C'}$ be fully faithful.
+  \begin{itemize}
+    \item If $\mathcal{D}$ has small limits, then $F_{*}$ is fully faithful.
+
+    \item If $\mathcal{D}$ has small colimits, then $F_{!}$ fully faithful.
+  \end{itemize}
+\end{corollary}
+
+
+\section{Yoneda extensions}
+\label{sec:yoneda_extensions}
+
+\begin{definition}[Yoneda extension]
+  \label{def:yoneda_extension}
+  One calls left Kan extensions along the Yoneda embedding \defn{Yoneda extensions}.
+\end{definition}
+
+It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathcal{C}}$ as `generalized objects' of $\mathcal{C}$. This is possible becuase the Yoneda embedding is fully faithful, so one can reasonably think of $\mathcal{C}$ as sitting inside $\mathbf{Set}_{\mathcal{C}}$ as a full subcategory. One then imagines the objects of $\mathbf{Set}_{\mathcal{C}}$ as built by gluing together objects of $\mathcal{C}$. This point of view comes from the following result.
+
+\begin{lemma}
+  \label{lemma:colimit_of_comma_category}
+  Let $\mathcal{C}$ be a locally small category. Denote by $\mathcal{Y}$ the Yoneda embedding $\mathcal{C} \to \mathbf{Set}_{\mathcal{C}}$. Then for any functor $F\in \mathbf{Set}_{\mathcal{C}}$ we have the following expression.
+  \begin{equation*}
+    F \simeq \colim \left[ (\mathcal{Y} / F) \overset{\mathcal{U}}{\to} \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right].
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  By \hyperref[thm:kan_extension_along_fully_faithful_functor_counit_isomorphism]{Theorem~\ref*{thm:kan_extension_along_fully_faithful_functor_counit_isomorphism}}, the fully faithfulness of the Yoneda embedding, and the definition of the restriction functor, we have that
+  \begin{equation*}
+    F \simeq (\mathcal{Y}^{*} \circ \mathcal{Y}_{!})(F) \simeq (\mathcal{Y}_{!}\mathcal{Y})(F).
+  \end{equation*}
+  The functor $\mathcal{Y}_{!}\mathcal{Y}$ comes from the following Kan extension.
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}
+      \arrow[rr, "\mathcal{Y}"]
+      \arrow[dr, swap, "\mathcal{Y}"]
+      && \mathbf{Set}_{\mathcal{C}}
+      \\
+      & \mathbf{Set}_{\mathcal{C}}
+      \arrow[ur, swap, "\mathcal{Y}_{!} \mathcal{Y}"]
+    \end{tikzcd}
+  \end{equation*}
+  The colimit formula for left Kan extensions (\hyperref[fact:pointwise_formula_kan_extensions]{Fact~\ref*{fact:pointwise_formula_kan_extensions}}) then tells us that
+  \begin{equation*}
+    F \simeq \colim \left[ (\mathcal{Y}/F) \overset{\mathcal{U}}{\to} \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right]
+  \end{equation*}
+  as required.
+%  We need to show that $F$ is the base of a universal cocone under $\mathcal{Y} \circ \mathcal{U}$. That $F$ is the base of a cocone is obvious, since every object $(\alpha, f)$ comes with a map $f\colon \mathcal{Y}(\alpha) \to F$ as required, and the diagram below manifestly commutes for each morphism $g$.
+%  \begin{equation*}
+%    \begin{tikzcd}
+%      \mathcal{Y}(\alpha)
+%      \arrow[rd, swap, Rightarrow, "f"]
+%      \arrow[rr, Rightarrow, "\mathcal{Y}(g)"]
+%      && \mathcal{Y}(\alpha')
+%      \arrow[ld, Rightarrow, "f'"]
+%      \\
+%      & F
+%    \end{tikzcd}
+%  \end{equation*}
+%  That is, $f' \circ \mathcal{Y}(g) = f$
+%  It remains to show that $F$ is universal, i.e.\ that for any other cocone with tip $G \in \mathbf{Set}_{\mathcal{C}}$ and components
+%  \begin{equation*}
+%    \xi_{(\alpha, f)}\colon \mathcal{Y}(c) \Rightarrow G
+%  \end{equation*}
+%  making the diagrams
+%  \begin{equation*}
+%    \begin{tikzcd}
+%      \mathcal{Y}(\alpha)
+%      \arrow[rd, swap, Rightarrow, "\xi_{(\alpha, f)}"]
+%      \arrow[rr, Rightarrow, "\mathcal{Y}(g)"]
+%      && \mathcal{Y}(\alpha')
+%      \arrow[ld, Rightarrow, "\xi_{(\alpha', f')}"]
+%      \\
+%      & G
+%    \end{tikzcd}
+%  \end{equation*}
+%  commute (i.e.\ so that $\xi_{(\alpha', f')} \circ \mathcal{Y}(g) = \xi_{(\alpha, f)}$), this data is enough to define a unique natural transformation $F \Rightarrow G$.
+%
+%  But each object $(\alpha, f)$ also gives us, again by Yoneda, an element of $G(\alpha)$. Thus, we are able to assign to each element of $F(\alpha)$ a unique element of $G(\alpha)$, giving us a map $F(\alpha) \to G(\alpha)$. This gives us a correspondence
+%  \begin{equation*}
+%    \mathbf{Set}_{\mathcal{C}}(\mathcal{Y}(\alpha), F) \to \mathbf{Set}_{\mathcal{C}}(\mathcal{Y}(\alpha), G),
+%  \end{equation*}
+%  natural in $\alpha$. By Yoneda, we get a natural transformation $F \Rightarrow G$.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:right_adjoint_to_yoneda_extension}
+  Let $\mathcal{I}$ be a small category, and let $\mathcal{C}$ be locally small and cocomplete. Let $F$ be a functor as below. Then the Yoneda extension $\mathcal{Y}_{!}F$ is left adjoint to the functor
+  \begin{equation*}
+    G\colon \mathcal{C} \to \mathbf{Set}_{\mathcal{I}};\qquad c \mapsto \mathcal{C}(F(-), c).
+  \end{equation*}
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{I}
+      \arrow[rr, "F"]
+      \arrow[dr, swap, "\mathcal{Y}"]
+      && \mathcal{C}
+      \\
+      & {\mathbf{Set}_{\mathcal{I}}}
+      \arrow[ur, swap, "\mathcal{Y}_{!}F"]
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      \mathcal{Y}_{!}F : \mathbf{Set}_{\mathcal{I}} \leftrightarrow \mathcal{C} : G
+    \end{tikzcd}
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  Since $\mathcal{C}$ is cocomplete, we are entitled to use the colimit formula for left Kan extensions. That is, we can write
+  \begin{equation*}
+    (\mathcal{Y}_{!}F)(H) = \lim_{\rightarrow} \left[ (\mathcal{Y} / H) \overset{\mathcal{U}}{\to} \mathcal{I} \overset{F}{\to} \mathcal{C} \right] = \lim_{\rightarrow}\left[ F \circ \mathcal{U} \right].
+  \end{equation*}
+  Thus, we have the following string of natural isomorphisms.
+  \begin{align*}
+    \mathcal{C}((\mathcal{Y}_{!}F)(H), c) &\simeq \mathcal{C}(\lim_{\rightarrow} [F \circ \mathcal{U}], c) \\
+    &\simeq \lim_{\leftarrow}\mathcal{C}(F(-), c) \circ \mathcal{U} \\
+    &\simeq \lim_{\leftarrow} G(c) \circ \mathcal{U} \\
+    &\simeq \lim_{\leftarrow}\mathbf{Set}_{\mathcal{I}}(\mathcal{Y}(-), G(c)) \circ \mathcal{U}. \\
+    &\simeq\mathbf{Set}_{\mathcal{I}}(\lim_{\rightarrow}\mathcal{Y} \circ \mathcal{U}, G(c)) \\
+    &\simeq\mathbf{Set}_{\mathcal{I}}(H, G(c)).
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  \label{cor:yoneda_extension_results_in_cocontinuous_functor}
+  Let $\mathcal{I}$ be a small category, and let $\mathcal{C}$ be locally small and cocomplete. Let $F\colon \mathcal{I} \to \mathcal{C}$. Then the Yoneda extension $\mathcal{Y}_{!}F$ preserves colimits.
+\end{corollary}
+\begin{proof}
+  By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}, $\mathcal{Y}_{!}F$ is a left adjoint.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:yoneda_extension_of_restriction_preserves_colimits}
+  Let $\mathcal{C}$ be a small category, and let $\mathcal{D}$ be cocomplete. Let $F\colon \mathbf{Set}_{\mathcal{C}} \to \mathcal{D}$ be any functor. Then $F$ preserves colimits if and only if it is the left Yoneda extension of its restriction $\mathcal{Y}^{*}F \colon \mathcal{C} \to \mathcal{D}$, i.e.\ if $F = (\mathcal{Y}_{!}\mathcal{Y}^{*})(F)$.
+\end{theorem}
+\begin{proof}
+  Assume that $F = (\mathcal{Y}_{!}\mathcal{Y}^{*})(F)$. By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}, $(\mathcal{Y}_{!}\mathcal{Y}^{*})(F)$ is a left adjoint, hence preserves colimits.
+
+  Now assume that $F$ preserves colimits. Pick some functor $G\colon \mathcal{C}^{\mathrm{op}} \to \mathbf{Set}$. By \hyperref[lemma:colimit_of_comma_category]{Lemma~\ref*{lemma:colimit_of_comma_category}}, we can write
+  \begin{align*}
+    F(G) &\simeq F\left( \lim_{\rightarrow}\left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right] \right) \\
+    &\simeq \lim_{\rightarrow} \left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}}  \overset{F}{\to} \mathcal{D} \right] \\
+    &\simeq \lim_{\rightarrow} \left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}^{*}F}{\to} \mathcal{D} \right] \\
+    &\simeq \mathcal{Y}_{!}(\mathcal{Y}^{*}F)(G).
+  \end{align*}
+\end{proof}
+
+\begin{corollary}
+  \label{cor:functors_equivalent_to_cocontinuous_functors_out_of_presheafs}
+  Let $\mathcal{C}$ be a small category, and $\mathcal{D}$ locally small. There is an equivalence of categories
+  \begin{equation*}
+    [\mathbf{Set}_{\mathcal{C}} , \mathcal{D}]_{\mathrm{cocontinuous}} \simeq [\mathcal{C}, \mathcal{D}].
+  \end{equation*}
+  That is, colimit preserving functors $\mathbf{Set}_{\mathcal{C}}  \to \mathcal{D}$ are equivalent to functors $\mathcal{C} \to \mathcal{D}$ via restriction along the Yoneda embedding.
+\end{corollary}
+\begin{proof}
+  We have an adjunction
+  \begin{equation*}
+    \mathcal{Y}_{!}: [\mathcal{C}, \mathcal{D}] \leftrightarrow [\mathbf{Set}_{\mathcal{C}} , \mathcal{D}] : \mathcal{Y}^{*}.
+  \end{equation*}
+
+  By \hyperref[cor:yoneda_extension_results_in_cocontinuous_functor]{Corollary~\ref*{cor:yoneda_extension_results_in_cocontinuous_functor}}, the image of $\mathcal{Y}_{!}$ is completely contained in $[\mathbf{Set}_{\mathcal{C}} , \mathcal{D}]_{\mathrm{cocontinuous}}$, so the above adjunction extends to an adjunction
+  \begin{equation*}
+    \mathcal{Y}_{!}: [\mathcal{C}, \mathcal{D}] \leftrightarrow [\mathbf{Set}_{\mathcal{C}} , \mathcal{D}]_{\mathrm{cocontinuous}} : \mathcal{Y}^{*}.
+  \end{equation*}
+  We know that the Yoneda embedding is fully faithful. Thus, by \hyperref[thm:kan_extension_along_fully_faithful_functor_counit_isomorphism]{Theorem~\ref*{thm:kan_extension_along_fully_faithful_functor_counit_isomorphism}}, we have that the unit is an isomorphism. Also, by \hyperref[thm:yoneda_extension_of_restriction_preserves_colimits]{Theorem~\ref*{thm:yoneda_extension_of_restriction_preserves_colimits}}, the counit is an isomorphism, so the above adjunction is in fact an equivalence of categories.
+\end{proof}
+
+\section{Day convolution}
+\label{sec:day_convolution}
+
+Let $(\mathcal{C}, \otimes)$ be a monoidal category. The category $\Set_{\mathcal{C}}$ of functors from $\mathcal{C}\op$ to $\Set$ inherits a monoidal structure as follows.
+
+Given functors $F$, $G\colon \mathcal{C} \to \Set$, we can define a functor
+\begin{equation*}
+  F \bar{\times} G\colon \mathcal{C}\op \times \mathcal{C}\op \to \Set;\qquad (c, d) \mapsto F(c) \times G(d).
+\end{equation*}
+
+\begin{definition}[Day convolution]
+  \label{def:day_convolution}
+  The \defn{Day convolution} of $F$ and $G$, denoted $F \otimes G$, is given by the left Kan extension of $F \bar{\times} G$ along $\otimes\op$.
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}\op \times \mathcal{C}\op
+      \arrow[rr, "F \bar{\times} G"]
+      \arrow[dr, swap, "\otimes\op"]
+      && \Set
+      \\
+      & \mathcal{C}\op
+      \arrow[ur, swap, "F \otimes G"]
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+The colimit formula for left Kan extensions tells us that
+\begin{equation*}
+  (F \otimes G)(c) = \colim \left[ (c \downarrow \otimes\op) \to \mathcal{C}\op \times \mathcal{C}\op \overset{F \bar{\times} G}{\to} \Set \right]
+\end{equation*}
+
+\section{Enriched category theory}
+\label{sec:enriched_category_theory}
+
+\begin{definition}[enriched category]
+  \label{def:enriched_category}
+  Let $(\mathcal{M}, \otimes, 1_{\mathcal{M}}, \alpha, \lambda, \rho)$ be a monoidal category. A \defn{$\mathcal{M}$-enriched category} $\mathcal{C}$ consists of the following data.
+  \begin{itemize}
+    \item A set $\ob(\mathcal{C})$ of objects.
+
+    \item For each pair $x$, $y$ of objects, an object $\mathcal{C}(x, y) \in \mathcal{M}$ of morphisms.
+
+    \item For each object $x \in \mathcal{C}$, a morphism
+      \begin{equation*}
+        1_{\mathcal{M}} \to \mathcal{C}(x, x)
+      \end{equation*}
+      called the \emph{unit}
+
+    \item For objects $x$, $y$, and $z$, a morphism
+      \begin{equation*}
+        \mathcal{C}(x, y) \otimes \mathcal{C}(y, z) \to \mathcal{C}(x, z)
+      \end{equation*}
+      called the \emph{composition}.
+  \end{itemize}
+  This composition must be unital and associative, i.e.\ the diagrams
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}(x, y)
+      \arrow[r]
+      \arrow[d]
+      \arrow[rd, "\id"]
+      & \mathcal{C}(y, y) \otimes \mathcal{C}(x, y)
+      \arrow[d]
+      \\
+      \mathcal{C}(x, y) \otimes \mathcal{C}(x, x)
+      \arrow[r]
+      & \mathcal{C}(x, y)
+    \end{tikzcd}
+  \end{equation*}
+  and
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}(x, y) \otimes \mathcal{C}(y, z) \otimes \mathcal{C}(z, w)
+      \arrow[r]
+      \arrow[d]
+      & \mathcal{C}(x, y) \otimes \mathcal{C}(y, w)
+      \arrow[d]
+      \\
+      \mathcal{C}(x, z) \otimes \mathcal{C}(z, w)
+      \arrow[r]
+      & \mathcal{C}(x, w)
+    \end{tikzcd}
+  \end{equation*}
+  must commute (where unitors and associators are notationally supressed).
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:monoidal_functor_switches_enrichment}
+  Let $\mathcal{C}$ be an $\mathcal{M}$-enriched category, and let $F\colon \mathcal{M} \to \mathcal{N}$ be a monoidal functor with data
+  \begin{equation*}
+    \Phi_{x, y}\colon F(x) \otimes_{\mathcal{N}} F(y) \to F(x \otimes_{\mathcal{M}} y),\qquad \phi\colon 1_{\mathcal{N}} \to F(1_{\mathcal{M}}).
+  \end{equation*}
+  This data allows us to build from $\mathcal{C}$ a category enriched over $\mathcal{N}$.
+\end{lemma}
+\begin{proof}
+  \leavevmode
+  \begin{itemize}
+    \item We apply $F$ to each hom-object in $\mathcal{M}$ to get a new hom-object in $\mathcal{N}$;
+      \begin{equation*}
+        \mathcal{C}(x, y)_{\mathcal{N}} = F(\mathcal{C}(x, y)_{\mathcal{M}}).
+      \end{equation*}
+
+    \item The unit is the composition
+      \begin{equation*}
+        \begin{tikzcd}
+          1_{\mathcal{N}}
+          \arrow[r]
+          & F(1_{\mathcal{M}})
+          \arrow[r]
+          & F(\mathcal{C}(x, y)_{\mathcal{M}})
+          \arrow[r, equals]
+          & \mathcal{C}(x, y)_{\mathcal{N}}
+        \end{tikzcd}
+      \end{equation*}
+
+    \item The composition is given by the obvious.
+  \end{itemize}
+\end{proof}
+
+
+\end{document}

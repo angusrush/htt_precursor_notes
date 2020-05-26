@@ -1,0 +1,1193 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\newcommand{\ssmash}{\overset{\star}{\wedge}}
+
+\chapter{The fibration zoo}
+\label{ch:the_fibration_zoo}
+
+If the reader thought that the theory of Kan fibrations was vibrant, they are in for a treat.
+
+Let $f\colon K \to S$ be a morphism of simplicial sets.
+
+\begin{itemize}
+  \item We call the morphism $f$ a \defn{Kan fibration} if it has the right lifting property with respect to all horn inclusion $\Lambda^{n}_{i} \to \Delta^{n}$ with $0 \leq i \leq n$.
+
+  \item We call the morphism $f$ a \defn{left fibration} if it has the right lifting property with respect to all horn inclusion $\Lambda^{n}_{i} \to \Delta^{n}$ with $0 \leq i < n$.
+
+  \item We call the morphism $f$ a \defn{right fibration} if it has the right lifting property with respect to all horn inclusion $\Lambda^{n}_{i} \to \Delta^{n}$ with $0 < i \leq n$.
+
+  \item We call the morphism $f$ an \defn{inner fibration} if it has the right lifting property with respect to all horn inclusion $\Lambda^{n}_{i} \to \Delta^{n}$ with $0 < i < n$.
+\end{itemize}
+
+We will use the following terminology.
+\begin{itemize}
+  \item The morphism $f$ is \defn{anodyne} if it has the left-lifting property with respect to all Kan fibrations.
+
+  \item The morphism $f$ is \defn{left anodyne} if it has the left-lifting property with respect to all left fibrations.
+
+  \item The morphism $f$ is \defn{right anodyne} if it has the left-lifting property with respect to all right fibrations.
+
+  \item The morphism $f$ is \defn{inner anodyne} if it has the left-lifting property with respect to all inner fibrations.
+\end{itemize}
+
+The story, roughly, will go as follows. We have seen that the fibers of a Kan fibration are groupoids. We will see that this is more data than is required the fibers of a left (dually, right) fibration are groupoids. Furthermore, an $\infty$-categorical version of the Grothendieck construction tells us that the fibers of a left fibration depend functorially on the base.
+
+One might hope that the fibers of an inner fibration would be $\infty$-cateories, and indeed this is true, as follows easily from the stability of fibrations under pullbacks. However, the fibers do not depend functorially on the base. In order to get such functoriality, one needs to demand that inner fibrations satisfy an extra condition. Such an inner fibration is known as a (co)Cartesian fibration.
+
+\begin{definition}[Cartesian fibration]
+  \label{def:cartesian_fibration}
+  Let $f\colon K \to S$ be a morphism of simplicial sets. The morphism $f$ is a \defn{Cartesian fibration} if the following conditions are satisfied.
+  \begin{itemize}
+    \item The morphism $f$ is an inner fibration
+
+    \item For every $h\colon x \to y$ in $S$ and $\tilde{y} \in K_{0}$ there is a $f$-Cartesian morphism $\tilde{h}\colon \tilde{x} \to \tilde{y}$ such that $f(\tilde{h}) = h$.
+
+    \item A $f$-Cartesian edge in $K$ is an edge $f\colon x \to y$ such that the map
+      \begin{equation*}
+        K_{/f} \to K_{/y} \underset{S_{/f(y)}}{\times} S_{/p(f)}
+      \end{equation*}
+      is a trivial Kan fibration.
+  \end{itemize}
+\end{definition}
+
+\begin{proposition}
+  Let $p\colon K \to S$ be an inner fibration. A morphism $f\colon x \to y$ in $K$ is $p$-Cartesian if and only if for every $n \geq 2$ and every solid commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      \Delta^{\{n-1, n\}}
+      \arrow[d, hook]
+      \arrow[dr, "f"]
+      \\
+      \Lambda_{n}^{n}
+      \arrow[r]
+      \arrow[d, hook]
+      & X
+      \arrow[d, "p"]
+      \\
+      \Delta^{n}
+      \arrow[r]
+      \arrow[ur, dashed]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  admits a dashed lift.
+\end{proposition}
+\begin{proof}
+  We show that the conditions are equivalent. An edge $f\colon x \to y$ is cartesian if and only if we can find lifts of the form.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{n}
+      \arrow[r]
+      \arrow[d, hook]
+      & K_{/f}
+      \arrow[d]
+      \\
+      \Delta^{n}
+      \arrow[ur, dashed]
+      \arrow[r]
+      & K_{/y} \underset{S_{/f(y)}}{\times} S_{/p(f)}
+    \end{tikzcd}
+  \end{equation*}
+
+  Using the adjunction \hyperref[thm:almost_adjunction_for_undercategories]{Theorem~\ref*{thm:almost_adjunction_for_undercategories}} and the reasoning of \hyperref[lemma:equivalent_lifting_problems]{Lemma~\ref*{lemma:equivalent_lifting_problems}}, we find that this is equivalent to the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{n} \star \Delta^{1} \coprod\limits_{\partial \Delta^{n} \star \Delta^{\{1\}}} \Delta^{n} \star \Delta^{\{1\}}
+      \arrow[r]
+      \arrow[d, hook]
+      & K
+      \arrow[d]
+      \\
+      \Delta^{n} \star \Delta^{1}
+      \arrow[r]
+      \arrow[ur, dashed]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  where the component $\Delta^{1} \to K$ is $f$. But, working out which simplices in $\Delta^{n+2}$ we have, we find that this is precisely what we needed to show.
+\end{proof}
+
+\begin{theorem}
+  Let $f$ be a trivial fibration. Then $f$ is a Kan fibration.
+\end{theorem}
+\begin{proof}
+  Let $f$ be a trivial fibration, and consider the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{n}_{i}
+      \arrow[r]
+      \arrow[d]
+      & K
+      \arrow[d]
+      \\
+      \Delta^{n}
+      \arrow[r]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  Restricting to the face opposite $i$, we find the lifting problem
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{\{1, \ldots, n\}}
+      \arrow[r]
+      \arrow[d]
+      & K
+      \arrow[d]
+      \\
+      \Delta^{\{1, \ldots, n\}}
+      \arrow[r]
+      \arrow[ur, dashed]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  which has a dashed solution. This allows us to turn our map $\Delta^{n}_{i} \to K$ to a map $\partial \Delta^{n} \to K$ making the folowing diagram commute.
+  \begin{equation*}
+    \begin{tikzcd}
+      \partial \Delta^{n}
+      \arrow[r]
+      \arrow[d]
+      & K
+      \arrow[d]
+      \\
+      \Delta^{n}
+      \arrow[r]
+      \arrow[ur, dashed]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  which has a dashed lift.
+\end{proof}
+
+\begin{note}
+  A map $f\colon X \to Y$ is a left fibration if and only if $f\op\colon X\op \to Y\op$ is a a right fibration. Thus, it suffices to study left fibrations; the theory of right fibrations is dual.
+\end{note}
+
+%\begin{lemma}
+%  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor of ordinary categories. Then $N(F)\colon N(\mathcal{C}) \to N(\mathcal{D})$ is an inner fibration.
+%
+%  Conversely, if a map of simplicial sets $\tilde{F}\colon N(\mathcal{C}) \to N(\mathcal{D})$ is an inner fibration, then it is the nerve of a functor $\tilde{F}\colon \mathcal{C} \to \mathcal{D}$.
+%\end{lemma}
+%\begin{proof}
+%  We need to show that $F$ respects composition, i.e.\ that $F(f \circ g) = F(f) \circ F(g)$, and that $F(\id) = \id$.
+%
+%  We examine horn-filling conditions in small degrees. First, consider a general inner horn filling problem.
+%  \begin{equation*}
+%    \begin{tikzcd}
+%      \Lambda^{2}_{1}
+%      \arrow[r, "{(f, g)}"]
+%      \arrow[d]
+%      & N(\mathcal{C})
+%      \arrow[d, "\tilde{F}"]
+%      \\
+%      \Delta^{2}
+%      \arrow[r]
+%      & N(\mathcal{D})
+%    \end{tikzcd}
+%  \end{equation*}
+%  In $N(\mathcal{C})$ and $N(\mathcal{D})$ respectively, we have the following diagrams.
+%  \begin{equation*}
+%    \begin{tikzcd}[column sep=small]
+%      & y
+%      \arrow[dr, "g"]
+%      \\
+%      x
+%      \arrow[ur, "f"]
+%      && z
+%    \end{tikzcd}
+%    \qquad \overset{\tilde{F}}{\rightarrow}\qquad
+%    \begin{tikzcd}[column sep=small]
+%      & F(y)
+%      \arrow[dr, "F(g)"]
+%      \\
+%      F(x)
+%      \arrow[ur, "F(f)"]
+%      \arrow[rr, swap, "h"]
+%      && F(z)
+%    \end{tikzcd}
+%  \end{equation*}
+%  By assumption, this has a lift.
+%  \begin{equation*}
+%    \begin{tikzcd}
+%      \Lambda^{2}_{1}
+%      \arrow[r, "{(f, g)}"]
+%      \arrow[d]
+%      & N(\mathcal{C})
+%      \arrow[d, "\tilde{F}"]
+%      \\
+%      \Delta^{2}
+%      \arrow[r]
+%      \arrow[ur, dashed]
+%      & N(\mathcal{D})
+%    \end{tikzcd}
+%  \end{equation*}
+%  Since $N(\mathcal{C})$ is the nerve of a category, there is a unique lift making the upper triangle commute. This tells us that we can fill in our diagram as follows.
+%  \begin{equation*}
+%    \begin{tikzcd}[column sep=small]
+%      & y
+%      \arrow[dr, "g"]
+%      \\
+%      x
+%      \arrow[ur, "f"]
+%      \arrow[rr, swap, dashed "g \circ f"]
+%      && z
+%    \end{tikzcd}
+%  \end{equation*}
+%
+%  The commutativity of the lower triangle tells us that $h = F(g \circ f)$. But again by inner horn filling conditions, the only filler is $F(g) \circ F(f)$. Thus, $F(g \circ f) = F(g) \circ F(f)$ as needed.
+%
+%  In particular, when $f = g = \id$, this tells us that $F(\id) = \id$.
+%
+%\end{proof}
+
+\begin{lemma}
+  \label{lemma:can_lift_equivalences_along_left_fibrations}
+  Let $p\colon \mathcal{C} \to \mathcal{D}$ be a left fibration of infinity categories, and let $\tilde{f}\colon \bar{x} \to p(y)$ be an equivalence in $\mathcal{D}$, and $y \in \mathcal{C}_{0}$. Then there exists $f\colon x \to y$ so that $p(f) = \bar{f}$.
+\end{lemma}
+
+\begin{lemma}
+  \label{lemma:complicated_thing_is_left_fibration}
+  Consider morphisms of simplicial sets as follows
+  \begin{equation*}
+    \begin{tikzcd}
+      \bar{K}
+      \arrow[r, hookrightarrow]
+      & K
+      \arrow[r, "p"]
+      & X
+      \arrow[r, "q"]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  where $q$ is an inner fibration. Let $r = p \circ q$, $\bar{p} = p|_{\bar{K}}$, $\bar{r} = r|_{\bar{K}}$. Then the induced map
+  \begin{equation*}
+    S_{p/} \to X_{\bar{p}/} \underset{S_{\bar{p}/}}{\times} S_{r/}
+  \end{equation*}
+  is an inner fibration. If $q$ is a left fibration, then the map is a left fibration.
+\end{lemma}
+
+\begin{corollary}
+  Let $\mathcal{C}$ be an infinity category, and let $p\colon K \to \mathcal{C}$ be a diagram in $\mathcal{C}$. Then the map $\mathcal{C}_{/p} \to \mathcal{C}$ is a left fibration, and $\mathcal{C}_{/p}$ is an infinity category.
+\end{corollary}
+\begin{proof}
+  Take $X = \mathcal{C}$, $S = \Delta^{0}$, and $\bar{K} = \emptyset$. This tells us that the map
+  \begin{equation*}
+    \mathcal{C}_{p/} \to \mathcal{C}
+  \end{equation*}
+  is a left fibration. Thus, the composition
+  \begin{equation*}
+    \mathcal{C}_{p/} \to \mathcal{C} \to *
+  \end{equation*}
+  is the composition of a left fibration and an inner fibration, so is itself an inner fibration.
+\end{proof}
+
+\begin{corollary}
+  Let $f\colon x \to y$ be a morphism in an $\infty$-category $\mathcal{C}$. Then $f$ is an equivalence if and only if for every $n \geq 2$ and left horn $h\colon \Lambda^{n}_{0} \to \mathcal{C}$, with $h|_{\{0, 1\}} = f$, $h$ admits a filler.
+\end{corollary}
+
+\begin{theorem}
+  The following are equivalent for an $\infty$-category $\mathcal{C}$.
+  \begin{itemize}
+    \item The homotopy category $\h\mathcal{C}$ is a groupoid.
+
+    \item Every left horn in $\mathcal{C}$ has a filler.
+
+    \item Every right horn has a filler.
+
+    \item $\mathcal{C}$ is a Kan complex.
+  \end{itemize}
+\end{theorem}
+
+\begin{corollary}
+  \label{cor:fibers_of_left_fibration_are_kan_complexes}
+  All fibers of a left fibration are Kan complexes.
+\end{corollary}
+
+\section{The classical Grothendieck construction}
+\label{sec:the_classical_grothendieck_construction}
+
+\begin{definition}[Grothendieck construction]
+  \label{def:grothendieck_construction}
+  Let $\mathcal{D}$ be a small category, and let $\chi\colon \mathcal{D} \to \mathbf{Grpd}$. The Grothendieck construction consists of the following data the following data.
+  \begin{itemize}
+    \item A category $\mathcal{C}_{\chi}$
+
+    \item A functor $\pi\colon \mathcal{C}_{\chi} \to \mathcal{D}$
+  \end{itemize}
+
+  The category $\mathcal{C}_{\chi}$ is as follows.
+  \begin{itemize}
+    \item \textbf{Objects:} Pairs $(d, x)$, where $d \in \mathcal{D}$ and $x \in \chi(d)$.
+
+    \item \textbf{Morphisms:} A morphism $(d, x) \to (d', x')$ consists of
+      \begin{itemize}
+        \item A morphism $f\colon d \to d'$ in $\mathcal{D}$
+
+        \item An isomorphism $\alpha\colon \chi(f)(x) \simeq x'$
+      \end{itemize}
+  \end{itemize}
+
+  The functor $\pi$ is the forgetful functor to $\mathcal{D}$.
+\end{definition}
+
+The Grothendieck construction can be understood in the following way. The functor $\chi$ gives us a way of associating a groupoid to each object $d \in \mathcal{D}$. Each of these groupoids is itself a category, and has its own objects. The idea of the Grothendieck construction is to throw all of these objects together into one big category. To keep track of where each object $x$ comes from, we think of $x$ as ordered pairs $(d, x)$, where the $x \in \chi(d)$. The functor $\pi$ simply remembers where each $x$ came from.
+
+For two objects $x$ and $\tilde{x}$ from the same $\chi(d)$, the morphisms $(d, x) \to (d, \tilde{x})$ are simply the morphisms between $x$ and $\tilde{x}$. For an object $x'$ from a different groupoid $\chi(d')$, the morphisms $(d, x) \to (d', x')$ come from translating, using $\chi$ and a morphism $d \to d'$, morphisms in $\chi(d)$ into morphisms in $\chi(d')$.
+
+\begin{example}
+  Let $G$ and $H$ be a groups, and $\mathbf{B}G$ and $\mathbf{B}H$ their delooping groupoids. Let $\phi\colon G \to H$ be a group homomorphism, or equivalently a functor $\mathbf{B}G \to \mathbf{B}H$. This can also be taken to be a functor $\mathbf{B}G \to \mathbf{Grpd}$.
+
+  The Grothendieck construction consists of a category with one object, whose morphisms consist of an element $g \in G$
+\end{example}
+
+There is also a contravariant version of the Grothendieck construction, consisting of the following.
+\begin{definition}[contravariant Grothendieck construction]
+  \label{def:contravariant_grothendieck_construction}
+  For any functor $\mathcal{D}\op \to \mathsf{Grpd}$, the \defn{contravariant Grothendieck construction} consists of the following.
+  \begin{enumerate}[label=\arabic*.]
+    \item A category $\mathcal{C}^{\chi}$
+
+    \item A functor $\pi\colon \mathcal{C}^{\chi} \to \mathcal{D}$.
+  \end{enumerate}
+  The category $\mathcal{C}^{\chi}$ is as follows.
+  \begin{itemize}
+    \item The objects of $\mathcal{C}^{\chi}$ are be pairs $(d, x)$, with $d \in \mathcal{D}$ and $x \in \chi(d)$.
+
+    \item The morphisms $(d', x') \to (d, x)$ are pairs $(f, \alpha)$, where $f\colon d' \to d$ and $\alpha\colon x' \to F(f)(x)$.
+  \end{itemize}
+\end{definition}
+
+There is the following relationship between the covariant and contravariant Grothendieck constructions. $\mathcal{C}^{\chi} = \mathcal{C}_{\chi}\op$.
+
+\begin{example}
+  Let $X\colon \mathcal{D}\op \to \mathbf{Set}$ be a diagram of sets, which we interpret as discrete groupoids. Then there is an equivalence of categories between the contravariant construction and the slice category $\mathcal{D}/X$.
+
+  The objects of $\mathcal{D}/X$ are pairs $(d, \alpha)$, where $d \in \mathcal{D}$ and $\alpha\colon \Hom_{\mathcal{D}}(-, d) \Rightarrow X$. The morphisms $(d, \alpha) \to (d', \beta)$ are morphisms $f\colon d \to d'$ such that the diagram
+  \begin{equation}
+    \label{eq:natural_transformation_diagram}
+    \begin{tikzcd}
+      \Hom_{\mathcal{D}}(-, d)
+      \arrow[rr, Rightarrow, "f \circ -"]
+      \arrow[dr, swap, Rightarrow, "\alpha"]
+      && \Hom_{\mathcal{D}}(-, d')
+      \arrow[dl, Rightarrow, "\beta"]
+      \\
+      & X
+    \end{tikzcd}
+  \end{equation}
+  commutes.
+
+  Consider any such morphism $f$. The above diagram commutes if and only if it commutes component-wise, i.e.\ if for each $c$, the diagram below commutes.
+  \begin{equation}
+    \label{eq:commutativity_diagram}
+    \begin{tikzcd}[column sep=small]
+      \Hom_{\mathcal{D}}(c, d)
+      \arrow[rr, "f \circ -"]
+      \arrow[dr, swap, "\alpha_{c}"]
+      && \Hom_{\mathcal{D}}(c, d')
+      \arrow[dl, "\beta_{c}"]
+      \\
+      & X(c)
+    \end{tikzcd}
+  \end{equation}
+
+  In particular, it commutes when $c = d$. Following the identity $\id_{d}$ around, we find that morphisms $f$ making the above diagram commute satisfy the following equality.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      \id_{d}
+      \arrow[rr, mapsto]
+      \arrow[rd, mapsto]
+      && f
+      \arrow[dl, mapsto]
+      \\
+      & \alpha_{d}(\id_{d}) = \beta_{d}(f)
+    \end{tikzcd}
+  \end{equation*}
+  By the naturality of the Yoneda embedding, we have that
+  \begin{equation*}
+    \beta_{d}(f) = X(f)(\beta_{d'}(\id_{d'})),
+  \end{equation*}
+  so
+  \begin{equation}
+    \label{eq:yoneda_naturality}
+    \alpha_{d}(\id_{d}) = X(f)(\beta_{d'}(\id_{d'})).
+  \end{equation}
+
+  We can specify a functor $\mathcal{D}/X \to \mathcal{C}^{X}$ on objects by sending
+  \begin{equation*}
+    (d, \alpha) \mapsto (d, \alpha_{b}(\id_{b})),
+  \end{equation*}
+  and on morphisms $f\colon (d, \alpha) \to (d', \beta)$ commute by sending
+  \begin{equation*}
+    f \mapsto (f, \id_{X(f)(\beta_{d'}(\id_{d'}))}).
+  \end{equation*}
+  We are allowed to use the above identity map preciesly because it is an isomorphism
+  \begin{equation*}
+    \alpha_{d}(\id_{d}) \to X(f)(\beta_{d'}(d'))
+  \end{equation*}
+  as shown in \hyperref[eq:yoneda_naturality]{Equation~\ref*{eq:yoneda_naturality}}.
+
+  The fully faithfulness of the Yoneda embedding implies that the map between the objects of $\mathcal{D}/X$ and the objects of $\mathcal{C}^{\chi}$ is a bijection. We will now construct a functor $\mathcal{C}^{\chi} \to \mathcal{D}/X$, defined on objects to be the inverse of the one defined above, i.e.\ sending a pair $(d, x)$ to the pair $(d, \alpha^{x})$, where $\alpha^{x}$ is the natural transformation uniquely specified by $\alpha^{x}_{d}(\id_{d}) \mapsto x \in X(d)$.
+
+  Our inverse functor acts on any morphism $(f, \phi)$ by forgetting $\phi$. It only remains to check that this provides a well-defined map of morphisms, as $f$ has to make \hyperref[eq:natural_transformation_diagram]{Diagram~\ref*{eq:natural_transformation_diagram}} commute. We can check that this is so by following a general morphism $g\colon c \to d$ around \hyperref[eq:commutativity_diagram]{Diagram~\ref*{eq:commutativity_diagram}}, finding the following condition.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      g
+      \arrow[rr, mapsto]
+      \arrow[rd, mapsto]
+      && f \circ g
+      \arrow[dl, mapsto]
+      \\
+      & \alpha_{c}(g) \overset{!}{=} \beta_{c}(f \circ g)
+    \end{tikzcd}
+  \end{equation*}
+  By naturality of the Yoneda embedding, we have
+  \begin{equation*}
+    \alpha_{c}(g) = (Xg)(\alpha_{d}(\id_{d})),\qquad \beta_{c}(f \circ g) = X(f \circ g)(\beta_{d'}(\id_{d'})) = (Xg \circ Xf)(\beta_{d'}(\id_{d'})),
+  \end{equation*}
+  so our condition equivalently reads
+  \begin{equation*}
+    Xg(\alpha_{d}(\id_{d})) = Xg((Xf)(\beta_{d'}(\id_{d'}))).
+  \end{equation*}
+  This is true because by definition of $f$,
+  \begin{equation*}
+    \alpha_{d}(\id_{d}) = (Xf)(\beta_{d'}(\id_{d'})).
+  \end{equation*}
+
+  The two functors defined in this way are manifestly each other's inverses, hence provide an isomorphism of categories, which is stronger than what we are looking for.
+\end{example}
+
+\subsection{When can we invert the classical Grothendieck construction?}
+\label{ssc:when_can_we_invert_the_classical_grothendieck_construction}
+
+Suppose we are given a functor $F\colon \mathcal{C} \to \mathcal{D}$ exhibiting $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. By \hyperref[lemma:fiber_of_category_cofibered_in_groupoids_is_groupoid]{Lemma~\ref*{lemma:fiber_of_category_cofibered_in_groupoids_is_groupoid}}, each of the fibers $\mathcal{C}_{d}$ is a groupoid. We may hope that we could reverse the Grothendieck construction by defining a functor $\mathcal{D} \to \mathbf{Grpd}$ defined on objects by $d \mapsto \mathcal{C}_{d}$.
+
+We almost can. For any morphism $f\colon d \to d'$ in $\mathcal{D}$, we can build functor $f_{!}\colon \mathcal{C}_{d} \to \mathcal{C}_{d'}$ as follows.
+
+Let $f\colon d \to d'$, and let $c \in \mathcal{C}_{d}$. By property 2 in \hyperref[def:cofibrant_in_groupoids]{Definition~\ref*{def:cofibrant_in_groupoids}}, we can find an object $c' \in \mathcal{C}_{d'}$ and a morphism $\bar{f}\colon c \to c'$ in $\mathcal{C}$ such that $F(\bar{f}) = f$. Define $f_{!}(c) = c'$, and $f_{!}()$
+
+The above discussion means that the Grothendieck construction defines the following correspondence.
+\begin{equation*}
+  \left\{ \substack{\text{$F\colon \mathcal{C} \to \mathcal{D}$ exhibits $\mathcal{C}$}\\\text{as cofibered in groupoids}} \right\}
+  \overset{\simeq}{\longleftrightarrow} \left\{ \substack{\text{pseudofunctors}\\ \mathcal{D} \to \mathbf{Grpd}} \right\}
+\end{equation*}
+
+
+\subsection{Fibrance and cofibrance in groupoids}
+\label{ssc:cofibrance_in_groupoids}
+
+\begin{example}
+  The Grothendieck construction
+  \begin{equation*}
+    \pi\colon \mathcal{C}_{\chi} \to \mathcal{D}
+  \end{equation*}
+  exhibits $\mathcal{D}$ as cofibered over groupoids. We simply transcribe the definition, making the necessary changes as we go along.
+
+  In ordered for $\pi$ to exhibit $\mathcal{C}_{\chi}$ as cofibered in groupoids over $\mathcal{D}$, we have to check the following.
+  \begin{enumerate}
+    \item For every $(d, x) \in \mathcal{C}_{\chi}$ and every morphism
+      \begin{equation*}
+        \eta\colon d \to d'\qquad\text{in }\mathcal{D}
+      \end{equation*}
+      there exists a lift
+      \begin{equation*}
+        \tilde{\eta} = (f, \alpha) \colon (d, x) \to (d', x')\qquad\text{in }\mathcal{C}_{\chi}
+      \end{equation*}
+      such that
+      \begin{equation*}
+        \pi(\tilde{\eta}) = f\colon d \to d' = \eta.
+      \end{equation*}
+
+    \item For every morphism $\eta\colon (x, d) \to (x', d')$ in $\mathcal{C}$ and every object $(x'', d'') \in \mathcal{C}$, the map
+
+      \begin{equation*}
+        \mathcal{C}_{\chi}((d', x') \to (d'', x'')) \to\mathcal{C}_{\chi}((d, x), (d'', x'')) \underset{\mathcal{D}(d,d'')}{\times}\mathcal{D}(d', d'')
+      \end{equation*}
+      is a bijection.
+  \end{enumerate}
+
+  What do these mean?
+  \begin{enumerate}
+    \item We need to construct from our map $\eta\colon d \to d'$ an isomorphism
+      \begin{equation*}
+        \alpha\colon \chi(f)(x) \simeq x'
+      \end{equation*}
+      for some $x'$. We can pick $x' = \chi(f)(x)$. Then $\tilde{\eta} = (f, \alpha)$ does the job. Indeed, $\pi(f, \alpha) = f$ as required.
+
+    \item Draw a picture. Given the data of
+      \begin{itemize}
+        \item A morphism
+      \end{itemize}
+  \end{enumerate}
+\end{example}
+
+
+
+\begin{example}
+  The contravariant Grothendieck construction exhibits $\mathcal{C}^{\chi} \to \mathcal{D}$ as fibered in groupoids over $\mathcal{D}$.
+
+  To see this, we need to make the following checks.
+  \begin{itemize}
+    \item \textbf{Check:} For every $(d, x) \in \mathcal{C}^{\chi}$, and every morphism $\eta\colon d' \to d$ in $\mathcal{D}$, we should be able to find some object $x' \in \chi(d')$ and a morphism $(f, \alpha)\colon (d', x') \to (d, x)$.
+
+      \textbf{Solution:} We can pick $f = \eta$, $x' = \chi(f)(x)$, and $\alpha = \id_{x'}$.
+
+    \item \textbf{Check:} Fixing any diagram
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          & (d', x')
+          \arrow[dr, "{(g, \alpha)}"]
+          \\
+          (d'', x'')
+          \arrow[rr, swap, "{(\eta, \beta)}"]
+          && (d, x)
+        \end{tikzcd}
+      \end{equation*}
+      in $\mathcal{C}^{\chi}$, for any morphism $f\colon d'' \to d'$ making the below left diagram commute, we should be able to find a morphism $(f, \gamma)\colon (d'', x'') \to (d', x')$ making the below right diagram commute.
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          & d'
+          \arrow[dr, "g"]
+          \\
+          d''
+          \arrow[ur, dashed, "f"]
+          \arrow[rr, swap, "\eta"]
+          && d
+        \end{tikzcd}
+        \rightsquigarrow
+        \begin{tikzcd}[column sep=small]
+          & (d', x')
+          \arrow[dr, "{(g, \alpha)}"]
+          \\
+          (d'', x'')
+          \arrow[ur, dashed, "{(f, \gamma)}"]
+          \arrow[rr, swap, "{(\eta, \beta)}"]
+          && (d, x)
+        \end{tikzcd}
+      \end{equation*}
+
+      \textbf{Solution:} We need a morphism $\gamma\colon x'' \to \chi(f)(x')$ making the above diagram commute.
+
+      Using the data available to us, we can create the following diagram in $\chi(d'')$.
+      \begin{equation*}
+        \begin{tikzcd}[column sep=small]
+          & \chi(f)(x')
+          \arrow[dr, "\chi(f)(\alpha)"]
+          \\
+          x''
+          \arrow[rr, swap, "\beta"]
+          && \chi(\eta)(x)
+        \end{tikzcd}
+      \end{equation*}
+      Note that we are entitled to draw $\chi(f)(\alpha)$ terminating at $\chi(\eta)(x)$ because
+      \begin{equation*}
+        \chi(f)(\chi(g)(x)) = \chi(g \circ f)(x) = \chi(\eta)(x).
+      \end{equation*}
+
+      Because $\chi(d'')$ is a groupoid, we get the morphism $\gamma$ via
+      \begin{equation*}
+        \gamma = (\chi(f)(a))^{-1} \circ \beta.
+      \end{equation*}
+  \end{itemize}
+
+\end{example}
+
+\section{Left fibrations}
+\label{sec:left_fibrations}
+
+\begin{lemma}
+  \label{lemma:equivalent_lifting_problems_starred_smash}
+  Consider simplicial sets and morphisms as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      K_{0}
+      \arrow[r, hook]
+      \arrow[rr, bend right, swap, "p_{0}"]
+      \arrow[rrr, bend left, "r_{0}"]
+      & K
+      \arrow[r, "p"]
+      \arrow[rr, bend left, swap, "r"]
+      & X
+      \arrow[r, "q"]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+
+  We can translate a lifting problem of the first type into a lifting problem of the second.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d]
+      & X_{p/}
+      \arrow[d]
+      \\
+      B
+      \arrow[r]
+      \arrow[ur, dashed]
+      & X_{p_{0}/} \times_{S_{r_{0}/}} S_{r/}
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      K \star A \coprod_{K_{0} \star A} K_{0} \star B
+      \arrow[r]
+      \arrow[d]
+      & X
+      \arrow[d]
+      \\
+      K \star B
+      \arrow[r]
+      \arrow[ur, dashed]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+\end{lemma}
+
+
+\section{Left fibrations and cofibrancy in groupoids}
+\label{sec:left_fibrations_and_cofibrancy_in_groupoids}
+
+Since left fibrations are of the form
+\begin{equation*}
+  \{\Lambda^{n}_{i} \hookrightarrow \Delta^{n} \mid n \geq 1, 0 \leq i < n\}\rlp,
+\end{equation*}
+\hyperref[prop:properties_of_right_lifting_property]{Proposition~\ref*{prop:properties_of_right_lifting_property}} implies that they are closed under pullback.
+
+Let $F\colon X \to Y$ be a left fibration of simplicial sets. For $x \in X$, the fiber
+
+\subsection{Cofibrancy in groupoids}
+\label{ssc:cofibrancy_in_groupoids}
+
+\begin{definition}[cofibrant in groupoids]
+  \label{def:cofibrant_in_groupoids}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor. We say that $f$ \defn{exhibits $\mathcal{C}$ as cofibrant in groupoids over $\mathcal{D}$} if the following conditions are satisfied.
+  \begin{enumerate}
+    \item For every $c \in \mathcal{C}$ and every morphism
+      \begin{equation*}
+        \eta\colon F(c) \to d \qquad\text{in }\mathcal{D}
+      \end{equation*}
+      there exists a morphism
+      \begin{equation*}
+        \tilde{\eta}\colon c \to \tilde{d}\qquad\text{in }\mathcal{C}
+      \end{equation*}
+      such that $F(\tilde{\eta}) = \eta$.
+
+    \item For every morphism $\eta\colon c \to c'$ in $\mathcal{C}$ and every object $c'' \in \mathcal{C}$, the map
+      \begin{equation*}
+        \mathcal{C}(c', c'') \to\mathcal{C}(c, c'') \underset{\mathcal{D}(F(c), F(c''))}{\times}\mathcal{D}(F(c'), F(c'')).
+      \end{equation*}
+      is a bijection.
+  \end{enumerate}
+\end{definition}
+
+Let us unravel what the second condition means. The second set is the following pullback.
+\begin{equation*}
+  \begin{tikzcd}
+    *
+    \arrow[r]
+    \arrow[d]
+    &\mathcal{D}(F(c'), F(c''))
+    \arrow[d, "\eta"]
+    \\
+    \mathcal{C}(c, c'')
+    \arrow[r, swap, "F"]
+    &\mathcal{D}(F(c), F(c''))
+  \end{tikzcd}
+\end{equation*}
+Its elements are pairs
+\begin{equation*}
+  (f, \bar{g}),\qquad \text{where}\quad f\colon c \to c''\quad \text{and}\quad \bar{g}\colon F(c') \to F(c'')
+\end{equation*}
+such that
+\begin{equation*}
+  F(f) = \bar{g} \circ F(\eta).
+\end{equation*}
+
+The bijection above is defined as follows. Starting on the LHS with a morphism $h\colon c' \to c''$, build the following commutative diagram.
+\begin{equation*}
+  \begin{tikzcd}[column sep=small]
+    & c'
+    \arrow[dr, "h"]
+    \\
+    c
+    \arrow[ur, "\eta"]
+    \arrow[rr, swap, "h \circ \eta"]
+    && c''
+  \end{tikzcd}
+\end{equation*}
+
+We can read off a map $f = h \circ \eta\colon c \to c''$ and a map $\bar{g} = F(h)\colon F(c') \to F(c'')$, and indeed $F(f) = \bar{g} \circ F(\eta)$, giving us an element of the RHS.
+
+The fact that this is a bijection means that the above operation is invertible. Fixing a morphism $\eta\colon c \to c'$ and an object $c''$, whenever we have the following data:
+\begin{itemize}
+  \item A morphism $g\colon c \to c''$ as follows
+    \begin{equation*}
+      \begin{tikzcd}[column sep=small]
+        & c'
+        \\
+        c
+        \arrow[ur, "\eta"]
+        \arrow[rr, swap, "\bar{g}"]
+        && c''
+      \end{tikzcd}
+    \end{equation*}
+  \item A map $\bar{h}\colon F(c') \to F(c'')$ making the following diagram commute
+    \begin{equation*}
+      \begin{tikzcd}[column sep=small]
+        & F(c')
+        \arrow[dr, "\bar{h}"]
+        \\
+        F(c)
+        \arrow[ur, "F(\eta)"]
+        \arrow[rr, swap, "F(g)"]
+        && F(c'')
+      \end{tikzcd}
+    \end{equation*}
+\end{itemize}
+we can lift $\bar{h}$ to a morphism $h$ in $\mathcal{C}$ making the following diagram commute.
+\begin{equation*}
+  \begin{tikzcd}[column sep=small]
+    & c'
+    \arrow[dr, "h"]
+    \\
+    c
+    \arrow[ur, "\eta"]
+    \arrow[rr, swap, "g"]
+    && c''
+  \end{tikzcd}
+\end{equation*}
+
+\begin{lemma}
+  \label{lemma:cofibered_in_groupoids_morphism_mapped_to_identity_is_isomorphism}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor exhibiting $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Let $f$ be a morphism in $\mathcal{C}$ such that $F(f) = \id$. Then $f$ is an isomorphism.
+\end{lemma}
+\begin{proof}
+  Let $f\colon c \to c'$ in $\mathcal{C}_{d}$ be a morphism such that $F(f) = \id_{d}$. Then we can form the following commutative diagram.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      & c'
+      \\
+      c
+      \arrow[ur, "f"]
+      \arrow[rr, swap, "\id"]
+      & & c
+    \end{tikzcd}
+  \end{equation*}
+  When mapped to $\mathcal{D}$, we find the following very simple diagram, with a dashed filler.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      & d
+      \arrow[dr, dashed, "\id"]
+      \\
+      d
+      \arrow[ur, "\id"]
+      \arrow[rr, swap, "\id"]
+      && d
+    \end{tikzcd}
+  \end{equation*}
+
+  Lifting this gives us a left inverse $\tilde{f}$ to $f$. Pulling the same trick with $\tilde{f}$ gives us a left inverse $\hat{f}$ to $\tilde{f}$. Then
+  \begin{align*}
+    f \circ \tilde{f} &= \id \\
+    \hat{f} \circ f \circ \tilde{f} &= \hat{f} \\
+    \hat{f} &= f,
+  \end{align*}
+  so $\tilde{f}$ is both a left and a right inverse for $f$, i.e.\ $f$ is an isomorphism.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:fibers_of_fibration_in_groupoids_are_groupoids}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ exhibit $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Then the fibers of $F$ are groupoids.
+\end{corollary}
+\begin{proof}
+  The morphisms in the fiber $\mathcal{C}_{d}$ are precisely those which are mapped to the identity $\id_{d}$.
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:cofibered_in_groupoids_morphism_mapped_to_equivalence_is_equivalence}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor exhibiting $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Let $f$ be a morphism in $\mathcal{C}$ such that $F(f)$ is an equivalence. Then $f$ is an equivalence.
+\end{lemma}
+
+
+\begin{definition}[coCartesian morphism]
+  \label{def:cocartesian_morphismfibration}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor of small categories. A morphism $f\colon c \to c'$ is said to be \defn{$F$-coCartesian} if, for every $c'' \in \mathcal{C}$, the map
+  \begin{equation*}
+    \mathcal{C}(c', c'') \to \mathcal{C}(c, c'') \times_{\mathcal{D}(F(c), F(c''))} \mathcal{D}(F(c'), F(c''))
+  \end{equation*}
+  is a bijection.
+\end{definition}
+
+\begin{definition}[coCartesian fibration]
+  \label{def:cocartesian_fibration}
+  A functor $F\colon \mathcal{C} \to \mathcal{D}$ is said to be a \defn{coCartesian fibration} if, for each $x \in \mathcal{C}$ and every morphism $\tilde{f}\colon F(x) \to y$ in $\mathcal{D}$, there exists a coCartesian morphism $f\colon x \to \tilde{y}$ such that $F(f) = \tilde{f}$.
+\end{definition}
+
+The reader has probably guessed the next sentence: ``There is a dual notion.''
+
+\begin{definition}[fibrant in groupoids]
+  \label{def:fibrant_in_groupoids}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor. We say that $f$ \defn{exhibits $\mathcal{C}$ as fibrant in groupoids over $\mathcal{D}$} if the following conditions are satisfied.
+  \begin{enumerate}
+    \item For every $c' \in \mathcal{C}$ and every morphism
+      \begin{equation*}
+        \eta\colon d \to F(c') \qquad\text{in }\mathcal{D}
+      \end{equation*}
+      there exists a morphism
+      \begin{equation*}
+        \tilde{\eta}\colon \tilde{d} \to c' \qquad\text{in }\mathcal{C}
+      \end{equation*}
+      such that $F(\tilde{\eta}) = \eta$.
+
+    \item For every morphism $\eta\colon c \to c'$ in $\mathcal{C}$ and every object $c'' \in \mathcal{C}$, the map
+      \begin{equation*}
+        \mathcal{C}(c', c'') \to\mathcal{C}(c, c'') \underset{\mathcal{D}(F(c), F(c''))}{\times}\mathcal{D}(F(c'), F(c'')).
+      \end{equation*}
+      is a bijection.
+  \end{enumerate}
+\end{definition}
+
+
+\section{The starred smash}
+\label{sec:the_starred_smash}
+
+\begin{definition}[starred smash]
+  \label{def:starred_smash}
+  Let $f\colon A \to A'$, $g\colon B \to B'$ be two morphisms of simplicial sets. Define a morphism $f \ssmash g$ using the universal property for pushouts as follows.
+  \begin{equation*}
+    \begin{tikzcd}[row sep=huge]
+      A \star B
+      \arrow[r, "f \star \id"]
+      \arrow[d, swap, "\id \star g"]
+      & A' \star B
+      \arrow[ddr, bend left, "\id \star g"]
+      \arrow[d, hookrightarrow]
+      \\
+      A \star B'
+      \arrow[r, hookrightarrow]
+      \arrow[rrd, swap, bend right, "f \star \id"]
+      & A' \star B \coprod_{A \star B} A \star B'
+      \arrow[dr, dashed, "f \ssmash g"]
+      \\
+      && A' \star B'
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+\begin{proposition}
+  We have the following facts.
+  \begin{enumerate}
+    \item If $f$ is right anodyne, then $f \ssmash g$ and $f \wedge g$ are inner anodyne.
+
+    \item If $f$ is left anodyne, then $f \ssmash g$ and $f \wedge g$ are left anodyne.
+
+    \item If $f$ is anodyne, then $f \ssmash g$ is a Kan fibration.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}
+  Consider the set
+  \begin{equation*}
+    \mathcal{S} = \{f \mid f \ssmash g \text{ is inner anodyne}\}.
+  \end{equation*}
+
+  That is, $f$ consists of precisely those maps such that the lifting
+  \begin{equation*}
+    \begin{tikzcd}
+      A_{0} \star B \coprod\limits_{A_{0} \star B_{0}} A \star B_{0}
+      \arrow[r]
+      \arrow[d, swap, "f \ssmash g"]
+      & X
+      \arrow[d, "\substack{\text{inner}\\\text{fibration}}"]
+      \\
+      A \star B
+      \arrow[r]
+      \arrow[ur, dashed]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  has a solution
+
+  By a result analogous to \hyperref[lemma:equivalent_lifting_problems]{Odious Lemma~\ref*{lemma:equivalent_lifting_problems}}, we have immediately that such a lifting problem is equivalent to the following.
+
+\end{proof}
+
+
+We have the following `perpendicular statements' (whatever that means).
+
+\begin{fact}
+  Consider morphisms of simplicial sets as follows
+  \begin{equation*}
+    \begin{tikzcd}
+      \bar{K}
+      \arrow[r, hookrightarrow]
+      & K
+      \arrow[r, "p"]
+      & X
+      \arrow[r, "q"]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  where $q$ is an inner fibration. Let $r = p \circ q$, $\bar{p} = p|_{\bar{K}}$, $\bar{r} = r|_{\bar{K}}$. Denote the
+  \begin{equation*}
+    S_{/p} \to X_{/\bar{p}} \underset{S_{/\bar{p}}}{\times} S_{/r}.
+  \end{equation*}
+\end{fact}
+
+\subsection{Cofibration in groupoids}
+\label{ssc:cofibration_in_groupoids}
+
+We would like to find the correct $\infty$-categorical notion of being cofibered in groupoids.
+
+\begin{lemma}
+  \label{lemma:fiber_of_category_cofibered_in_groupoids_is_groupoid}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor exhibiting $\mathcal{C}$ as cofibered in groupoids over $\mathcal{D}$. Then for each $d \in \mathcal{D}$, the fiber $\mathcal{C}_{d}$ defined by the pullback below is a groupoid.
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}_{d}
+      \arrow[r]
+      \arrow[d]
+      & \mathcal{C}
+      \arrow[d, "F"]
+      \\
+      \{d\}
+      \arrow[r, hookrightarrow]
+      & \mathcal{D}
+    \end{tikzcd}
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  Every morphism in $\mathcal{C}_{d}$ is by definition mapped to $\id_{d}$, so by
+\end{proof}
+
+
+\begin{theorem}
+  Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor. Then $F$ exhibits $\mathcal{C}$ as cofibered in groupoids over $D$ if and only if $N(F)\colon N(\mathcal{C}) \to N(\mathcal{D})$ is a left fibration.
+\end{theorem}
+\begin{proof}
+  Suppose $F$ is a left fibration. We examine some horn filling conditions in small degrees.
+  First, consider a horn filling
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{1}_{0}
+      \arrow[r]
+      \arrow[d, swap,]
+      & N(\mathcal{C})
+      \arrow[d]
+      \\
+      \Delta^{1}
+      \arrow[r, swap]
+      & N(\mathcal{D})
+    \end{tikzcd}
+  \end{equation*}
+  The commutativity conditions tell us that we have the following solid diagrams in $\mathcal{C}$ and $\mathcal{D}$ respectively.
+  \begin{equation*}
+    \begin{tikzcd}
+      x
+    \end{tikzcd}
+    \qquad \overset{F}{\longrightarrow}\qquad
+    \begin{tikzcd}
+      F(x)
+      \arrow[r, "\bar{f}"]
+      & \bar{y}
+    \end{tikzcd}
+  \end{equation*}
+  A dashed lift
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{1}_{0}
+      \arrow[r]
+      \arrow[d, swap,]
+      & N(\mathcal{C})
+      \arrow[d]
+      \\
+      \Delta^{1}
+      \arrow[r, swap]
+      \arrow[ur, dashed]
+      & N(\mathcal{D})
+    \end{tikzcd}
+  \end{equation*}
+  gives us the following dashed data.
+  \begin{equation*}
+    \begin{tikzcd}
+      x
+      \arrow[r, dashed, "f"]
+      & y
+    \end{tikzcd}
+    \qquad \overset{F}{\longrightarrow}\qquad
+    \begin{tikzcd}
+      F(x)
+      \arrow[r, "\bar{f}"]
+      & \bar{y}
+    \end{tikzcd}
+  \end{equation*}
+  Thus, the first condition of \hyperref[def:cofibrant_in_groupoids]{Definition~\ref*{def:cofibrant_in_groupoids}} is satisfied.
+
+  Similarly, a horn filling problem $\Lambda^{2}_{0} \to \Delta^{2}$ gives us the following solid data, while a lift gives us the dashed data.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      & y
+      \arrow[dr, dashed, "g"]
+      \\
+      x
+      \arrow[ur, "f"]
+      \arrow[rr, swap, "h"]
+      && z
+    \end{tikzcd}
+    \begin{tikzcd}[column sep=small]
+      & F(y)
+      \arrow[dr, "\bar{g}"]
+      \\
+      F(x)
+      \arrow[ur, "F(f)"]
+      \arrow[rr, swap, "F(h)"]
+      && F(z)
+    \end{tikzcd}
+  \end{equation*}
+  This says that there exists a lift as required, but not that it is unique.
+
+  Now consider two possible lifts $\bar{g}$ and $\bar{g}'$, arranged into a $(3,0)$-horn as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      x
+      \arrow[r, "f"]
+      \arrow[d, swap, "f"]
+      \arrow[dr, "h"]
+      & y
+      \arrow[d, "g"]
+      \\
+      y
+      \arrow[r, swap, "g'"]
+      & z
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      x
+      \arrow[r, "f"]
+      \arrow[d, swap, "f"]
+      & y
+      \arrow[d, "g"]
+      \\
+      y
+      \arrow[r, swap, "g'"]
+      \arrow[ur, "\id_{y}"]
+      & z
+    \end{tikzcd}
+  \end{equation*}
+  These correspond to a $3$-simplex in $\mathcal{D}$ as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      F(x)
+      \arrow[r, "F(f)"]
+      \arrow[d, swap, "F(f)"]
+      \arrow[dr, "F(h)"]
+      & F(y)
+      \arrow[d, "\bar{g}'"]
+      \\
+      F(y)
+      \arrow[r, swap, "\bar{g}"]
+      & F(z)
+    \end{tikzcd}
+    \begin{tikzcd}
+      F(x)
+      \arrow[r, "F(f)"]
+      \arrow[d, swap, "F(f)"]
+      & F(y)
+      \arrow[d, "\bar{g}'"]
+      \\
+      F(y)
+      \arrow[ur, "\id_{F(y)}"]
+      \arrow[r, swap, "\bar{g}"]
+      & F(z)
+    \end{tikzcd}
+  \end{equation*}
+  The lifting properties say that we can fill the above horn, telling us that $g = g'$, i.e.\ that the lift is unique.
+\end{proof}
+
+\section{The infinity-categorical Grothendieck construction}
+\label{sec:the_infinity_categorical_grothendieck_construction}
+
+\begin{definition}[fiber over a point]
+  \label{def:fiber_over_a_point}
+  Let $f\colon X \to S$ be a map of simplicial sets, and let $s \in S$. The \defn{fiber over $s$}, denoted $X_{s}$ is the following pullback.
+  \begin{equation*}
+    \begin{tikzcd}
+      X_{s}
+      \arrow[r]
+      \arrow[d]
+      & X
+      \arrow[d, "f"]
+      \\
+      \{s\}
+      \arrow[r, hookrightarrow]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+\begin{theorem}
+  Let $p\colon X \to S$ be a left fibration of simplicial sets. Then the assignment
+  \begin{equation*}
+    s \mapsto X_{s}
+  \end{equation*}
+  extends to a functor $\h S \to \h\mathcal{S}$, where $\mathcal{S}$ is the category of spaces (\hyperref[def:category_of_spaces]{Definition~\ref*{def:category_of_spaces}}).
+\end{theorem}
+\begin{proof}
+  By \hyperref[cor:fibers_of_left_fibration_are_kan_complexes]{Corollary~\ref*{cor:fibers_of_left_fibration_are_kan_complexes}}, each fiber $X_{s}$ is a Kan complex.
+
+  Now, let $f\colon s \to s'$ be any morphism in $S$. Consider the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      \{0\} \times X_{s}
+      \arrow[d, swap, hookrightarrow]
+      \arrow[rr, hookrightarrow]
+      && X
+      \arrow[d, "p"]
+      \\
+      \Delta^{1} \times X_{s}
+      \arrow[r]
+      \arrow[urr, dashed, "Lf"]
+      & \Delta^{1}
+      \arrow[r, "f"]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+
+  The left-hand morphism is left anodyne because it is the smash product
+  \begin{equation*}
+    (\{0\} \hookrightarrow \Delta^{1}) \ssmash (\emptyset \hookrightarrow X_{s}),
+  \end{equation*}
+  so we can find a dashed lift. This gives us a map $Lf\colon \Delta^{1} \times X_{s} \to X$ such that $Lf_{\{0\}} = \id_{X_{s}}$. Restricting to $\{1\} \times X_{s}$, we get a map $Lf_{\{1\} \times X_{s}}\colon \{1\} \times X_{s} \to X_{s'}$, giving us a map
+  \begin{equation*}
+    \tilde{f}\colon X_{s} \to X_{s'}.
+  \end{equation*}
+  The functor $\h S \to \h\mathcal{S}$ sends $[f] \mapsto [\tilde{f}]$. It remains to check that this is well-defined, i.e.\ respects
+\end{proof}
+
+\section{More model structures}
+\label{sec:more_model_structures}
+
+Let $S$ be a simplicial set.
+\begin{itemize}
+  \item Denote by $(\SSet)_{/S}$ the category of simplicial sets over $S$.
+
+  \item Denote by $\SSet^{\mathfrak{C}(S)}$ the category of functors of simplicial categories from $\mathfrak{C}(S) \to \SSet$.
+\end{itemize}
+
+\begin{theorem}
+  There is a Quillen equivalence
+  \begin{equation*}
+    (\SSet)_{/S} \leftrightarrow \SSet^{\mathfrak{C}(S)}
+  \end{equation*}
+  where $(\SSet)_{/S}$ is taken to have the covariant model structure, and $\SSet^{\mathfrak{C}(S)}$ is taken to have the projective model structure.
+\end{theorem}
+
+\section{Some correspondences}
+\label{sec:some_correspondences}
+
+\begin{gather*}
+  \left\{ \substack{\text{functors }\mathcal{C}^{\chi} \to \mathcal{D} \\ \text{fibered in groupoids}} \right\} \longleftrightarrow \left\{\substack{\text{pseudofunctors} \\ \mathcal{D} \to \mathbf{Grpd}}\right\} \longleftrightarrow \left\{ \substack{\text{functors }\mathcal{C} \to \mathcal{D} \\ \text{cofibered in groupoids}} \right\} \\
+  \left\{ \substack{\text{coCartesian fibrations}\\\mathcal{C}^{\chi} \to \mathcal{D}} \right\} \longleftrightarrow \left\{\substack{\text{pseudofunctors} \\ \mathcal{D} \to \mathbf{Grpd}}\right\} \longleftrightarrow \left\{ \substack{\text{coCartesian fibrations}\\\mathcal{C}^{\chi} \to \mathcal{D}} \right\}
+\end{gather*}
+
+\end{document}

@@ -1,0 +1,35 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Introduction}
+\label{ch:introduction}
+
+These notes grew out of a course given by Prof.\ Tobias Dyckerhoff at the University of Hamburg. However, much of the presentation and many of the proofs are heavily adapted. In the process I have undoubtedly introduced many mistakes, all of which are entirely my own.
+
+These notes are under very heavy construction at the moment, and the results in them should not be taken as fact. They are a part of my learning process; I write them for this reason.
+
+I write them for another reason as well: I think that there's some pedagogical value in the writings of beginners. The proofs included here are not here because they're the most elegant or the cleanest; instead, they're here because they're the proofs that finally made me, a novice struggling with category theory for the first time, understand the material.
+
+\section{Axiomatic framework}
+\label{sec:axiomatic_framework}
+
+These notes are phrased in terms of $\mathbf{ZFCU}$, i.e.\ the Zermelo-Fraenkel axioms together with the following axioms.
+\begin{itemize}
+  \item $\mathbf{C}$: the axiom of choice.
+
+  \item $\mathbf{U}$: Grothendieck's universe axiom.
+\end{itemize}
+
+An introduction to category theory in the language of Grothendieck universes can be found in the corresponding notes on ordinary category theory.\footnote{\url{https://github.com/angusrush/notes-public/blob/master/category_theory/notes.pdf}}
+
+\section{Notational inconsistencies}
+\label{sec:notation}
+
+\begin{itemize}
+  \item The unit and counit are sometimes called $\epsilon$ and $\eta$ respectively, and sometimes the other way around. I'm going through and fixing this.
+
+  \item For a functor $F\colon \mathcal{C} \to \mathcal{D}$ between ordinary categories, I denote the comma category by $(F \downarrow \mathcal{D})$. In the $\infty$-categorical context, I denote it by $\mathcal{D}_{F/}$. I like the first notaion better in the context of ordinary categories, but prefer the second for simplicial sets.
+\end{itemize}
+
+\end{document}

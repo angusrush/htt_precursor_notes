@@ -1,0 +1,1960 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{Lifting problems}
+\label{cha:lifting_problems}
+
+One often encounters problems of the following form.
+\begin{quote}
+  Given some commuting square
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d]
+      & B
+      \arrow[d]
+      \\
+      C
+      \arrow[r]
+      & D
+    \end{tikzcd}
+  \end{equation*}
+  construct a dashed arrow making the triangles formed commute.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d]
+      & B
+      \arrow[d]
+      \\
+      C
+      \arrow[ur, dashed]
+      \arrow[r]
+      & D
+    \end{tikzcd}
+  \end{equation*}
+\end{quote}
+
+These problems are known as lifting problems. They turn out to be very important. In this chapter, we develop some powerful machines which enable us to easily solve lifting problems.
+
+In \hyperref[sec:saturated_sets]{Section~\ref*{sec:saturated_sets}}, we define the notion of a \emph{saturated set,} which is a set of morphisms closed under certain operations. We see that these operations are closed under intersection, and thus one can define the \emph{saturated hull} of any set of morphisms to be the smallest saturated hull containing them.
+
+We then define the notion of a \emph{lifting property;} roughly, a morphism $f$ has the left lifting property with respect to a set $\mathcal{S}$ of morphisms if for all $s \in \mathcal{S}$, and all commuting with $f$ on the left and some $s \in \mathcal{S}$ on the right, one can find a dashed arrow as follows.
+\begin{equation*}
+  \begin{tikzcd}
+    X
+    \arrow[r]
+    \arrow[d, swap, "f"]
+    & A
+    \arrow[d, "s"]
+    \\
+    Y
+    \arrow[r]
+    \arrow[ur, dashed]
+    & B
+  \end{tikzcd}
+\end{equation*}
+
+Similarly, a morphism $g$ has the \emph{right lifting property} with respect to $\mathcal{S}$ if one can always find a dashed arrow as follows.
+\begin{equation*}
+  \begin{tikzcd}
+    A
+    \arrow[r]
+    \arrow[d, swap, "s"]
+    & X
+    \arrow[d, "g"]
+    \\
+    B
+    \arrow[r]
+    \arrow[ur, dashed]
+    & Y
+  \end{tikzcd}
+\end{equation*}
+
+For any set $\mathcal{S}$ of morphisms, we denote the set of all morphisms which have the left lifting property with respect to it by $\llp\mathcal{S}$, and the set of all morphisms with the right lifting property with respect to it by $\mathcal{S}\rlp$. We then show that for any set $\mathcal{M}$, the set $\llp\mathcal{M}$ is saturated, immediately implying that the saturated hull of any set $\mathcal{S}$ is contained in $\llp(\mathcal{S}_{\rlp})$.
+
+In \hyperref[sec:compact_objects]{Section~\ref*{sec:compact_objects}}, we define the notion of a compact object. Roughly speaking, a compact object is an object which satisfies a sort of finiteness condition.
+
+In \hyperref[sec:the_small_object_argument]{Section~\ref*{sec:the_small_object_argument}}, we prove a technical lemma called the \emph{small object argument.} This lemma provides a factorization for morphisms whose domain is compact. This factorization immediately implies that for sets of morphisms whsoe domain is compact, we have the equality $\overline{M} = \llp(\mathcal{M}\rlp)$.
+
+In \hyperref[sec:anodyne_morphisms]{Section~\ref*{sec:anodyne_morphisms}}, we define the set of anodyne morphisms to be the set of all morphisms with the left lifting property with respect to Kan fibrations, and show that the set of
+
+\section{Saturated sets}
+\label{sec:saturated_sets}
+
+Denote by $\mathcal{C}$ a category with small colimits.
+
+\begin{definition}[saturated]
+  \label{def:saturated}
+  A subset $\mathcal{S} \subset \mathrm{Morph}(\mathcal{C})$ is said to be \defn{saturated} if the following conditions hold.
+  \begin{enumerate}
+    \item $\mathcal{S}$ contains all isomorphisms.
+
+    \item $\mathcal{S}$ is closed under pushouts, i.e.\ for any pushout square
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r]
+          \arrow[d, swap, "i"]
+          & A'
+          \arrow[d, "i'"]
+          \\
+          B
+          \arrow[r]
+          & B'
+        \end{tikzcd}
+      \end{equation*}
+      with $i \in \mathcal{S}$, then $i' \in \mathcal{S}$.
+
+    \item $\mathcal{S}$ is closed under retracts,
+      \footnote{An object $X_{0}$ in some category is a retract of an object $X$ if the identity on $X_{0}$ factors as $X_{0} \hookrightarrow X \hookrightarrow X_{0}$. For example, any topological space is a retract of the point. This axiom says that $\mathcal{S}$ is closed under retracts in the category of morphisms $\mathrm{Fun}([1], \mathcal{C})$.}
+      i.e.\ for any commutative diagram
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[rr, bend left, "\id"]
+          \arrow[r]
+          \arrow[d, swap, "i'"]
+          & A'
+          \arrow[r]
+          \arrow[d, "i"]
+          & A
+          \arrow[d, "i'"]
+          \\
+          B
+          \arrow[rr, bend right, swap, "\id"]
+          \arrow[r]
+          & B'
+          \arrow[r]
+          & B
+        \end{tikzcd}
+      \end{equation*}
+      with $i \in \mathcal{S}$, we also have $i' \in \mathcal{S}$.
+
+    \item $\mathcal{S}$ is closed under countable composition, i.e.\ for any chain of morphisms indexed by $\N$
+      \begin{equation*}
+        \begin{tikzcd}
+          A_{0}
+          \arrow[r, "i_{0}"]
+          & A_{1}
+          \arrow[r, "i_{1}"]
+          & A_{2}
+          \arrow[r, "i_{2}"]
+          & A_{3}
+          \arrow[r, "i_{3}"]
+          & \cdots
+        \end{tikzcd}
+      \end{equation*}
+      the map
+      \begin{equation*}
+        A_{0} \to \colim_{n \in \N} A_{n} = A_{\infty}
+      \end{equation*}
+      is in $\mathcal{S}$.
+
+    \item $\mathcal{S}$ is closed under small coproducts: if the family of morphisms
+      \begin{equation*}
+        \{i_{j}\colon A_{j} \to B_{j}\}_{j \in J} \subset \mathcal{S}
+      \end{equation*}
+      is in $\mathcal{S}$, where $J$ is a small set, then the morphism $\coprod_{j} i_{j}$ defined using the universal property of coproducts
+      \begin{equation*}
+        \begin{tikzcd}
+          \coprod_{j \in J} A_{j}
+          \arrow[r, "\coprod i_{j}"]
+          & \coprod_{j \in J} B_{j}
+        \end{tikzcd}
+      \end{equation*}
+      is in $J$.
+  \end{enumerate}
+\end{definition}
+
+Saturatedness is a useful property. By showing that a certain set of morphisms is saturated, which is often possible based on general principles, the closure properties allow you to manipulate the morphisms in powerful ways.
+
+\begin{example}
+  \label{eg:monomorphisms_are_saturated}
+  The set
+  \begin{equation*}
+    \{f\colon X \to Y \mid f \text{ is mono}\} \subset \mathrm{Morph}(\SSet)
+  \end{equation*}
+  is saturated.
+  \begin{enumerate}
+    \item Clearly, every isomorphism is a monomorphism.
+
+    \item Since colimits are computed pointwise (\hyperref[cor:limits_computed_pointwise]{Corollary~\ref*{cor:limits_computed_pointwise}}) it suffices to check that every pushout of monos is mono in $\mathbf{Set}$.
+
+    \item Consider simplicial sets and maps as follows, with $i$ a monomorphism.
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r, swap, "f"]
+          \arrow[rr, bend left, "\id"]
+          \arrow[d, swap, "j"]
+          & A'
+          \arrow[r, swap, "g"]
+          \arrow[d, "i"]
+          & A
+          \arrow[d, "j"]
+          \\
+          B
+          \arrow[rr, bend right, swap, "\id"]
+          \arrow[r, "k"]
+          & B'
+          \arrow[r, "h"]
+          & B
+        \end{tikzcd}
+      \end{equation*}
+
+      Since $g \circ f = \id$, we must have that $f$ is a monomorphism, so $i \circ f$ is a monomorphism. Thus, $k \circ j$ is a monomorphism, so $j$ must be a monomorphism.
+
+    \item Again, it suffices to check that countable composition respects monomorphisms in $\mathbf{Set}$. Again, this is immediate from the universal property.
+
+    \item We can check this in $\mathbf{Set}$. Again it is immediate from the universal property.
+  \end{enumerate}
+\end{example}
+
+\begin{definition}[saturated hull]
+  \label{def:saturated_hull}
+  Let $\mathcal{M}$ be any set of morphisms in $\mathcal{C}$. We define the \defn{saturated hull} $\overline{M}$ of $\mathcal{M}$ to be the smallest saturated set containing $\mathcal{M}$, i.e.\ the intersection of all saturated sets containing $\mathcal{M}$.
+\end{definition}
+
+\begin{note}
+  This always exists because the set of all morphisms of $\mathcal{C}$ is a saturated set, and because the intersection of saturated sets is again saturated (because properties of the form `closure under $x$' are respected by intersection).
+\end{note}
+
+\begin{example}
+  Consider the set $\mathcal{M}$ of boundary fillings
+  \begin{equation*}
+    \mathcal{M} = \{\partial \Delta^{n} \hookrightarrow \Delta^{n} \mid n \geq 0\}.
+  \end{equation*}
+  We claim that the saturated hull $\overline{\mathcal{M}}$ is the set of monomorphisms. Note that by \hyperref[eg:monomorphisms_are_saturated]{Example~\ref*{eg:monomorphisms_are_saturated}}, the set of all monomorphisms is saturated.
+
+  To see this, consider some monomorphism $f\colon X \to Y$. We think of $f$ as including $X$ as a subobject of $Y$. Our goal is to construct $f$ from boundary inclusions using pushouts, retracts, countable composition, and coproducts.
+
+  Take the coproduct
+  \begin{equation*}
+    X^{0} \equiv X \amalg \left( \coprod_{\Delta^{0} \in Y_{0} \smallsetminus f_{0}(X_{0})} \Delta^{0} \right) = X \amalg \left\{ \substack{\text{0-skeleton of $Y$ which}\\\text{is not part of $X$}} \right\}.
+  \end{equation*}
+  Since $\partial \Delta^{0} = \emptyset$, we can build a map $g^{0}\colon X \hookrightarrow X^{0}$ as a coproduct of boundary fillings.
+  \begin{equation*}
+    \begin{tikzcd}
+      X = X \amalg \left( \coprod_{\Delta^{0} \in Y_{0} \smallsetminus f_{0}(X_{0})} \partial \Delta^{0} \right)
+      \arrow[hookrightarrow, r, "g^{0}"]
+      & X \amalg \left( \coprod_{\Delta^{0} \in Y_{0} \smallsetminus f_{0}(X_{0})} \Delta^{0} \right).
+    \end{tikzcd}
+  \end{equation*}
+  Since saturated sets are closed under coproducts, $g^{0} \in \overline{\mathcal{M}}$.
+
+  We get a factorization
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[rr, "f"]
+      \arrow[dr, swap, "g^{0}"]
+      && Y
+      \\
+      & X^{0}
+      \arrow[ur, swap, "f^{0}"]
+    \end{tikzcd}
+  \end{equation*}
+  where $g^{0}$ is simply the inclusion, and $f^{0}$ takes $X$ to $f(X)$ and the simplices of $Y$ we added to $X$ to themselves.
+
+  To summarize: we have a factorization $f^{0}\colon X^{0} \to Y$ which is an isomorphism on 0-simplices. It is trivially an isomorphism on all 0-cells (i.e.\ boundaries of 0-simplices), i.e.\ inclusions $\partial \Delta^{0} = \emptyset \hookrightarrow X \to Y$. In fact, since $\partial \Delta^{1} = \Delta^{0} \amalg \Delta^{0}$, it is an isomorphism on all 1-cells (i.e.\ boundaries of 1-simplices). Thus, we have the following solid maps. We call the pushout $X^{1}$.
+  \begin{equation*}
+    \begin{tikzcd}
+      \displaystyle\coprod_{\substack{\Delta^{1} \in Y_{1} \smallsetminus f_{1}(X_{1}) \\ \text{nondegenerate}}} \partial \Delta^{1}
+      \arrow[r]
+      \arrow[d, hookrightarrow]
+      & X^{0}
+      \arrow[d, dashed, "g^{1}"]
+      \\
+      \displaystyle\coprod_{\substack{\Delta^{1} \in Y_{1} \smallsetminus f_{1}(X_{1}) \\ \text{nondegenerate}}} \Delta^{1}
+      \arrow[r, dashed]
+      & X^{1}
+    \end{tikzcd}
+  \end{equation*}
+  Note that since $g^{1}$ is a coproduct of boundary inclusions, it is in $\overline{\mathcal{M}}$.
+
+  Schematically, we have
+  \begin{equation*}
+    X^{1} = X^{0} \coprod_{\substack{\text{0-skeleton} \\ \text{of $Y$}}} \left\{ \substack{\text{1-skeleton of $Y$ which}\\\text{is not in $X$}} \right\}.
+  \end{equation*}
+  Thus, we have a commutative diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[rrrr, "f"]
+      \arrow[dr, swap, "g^{0}"]
+      &&&& Y
+      \\
+      & X^{0}
+      \arrow[urrr, "f^{0}"]
+      \arrow[dr, swap, "g^{1}"]
+      \\
+      && X^{1}
+      \arrow[uurr, swap, "f^{1}"]
+    \end{tikzcd}
+  \end{equation*}
+  where $g^{1} \in \overline{\mathcal{M}}$ and $f^{1}$ is a monomorphism and an isomorphism on 1-simplices.
+
+  We continue this process, constructing sets $X^{2}$, $X^{3}$, etc., at each step adding another level of the skeleton via boundary inclusions of nondegenerate simplices and pushouts. At the $k$th step, we have a simplicial set $X^{k}$ and a factorization
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[rrrr, "f"]
+      \arrow[dr, dotted, no head]
+      &&&& Y
+      \\
+      & X^{k-1}
+      \arrow[urrr, "f^{k-1}"]
+      \arrow[dr, swap, "g^{k}"]
+      \\
+      && X^{k}
+      \arrow[uurr, swap, "f^{k}"]
+    \end{tikzcd}
+  \end{equation*}
+  where $g^{k} \in \overline{\mathcal{M}}$ and $f^{k}$ is a monomorphism and an isomorphism on $k$-simplices.
+
+  By construction, we have
+  \begin{equation*}
+    \colim_{n \in \N} X^{n} \equiv X^{\infty} = Y,
+  \end{equation*}
+  since the map $f^{\infty}$ is an isomorphism on $n$-simplices for all $n$. The countable composition of the $g$s is equal to $f$, and we get a factorization
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[rr, "f"]
+      \arrow[dr, swap, "g^{\infty}"]
+      && Y
+      \\
+      & X^{\infty}
+      \arrow[ur, swap, equals]
+    \end{tikzcd}
+  \end{equation*}
+  where $g^{\infty}$ is the countable composition of elements of $\overline{\mathcal{M}}$, and hence is in $\overline{\mathcal{M}}$.
+\end{example}
+
+\begin{definition}[lifting property]
+  \label{def:lifting_property}
+  Let $\mathcal{C}$ be a category, and let $i\colon A \to B$ and $p\colon K \to S$ be morphisms in $\mathcal{C}$. Suppose that for every commuting square
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d, swap, "i"]
+      & K
+      \arrow[d, "p"]
+      \\
+      B
+      \arrow[r]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  there exists a morphism $B \to K$ making the diagram
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d, swap, "i"]
+      & K
+      \arrow[d, "p"]
+      \\
+      B
+      \arrow[ur, dashed]
+      \arrow[r]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  commute. Then we say either of the following, which are equivalent.
+  \begin{itemize}
+    \item The morphism $i$ has the \defn{left lifting property} with respect to the morphism $p$.
+
+    \item The morphism $p$ hs the \defn{right lifting property} with respect to the morphism $i$.
+  \end{itemize}
+
+  For any set of morphisms $\mathcal{M}$ we define two sets, $_{\perp}\mathcal{M}$ and $M_{\perp}$ as follows.
+  \begin{align*}
+    {}_{\perp}\mathcal{M} &= \{f \mid f \text{ has the left lifting property with respect to all morphisms in $\mathcal{M}$}\} \\
+    \mathcal{M}_{\perp} &= \{g \mid g \text{ has the right lifting property with respect to all morphisms in $\mathcal{M}$}\} \\
+  \end{align*}
+\end{definition}
+
+\begin{example}
+  \label{eg:kan_fibrations_are_have_rlp_wrt_horn_fillings}
+  Let $\mathcal{C} = \SSet$. Let
+  \begin{equation*}
+    \mathcal{M} = \{f\colon \Lambda^{n}_{i} \to \Delta^{n} \mid 0 \leq i \leq n \text{ and } n > 0\}.
+  \end{equation*}
+  That is, $\mathcal{M}$ is the set of all horn inclusions of the $n$-simplex. Then what is $\mathcal{M}_{\perp}$?
+
+  Any morphism $g \in \mathcal{M}_{\perp}$ needs to satisfy the following property: for any commuting square as follows
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{n}_{i}
+      \arrow[r]
+      \arrow[d, swap, "f"]
+      & K
+      \arrow[d, "g"]
+      \\
+      \Delta^{n}
+      \arrow[r]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  there exists some morphism $\Delta^{n} \to K$ making the following diagram commute.
+  \begin{equation*}
+    \begin{tikzcd}
+      \Lambda^{n}_{i}
+      \arrow[r]
+      \arrow[d, swap, "f"]
+      & K
+      \arrow[d, "g"]
+      \\
+      \Delta^{n}
+      \arrow[ur, dashed]
+      \arrow[r]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+  Checking \hyperref[def:kan_fibration]{Definition~\ref*{def:kan_fibration}}, we see that this says precisely that $g$ is a Kan fibration. That is, $\mathcal{M}_{\perp}$ is the set of all Kan fibrations.
+\end{example}
+
+Checking that a set of morphisms is saturated by checking each condition individually is difficult and time-consuming. The next theorem provides a very efficient way of producing saturated sets of morphisms.
+
+\begin{theorem}
+  \label{thm:left_perp_is_saturated}
+  Let $\mathcal{M}$ be any set of morphisms in $\mathcal{C}$. Then $\llp\mathcal{M}$ is saturated.
+\end{theorem}
+\begin{proof}
+  We need to check conditions 1--5 in \hyperref[def:saturated]{Definition~\ref*{def:saturated}}.
+  \begin{enumerate}
+    \item Let $f\colon K \to S$ be an isomorphism. We need to check that $f$ has the left lifting property. Suppose we are given a commuting square as follows.
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r, "\alpha"]
+          \arrow[d, swap, "f"]
+          & K
+          \arrow[d]
+          \\
+          B
+          \arrow[r]
+          & S
+        \end{tikzcd}
+      \end{equation*}
+      We can define a morphism $h\colon B \to K$ by taking $h = \alpha \circ f^{-1}$.
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r, "\alpha"]
+          \arrow[d, "f"]
+          & K
+          \arrow[d]
+          \\
+          B
+          \arrow[u, bend left, "f^{-1}"]
+          \arrow[r]
+          \arrow[ur, dashed, "h"]
+          & S
+        \end{tikzcd}
+      \end{equation*}
+
+    \item Suppose $f \in \llp\mathcal{M}$, and let $\tilde{f}$ be any pushout.
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r]
+          \arrow[d, swap, "f"]
+          & A'
+          \arrow[d, "\tilde{f}"]
+          \\
+          B
+          \arrow[r]
+          & B'
+        \end{tikzcd}
+      \end{equation*}
+      We need to show that $\tilde{f} \in \llp\mathcal{M}$. To this end, consider a lifting problem as follows, with $m \in \mathcal{M}$.
+      \begin{equation*}
+        \begin{tikzcd}
+          A'
+          \arrow[r]
+          \arrow[d, swap, "\tilde{f}"]
+          & X
+          \arrow[d, "m"]
+          \\
+          B'
+          \arrow[r]
+          & Y
+        \end{tikzcd}
+      \end{equation*}
+      Stacking this square next to the pushout square above, we find the following.
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r]
+          \arrow[d, swap, "f"]
+          & A'
+          \arrow[r]
+          \arrow[d, swap, "\tilde{f}"]
+          & X
+          \arrow[d, "m"]
+          \\
+          B
+          \arrow[r]
+          & B'
+          \arrow[r]
+          & Y
+        \end{tikzcd}
+      \end{equation*}
+
+      We can solve the outer lifting problem.
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r]
+          \arrow[d, swap, "f"]
+          & A'
+          \arrow[r]
+          \arrow[d, swap, "\tilde{f}"]
+          & X
+          \arrow[d, "m"]
+          \\
+          B
+          \arrow[urr, dashed]
+          \arrow[r]
+          & B'
+          \arrow[r]
+          & Y
+        \end{tikzcd}
+      \end{equation*}
+
+      This gives us a cocone under the pushout, which gives us a unique dotted morphism, which is the lift we are after.
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r]
+          \arrow[d, swap, "f"]
+          & A'
+          \arrow[d, "\tilde{f}"]
+          \arrow[ddr, bend left]
+          \\
+          B
+          \arrow[drr, bend right, dashed]
+          \arrow[r]
+          & B'
+          \arrow[dr, dotted]
+          \\
+          && X
+        \end{tikzcd}
+      \end{equation*}
+
+    \item Suppose $i \in {}_{\perp}\mathcal{M}$, and consider a commuting square as follows.
+      \begin{equation}
+        \label{eq:retract_diagram_proof_perp}
+        \begin{tikzcd}
+          A'
+          \arrow[rr, bend left, "\id"]
+          \arrow[r]
+          \arrow[d, swap, "i'"]
+          & A
+          \arrow[r]
+          \arrow[d, "i"]
+          & A'
+          \arrow[d, "i'"]
+          \\
+          B'
+          \arrow[rr, bend right, swap, "\id"]
+          \arrow[r]
+          & B
+          \arrow[r]
+          & B'
+        \end{tikzcd}
+      \end{equation}
+      We need to show that $i'$ has the left lifting property. To this end, consider a commuting square as follows.
+      \begin{equation*}
+        \begin{tikzcd}
+          A'
+          \arrow[r]
+          \arrow[d, swap, "i'"]
+          & K
+          \arrow[d]
+          \\
+          B'
+          \arrow[r]
+          & S
+        \end{tikzcd}
+      \end{equation*}
+      Sticking this onto the right of \hyperref[eq:retract_diagram_proof_perp]{Equation~\ref*{eq:retract_diagram_proof_perp}}, we obtain a new diagram.
+      \begin{equation}
+        \begin{tikzcd}
+          A'
+          \arrow[rr, bend left, "\id"]
+          \arrow[r]
+          \arrow[d, swap, "i'"]
+          & A
+          \arrow[r]
+          \arrow[d, "i"]
+          & A'
+          \arrow[d, "i'"]
+          \arrow[r]
+          & K
+          \arrow[d]
+          \\
+          B'
+          \arrow[rr, bend right, swap, "\id"]
+          \arrow[r]
+          & B
+          \arrow[r]
+          & B'
+          \arrow[r]
+          & S
+        \end{tikzcd}
+      \end{equation}
+      The commuting square
+      \begin{equation*}
+        \begin{tikzcd}
+          A
+          \arrow[r]
+          \arrow[d, swap, "i"]
+          & K
+          \arrow[d]
+          \\
+          B
+          \arrow[r, "\alpha"]
+          & S
+        \end{tikzcd}
+      \end{equation*}
+      is a lifting problem we can solve, giving us a morphism $B \to K$ making the diagram commute. Adding this onto our original diagram and pre-composing it with $\alpha$ gives us the morphism required.
+      \begin{equation}
+        \begin{tikzcd}
+          A'
+          \arrow[rr, bend left, "\id"]
+          \arrow[r]
+          \arrow[d, swap, "i'"]
+          & A
+          \arrow[r]
+          \arrow[d, "i"]
+          & A'
+          \arrow[d, "i'"]
+          \arrow[r]
+          & K
+          \arrow[d]
+          \\
+          B'
+          \arrow[rr, bend right, swap, "\id"]
+          \arrow[r]
+          \arrow[urrr, dashed]
+          & B
+          \arrow[r]
+          & B'
+          \arrow[r]
+          & S
+        \end{tikzcd}
+      \end{equation}
+
+    \item Consider a chain of morphisms
+      \begin{equation*}
+        \begin{tikzcd}
+          A_{0}
+          \arrow[r, "i_{0}"]
+          & A_{1}
+          \arrow[r, "i_{1}"]
+          & A_{2}
+          \arrow[r, "i_{2}"]
+          & A_{3}
+          \arrow[r, "i_{3}"]
+          & \cdots
+        \end{tikzcd}
+      \end{equation*}
+      with $i_{k} \in {}_{\perp}\mathcal{M}$ for all $k$. We need to show that the map $A_{0} \to A_{\infty}$ induced by the colimit has the left lifting property.
+
+      Consider a commuting square as follows.
+      \begin{equation*}
+        \begin{tikzcd}
+          A_{0}
+          \arrow[dddd, bend right, swap]
+          \arrow[d, "i_{0}"]
+          \arrow[r]
+          & K
+          \arrow[dddd]
+          \\
+          A_{1}
+          \arrow[d, "i_{1}"]
+          \\
+          A_{2}
+          \arrow[d, "i_{2}"]
+          \\
+          A_{3}
+          \arrow[d, dotted, no head]
+          \\
+          A_{\infty}
+          \arrow[r]
+          & S
+        \end{tikzcd}
+      \end{equation*}
+      Suppose we have a map $A_{k} \to K$ which makes all squares and triangles formed commute. This gives us a commuting square as below.
+      \begin{equation*}
+        \begin{tikzcd}
+          A_{0}
+          \arrow[dddd, dashed, bend right, swap]
+          \arrow[d, dashed, "i_{0}"]
+          \arrow[r, dashed]
+          & K
+          \arrow[dddd]
+          \\
+          A_{1}
+          \arrow[d, dotted, no head]
+          \\
+          A_{k}
+          \arrow[d, "i_{k}"]
+          \arrow[ruu]
+          \\
+          A_{k+1}
+          \arrow[d, dotted, no head]
+          \arrow[dr]
+          \\
+          A_{\infty}
+          \arrow[r, dashed]
+          & S
+        \end{tikzcd}
+      \end{equation*}
+      Because $i_{k}$ has the left lifting property, we get a map $A_{k+1} \to K$ making the diagram commute.
+      \begin{equation*}
+        \begin{tikzcd}
+          A_{0}
+          \arrow[dddd, bend right, swap]
+          \arrow[d, "i_{0}"]
+          \arrow[r]
+          & K
+          \arrow[dddd]
+          \\
+          A_{1}
+          \arrow[d, dotted, no head]
+          \\
+          A_{k}
+          \arrow[d, "i_{k}"]
+          \arrow[ruu, dashed]
+          \\
+          A_{k+1}
+          \arrow[d, dotted, no head]
+          \arrow[dr, dashed]
+          \arrow[uuur, dashed]
+          \\
+          A_{\infty}
+          \arrow[r]
+          & S
+        \end{tikzcd}
+      \end{equation*}
+      By induction, this gives us a collection of maps $A_{k} \to K$, one for each $k \in \N$, which make the triangles
+      \begin{equation*}
+        \begin{tikzcd}[column sep=tiny]
+          A_{k}
+          \arrow[rd]
+          \arrow[rr, "i_{k}"]
+          && A_{k+1}
+          \arrow[ld]
+          \\
+          & K
+        \end{tikzcd}
+      \end{equation*}
+      commute. That is, we get a cocone under $K$. But this gives us a map $A_{\infty} \to K$ as required.
+
+    \item Similar.
+  \end{enumerate}
+\end{proof}
+
+We get a similar, but dual and slightly weaker result for sets with the right lifting property.
+
+\begin{proposition}
+  \label{prop:properties_of_right_lifting_property}
+  Let $\mathcal{M}$ be any set of morphisms in $\mathcal{C}$. The set $\mathcal{M}\rlp$ has the following properties.
+  \begin{enumerate}
+    \item $\mathcal{M}\rlp$ contains all isomorphisms.
+
+    \item $\mathcal{M}\rlp$ is closed under \emph{finite} composition.
+
+    \item $\mathcal{M}\rlp$ is closed under retracts.
+
+    \item $\mathcal{M}\rlp$ is closed under pullbacks.
+
+    \item $\mathcal{M}\rlp$ is closed under small products.
+  \end{enumerate}
+\end{proposition}
+
+\begin{corollary}
+  \label{cor:saturated_hull_contained_in_left_perp_of_right_perp}
+  Let $\mathcal{M}$ be a set of morphisms in $\mathcal{C}$. Then
+  \begin{equation*}
+    \overline{\mathcal{M}} \subset {}_{\perp}(\mathcal{M}_{\perp}).
+  \end{equation*}
+\end{corollary}
+\begin{proof}
+  The set $\mathcal{M}$ clearly has the left lifting property for the set of all morphisms which have the right lifting property for $\mathcal{M}$, so $\mathcal{M} \subset {}_{\perp}(\mathcal{M}_{\perp})$. Since ${}_{\perp}(\mathcal{M}_{\perp})$ is a saturated set, it contains $\overline{\mathcal{M}}$.
+\end{proof}
+
+It turns out that under some conditions, we have an equality
+\begin{equation*}
+  \overline{\mathcal{M}} = {}_{\perp}(\mathcal{M}_{\perp}).
+\end{equation*}
+
+\section{Compact objects}
+\label{sec:compact_objects}
+
+In many situations, objects which obey some sort of finiteness condition are especially well-behaved. In the situation of lifting problems, the small object argument, due to Quillen, guarantees us that any set of morphisms whose domains are small provides a weak factorization system.
+
+\begin{definition}[filtered poset]
+  \label{def:filtered_poset}
+  A poset $(I, \leq)$ is called \defn{filtered} (or \emph{$\aleph_{0}$-filtered}) if every finite subset of $I$ has an upper bound. 
+
+  More generally, the poset $(I, \leq)$ is \defn{$\kappa$-filtered}, for some regular cardinal $\kappa$, if every subset of $I$ cardinality less than $\kappa$ has an upper bound.
+\end{definition}
+
+In this chapter, we will only worry about $\aleph_{0}$-filtered posets.
+
+\begin{example}
+  \label{eg:poset_of_finite_subsets}
+  Let $X$ be a set, and consider the poset of finite subsets $\mathcal{P}_{\mathrm{fin}}(X)$. This is a filtered poset since every finite collection $X_{i} \in \mathcal{P}_{\mathrm{fin}}(X)$ is contained in the set $\bigcup_{i} X_{i}$, which is again finite.
+\end{example}
+
+\begin{definition}[compact object]
+  \label{def:compact_object}
+  An object $X \in \mathcal{C}$ is said to be \defn{compact} if for every diagram
+  \begin{equation*}
+    \phi\colon I \to \mathcal{C};\qquad i \mapsto Y_{i}
+  \end{equation*}
+  with $I$ a filtered poset, the criteria below are satisfied.
+
+  Denote by $Y_{\infty}$ the colimit of $\phi$, and write the colimit maps
+  \begin{equation*}
+    \eta_{i}\colon A_{i} \to Y_{\infty}.
+  \end{equation*}
+
+  \begin{enumerate}
+    \item There exists some $i \in I$ and $f_{i}\colon X \to Y_{i}$ making the diagram
+      \begin{equation*}
+        \begin{tikzcd}
+          X
+          \arrow[r, "f_{i}"]
+          \arrow[dr, swap, "f"]
+          & Y_{i}
+          \arrow[d, "\eta_{i}"]
+          \\
+          & Y_{\infty}
+        \end{tikzcd}
+      \end{equation*}
+      commute.
+
+    \item Given maps $f_{i}\colon X \to Y_{i}$ and $f_{j}\colon X \to Y_{j}$ making the diagrams
+      \begin{equation*}
+        \begin{tikzcd}
+          X
+          \arrow[r, "f_{i}"]
+          \arrow[dr, swap, "f"]
+          & Y_{i}
+          \arrow[d, "\eta_{i}"]
+          \\
+          & Y_{\infty}
+        \end{tikzcd}
+        \qquad\text{and}\qquad
+        \begin{tikzcd}
+          X
+          \arrow[r, "f_{i}"]
+          \arrow[dr, swap, "f"]
+          & Y_{i}
+          \arrow[d, "\eta_{i}"]
+          \\
+          & Y_{\infty}
+        \end{tikzcd}
+      \end{equation*}
+      commute, there exist $k$ with $k \geq i$, $j$ such that the following diagram commutes.
+      \begin{equation*}
+        \begin{tikzcd}
+          X
+          \arrow[r, "f_{i}"]
+          \arrow[d, swap, "f_{j}"]
+          & Y_{i}
+          \arrow[d]
+          \\
+          Y_{j}
+          \arrow[r]
+          & Y_{k}
+        \end{tikzcd}.
+      \end{equation*}
+  \end{enumerate}
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:compact_iff_contravariant_yoneda_commutes_with_colimits}
+  Suppose that $\mathcal{C}$ is locally small. Then $X \in \mathcal{C}$ is compact only if the contravariant Yoneda embedding
+  \begin{equation*}
+    \tilde{\mathcal{Y}}\colon X \mapsto \mathcal{C}(X, -)
+  \end{equation*}
+  commutes with small filtered colimits.
+\end{lemma}
+\begin{proof}
+  Suppose that $\tilde{\mathcal{Y}}$ commutes with small filtered colimits. Then there is a bijection
+  \begin{equation}
+    \label{eq:bijection_from_colimit_commutation}
+    \mathcal{C}(X, Y_{\infty}) \simeq \mathcal{C}(X, \colim_{i \in I} Y_{i}) \simeq \colim_{i \in I}\mathcal{C}(X, Y_{i}).
+  \end{equation}
+
+  Since each inclusion $Y_{i} \hookrightarrow Y_{j}$ gives an inclusion
+  \begin{equation*}
+    \mathcal{C}(X, Y_{i}) \hookrightarrow \mathcal{C}(X, Y_{j}),
+  \end{equation*}
+\end{proof}
+
+\begin{example}
+  A set $X \in \mathbf{Set}$ is compact if and only if $X$ is finite.
+
+  Suppose $X$ is compact. Consider the poset $\mathcal{P}_{\mathrm{fin}}(X)$ from \hyperref[eg:poset_of_finite_subsets]{Example~\ref*{eg:poset_of_finite_subsets}}. The colimit over this poset is $X$ since every element of $X$ is contained in some finite subset, so any map out of $X$ is completely determined by maps out of its finite subsets which agree on intersections. We can view this as a a diagram in $\mathbf{Set}$ via the inclusion map.
+
+  Now consider the identity map $\id_{X}\colon X \to \colim X_{i}$. Since $X$ is compact, there is some set $X_{i}$ such that the following diagram commutes.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[rd, swap, "\id_{X}"]
+      \arrow[r, "f_{i}"]
+      & X_{i}
+      \arrow[d]
+      \\
+      & X
+    \end{tikzcd}
+  \end{equation*}
+  By definition, the set $X_{i}$ is finite. Since $f_{i}$ must be injective, $X$ must also be finite.
+
+  Now suppose that $X$ is finite. Let
+  \begin{equation*}
+    \phi\colon I \to \mathbf{Set}
+  \end{equation*}
+  with $I$ a filtered poset be a diagram, and consider a map $f\colon X \to \colim \phi$. In set, we have the formula
+  \begin{equation*}
+    Y_{\infty} \equiv \colim \phi = \left( \coprod_{i \in I} Y_{i} \right)/\sim.
+  \end{equation*}
+  Denote by $\iota_{i}$ the map $Y_{i} \to Y_{\infty}$.
+
+  For every $x \in X$, there is some (certainly not unique!) $i_{x} \in \N$ such that $Y_{i_{x}}$ contains an element $e$ such that $\iota_{i_{x}}(e) = f(x)$. The set
+  \begin{equation*}
+    \{Y_{i_{x}}\}_{x \in X}
+  \end{equation*}
+  is finite, so it has an upper bound $Y_{i}$. Therefore, each of element of $x$ is represented by some element of $Y_{i}$, so there is a factorization as follows.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "f_{i}"]
+      \arrow[dr, swap, "f"]
+      & Y_{i}
+      \arrow[d]
+      \\
+      & Y_{\infty}
+    \end{tikzcd}
+  \end{equation*}
+
+  Now suppose that we have maps $f_{i}\colon X \to Y_{i}$ and $f_{j}\colon X \to Y_{j}$ making the following diagrams commute.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "f_{i}"]
+      \arrow[dr, swap, "f"]
+      & Y_{i}
+      \arrow[d]
+      \\
+      & Y_{\infty}
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      X
+      \arrow[r, "f_{j}"]
+      \arrow[dr, swap, "f"]
+      & Y_{j}
+      \arrow[d]
+      \\
+      & Y_{\infty}
+    \end{tikzcd}
+  \end{equation*}
+\end{example}
+
+\begin{example}
+  \label{eg:compact_in_sset}
+  In $\SSet$, the compact objects are precisely those simplicial sets with finitely many nondegenerate simplices.
+\end{example}
+
+\section{The Small Object Argument}
+\label{sec:the_small_object_argument}
+
+The small object argument is the proof of following statement.
+
+\begin{lemma}
+  \label{lemma:small_object_argument}
+  Let $\mathcal{C}$ be a locally small category with small colimits. Let $\mathcal{M}$ be a small set of morphisms in $\mathcal{C}$ such that for each $i\colon A \to B \in \mathcal{M}$, the domain $A$ of $i$ is compact.\footnote{If $\mathcal{C}$ is presentable, then this condition is satisfied vacuously, since every object is small.} Then every morphism $f\colon X \to Y$ in $\mathcal{C}$ admits a factorization
+  \begin{equation*}
+    \begin{tikzcd}[column sep=tiny]
+      X
+      \arrow[rr, "f"]
+      \arrow[rd, swap, near start, "h"]
+      && Y
+      \\
+      & Z
+      \arrow[ur, swap, near end, "g"]
+    \end{tikzcd}
+  \end{equation*}
+  with $h \in \overline{\mathcal{M}}$ and $g \in \mathcal{M}_{\perp}$.
+\end{lemma}
+\begin{proof}
+  Let $f\colon X \to Y$ be a morphism in $\mathcal{C}$. Any commutative diagram of the form
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d, swap, "i"]
+      & X
+      \arrow[d, "f"]
+      \\
+      B
+      \arrow[r]
+      & Y
+    \end{tikzcd},
+  \end{equation*}
+  with $i$ in $\mathcal{M}$, is certainly completely specified by the data of the morphsim $i\colon A \to B$, the map $A \to X$, and the map $B \to Y$. Therefore, the collection of all such commuting diagrams is indexed by a small set. Denote this set by $J$. We can write the set of all commuting squares as follows.
+  \begin{equation*}
+    \left\{
+      \begin{tikzcd}
+        A_{j}
+        \arrow[r]
+        \arrow[d, swap, "i_{j}"]
+        & X
+        \arrow[d, "f"]
+        \\
+        B_{j}
+        \arrow[r]
+        & Y
+      \end{tikzcd}
+    \right\}_{j \in J}
+  \end{equation*}
+
+  Form the coproducts
+  \begin{equation*}
+    A = \coprod_{j \in J} A_{j} \qquad\text{and}\qquad B = \coprod_{j \in J} B_{j}.
+  \end{equation*}
+
+  By the universal property for coproducts, specifying a map out of a coproduct is the same as specifying a map from each summand. Taking $\iota_{B_{j}} \circ i_{j}\colon A \to B_{j}$ gives us a map $\amalg_{j} i_{j}\colon A \to B$.
+
+  Note that the following diagram commutes.
+  \begin{equation*}
+    \begin{tikzcd}
+      \coprod_{j \in J} A_{j}
+      \arrow[r]
+      \arrow[d, swap, "\amalg_{j} i_{j}"]
+      & X
+      \arrow[d, "f"]
+      \\
+      \coprod_{j \in J} B_{j}
+      \arrow[r]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  Now consider the following pushout.
+  \begin{equation*}
+    \begin{tikzcd}
+      \coprod_{j \in J} A_{j}
+      \arrow[dr, phantom, "\ulcorner", very near end]
+      \arrow[r]
+      \arrow[d, swap, "\amalg_{j} i_{j}"]
+      & X
+      \arrow[ddr, bend left, "f"]
+      \arrow[d, swap, "h_{1}"]
+      \\
+      \coprod_{j \in J} B_{j}
+      \arrow[r]
+      \arrow[rrd, bend right]
+      & X_{1}
+      \arrow[rd, outer sep=-2pt, near start, "g_{1}"]
+      \\
+      & & Y
+    \end{tikzcd}
+  \end{equation*}
+  Note that this gives us a factorization $f = g_{1} \circ h_{1}$, but it's not the one we want: while we have that $h_{1} \in \overline{\mathcal{M}}$ since it's the pushout of something in $\overline{\mathcal{M}}$, we do not yet have that $g_{1} \in \mathcal{M}_{\perp}$. We need to keep looking.
+
+  We do this whole process again, considering the set of diagrams
+  \begin{equation*}
+    \left\{
+      \begin{tikzcd}
+        A_{j}
+        \arrow[r]
+        \arrow[d, swap, "i_{j}"]
+        & X_{1}
+        \arrow[d, "g_{1}"]
+        \\
+        B_{j}
+        \arrow[r]
+        & Y
+      \end{tikzcd}
+    \right\}
+  \end{equation*}
+
+  Take the pushout as before.
+  \begin{equation*}
+    \begin{tikzcd}
+      \coprod_{j \in J} A_{j}
+      \arrow[r]
+      \arrow[d, swap, "\amalg_{j} i_{j}"]
+      & X_{1}
+      \arrow[ddr, bend left, "g_{1}"]
+      \arrow[d, swap, "h_{2}"]
+      \\
+      \coprod_{j \in J} B_{j}
+      \arrow[r]
+      \arrow[rrd, bend right]
+      & X_{2}
+      \arrow[rd, outer sep=-2pt, near start, "g_{2}"]
+      \\
+      & & Y
+    \end{tikzcd}
+  \end{equation*}
+
+  Repeating this process, we get a chain of morphisms $h_{i}\colon X_{i-1} \to X_{i}$, each of which is in $\overline{\mathcal{M}}$.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "h_{1}"]
+      & X_{1}
+      \arrow[r, "h_{2}"]
+      & X_{2}
+      \arrow[r, "h_{3}"]
+      & X_{3}
+      \arrow[r, dotted, no head]
+      & X_{\infty}
+    \end{tikzcd}
+  \end{equation*}
+  We can take the countable composition without leaving $\overline{\mathcal{M}}$, giving us a map $h\colon X \to X_{\infty}$.
+
+  For each $X_{i}$, we also constructed a map $g_{i}\colon X_{i} \to Y$. The universal property for colimits allows us to turn this into a map $g\colon X_{\infty} \to Y$. It turns out that this map is in $\mathcal{M}_{\perp}$!
+
+  In order to see that, consider the following lifting problem, with $i \in \mathcal{M}$.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d, swap, "i"]
+      & X_{\infty}
+      \arrow[d, "g"]
+      \\
+      B
+      \arrow[r]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+
+  By assumption, $Y$ is compact, so any map $Y \to X_{\infty}$ factors through some $X_{j}$.
+  \begin{equation}
+    \label{eq:soa_partly_built_square}
+    \begin{tikzcd}
+      A
+      \arrow[rr]
+      \arrow[dd, swap, "i"]
+      \arrow[rd]
+      && X_{\infty}
+      \arrow[dd, "g"]
+      \\
+      & X_{j}
+      \arrow[ur]
+      \arrow[dr]
+      \\
+      B
+      \arrow[rr]
+      && Y
+    \end{tikzcd}
+  \end{equation}
+
+  The lower-left square should look familiar.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d, swap, "i"]
+      & X_{j}
+      \arrow[d, "g_{j}"]
+      \\
+      B
+      \arrow[r]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  This is one of the diagrams that we took the coproduct of in the $j$th step above. The pushout gave us the following commuting diagram.
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[r]
+      \arrow[d, swap, "i"]
+      & X_{j}
+      \arrow[ddr, bend left]
+      \arrow[d, swap]
+      \\
+      B
+      \arrow[r]
+      \arrow[rrd, bend right]
+      & X_{j+1}
+      \arrow[rd]
+      \\
+      & & Y
+    \end{tikzcd}
+  \end{equation*}
+  Nestling this diagram into \hyperref[eq:soa_partly_built_square]{Equation~\ref*{eq:soa_partly_built_square}}, we find
+  \begin{equation*}
+    \begin{tikzcd}
+      A
+      \arrow[rrr]
+      \arrow[ddd, swap, "i"]
+      \arrow[rd]
+      &&& X_{\infty}
+      \arrow[ddd, "g"]
+      \\
+      & X_{j}
+      \arrow[urr]
+      \arrow[dr]
+      \\
+      && X_{j+1}
+      \arrow[uur]
+      \arrow[rd]
+      \\
+      B
+      \arrow[rrr]
+      \arrow[urr]
+      &&& Y
+    \end{tikzcd}
+  \end{equation*}
+  This gives us a map $B \to X_{j+1} \to X_{\infty}$ which makes the diagram commute. We have solved the lifting problem!
+\end{proof}
+
+One important use of the small object argument is to prove the following.
+
+\begin{corollary}
+  \label{cor:saturated_hull_is_left_perp_of_right_perp}
+  Let $\mathcal{C}$ be a locally small category with small colimits, and let $\mathcal{M}$ be a small set of morphisms in $\mathcal{C}$ such that for each $i\colon A \to B \in \mathcal{M}$, the domain $A$ of $i$ is compact as in \hyperref[lemma:small_object_argument]{Lemma~\ref*{lemma:small_object_argument}}. Then
+  \begin{equation*}
+    \overline{\mathcal{M}} = {}_{\perp}(\mathcal{M}_{\perp}).
+  \end{equation*}
+\end{corollary}
+\begin{proof}
+  We have $\overline{\mathcal{M}} \subseteq {}_{\perp}(\mathcal{M}_{\perp})$ by \hyperref[cor:saturated_hull_contained_in_left_perp_of_right_perp]{Corollary~\ref*{cor:saturated_hull_contained_in_left_perp_of_right_perp}}.
+
+  Consider some morphism $f \in {}_{\perp}(\mathcal{M}_{\perp})$. Then by \hyperref[lemma:small_object_argument]{Lemma~\ref*{lemma:small_object_argument}}, $f$ has a factorization
+  \begin{equation*}
+    f = g \circ h,
+  \end{equation*}
+  with $g \in \mathcal{M}_{\perp}$ and $h \in \overline{\mathcal{M}}$. We can write this as a commuting square.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "h"]
+      \arrow[d, swap, "{}_\perp(\mathcal{M}_{\perp})\ni f"]
+      & Z
+      \arrow[d, "g \in \mathcal{M}_{\perp}"]
+      \\
+      Y
+      \arrow[r, swap, "\id_{Y}"]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  Because $f$ has the left lifting property with respect to $g$, we get a morphism $r\colon Y \to Z$ making the diagram commute.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[r, "h"]
+      \arrow[d, swap, "f"]
+      & Z
+      \arrow[d, "g"]
+      \\
+      Y
+      \arrow[r, swap, "\id_{Y}"]
+      \arrow[ur, dashed, "r"]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  Unfolding this, we find the following diagram.
+  \begin{equation*}
+    \begin{tikzcd}
+      X
+      \arrow[rr, bend left, "\id_{X}"]
+      \arrow[r, swap, "\id_{X}"]
+      \arrow[d, swap, "f"]
+      & X
+      \arrow[r, swap, "\id_{X}"]
+      \arrow[d, swap, "h"]
+      & X
+      \arrow[d, swap, "f"]
+      \\
+      Y
+      \arrow[rr, bend right, swap, "\id_{Y}"]
+      \arrow[r, "r"]
+      & Z
+      \arrow[r, "g"]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  This says precisely that $f$ is a retract of $h$, so $f \in \overline{\mathcal{M}}$.
+\end{proof}
+
+\section{Anodyne morphisms}
+\label{sec:anodyne_morphisms}
+
+\begin{definition}[anodyne morphism]
+  \label{def:anodyne_morphism}
+  A morphism of simplicial sets is called \defn{anodyne} if it has the left lefting property with respect to all Kan fibrations (\hyperref[def:kan_fibration]{Definition~\ref*{def:kan_fibration}}).
+\end{definition}
+
+\begin{example}
+  By definition, horn fillings $\Lambda^{n}_{i} \hookrightarrow \Delta^{n}$ are anodyne.
+\end{example}
+
+\begin{lemma}
+  \label{lemma:anodyne_morphisms_closure_of_horn_inclusions}
+  The set of anodyne morphisms is the saturated hull of the set of horn inclusions.
+\end{lemma}
+\begin{proof}
+  We have the following string of equalities.
+  \begin{align*}
+    {}_{\perp}\{\text{Kan fibrations}\} &= {}_{\perp}(\{\text{horn fillings}\}_{\perp}) &(\text{By \hyperref[eg:kan_fibrations_are_have_rlp_wrt_horn_fillings]{Example~\ref*{eg:kan_fibrations_are_have_rlp_wrt_horn_fillings}}}) \\
+    &= \overline{\{\text{horn fillings}\}} & (\text{By \hyperref[cor:saturated_hull_contained_in_left_perp_of_right_perp]{Corollary~\ref*{cor:saturated_hull_contained_in_left_perp_of_right_perp}}})
+  \end{align*}
+  where the last equality holds because horns have finitely many non-degenerate simplices, and hence are compact by \hyperref[eg:compact_in_sset]{Example~\ref*{eg:compact_in_sset}}.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:anodyne_morphisms_are_saturated}
+  The set of all anodyne morphisms is saturated.
+\end{corollary}
+
+\begin{definition}[smash product]
+  \label{def:smash_product}
+  Let $f\colon A \to B$ and $g\colon A' \to B'$ be morphisms of simplicial sets. Consider the following diagram.
+  \begin{equation*}
+    \begin{tikzcd}
+      A \times B
+      \arrow[r, "f \times \id"]
+      \arrow[d, swap, "\id \times g"]
+      & A' \times B
+      \arrow[d, "\id \times g"]
+      \\
+      A \times B'
+      \arrow[r, swap, "f \times \id"]
+      & A' \times B'
+    \end{tikzcd}
+  \end{equation*}
+  Taking the pushout, we find a morphism
+  \begin{equation*}
+    f \wedge g\colon A' \times B \coprod_{A \times B} A \times B' \to A' \times B',
+  \end{equation*}
+  called the \defn{smash product} of $f$ and $g$.
+  \begin{equation*}
+    \begin{tikzcd}[row sep=huge]
+      A \times B
+      \arrow[r, "f \times \id"]
+      \arrow[d, swap, "\id \times g"]
+      & A' \times B
+      \arrow[ddr, bend left, "\id \times g"]
+      \arrow[d]
+      \\
+      A \times B'
+      \arrow[r]
+      \arrow[rrd, swap, bend right, "f \times \id"]
+      & A' \times B \coprod_{A \times B} A \times B'
+      \arrow[dr, dashed, "f \wedge g"]
+      \\
+      && A' \times B'
+    \end{tikzcd}
+  \end{equation*}
+\end{definition}
+
+\begin{lemma}
+  \label{lemma:facts_about_smash_product}
+  Let $f$, $g$, and $h$ be morphisms of simplicial sets. We have the following.
+  \begin{enumerate}
+    \item If $f$ and $g$ are monic, then $f \wedge g$ is monic.
+
+    \item There is a natural isomorphism $(f \wedge g) \wedge h \simeq f \wedge (g \wedge h)$
+  \end{enumerate}
+\end{lemma}
+\begin{proof}
+  \leavevmode
+  \begin{enumerate}
+    \item The pushout square defining the smash product takes place in $\SSet$. By \hyperref[lemma:properties_of_morphisms_of_simplicial_sets]{Corollary~\ref*{lemma:properties_of_morphisms_of_simplicial_sets}}, it suffices to check that each component is monic. Therefore, consider the defining diagram now as a map of sets.
+      \begin{equation*}
+        \begin{tikzcd}[row sep=huge]
+          A \times B
+          \arrow[r, "f \times \id"]
+          \arrow[d, swap, "\id \times g"]
+          & A' \times B
+          \arrow[ddr, bend left, "\id \times g"]
+          \arrow[d, hookrightarrow]
+          \\
+          A \times B'
+          \arrow[r, hookrightarrow]
+          \arrow[rrd, swap, bend right, "f \times \id"]
+          & A' \times B \coprod_{A \times B} A \times B'
+          \arrow[dr, dashed, "f \wedge g"]
+          \\
+          && A' \times B'
+        \end{tikzcd}
+      \end{equation*}
+      In the context of sets, we are allowed to think of $f$ and $g$ as including $A \subset A'$ and $B \subset B'$ respectively. The wedge product $f \wedge g$ is thus the inclusion of the union
+      \begin{equation*}
+        (A' \times B) \cup (A \times B') \subset A' \times B'.
+      \end{equation*}
+
+    \item Draw a cube.
+  \end{enumerate}
+\end{proof}
+
+We will need this lemma many times.
+\begin{lemma}
+  \label{lemma:equivalent_lifting_problems}
+  The following lifting problems are equivalent.
+  \begin{equation*}
+    \begin{tikzcd}
+      A' \times B \coprod_{A \times B} A \times B'
+      \arrow[r]
+      \arrow[d]
+      & X
+      \arrow[d]
+      \\
+      A' \times B'
+      \arrow[r]
+      \arrow[ur, dashed]
+      & Y
+    \end{tikzcd}
+    \qquad
+    \begin{tikzcd}
+      B
+      \arrow[r]
+      \arrow[d]
+      & \Maps(A', X)
+      \arrow[d]
+      \\
+      B'
+      \arrow[r]
+      \arrow[ur, dashed]
+      & \Maps(A, X) \underset{\Maps(A, Y)}{\times} \Maps(A', Y)
+    \end{tikzcd}
+  \end{equation*}
+\end{lemma}
+\begin{proof}
+  First, consider the first. By expanding the pushout into its cocone and replacing maps out of it with maps out of the cocone, we find the following diagram (where we have now labelled maps).
+  \begin{equation*}
+    \begin{tikzcd}
+      A \times B
+      \arrow[r, "\alpha \times \id_{B}"]
+      \arrow[d, swap, "\id_{A} \times \beta"]
+      & A' \times B
+      \arrow[dd, near start, swap, "\id_{A'} \times \beta"]
+      \arrow[dr, "a"]
+      \\
+      A \times B'
+      \arrow[rr, near end, crossing over, "c"]
+      \arrow[dr, swap, "\alpha \times \id_{B}"]
+      && X
+      \arrow[d, "b"]
+      \\
+      & A' \times B'
+      \arrow[ur, dashed, "\ell"]
+      \arrow[r, swap, "d"]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  Re-arranging to avoid overlaps, we find the following diagram.
+  \begin{equation*}
+    \begin{tikzcd}
+      & A \times B
+      \arrow[dr, "\id_{A} \times \beta"]
+      \arrow[dl, swap, "\alpha \times \id_{B}"]
+      \\
+      A' \times B
+      \arrow[dddr, bend right, swap, "a"]
+      \arrow[dr, swap, "\id_{A'} \times \beta"]
+      && A \times B'
+      \arrow[dddl, bend left, "c"]
+      \arrow[dl, "\alpha \times \id_{B'}"]
+      \\
+      & A' \times B'
+      \arrow[d, swap, "d"]
+      \arrow[dd, bend left, dashed, "\ell"]
+      \\
+      & Y
+      \\
+      & X
+      \arrow[u, "b"]
+    \end{tikzcd}
+  \end{equation*}
+
+  This diagram is made of several commuting squares and one triangle, which tell us the following.
+  \begin{enumerate}
+    \item The top square commutes trivially.
+
+    \item The left square tells us that $b \circ a = d \circ (\id_{A'} \times \beta)$.
+
+    \item The right square tells us that $b \circ c = d \circ (\alpha \times \id_{B'})$.
+
+    \item The outer square tells us that $a \circ (\alpha \times \id_{B}) = c \circ (\id_{A} \times \beta)$.
+
+    \item The triangle involving the lift tells us that $d = b \circ \ell$.
+  \end{enumerate}
+
+  We will denote the adjuncts to $a$, $c$, $d$, and $\ell$ by
+  \begin{equation*}
+    \tilde{a}\colon B \to [A', X],\qquad \tilde{c}\colon B' \to [A, X],\qquad \tilde{d}\colon B' \to [A', Y],\qquad \tilde{\ell}\colon B' \to [A', X].
+  \end{equation*}
+  Expanding the second diagram in the same way as the first, we find the following.
+  \begin{equation*}
+    \begin{tikzcd}[column sep=small]
+      & B'
+      \arrow[dd, bend left, dashed, "\tilde{\ell}"]
+      \arrow[dddr, bend left, "\tilde{d}"]
+      \arrow[dddl, bend right, swap, "\tilde{b}"]
+      \\
+      & B
+      \arrow[u, "\beta"]
+      \arrow[d, swap, "\tilde{a}"]
+      \\
+      & \Maps(A', X)
+      \arrow[dr, "{[\id_{A'}, c]}"]
+      \arrow[dl, swap, "{[\alpha, \id_{X}]}"]
+      \\
+      \Maps(A, X)
+      \arrow[dr, swap, "{[\id_{A}, c]}"]
+      && \Maps(A', Y)
+      \arrow[dl, "{[\alpha, \id_{Y}]}"]
+      \\
+      & \Maps(A, Y)
+    \end{tikzcd}
+  \end{equation*}
+\end{proof}
+
+\begin{lemma}
+  \label{lemma:set_of_morphisms_whose_smash_product_is_anodyne_is_saturated}
+  Fix some morphism $i\colon A \to A'$ in $\SSet$. The set
+  \begin{equation*}
+    \mathcal{S} = \{f \mid i \wedge f \text{ is anodyne}\}
+  \end{equation*}
+  is saturated.
+\end{lemma}
+\begin{proof}
+  Let $f\colon B \to B'$. By definition, $i \wedge f$ is anodyne if and only if every lifting problem
+  \begin{equation*}
+    \begin{tikzcd}
+      A' \times B \coprod_{A \times B} A \times B'
+      \arrow[r]
+      \arrow[d, swap, "i \wedge f"]
+      & X
+      \arrow[d, "g"]
+      \\
+      A' \times B'
+      \arrow[r]
+      \arrow[ur, dashed]
+      & Y
+    \end{tikzcd}
+  \end{equation*}
+  where $g$ is a Kan fibration has a solution. However, by \hyperref[lemma:equivalent_lifting_problems]{Lemma~\ref*{lemma:equivalent_lifting_problems}}, we may equivalently say that $i \wedge f$ is anodyne if and only if every lifting problem of the following form has a solution.
+  \begin{equation*}
+    \begin{tikzcd}
+      B
+      \arrow[r]
+      \arrow[d, swap, "f"]
+      & \Maps(A', X)
+      \arrow[d]
+      \\
+      B'
+      \arrow[r]
+      \arrow[ur, dashed]
+      & \Maps(A, X) \underset{\Maps(A, Y)}{\times} \Maps(A', Y)
+    \end{tikzcd}
+  \end{equation*}
+  Defining
+  \begin{equation*}
+    \mathcal{R} = \{ \Maps(A', X) \to \Maps(A, X) \underset{\Maps(A, Y)}{\times} \Maps(A', Y) \mid X \to Y \text{ Kan fibration}\},
+  \end{equation*}
+  we see that
+  \begin{equation*}
+    \{f \mid f \wedge i \text{ anodyne}\} = \llp\mathcal{R}.
+  \end{equation*}
+  Thus by \hyperref[thm:left_perp_is_saturated]{Theorem~\ref*{thm:left_perp_is_saturated}} $\{f \mid f \wedge i \text{ anodyne}\}$ is saturated.
+\end{proof}
+
+\begin{theorem}
+  \label{thm:saturated_hull_of_various_sets_are_anodyne_morphisms}
+  Consider the following sets of morphisms.
+  \begin{align*}
+    \mathcal{M}_{1} &= \left\{ \Lambda^{n}_{i} \to \Delta^{n} \mid n > 0,\ 0 \leq i \leq n \right\} \\
+    \mathcal{M}_{2} &= \left\{ \{e\} \times \Delta^{n} \coprod_{\{e\} \times \partial \Delta^{n}} \Delta^{1} \times \partial\Delta^{n} \to \Delta^{1} \times \Delta^{n} \Biggm| n \geq 0,\ e = 0,\, 1 \right\} \\
+    \mathcal{M}_{3} &= \left\{ \{e\} \times S \coprod_{\{e\} \times S} \Delta^{1} \times S \to \Delta^{1} \times S' \Biggm| S \to S'\ \text{monic},\ e = 0,\, 1 \right\}
+  \end{align*}
+  Each of these sets generate the set of all anodyne morphisms in the sense that
+  \begin{equation*}
+    \overline{\mathcal{M}}_{1} = \overline{\mathcal{M}}_{2} = \overline{\mathcal{M}}_{3} = \{\text{anodyne morphisms}\}.
+  \end{equation*}
+\end{theorem}
+\begin{proof}
+  We will show the following inclusions.
+  \begin{enumerate}
+    \item $\mathcal{M}_{2} \subset \overline{\mathcal{M}}_{1}$
+
+    \item $\mathcal{M}_{1} \subset \overline{\mathcal{M}}_{3}$
+
+    \item $\overline{\mathcal{M}}_{2} = \overline{\mathcal{M}}_{3}$
+  \end{enumerate}
+  This will imply that
+  \begin{equation*}
+    \overline{\mathcal{M}}_{2} \subset \overline{\mathcal{M}}_{1} \subset \overline{\mathcal{M}}_{3} \subset \overline{\mathcal{M}}_{2}.
+  \end{equation*}
+  \begin{enumerate}
+    \item Fix a morphism $i$ in $\mathcal{M}_{2}$ with $e = 0$, i.e.\ an inclusion
+      \begin{equation*}
+        \begin{tikzcd}
+          C^{0} = \{0\} \times \Delta^{n} \coprod_{\{0\} \times \partial \Delta^{n}} \Delta^{1} \times \Delta^{n}
+          \arrow[r, hook, "i"]
+          & \Delta^{1} \times \Delta^{n} = C.
+        \end{tikzcd}
+      \end{equation*}
+      Consider the poset $[1] \times [n]$, which we can draw as follows.
+      \begin{equation*}
+        \begin{tikzcd}
+          10
+          \arrow[r]
+          & 11
+          \arrow[r]
+          & 12
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & 1(n-1)
+          \arrow[r]
+          & 1n
+          \\
+          00
+          \arrow[u]
+          \arrow[r]
+          & 01
+          \arrow[u]
+          \arrow[r]
+          & 02
+          \arrow[u]
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & 0(n-1)
+          \arrow[u]
+          \arrow[r]
+          & 0n
+          \arrow[u]
+        \end{tikzcd}
+      \end{equation*}
+      The simplicial set $C$ is the nerve of this poset. An $(n+1)$-simplex in $C$ is thus given by a map of posets $[n+1] \to [1] \times [n]$. An $(n+1)$-simplex is nondegenerate if and only if it is a monomorphism. There are exactly $n+1$ nondegenerate simplices in $\Delta^{1} \times \Delta^{n}$, of the form
+      \begin{equation*}
+        \begin{tikzcd}[row sep=small, column sep=small]
+          &&& 1i
+          \arrow[r]
+          & 1(i+1)
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & 1n
+          \\
+          00
+          \arrow[r]
+          & 01
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & 0i
+          \arrow[u]
+        \end{tikzcd}
+      \end{equation*}
+      for $0 \leq i \leq n$. We denote the above $(n+1)$-simplex by $\sigma_{i}$.
+
+      Consider the nondegenerate $(n+1)$-simplex $\sigma_{n}$ given by
+      \begin{equation*}
+        \sigma_{n} =\ \ 
+        \begin{tikzcd}[row sep=small, column sep=small]
+          &&&& 1n
+          \\
+          00 
+          \arrow[r] 
+          & 01 
+          \arrow[r] 
+          & 02 
+          \arrow[r] 
+          & \cdots 
+          \arrow[r] 
+          & 0n 
+          \arrow[u]
+        \end{tikzcd}.
+      \end{equation*}
+      The $i$th face of $\sigma_{n}$ is given by skipping over the $i$th vertex of $\sigma_{n}$. For example, $d_{1}\sigma_{n}$ is in blue below.
+      \begin{equation*}
+        \begin{tikzcd}[row sep=small, column sep=small]
+          &&&& 1n
+          \\
+          00 
+          \arrow[r] 
+          \arrow[rr, bend left, color = blue]
+          & 01 
+          \arrow[r] 
+          & 02 
+          \arrow[r, color=blue] 
+          & \cdots 
+          \arrow[r, color=blue] 
+          & 0n 
+          \arrow[u, color=blue]
+        \end{tikzcd}
+      \end{equation*}
+      Each of the faces $d_{0} \sigma_{n}$, $d_{1} \sigma_{n}$, etc., is in $C^{0}$, except $d_{n}\sigma_{n}$.
+      \begin{equation*}
+        \begin{tikzcd}[row sep=small, column sep=small]
+          &&&& 1n
+          \\
+          00 
+          \arrow[r, color=blue] 
+          & \cdots 
+          \arrow[r, color=blue]
+          & 0(n-2)
+          \arrow[r, color=blue] 
+          & 0(n-1) 
+          \arrow[r]
+          \arrow[ur, color=blue] 
+          & 0n 
+          \arrow[u]
+        \end{tikzcd}
+      \end{equation*}
+      This means that $\sigma_{n} \cap C^{0} \cong \Lambda^{n+1}_{n}$, giving us a pushout
+      \begin{equation*}
+        \begin{tikzcd}[column sep=huge]
+          \Lambda^{n+1}_{n}
+          \arrow[r, "{(d_{0} \sigma_{n}, \ldots, d_{n-2} \sigma_{n}, -, d_{n} \sigma_{n})}"]
+          \arrow[d]
+          & C^{0}
+          \arrow[d, hook, "i_{0}"]
+          \\
+          \Delta^{n}
+          \arrow[r, "\sigma_{n}"]
+          & C^{1} = C^{0} \cup \sigma_{n}
+        \end{tikzcd}
+      \end{equation*}
+      exhibiting $i_{0}$ as a pushout of a horn inclusion. Hence, $i_{0}$ is in $\overline{\mathcal{M}}_{1}$.
+
+      Reasoning along the same lines shows that $\sigma_{n-1}$ has two faces missing from $C^{0}$: $d_{n}\sigma_{n-1}$ and $d_{n-1} \sigma_{n-1}$. However, $d_{n-2} \sigma_{n-2}$ is in $C^{1}$, so we again have a pushout
+      \begin{equation*}
+        \begin{tikzcd}[column sep=huge]
+          \Lambda^{n+1}_{n-1}
+          \arrow[r, "{(\ldots, d_{n-2} \sigma_{n-1}, -, d_{n} \sigma_{n-1}, \ldots)}"]
+          \arrow[d]
+          & C^{1}
+          \arrow[d, hook, "i_{1}"]
+          \\
+          \Delta^{n}
+          \arrow[r, "\sigma_{n}"]
+          & C^{2} = C^{1} \cup \sigma_{n-1}
+        \end{tikzcd}
+      \end{equation*}
+
+      Proceeding inductively, we see that we have a string of inclusions
+      \begin{equation*}
+        \begin{tikzcd}
+          C^{0}
+          \arrow[r, hook, "i_{0}"]
+          & C^{1}
+          \arrow[r, hook, "i_{1}"]
+          & C^{2}
+          \arrow[r, hook, "i_{2}"]
+          & \cdots
+          \arrow[r, hook, "i_{n-1}"]
+          & C^{n}
+        \end{tikzcd}
+      \end{equation*}
+      where $C^{i} \hookrightarrow C^{i+1}$ is given by a pushout
+      \begin{equation*}
+        \begin{tikzcd}
+          \Lambda^{n+1}_{n-i}
+          \arrow[r]
+          \arrow[d]
+          & C^{i}
+          \arrow[d, hook]
+          \\
+          \Delta^{n+1}
+          \arrow[r]
+          & C^{i+1} = C^{i} \cup \sigma_{n-i}
+        \end{tikzcd}.
+      \end{equation*}
+      The composition of these is $i$. Each $i_{k}$ is in $\overline{\mathcal{M}}_{1}$, so $i$ is a composition of morphisms in $\overline{\mathcal{M}}_{1}$, hence is in $\overline{\mathcal{M}}_{1}$
+
+      The case $e = 1$ is dual.
+
+    \item Consider the map $i\colon [n] \to [1] \times [n]$ sending $i$ to $(i, 0)$, and the map $r\colon [1] \times [n] \to [n]$ as follows.
+      \begin{equation*}
+        \begin{tikzcd}
+          0
+          \arrow[r]
+          & 1
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & k
+          \arrow[r]
+          & k + 1
+          \arrow[r]
+          & \cdots
+          \arrow[r]
+          & n
+          \\
+          0
+          \arrow[r]
+          \arrow[u]
+          & 1
+          \arrow[r]
+          \arrow[u]
+          & \cdots
+          \arrow[r]
+          & k
+          \arrow[r]
+          \arrow[u]
+          & k
+          \arrow[r]
+          \arrow[u]
+          & \cdots
+          \arrow[r]
+          & k
+          \arrow[u]
+        \end{tikzcd}
+      \end{equation*}
+
+    \item For any morphisms $i\colon A \to A'$ in $\SSet$, the set
+      \begin{equation*}
+        \{f\colon B \to B' \mid f \wedge i \in \overline{\mathcal{M}}_{2}\}
+      \end{equation*}
+      is saturated because by \hyperref[lemma:equivalent_lifting_problems]{Lemma~\ref*{lemma:equivalent_lifting_problems}} it is given by
+      \begin{equation*}
+        \llp\{\Maps(A', X) \to \Maps(A, Y) \times_{\Maps(A', Y)} \Maps(A', X) \mid X \to Y \text{ Kan fibration}\}.
+      \end{equation*}
+
+
+      \begin{equation*}
+        \mathcal{E} = \{\{e\} \to \Delta^{1} \mid e = 0, 1\}.
+      \end{equation*}
+      Then
+
+      It is easy to see that $\overline{\mathcal{M}}_{2} \subset \overline{\mathcal{M}}_{3}$ since the inclusion $\partial \Delta^{n} \hookrightarrow \Delta^{n}$ is monic.
+  \end{enumerate}
+
+\end{proof}
+
+This theorem gives us 
+
+\begin{corollary}
+  \label{cor:smash_of_monic_and_anodyne_is_anodyne}
+  Let $f$ be anodyne, and let $g\colon X \to Y$ be a monomorphism. Then $f \wedge g$ is anodyne.
+\end{corollary}
+\begin{proof}
+
+\end{proof}
+
+\begin{example}
+  \label{eg:boundary_filling_times_horn_filling_is_anodyne}
+  Any horn filling $\Lambda^{n}_{i} \hookrightarrow \Delta^{n}$ is anodyne, and boundary fillings $\partial \Delta^{m} \to \Delta^{m}$ are mono, so pushouts
+  \begin{equation*}
+    \partial \Delta^{m} \times \Delta^{n} \coprod_{\partial \Delta^{m} \times \Lambda^{n}_{i}} \Delta^{m} \times \Lambda^{n}_{i} \to \Delta^{m} \times \Delta^{n}
+  \end{equation*}
+  are anodyne.
+\end{example}
+
+\section{A technical lemma of great importance}
+\label{sec:a_technical_lemma_of_great_importance}
+
+\begin{lemma}
+  \label{lemma:kan_fibrations_preserved_under_dual_to_smash_product}
+  Let $i\colon A \to B$ be a monomorphism, and let $p\colon K \to S$ be a Kan fibration (\hyperref[def:kan_fibration]{Definition~\ref*{def:kan_fibration}}). Consider the following pushout.
+  \begin{equation*}
+    \begin{tikzcd}[row sep=huge]
+      \Maps(B, K)
+      \arrow[rrd, bend left]
+      \arrow[rdd, bend right]
+      \arrow[rd, dashed]
+      \\
+      & \Maps(A, K) \underset{\Maps(A, S)}{\times} \Maps(B, S)
+      \arrow[r]
+      \arrow[d]
+      & \Maps(A, K)
+      \arrow[d]
+      \\
+      & \Maps(B, S)
+      \arrow[r]
+      & \Maps(A, S)
+    \end{tikzcd}
+  \end{equation*}
+  The dashed arrow is a Kan fibration.
+\end{lemma}
+\begin{proof}
+  We need to show that the dashed arrow solves right lifting problems of the following form,
+  \begin{equation*}
+    \begin{tikzcd}
+      A'
+      \arrow[d, swap, "j"]
+      \arrow[r]
+      & \Maps(B, K)
+      \arrow[d, dashed]
+      \\
+      B'
+      \arrow[r,]
+      \arrow[ur, dotted]
+      & \Maps(A, K) \underset{\Maps(B, K)}{\times} \Maps(B, S)
+    \end{tikzcd}
+  \end{equation*}
+  with $j\colon A' \to B'$ a horn filling. It will actually be easier to solve this problem in the generality where $j$ is any anodyne morphism; this will certainly suffice because by \hyperref[thm:saturated_hull_of_various_sets_are_anodyne_morphisms]{Theorem~\ref*{thm:saturated_hull_of_various_sets_are_anodyne_morphisms}}, all horn fillings are anodyne.
+
+  By \hyperref[lemma:equivalent_lifting_problems]{Lemma~\ref*{lemma:equivalent_lifting_problems}}, this is equivalent to the following lifting problem.
+  \begin{equation*}
+    \begin{tikzcd}
+      A' \times B \coprod_{A' \times A} B' \times A
+      \arrow[r]
+      \arrow[d]
+      & K
+      \arrow[d, "p"]
+      \\
+      B' \times B
+      \arrow[r]
+      \arrow[ur, dashed]
+      & S
+    \end{tikzcd}
+  \end{equation*}
+
+  The vertical arrow on the left is the smash product $i \wedge j$. By \hyperref[cor:smash_of_monic_and_anodyne_is_anodyne]{Corollary~\ref*{cor:smash_of_monic_and_anodyne_is_anodyne}}, this is anodyne. By assumption, $p$ is a Kan fibration, so the lift exists.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:mapping_space_to_kan_complex_is_kan_complex}
+  Let $K$ be a Kan complex, and let $B$ be a simplicial set. Then the simplicial set $\Maps(B, K)$ is a Kan complex.
+\end{corollary}
+\begin{proof}
+  Take $A = \emptyset$ and $S = *$. Then we have that the map
+  \begin{equation*}
+    \Maps(B, K) \to \Maps(\emptyset, K) \underset{\Maps(\emptyset,*)}{\times} \Maps(B, *) = *
+  \end{equation*}
+  is a Kan fibration. But by \hyperref[cor:kan_fibration_to_point_is_kan_complex]{Corollary~\ref*{cor:kan_fibration_to_point_is_kan_complex}}, this means that $\Maps(B, K)$ is a Kan complex.
+\end{proof}
+
+\begin{corollary}
+  \label{cor:maps_functor_preserves_kan_fibrations_in_first_slot}
+  For $i\colon A \to B$ a monomorphism of simplicial sets and $K$ a Kan complex, the map
+  \begin{equation*}
+    \Maps(i, \id_{K})\colon \Maps(B, K) \to \Maps(A, K)
+  \end{equation*}
+  is a Kan fibration.
+\end{corollary}
+\begin{proof}
+  Setting $S = *$, we find that the map
+  \begin{equation*}
+    \Maps(B, K) \to \Maps(A, K) \underset{\Maps(A, *)} \times \Maps(B, *) = \Maps(A, K)
+  \end{equation*}
+  is a Kan fibration, which is what we are after.
+\end{proof}
+
+
+\end{document}

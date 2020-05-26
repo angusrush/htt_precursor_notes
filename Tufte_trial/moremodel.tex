@@ -1,0 +1,59 @@
+\documentclass[main.tex]{subfiles}
+
+\begin{document}
+
+\chapter{More on model categories}
+\label{ch:more_on_model_categories}
+
+\section{Combinatorial model categories}
+\label{sec:combinatorial_model_categories}
+
+In general, it is difficult to construct model categories. However, in certain special cases we can leverage existing tools. One such tool is the notion of a combinatorial model category.
+
+\begin{definition}[presentable category]
+  \label{def:presentable_category}
+  Let $\mathcal{C}$ be a category. We say that $\mathcal{C}$ is \defn{presentable} if it satisfies the following conditions:
+  \begin{enumerate}
+    \item The category $\mathcal{C}$ admits all (small) colimits.
+
+    \item There exists some set $S$ of objects of $\mathcal{C}$ which generates $\mathcal{C}$ under small colimits in the sense that any object of $\mathcal{C}$ is a colimit of a diagram taking values in $S$.
+
+    \item Every object in $\mathcal{C}$ is small, i.e.\  compact in the sense of \hyperref[def:compact_object]{Definition~\ref*{def:compact_object}} for some small regular cardinal $\kappa$.
+
+    \item Each hom-set $\Hom(X, Y)$ in $\mathcal{C}$ is small; that is, $\mathcal{C}$ is locally small.
+  \end{enumerate}
+\end{definition}
+
+\begin{note}
+  Condition 3.\ is equivalent to demanding that only the objects of $S$ be compact.
+\end{note}
+
+\begin{definition}[combinatorial model category]
+  \label{def:combinatorial_model_category}
+  Let $\mathcal{A}$ be a model category. We say that $\mathcal{A}$ is \defn{combinatorial} if the following conditions are satisfied.
+  \begin{enumerate}
+    \item The category $\mathcal{A}$ is presentable.
+
+    \item There exists a set $I$ of \emph{generating cofibrations} such that $\cof = \overline{I}$, the saturated hull of $I$.
+
+    \item There exists a set $J$ of \emph{generating trivial cofibrations} such that $\cof \cap \W = \overline{J}$, the saturated hull of $J$.
+  \end{enumerate}
+\end{definition}
+
+\begin{definition}[perfect class of morphisms]
+  \label{def:perfect_class_of_morphisms}
+  Let $\mathcal{C}$ be a presentable category, and $W$ a class of morphisms of $\mathcal{C}$. We say that $W$ is \defn{perfect} if the following conditions are satisfied.
+  \begin{enumerate}
+    \item The class $W$ contains all isomorphisms.
+
+    \item The class $W$ satisfies the 2/3 law. 
+
+    \item The class $W$ is stable under filtered colimits, in the sense that for each filtered poset $I$ and functors $F$, $G\colon I \to \mathcal{C}$ such that each morphism in $I$
+  \end{enumerate}
+\end{definition}
+
+\section{Homotopy limits and colimits}
+\label{sec:homotopy_limits_and_colimits}
+
+
+\end{document}
