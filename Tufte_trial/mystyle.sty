@@ -1,0 +1,128 @@
+\ProvidesPackage{mystyle}
+
+\newcommand\hmmax{0}
+\newcommand\bmmax{0}
+
+%\usepackage[margin=1.2in]{geometry}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{amstext}
+\usepackage{array}
+\usepackage{amsthm}
+\usepackage{tikz}
+\usepackage{mathrsfs}
+\usepackage{soul}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{biblatex}
+\usepackage[makeroom]{cancel}
+\usepackage{libertine}
+\usepackage[libertine]{newtxmath}
+\usepackage{anyfontsize}
+\usepackage{interval}
+\usepackage{bm}
+\usepackage{booktabs}
+\usepackage{eucal}
+\usepackage[toc,page]{appendix}
+\usepackage{tikz-cd}
+\usepackage{graphicx}
+
+\usetikzlibrary{decorations.markings}
+
+% chktex-file 18
+% chktex-file 6
+
+%bibliography location
+\addbibresource{/home/angus/latex/sources.bib}
+
+% Set up hyperref colors
+\hypersetup{colorlinks,
+  linkcolor={blue!50!black},
+  citecolor={blue!50!black},
+  urlcolor={blue!80!black}
+}
+
+% chktex-file 18
+% chktex-file 23
+% chktex-file 6
+
+% Set up interval package
+\intervalconfig{soft open fences}
+
+% load tikz-cd
+%\usetikzlibrary{cd}
+
+% Makes indentation more note-ish
+\setlength{\parindent}{0em}
+\setlength{\parskip}{.5em}
+\setlength{\headheight}{14.0pt}
+
+% Page headers
+%\pagestyle{fancy}
+%\lhead{Angus Rush}
+%\chead{Higher categories notes}
+%\rhead{\today}
+
+\title{Category Theory}
+\author{Angus Rush}
+
+% My commands
+\newcommand{\R}{\mathbb{R}}
+\renewcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\defn}[1]{\ul{#1}}
+\newcommand{\abs}[1]{{| #1 |}}
+\newcommand{\tallabs}[1]{\left| #1 \right|}
+\newcommand{\id}{\mathrm{id}}
+\newcommand{\Sing}{\mathbf{Sing}}
+\newcommand{\op}{^{\mathrm{op}}}
+\newcommand{\rel}[1]{\quad(\mathrm{rel.\ }#1)}
+\newcommand{\W}{\mathcal{W}}
+\newcommand{\fib}{\mathcal{F}\mathrm{ib}}
+\newcommand{\cof}{\mathcal{C}\mathrm{of}}
+\newcommand{\llp}{{}_{\perp}}
+\newcommand{\rlp}{_{\perp}}
+\newcommand{\ev}{\mathrm{ev}}
+\newcommand{\CGHaus}{\mathbf{CGHaus}}
+\newcommand{\Set}{\mathbf{Set}}
+\renewcommand{\Top}{\mathbf{Top}}
+\newcommand{\h}{\mathrm{h}}
+
+\DeclareMathOperator{\coker}{coker}
+\DeclareMathOperator{\Mod}{Mod}
+\DeclareMathOperator{\Obj}{Obj}
+\DeclareMathOperator{\Hom}{Hom}
+\DeclareMathOperator*{\colim}{colim}
+\DeclareMathOperator{\ob}{\mathrm{ob}}
+\DeclareMathOperator{\Maps}{Maps}
+\DeclareMathOperator{\SSet}{\mathbf{Set}_{\Delta}}
+\DeclareMathOperator{\Fun}{\mathbf{Fun}}
+\DeclareMathOperator{\SCat}{\mathbf{Cat}_{\Delta}}
+
+% Second level of list uses empty bullets
+\renewcommand{\labelitemii}{$\circ$}
+
+% Declare theorem styles
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+\newtheorem{example}[definition]{Example}
+\newtheorem{recurring_example}[definition]{Recurring Example}
+\newtheorem{counterexample}[definition]{Counterexample}
+\newtheorem{fact}[definition]{Fact}
+\newtheorem{joke}[definition]{Joke}
+
+%\theoremstyle{plain}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{proposition}[definition]{Proposition}
+
+\theoremstyle{remark}
+\newtheorem{claim}[definition]{Claim}
+\newtheorem{recipe}[definition]{Recipe}
+\newtheorem{note}[definition]{Note}
+\newtheorem{notation}[definition]{Notation}

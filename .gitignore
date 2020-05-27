@@ -8,4 +8,7 @@
 !*.tex
 !*.pdf
 !*.synctex.gz
+!*.cls
+!*.def
+!*.sty
 !README.md
