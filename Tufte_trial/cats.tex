@@ -5,10 +5,13 @@
 \chapter{Category-theoretic preliminaries}
 \label{ch:category_theoretic_preliminaries}
 
-The theory of infinity categories rests on the shoulders of the theory of ordinary category theory. In this chapter, we recall some category-theoretic results that we will use.
+The theory of infinity categories rests on the shoulders of the theory of ordinary category theory. In this appendix, we recall some category-theoretic results that we will use. In general, we make no attempt to prove these results; they are standard, and proofs can be found in any introductory text on category theory. 
 
-\section{Formulae for limits and Kan extensions}
-\label{sec:formulae_for_limits_and_kan_extensions}
+\section{Limits and colimits}
+\label{sec:limits_and_colimits}
+
+\subsection{Formulae for limits}
+\label{ssc:formulae_for_limits}
 
 \begin{fact}
   \label{fact:limit_colimit_formula}
@@ -56,35 +59,8 @@ The theory of infinity categories rests on the shoulders of the theory of ordina
   \end{itemize}
 \end{fact}
 
-\begin{fact}
-  \label{fact:pointwise_formula_kan_extensions}
-  Consider categories and functors as follows,
-  \begin{equation*}
-    \begin{tikzcd}
-      \mathcal{C}
-      \arrow[dr, swap, "F"]
-      \arrow[rr, "D"]
-      && \mathcal{D}
-      \\
-      & \mathcal{C}'
-    \end{tikzcd}
-  \end{equation*}
-  where $\mathcal{C}$ is small. 
-  \begin{itemize}
-    \item If $\mathcal{D}$ has all small colimits, then the left Kan extension $F_{!}D$ exists and has values
-      \begin{equation*}
-        (F_{!}D)(c') = \colim \left[ \begin{tikzcd} (c' \downarrow F) \arrow[r] & \mathcal{C} \arrow[r, "D"] & \mathcal{D} \end{tikzcd} \right].
-      \end{equation*}
-
-    \item If $\mathcal{D}$ has all small limits, then the right Kan extension $F_{*}D$ exists and has values
-      \begin{equation*}
-        (F_{*}D)(c') = \lim \left[ \begin{tikzcd} (F \downarrow c') \arrow[r] & \mathcal{C} \arrow[r, "D"] & \mathcal{D} \end{tikzcd} \right].
-      \end{equation*}
-  \end{itemize}
-\end{fact}
-
-\section{Limits in functor categories}
-\label{sec:limits_in_functor_categories}
+\subsection{Limits in functor categories}
+\label{ssc:limits_in_functor_categories}
 
 \begin{theorem}
   \label{thm:limit_over_category_with_initial_object_is_that}
@@ -180,8 +156,75 @@ The theory of infinity categories rests on the shoulders of the theory of ordina
   The epimorphism case is dual.
 \end{proof}
 
-\section{Properties of Kan extensions}
-\label{sec:properties_of_kan_extensions}
+\section{Kan extensions}
+\label{sec:kan_extensions}
+
+\subsection{Pointwise formulae for Kan extensions}
+\label{ssc:pointwise_formulae_for_kan_extensions}
+
+Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor, and let $d \in \mathcal{D}$ be an object.
+\begin{itemize}
+  \item We will denote by $\mathcal{C}_{/d}$ the category whose objects are pairs $(c, f)$, where $c \in \mathcal{C}$ and $f\colon F(c) \to d$, and whose morphisms $(c, f) \to (c', f')$ are morphisms $h\colon c \to c'$ such that the triangle
+    \begin{equation*}
+      \begin{tikzcd}
+        F(c)
+        \arrow[rr, "F(h)"]
+        \arrow[dr, swap, "f"]
+        && F(c')
+        \arrow[dl, "f'"]
+        \\
+        & d
+      \end{tikzcd}
+    \end{equation*}
+    commutes. Note that there is an obvious forgetful functor $\mathcal{C}_{/d} \to \mathcal{C}$.
+
+  \item We will denote by $\mathcal{C}_{d/}$ the category whose objects are pairs $(c, f)$, where $c \in \mathcal{C}$ and $f\colon d \to F(c)$, and whose morphisms $(c, f) \to (c', f')$ are morphisms $h\colon c \to c'$ such that the triangle
+    \begin{equation*}
+      \begin{tikzcd}
+        & d
+        \arrow[dl, swap, "f"]
+        \arrow[dr, "f'"]
+        \\
+        F(c)
+        \arrow[rr, "f(h)"]
+        && F(c')
+      \end{tikzcd}
+    \end{equation*}
+    commutes. Note that there is an obvious forgetful functor $\mathcal{C}_{d/} \to \mathcal{C}$.
+\end{itemize}
+\marginnote[-5cm]{
+  The categories $\mathcal{C}_{/d}$ and $\mathcal{C}_{d/}$ are often referred to as (co)slice categories, comma categories, and under- and overcategories. There seems to be little agreement in the literature as to which of these terms refers to precisely which concept. We will call $\mathcal{C}_{d/}$ an \emph{overcategory} and $\mathcal{C}_{/d}$ an \emph{undercategory.} 
+
+  The notatations used for these categories are as diverse as the names. What we are calling $\mathcal{C}_{/d}$ is often called $(F \downarrow d)$, for example.
+}
+\begin{fact}
+  \label{fact:pointwise_formula_kan_extensions}
+  Consider categories and functors as follows, where $\mathcal{C}$ is small. 
+  \begin{equation*}
+    \begin{tikzcd}
+      \mathcal{C}
+      \arrow[dr, swap, "F"]
+      \arrow[rr, "D"]
+      && \mathcal{D}
+      \\
+      & \mathcal{C}'
+    \end{tikzcd}
+  \end{equation*}
+  \begin{itemize}
+    \item If $\mathcal{D}$ has all small colimits, then the left Kan extension $F_{!}D$ exists and has values
+      \begin{equation*}
+        (F_{!}D)(c') = \colim \left[ \begin{tikzcd} \mathcal{C}_{c'/} \arrow[r] & \mathcal{C} \arrow[r, "D"] & \mathcal{D} \end{tikzcd} \right].
+      \end{equation*}
+
+    \item If $\mathcal{D}$ has all small limits, then the right Kan extension $F_{*}D$ exists and has values
+      \begin{equation*}
+        (F_{*}D)(c') = \lim \left[ \begin{tikzcd} \mathcal{C}_{/c'} \arrow[r] & \mathcal{C} \arrow[r, "D"] & \mathcal{D} \end{tikzcd} \right].
+      \end{equation*}
+  \end{itemize}
+\end{fact}
+
+\subsection{Properties of Kan extensions}
+\label{ssc:properties_of_kan_extensions}
 
 \begin{theorem}
   \label{thm:kan_extension_along_fully_faithful_functor_counit_isomorphism}
@@ -224,7 +267,7 @@ The theory of infinity categories rests on the shoulders of the theory of ordina
   \end{equation*}
   Thus, we have
   \begin{equation*}
-    (F^{*} \circ F_{*})(G)(c) \simeq G(c)
+    (F^{*} \circ F_{*})(G)(c) \cong G(c)
   \end{equation*}
   for all $c \in \mathcal{C}$
 \end{proof}
@@ -239,27 +282,28 @@ The theory of infinity categories rests on the shoulders of the theory of ordina
 \end{corollary}
 
 
-\section{Yoneda extensions}
-\label{sec:yoneda_extensions}
+\subsection{Yoneda extensions}
+\label{ssc:yoneda_extensions}
 
-\begin{definition}[Yoneda extension]
-  \label{def:yoneda_extension}
-  One calls left Kan extensions along the Yoneda embedding \defn{Yoneda extensions}.
-\end{definition}
+For any locally small category $\mathcal{C}$, the \emph{Yoneda embedding} is the functor
+\begin{equation*}
+  \mathcal{Y}\colon \mathcal{C} \to [\mathcal{C}\op, \Set] := \Set_{\mathcal{C}};\qquad c \mapsto \Hom_{\mathcal{C}}(-, c).
+\end{equation*}
+The category $\Set_{\mathcal{C}}$ is the category of presheaves on $\mathcal{C}$. We will be particularly interested in Kan extensions along the Yoneda embedding; these are called \emph{Yoneda extensions.}
 
-It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathcal{C}}$ as `generalized objects' of $\mathcal{C}$. This is possible becuase the Yoneda embedding is fully faithful, so one can reasonably think of $\mathcal{C}$ as sitting inside $\mathbf{Set}_{\mathcal{C}}$ as a full subcategory. One then imagines the objects of $\mathbf{Set}_{\mathcal{C}}$ as built by gluing together objects of $\mathcal{C}$. This point of view comes from the following result.
+%It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathcal{C}}$ as `generalized objects' of $\mathcal{C}$. This is possible becuase the Yoneda embedding is fully faithful, so one can reasonably think of $\mathcal{C}$ as sitting inside $\mathbf{Set}_{\mathcal{C}}$ as a full subcategory. One then imagines the objects of $\mathbf{Set}_{\mathcal{C}}$ as built by gluing together objects of $\mathcal{C}$. This point of view comes from the following result.
 
 \begin{lemma}
   \label{lemma:colimit_of_comma_category}
-  Let $\mathcal{C}$ be a locally small category. Denote by $\mathcal{Y}$ the Yoneda embedding $\mathcal{C} \to \mathbf{Set}_{\mathcal{C}}$. Then for any functor $F\in \mathbf{Set}_{\mathcal{C}}$ we have the following expression.
+  Let $\mathcal{C}$ be a locally small category. For any functor $F\in \mathbf{Set}_{\mathcal{C}}$ we have an isomorphism
   \begin{equation*}
-    F \simeq \colim \left[ (\mathcal{Y} / F) \overset{\mathcal{U}}{\to} \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right].
+    F \cong \colim \left[ \mathcal{C}_{/F} \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right].
   \end{equation*}
 \end{lemma}
 \begin{proof}
   By \hyperref[thm:kan_extension_along_fully_faithful_functor_counit_isomorphism]{Theorem~\ref*{thm:kan_extension_along_fully_faithful_functor_counit_isomorphism}}, the fully faithfulness of the Yoneda embedding, and the definition of the restriction functor, we have that
   \begin{equation*}
-    F \simeq (\mathcal{Y}^{*} \circ \mathcal{Y}_{!})(F) \simeq (\mathcal{Y}_{!}\mathcal{Y})(F).
+    F \cong (\mathcal{Y}^{*} \circ \mathcal{Y}_{!})(F) \cong (\mathcal{Y}_{!}\mathcal{Y})(F).
   \end{equation*}
   The functor $\mathcal{Y}_{!}\mathcal{Y}$ comes from the following Kan extension.
   \begin{equation*}
@@ -275,7 +319,7 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
   \end{equation*}
   The colimit formula for left Kan extensions (\hyperref[fact:pointwise_formula_kan_extensions]{Fact~\ref*{fact:pointwise_formula_kan_extensions}}) then tells us that
   \begin{equation*}
-    F \simeq \colim \left[ (\mathcal{Y}/F) \overset{\mathcal{U}}{\to} \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right]
+    F \cong \colim \left[ \mathcal{C}_{/F} \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right]
   \end{equation*}
   as required.
 %  We need to show that $F$ is the base of a universal cocone under $\mathcal{Y} \circ \mathcal{U}$. That $F$ is the base of a cocone is obvious, since every object $(\alpha, f)$ comes with a map $f\colon \mathcal{Y}(\alpha) \to F$ as required, and the diagram below manifestly commutes for each morphism $g$.
@@ -316,6 +360,12 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
 %  natural in $\alpha$. By Yoneda, we get a natural transformation $F \Rightarrow G$.
 \end{proof}
 
+The notation
+\begin{equation*}
+  \colim \left[ \mathcal{C}_{/F} \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right]
+\end{equation*}
+is quite cumbersome, and we will be well-served by simplifying it. First, note that the category $\mathcal{C}_{/F}$ has objects $(c, f)$, where $f\colon \mathcal{Y}(c) \to F$. By the Yoneda lemma, specifying such an $f$ is the same as specifying an element of $F(c)$.
+
 \begin{lemma}
   \label{lemma:right_adjoint_to_yoneda_extension}
   Let $\mathcal{I}$ be a small category, and let $\mathcal{C}$ be locally small and cocomplete. Let $F$ be a functor as below. Then the Yoneda extension $\mathcal{Y}_{!}F$ is left adjoint to the functor
@@ -341,16 +391,16 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
 \begin{proof}
   Since $\mathcal{C}$ is cocomplete, we are entitled to use the colimit formula for left Kan extensions. That is, we can write
   \begin{equation*}
-    (\mathcal{Y}_{!}F)(H) = \lim_{\rightarrow} \left[ (\mathcal{Y} / H) \overset{\mathcal{U}}{\to} \mathcal{I} \overset{F}{\to} \mathcal{C} \right] = \lim_{\rightarrow}\left[ F \circ \mathcal{U} \right].
+    (\mathcal{Y}_{!}F)(H) = \colim \left[ (\mathcal{Y} / H) \overset{\mathcal{U}}{\to} \mathcal{I} \overset{F}{\to} \mathcal{C} \right] = \colim \left[ F \circ \mathcal{U} \right].
   \end{equation*}
   Thus, we have the following string of natural isomorphisms.
   \begin{align*}
-    \mathcal{C}((\mathcal{Y}_{!}F)(H), c) &\simeq \mathcal{C}(\lim_{\rightarrow} [F \circ \mathcal{U}], c) \\
-    &\simeq \lim_{\leftarrow}\mathcal{C}(F(-), c) \circ \mathcal{U} \\
-    &\simeq \lim_{\leftarrow} G(c) \circ \mathcal{U} \\
-    &\simeq \lim_{\leftarrow}\mathbf{Set}_{\mathcal{I}}(\mathcal{Y}(-), G(c)) \circ \mathcal{U}. \\
-    &\simeq\mathbf{Set}_{\mathcal{I}}(\lim_{\rightarrow}\mathcal{Y} \circ \mathcal{U}, G(c)) \\
-    &\simeq\mathbf{Set}_{\mathcal{I}}(H, G(c)).
+    \mathcal{C}((\mathcal{Y}_{!}F)(H), c) &\cong \mathcal{C}(\colim [F \circ \mathcal{U}], c) \\
+    &\cong \lim_{\leftarrow}\mathcal{C}(F(-), c) \circ \mathcal{U} \\
+    &\cong \lim_{\leftarrow} G(c) \circ \mathcal{U} \\
+    &\cong \lim_{\leftarrow}\mathbf{Set}_{\mathcal{I}}(\mathcal{Y}(-), G(c)) \circ \mathcal{U}. \\
+    &\cong\mathbf{Set}_{\mathcal{I}}(\lim_{\rightarrow}\mathcal{Y} \circ \mathcal{U}, G(c)) \\
+    &\cong\mathbf{Set}_{\mathcal{I}}(H, G(c)).
   \end{align*}
 \end{proof}
 
@@ -371,10 +421,10 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
 
   Now assume that $F$ preserves colimits. Pick some functor $G\colon \mathcal{C}^{\mathrm{op}} \to \mathbf{Set}$. By \hyperref[lemma:colimit_of_comma_category]{Lemma~\ref*{lemma:colimit_of_comma_category}}, we can write
   \begin{align*}
-    F(G) &\simeq F\left( \lim_{\rightarrow}\left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right] \right) \\
-    &\simeq \lim_{\rightarrow} \left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}}  \overset{F}{\to} \mathcal{D} \right] \\
-    &\simeq \lim_{\rightarrow} \left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}^{*}F}{\to} \mathcal{D} \right] \\
-    &\simeq \mathcal{Y}_{!}(\mathcal{Y}^{*}F)(G).
+    F(G) &\cong F\left( \lim_{\rightarrow}\left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right] \right) \\
+    &\cong \lim_{\rightarrow} \left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}}  \overset{F}{\to} \mathcal{D} \right] \\
+    &\cong \lim_{\rightarrow} \left[ (\mathcal{Y} / G) \to \mathcal{C} \overset{\mathcal{Y}^{*}F}{\to} \mathcal{D} \right] \\
+    &\cong \mathcal{Y}_{!}(\mathcal{Y}^{*}F)(G).
   \end{align*}
 \end{proof}
 
@@ -382,7 +432,7 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
   \label{cor:functors_equivalent_to_cocontinuous_functors_out_of_presheafs}
   Let $\mathcal{C}$ be a small category, and $\mathcal{D}$ locally small. There is an equivalence of categories
   \begin{equation*}
-    [\mathbf{Set}_{\mathcal{C}} , \mathcal{D}]_{\mathrm{cocontinuous}} \simeq [\mathcal{C}, \mathcal{D}].
+    [\mathbf{Set}_{\mathcal{C}} , \mathcal{D}]_{\mathrm{cocontinuous}} \cong [\mathcal{C}, \mathcal{D}].
   \end{equation*}
   That is, colimit preserving functors $\mathbf{Set}_{\mathcal{C}}  \to \mathcal{D}$ are equivalent to functors $\mathcal{C} \to \mathcal{D}$ via restriction along the Yoneda embedding.
 \end{corollary}
@@ -399,8 +449,8 @@ It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathca
   We know that the Yoneda embedding is fully faithful. Thus, by \hyperref[thm:kan_extension_along_fully_faithful_functor_counit_isomorphism]{Theorem~\ref*{thm:kan_extension_along_fully_faithful_functor_counit_isomorphism}}, we have that the unit is an isomorphism. Also, by \hyperref[thm:yoneda_extension_of_restriction_preserves_colimits]{Theorem~\ref*{thm:yoneda_extension_of_restriction_preserves_colimits}}, the counit is an isomorphism, so the above adjunction is in fact an equivalence of categories.
 \end{proof}
 
-\section{Day convolution}
-\label{sec:day_convolution}
+\subsection{Day convolution}
+\label{ssc:day_convolution}
 
 Let $(\mathcal{C}, \otimes)$ be a monoidal category. The category $\Set_{\mathcal{C}}$ of functors from $\mathcal{C}\op$ to $\Set$ inherits a monoidal structure as follows.
 

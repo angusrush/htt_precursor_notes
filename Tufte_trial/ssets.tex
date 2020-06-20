@@ -310,7 +310,7 @@ A simplicial set is thought of as a collection of standard simplices of various 
   We denote this category by $\SSet$.
 \end{definition}
 
-As discussed briefly in \hyperref[sec:yoneda_extensions]{Section~\ref*{sec:yoneda_extensions}}, one thinks of the image under the Yoneda embedding of the object $[n]$ as an $n$-simplex, called the \emph{standard $n$-simplex.} One imagines more general simplicial sets as being built by gluing standard simplices together along their faces. Specifically, for any simplicial set $K$ we should interpret $K([n])$ as the set of $n$-simplices of $K$. The gluing conditions come from functoriality. We will investigate this in \hyperref[sec:which_data_does_a_simplicial_set_give_us]{Section~\ref*{sec:which_data_does_a_simplicial_set_give_us}}.
+As discussed briefly in \hyperref[ssc:yoneda_extensions]{Section~\ref*{ssc:yoneda_extensions}}, one thinks of the image under the Yoneda embedding of the object $[n]$ as an $n$-simplex, called the \emph{standard $n$-simplex.} One imagines more general simplicial sets as being built by gluing standard simplices together along their faces. Specifically, for any simplicial set $K$ we should interpret $K([n])$ as the set of $n$-simplices of $K$. The gluing conditions come from functoriality. We will investigate this in \hyperref[sec:which_data_does_a_simplicial_set_give_us]{Section~\ref*{sec:which_data_does_a_simplicial_set_give_us}}.
 
 \begin{definition}[standard simplex]
   \label{eg:standard_simplex}
@@ -989,23 +989,23 @@ Before we prove that such an internal hom exists, let us assume that $\SSet$ adm
 \begin{proof}
   By definition, $\Maps(B, C)$ needs to be part of a hom-set adjunction
   \begin{equation*}
-    \SSet(A \times B, C) \simeq \SSet(A, \Maps(B, C)).
+    \SSet(A \times B, C) \cong \SSet(A, \Maps(B, C)).
   \end{equation*}
   In particular, when $A = \Delta^{n}$, we have that
   \begin{equation*}
-    \SSet(\Delta^{n} \times B, C) \simeq \SSet(\Delta^{n}, \Maps(B, C)).
+    \SSet(\Delta^{n} \times B, C) \cong \SSet(\Delta^{n}, \Maps(B, C)).
   \end{equation*}
   However, by the Yoneda lemma, there is an isomorphism
   \begin{equation*}
-    \SSet(\Delta^{n}, \Maps(B, C)) \simeq \Maps(B, C)_{n},
+    \SSet(\Delta^{n}, \Maps(B, C)) \cong \Maps(B, C)_{n},
   \end{equation*}
   natural in $n$. Thus the internal hom, should it exist, must be given level-wise by
   \begin{equation*}
-    \Maps(B, C)_{n} \simeq \SSet(B \times \Delta^{n}, C).
+    \Maps(B, C)_{n} \cong \SSet(B \times \Delta^{n}, C).
   \end{equation*}
   The naturality of the Yoneda embedding now implies that this level-wise isomorphism must really be a natural isomorphism, i.e.\ that
   \begin{equation*}
-    \Maps(B, C) \simeq \SSet(B \times \Delta^{\bullet}, C).
+    \Maps(B, C) \cong \SSet(B \times \Delta^{\bullet}, C).
   \end{equation*}
 \end{proof}
 
@@ -1016,7 +1016,7 @@ Before we prove that such an internal hom exists, let us assume that $\SSet$ adm
   \end{equation*}
   is a model for the internal hom $\Maps(B, C)$. That is, for each simplicial set $B$, there is a bijection
   \begin{equation*}
-    \SSet(A \times B, C) \simeq \SSet(A, \Maps(B, C)),
+    \SSet(A \times B, C) \cong \SSet(A, \Maps(B, C)),
   \end{equation*}
   natural in $A$ and $C$.
 \end{theorem}
@@ -1308,7 +1308,7 @@ The goal of this section is to derive and understand the following formula for t
 
   This means that we are really taking the coproduct over two things: morphisms $[m] \to [n]$, and morphisms $\Delta^{n} \to K$. But by the Yoneda lemma
   \begin{equation*}
-    \SSet(\Delta^{n}, K) \simeq K_{n},
+    \SSet(\Delta^{n}, K) \cong K_{n},
   \end{equation*}
   so we write the first coproduct as
   \begin{equation*}

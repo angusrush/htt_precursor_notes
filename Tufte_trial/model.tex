@@ -393,7 +393,7 @@ Since both $S \circ R$ and $U \circ T$ compose to the identity, $T$ and $R$ are 
     \end{equation*}
     We have a natural isomorphism $G \circ G^{-1} \Rightarrow \id$, which tells us that
     \begin{equation*}
-      (U \circ G \circ G^{-1} \circ T)(b) \simeq (U \circ T)(b) = b.
+      (U \circ G \circ G^{-1} \circ T)(b) \cong (U \circ T)(b) = b.
     \end{equation*}
 
   \item \textbf{Fully faithful:} The logic is very similar. We can map any morphism $f$ in $\mathcal{B}$ to a morphism in $\mathcal{D}$ with $T$, and (because $G$ is fully faithful) find a unique preimage in $\mathcal{C}$ which we'll call $G^{-1}(T(f))$. Applying $S$ gives us a morphism
@@ -509,7 +509,7 @@ Consider a diagram
 \end{equation*}
 where $i$ is injective on objects and $P$ is both an isofibration and a weak equivalence.
 
-Pick any $d \in \mathcal{D}$. Since $P$ is an equivalence of categories, there is some object $b \in \mathcal{B}$ such that $P(b) \simeq d$. Define a functor $I \to \mathcal{D}$ which sends $* \mapsto b$ and $\bullet \mapsto P(b)$, and a functor $(*) \to \mathcal{B}$ which picks out $b$. This gives us a commuting diagram
+Pick any $d \in \mathcal{D}$. Since $P$ is an equivalence of categories, there is some object $b \in \mathcal{B}$ such that $P(b) \cong d$. Define a functor $I \to \mathcal{D}$ which sends $* \mapsto b$ and $\bullet \mapsto P(b)$, and a functor $(*) \to \mathcal{B}$ which picks out $b$. This gives us a commuting diagram
 \begin{equation*}
   \begin{tikzcd}
     (*)
@@ -597,7 +597,7 @@ so
 
 Now we are in the situation where $i$ is both injective and an equivalence of categories, and $P$ is an isofibration.
 
-Let $c \in \mathcal{C}$. Becase $i$ is essentially surjective we can always pick $c' \in \mathcal{C}$ such that $c'$ is in the image of $i$, i.e.\ such that there exists some $a_{c}$ with $i(a_{c}) = c' \simeq c$. For each such $c$, pick such a $c'$ and $a_{c}$. If $c$ is already in the image of $i$, pick $c' = c$; that is, demand that $a_{i(a)} = a$.
+Let $c \in \mathcal{C}$. Becase $i$ is essentially surjective we can always pick $c' \in \mathcal{C}$ such that $c'$ is in the image of $i$, i.e.\ such that there exists some $a_{c}$ with $i(a_{c}) = c' \cong c$. For each such $c$, pick such a $c'$ and $a_{c}$. If $c$ is already in the image of $i$, pick $c' = c$; that is, demand that $a_{i(a)} = a$.
 
 This allows us to define, for each $c \in \mathcal{C}$ functors as follows.
 \begin{equation*}

@@ -16,7 +16,7 @@ which sends any category to a simplicial likeness.
 \begin{lemma}
   Let $K$ be a simplicial set. Then $K$ is the nerve of some category if and only if $K$ has unique inner horn fillers. That is, the following are equivalent.
   \begin{itemize}
-    \item There exists a category $\mathcal{C}$ and an isomorphism $K \simeq N(\mathcal{C})$.
+    \item There exists a category $\mathcal{C}$ and an isomorphism $K \cong N(\mathcal{C})$.
 
     \item Every lifting problem
       \begin{equation*}
@@ -299,11 +299,11 @@ We would like to be able to view infinity-categories as a generalization of cate
   \label{lemma:properties_of_homotopy_category}
   The following are properties of $\h\mathcal{C}$.
   \begin{enumerate}
-    \item Let $\mathcal{C}$ be a small category. Then $\h N(\mathcal{C}) \simeq \mathcal{C}$.
+    \item Let $\mathcal{C}$ be a small category. Then $\h N(\mathcal{C}) \cong \mathcal{C}$.
 
     \item For every topological space $X$,
       \begin{equation*}
-        \h \Sing(X) \simeq \pi_{\geq 1} (X)
+        \h \Sing(X) \cong \pi_{\geq 1} (X)
       \end{equation*}
 
     \item A simplicial set $X$ is the nerve of a category if and only if it has unique inner horn fillers.
@@ -468,12 +468,13 @@ Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techica
   as follows.
 
   \begin{align*}
-    \Sing(X \times Y) &\simeq \mathbf{Top}(\abs{\Delta^{\bullet}}, X \times Y) \\
-    &\simeq \mathbf{Top}(\abs{\Delta^{\bullet}}, X) \times \mathbf{Top}(\abs{\Delta^{\bullet}}, Y) \\
-    &\simeq \Sing(X) \times \Sing(Y).
+    \Sing(X \times Y) &\cong \mathbf{Top}(\abs{\Delta^{\bullet}}, X \times Y) \\
+    &\cong \mathbf{Top}(\abs{\Delta^{\bullet}}, X) \times \mathbf{Top}(\abs{\Delta^{\bullet}}, Y) \\
+    &\cong \Sing(X) \times \Sing(Y).
   \end{align*}
 
-  The singular set $\Sing(\abs{\Delta^{0}}) \simeq \Delta^{0}$, so we don't have any choice in defining $\phi$.
+
+  The singular set $\Sing(\abs{\Delta^{0}}) \cong \Delta^{0}$, so we don't have any choice in defining $\phi$.
 \end{proof}
 
 
@@ -553,7 +554,7 @@ In \hyperref[ssc:functors_and_diagrams]{Subsection~\ref*{ssc:functors_and_diagra
 
 In \hyperref[ssc:joins]{Subsection~\ref*{ssc:joins}}, we define a monoidal product called the \emph{join} on the category of categories, and show that it reproduces cones and cocones. We then generalize the construction to the category of simpicial sets, and show\footnote{Well, if there's time.} that the two notions are compatible in the sense that the nerve is a monoidal functor between them; that is we have a natural isomorphism
 \begin{equation*}
-  N(\mathcal{C} \star \mathcal{D}) \simeq N(\mathcal{C}) \star N(\mathcal{D}).
+  N(\mathcal{C} \star \mathcal{D}) \cong N(\mathcal{C}) \star N(\mathcal{D}).
 \end{equation*}
 
 In \hyperref[ssc:opposite_categories]{Subsection~\ref*{ssc:opposite_categories}}, we generalize the notion of the \emph{opposite category} to the context of simplicial sets, and note that it defines an \emph{opposite functor} on the category of simplicial sets, when one extends simplex category $\Delta$ in an appropriate way.
@@ -729,7 +730,7 @@ Of course, this gives a functor $\hat{\Delta}\op \to \Set$; to get a simplicial 
 \begin{theorem}
   We can compute the join by the following formula.
   \begin{equation*}
-    (K \star K')_{n} = \coprod_{[i] \oplus [j] \simeq [n]} K_{i} \times K'_{j},
+    (K \star K')_{n} = \coprod_{[i] \oplus [j] \cong [n]} K_{i} \times K'_{j},
   \end{equation*}
 \end{theorem}
 \begin{proof}
@@ -742,11 +743,11 @@ Of course, this gives a functor $\hat{\Delta}\op \to \Set$; to get a simplicial 
 and which acts on a morphism $\phi\colon [m] \to [n]$ by sending a simplex
 
 \begin{equation*}
-  \sigma = (\alpha \in K_{i}, \beta \in K_{j}, [i] \oplus [j] \simeq [n]) \in (K \star K')_{n}
+  \sigma = (\alpha \in K_{i}, \beta \in K_{j}, [i] \oplus [j] \cong [n]) \in (K \star K')_{n}
 \end{equation*}
 to a simplex
 \begin{equation*}
-  \phi^{*}\sigma = (\psi^{*}_{1} \alpha, \psi^{*}_{2} \beta, \phi^{-1}([i]) \oplus \phi^{-1}([j]) \simeq [m]) \in (K \star K')_{m},
+  \phi^{*}\sigma = (\psi^{*}_{1} \alpha, \psi^{*}_{2} \beta, \phi^{-1}([i]) \oplus \phi^{-1}([j]) \cong [m]) \in (K \star K')_{m},
 \end{equation*}
 where
 \begin{equation*}
@@ -771,7 +772,7 @@ This is functorial since
   \begin{equation*}
     K_{i} \times S_{j} \to K'_{i} \times S_{j}
   \end{equation*}
-  for each $[i] \oplus [j] \simeq [n]$. We have a map $f_{i}\colon K_{i} \to K'_{i}$, which gives a map $f_{i} \times \id$ as required. We need only check that this is a morphism of simplicial sets, i.e.\ makes the following square commute for each $\phi\colon [n] \to [m]$.
+  for each $[i] \oplus [j] \cong [n]$. We have a map $f_{i}\colon K_{i} \to K'_{i}$, which gives a map $f_{i} \times \id$ as required. We need only check that this is a morphism of simplicial sets, i.e.\ makes the following square commute for each $\phi\colon [n] \to [m]$.
   \begin{equation*}
     \begin{tikzcd}
       (K \star S)_{m}
@@ -785,7 +786,7 @@ This is functorial since
       & (K' \star S)_{n}
     \end{tikzcd}
   \end{equation*}
-  Let $\sigma = (\alpha, \beta, [i] \oplus [j] \simeq [n]) \in (K \star S)_{m}$. We follow it around.
+  Let $\sigma = (\alpha, \beta, [i] \oplus [j] \cong [n]) \in (K \star S)_{m}$. We follow it around.
   \begin{equation*}
     \begin{tikzcd}
       (\alpha, \beta)
@@ -864,7 +865,7 @@ This is functorial since
   \end{equation*}
   More explicitly, given a map $p\colon X \to \mathcal{C}$, there is a natural bijection
   \begin{equation*}
-    \Hom_{p}(K \star X, \mathcal{C}) \simeq \Hom(K, \mathcal{C}_{/p}),
+    \Hom_{p}(K \star X, \mathcal{C}) \cong \Hom(K, \mathcal{C}_{/p}),
   \end{equation*}
   where $\Hom_{p}$ denotes the set of maps $f\colon K \star X \to \mathcal{C}$ such that $f|_{K} = p$.
 \end{theorem}
@@ -1004,7 +1005,7 @@ One might expect that these conditions were equivalent. However, that is not the
     \end{tikzcd}
   \end{equation*}
 
-  The solution to this lifting problem would give us a homotopy from $\alpha$ to $x$. However, by assumption, there is no such homotopy. Thus, $x$ is not initial in $\Sing(X)$. However, every point $x \in X$ is initial in $\h \Sing(X)$ because $\h \Sing(X) \simeq \pi_{\geq 1}(X)$, and there is exactly one homotopy class of paths between any two points of $X$ because $X$ is simply connected.
+  The solution to this lifting problem would give us a homotopy from $\alpha$ to $x$. However, by assumption, there is no such homotopy. Thus, $x$ is not initial in $\Sing(X)$. However, every point $x \in X$ is initial in $\h \Sing(X)$ because $\h \Sing(X) \cong \pi_{\geq 1}(X)$, and there is exactly one homotopy class of paths between any two points of $X$ because $X$ is simply connected.
 \end{example}
 
 We have now shown the following. 
@@ -1145,7 +1146,7 @@ Such functors are precisely morphisms of cones.
   \begin{enumerate}
     \item First we show the result on simplices. The $n$-simplices of $(\mathcal{C}\op)_{p\op/}$ are
       \begin{align*}
-        \{ f\colon K\op \star \Delta^{n} \to \mathcal{C}\op \mid f|_{K\op} = p\op \} &\simeq \{ f\op\colon (\Delta^{n})\op \star K \to \mathcal{C} | f\op|_{K} = p \}
+        \{ f\colon K\op \star \Delta^{n} \to \mathcal{C}\op \mid f|_{K\op} = p\op \} &\cong \{ f\op\colon (\Delta^{n})\op \star K \to \mathcal{C} | f\op|_{K} = p \}
       \end{align*}
       But these are precisely the $n$-simplices of $(\mathcal{C}_{/p})\op$. Thus, the map on $n$-simplices is given by $f \mapsto f\op$.
 
