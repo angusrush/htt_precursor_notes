@@ -8,7 +8,47 @@
 \section{Simplices as topological spaces and categories}
 \label{sec:simplices_as_topological_spaces_and_categories}
 
-One of the main themes in the study of higher category theory is the interplay between ordinary topology, simplicial topology, and category theory.
+One of the main themes in the study of higher category theory is the interplay between ordinary topology, simplicial topology, and category theory.\marginnote[-3cm]{
+		We can easily draw the first few standard $n$-simplices as subsets of $\R^{n+1}$: 
+		\begin{center}
+			$n=0$
+			
+			\begin{tikzpicture}
+			\draw[->] (-1, 0) to (3,0); 
+			\path[fill=black] (2,0) circle (0.05);
+			\end{tikzpicture}
+			
+			$n=1$
+			
+			\begin{tikzpicture}
+			\draw[->] (-1,0)--(3,0) node[right] {$x$};
+			\draw[->] (0,-1)--(0,3) node[above] {$y$};
+			\path (2,0) coordinate (x);
+			\path (0,2) coordinate (y);
+			\draw[thick] (x) to (y);
+			\draw[fill=black] (y) circle (0.05); 
+			\draw[fill=black] (x) circle (0.05); 
+			\end{tikzpicture}
+			
+			$n=2$
+			
+			\tdplotsetmaincoords{100}{120}
+			\begin{tikzpicture}[tdplot_main_coords]
+			\draw[->] (-1,0,0) -- (3,0,0) node[above] {$x$};
+			\draw[->] (0,-1,0) -- (0,3,0) node[above] {$y$};
+			\draw[->] (0,0,-1) -- (0,0,3) node[above] {$z$};
+			\path (2,0,0) coordinate (y);
+			\path (0,0,2) coordinate (x);
+			\path (0,2,0) coordinate (z);
+			\draw[fill=black] (y) circle (0.05); 
+			\draw[fill=black] (x) circle (0.05); 
+			\draw[fill=black] (z) circle (0.05);
+			\draw[thick] (x) -- (y) -- (z)-- (x);
+			\path[fill=blue,opacity=0.2]  (x) -- (y) -- (z)-- (x);
+			\end{tikzpicture}
+		\end{center}
+		The standard $3$-simplex can be identified with a tetrahedron, as in the main text. However, for obvious reasons, we cannot draw it as a subset of $\R^4$. 
+}
 
 \begin{equation*}
   \begin{aligned}
@@ -72,7 +112,7 @@ The fundamental topological object we will study is the \emph{geometrical $n$-si
   \label{def:geometric_simplex}
   For any $n \geq 0$, the \defn{geometrical $n$-simplex}, denoted $\abs{\Delta^{n}}$, is the set (together with the subspace topology)
   \begin{equation*}
-    \abs{\Delta^{n}} = \left\{(t_{0}, t_{1}, \ldots, t_{n}) \in \R^{n} \mid \sum_{i = 0}^{n} t_{i} = 1 \text{ and } t_{i} \geq 0 \text{ for all }i \right\}.
+    \abs{\Delta^{n}} = \left\{(t_{0}, t_{1}, \ldots, t_{n}) \in \R^{n+1} \mid \sum_{i = 0}^{n} t_{i} = 1 \text{ and } t_{i} \geq 0 \text{ for all }i \right\}.
   \end{equation*}
 \end{definition}
 
@@ -84,7 +124,7 @@ In simplicial topology, one studies spaces glued out of geometrical simplices by
   \begin{equation*}
     [n] = \{0, \ldots, n\}
   \end{equation*}
-  and whose morphisms $n \to m$ are weakly monotonic\footnote{i.e.\ nondecreasing in the sense that $i \geq j \implies f(i) \geq f(j)$} maps.
+  and whose morphisms $[n] \to [m]$ are weakly monotonic\footnote{i.e.\ nondecreasing in the sense that $i \geq j \implies f(i) \geq f(j)$} maps.
 \end{definition}
 
 The objects $[n]$ of $\Delta$ are to be interpreted as simplices with ordered vertices. For example,
@@ -207,7 +247,7 @@ One can also think of these combinatorial simplices categorically. Again, this c
 
 \begin{definition}[categorification functor]
   \label{def:categorification_functor}
-  The \defn{categorification functor} is the functor
+  The \defn{categorification functor}\sidenote{This terminology is highly-nonstandard. What we call the ``decategorification functor" here is a restriction to a full subcategory of a functor usually referred to in the literature as the "fundamental category" functor.} is the functor
   \begin{equation*}
     \chi\colon \Delta \to \mathbf{Cat}
   \end{equation*}
@@ -281,7 +321,29 @@ As discussed briefly in \hyperref[sec:yoneda_extensions]{Section~\ref*{sec:yoned
   is denoted $\Delta^{n}$, and called the \emph{standard $n$-simplex.}
 \end{definition}
 
-The claim is that the standard $n$-simplex can be interpreted geometrically, as precisely the sort of picture we have been drawing. To see this, it will be helpful to explicitly analyze some cases in which $n$ is small. Take $n = 2$. To justify the name, the standard $2$-simplex had better look something like the 2-simplex we know and love.
+The claim is that the standard $n$-simplex can be interpreted geometrically, as precisely the sort of picture we have been drawing.\sidenote{More generally, simplicial sets, when interpreted geometrically, can be viewed as one of the many ways to ``build topological spaces out of triangles''. The simplicial complexes common in introductory courses in (algebraic) topology are another such. However, as we will see, simplicial sets are often more flexible and easier to work with. Moreover, every an \emph{ordered} simplicial complex $C$, where every 1-simplex has been equipped with a choice of orientation, as in the figure 
+\begin{center}
+	\begin{tikzpicture}[scale=1.5, decoration={markings,mark=at position 0.5 with {\arrow{>}}}]
+\foreach \x/\y/\lab/\num in {0/1/v1/1, 0/0/v2/2,1/1/v3/3,1/0/v4/4, 2/0/v5/5, 3/0/v6/6,3/1/v7/7}{
+	\path (\x,\y) coordinate (\lab);
+	\path (\lab) node[above left] {$\num$};
+	\path[fill=black] (\x,\y) circle (0.025); 
+}
+\draw[postaction={decorate}] (v1)--(v2);
+\draw[postaction={decorate}] (v1)--(v3);
+\draw[postaction={decorate}] (v2)--(v3);
+\draw[postaction={decorate}] (v2)--(v4);
+\draw[postaction={decorate}] (v3)--(v4);
+\draw[postaction={decorate}] (v4)--(v5);
+\draw[postaction={decorate}] (v5)--(v6);
+\draw[postaction={decorate}] (v5)--(v7); 
+\draw[postaction={decorate}] (v6)--(v7);
+\path[fill=blue, opacity=0.2] (v1)--(v2)--(v3)--(v1);
+\path[fill=blue, opacity=0.2] (v5)--(v6)--(v7)--(v5);
+\end{tikzpicture}
+\end{center}
+can be canonically viewed as a simplicial set. Here we view the blue triangles as being filled by a 2-simplex, and the white ones as empty ``holes''. 
+}  To see this, it will be helpful to explicitly analyze some cases in which $n$ is small. Take $n = 2$. To justify the name, the standard $2$-simplex had better look something like the 2-simplex we know and love.
 \begin{equation*}
   \begin{tikzpicture}[dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=2]
     \coordinate[draw, dot, label=210:0] (0) at (0,0);
@@ -307,7 +369,17 @@ This is good. We said that $\Delta^{2}([0])$ should be interpreted as the set of
 \begin{equation*}
   \Delta^{2}([1]) = \{\{0,1\} \mapsto \{0,1\}, \{0,2\}, \{1,2\}, \{0,0\}, \{1,1\}, \{2,2\}\}.
 \end{equation*}
-This is not so good; we can interpret the three edges $\{0, 1\}$, $\{0, 2\}$, and $\{1, 2\}$ as the edges between 0 and 1, 0 and 2, and 1 and 2 that we were expecting, but we also have three more. We interpret these as `degenerate edges,' which are all bunched up at the vertices. This is one difference between simplicial complexes and simplicial sets: simplicial sets can have degenerate edges.
+This is not so good; we can interpret the three edges $\{0, 1\}$, $\{0, 2\}$, and $\{1, 2\}$ as the edges between 0 and 1, 0 and 2, and 1 and 2 that we were expecting, but we also have three more. We interpret these as `degenerate edges,' which are all bunched up at the vertices. This is one difference between simplicial complexes and simplicial sets: simplicial sets can have degenerate edges.\sidenote{Another difference is that an $n$-simplex need not be specified by its set of vertices. For example, 
+the following picture is not a simplicial complex, but it is a simplicial set. 
+\begin{center}
+	\begin{tikzpicture}[decoration={markings,mark=at position 0.5 with {\arrow{to}}}]
+	\path[fill=black] (0,0) circle (0.05) (2,0) circle (0.05);
+	\draw[postaction={decorate}] (0,0) to[bend right] (2,0);
+	\draw[postaction={decorate}] (0,0) to[bend left] (2,0);
+	\end{tikzpicture}
+\end{center}
+the reason for this is that, in a simplicial complex, there is at most one $n$-simplex with a given set of vertices. In the drawing above, however, both 1-simplices have the same set of vertices. 
+}
 
 Continuing, we find
 \begin{equation*}
@@ -322,7 +394,71 @@ Note that contrary to what you might expect, $\Delta^{n}([k])$ is not empty for 
   \begin{equation*}
     \Delta^{\mathcal{J}}([n]) \subseteq \Delta([m], [n])
   \end{equation*}
-  consisting of those $f$ such that $\mathrm{im}(f) \subset J$ for some $J \in \mathcal{J}$.
+  consisting of those $f$ such that $\mathrm{im}(f) \subset J$ for some $J \in \mathcal{J}$.\marginnote[-1.5cm]{
+ 	We can construct another interesting simplicial set from the power set $\mathcal{P}([n])$. The power set itself has the structure of a poset --- its objects are ordered by inclusion of subsets. We can define a simplicial set $C^{[n]}$ by setting 
+ 	\[
+ 	C^{[n]}([k])=\{f:[k]\to [n]\mid f \text{ order-preserving}\} 
+ 	\]
+ 	Drawing only non-degenerate simplices, $C^1$ will look like 
+\begin{center}
+	\begin{tikzpicture}[dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=2]
+\coordinate[draw, dot, label=below left:${\emptyset}$] (00) at (0,0);
+\coordinate[draw, dot, label=above left:${0}$] (01) at (0,1);
+\coordinate[draw, dot, label=below right:${1}$] (10) at (1,0);
+\coordinate[draw, dot, label=above right:${01}$] (11) at (1,1);
+
+
+\begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{to}}}]
+\draw[postaction={decorate}] (00)--(01);
+\draw[postaction={decorate}] (00)--(10);
+\draw[postaction={decorate}] (00)--(11);
+\draw[postaction={decorate}] (01)--(11);
+\draw[postaction={decorate}] (10)--(11);
+\end{scope}
+\end{tikzpicture}
+\end{center}
+
+Drawing only non-degenerate 1-simplices, $C^2$ looks like 
+
+\begin{center}
+	\begin{tikzpicture}[x={(1cm,0cm)},y={(0,1cm)},z={(0.2cm,0.5cm)}, dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=2.5]
+	\coordinate[draw, dot, label=below left:${\emptyset}$] (000) at (0,0,0);
+	\coordinate[draw, dot, label=above left:${0}$] (010) at (0,1,0);
+	\coordinate[draw, dot, label=below right:${1}$] (100) at (1,0,0);
+	\coordinate[draw, dot, label=above right:${01}$] (110) at (1,1,0);
+	
+	\coordinate[draw, dot, label=below left:${2}$] (001) at (0,0,1);
+	\coordinate[draw, dot, label=above left:${02}$] (011) at (0,1,1);
+	\coordinate[draw, dot, label=below right:${12}$] (101) at (1,0,1);
+	\coordinate[draw, dot, label=above right:${012}$] (111) at (1,1,1);
+	
+	
+	\begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{to}}}]
+	\draw[postaction={decorate}] (000)--(010);
+	\draw[postaction={decorate}] (000)--(100);
+	\draw[postaction={decorate}] (000)--(110);
+	\draw[postaction={decorate}] (010)--(110);
+	\draw[postaction={decorate}] (100)--(110);
+	
+	\draw[postaction={decorate}] (001)--(011);
+	\draw[postaction={decorate}] (001)--(101);
+	\draw[postaction={decorate}] (001)--(111);
+	\draw[postaction={decorate}] (011)--(111);
+	\draw[postaction={decorate}] (101)--(111);
+	
+	\draw[postaction={decorate}] (000) to (001);
+	\draw[postaction={decorate}] (000) to (011);
+	\draw[postaction={decorate}] (010) to (011);
+	\draw[postaction={decorate}] (100) to (101);
+	\draw[postaction={decorate}]  (100) to (111);
+	\draw[postaction={decorate}] (110) to (111);
+	\draw[postaction={decorate}]  (010) to (111);
+	\draw[postaction={decorate}] (000) to (111);
+	\end{scope}
+	\end{tikzpicture}
+\end{center}
+	Where the 2- and 3-simplices then fill the cube. 
+	}
 
   Here are some specific examples of $\mathcal{J}$ which will be useful to us.
   \begin{itemize}
@@ -734,7 +870,7 @@ The face and degeneracy functions are interesting because they generate all morp
 \end{theorem}
 
 \begin{fact}
-  The definition of a simplicial set is equivalent to the definition the following data.
+  A simplicial set $X$ is equivalently the following data.
   \begin{itemize}
     \item The sets $X_{n}$, $n \geq 0$.
     \item The face and degeneracy maps satisfying the simplicial identities.
@@ -1012,7 +1148,7 @@ In general, $N(\mathcal{C})([n])$ picks out chains of morphisms,
     & X_{n}
   \end{tikzcd},
 \end{equation*}
-together with all possible compositions. One should picture these as forming an $n$-dimensional simplex.
+together with all possible compositions. One should picture these as forming an $n$-dimensional simplex.\sidenote{We have already encountered a nerve in a previous sidebar. One can view the power set $\mathcal{P}([n])$ as a poset, and thus as a category. The cubes $C^n$, which we defined above as simplicial sets, are nothing more than the nerves of the categories $\mathcal{P}([n])$.}  
 
 To summarize, one pictures the construction of the nerve of a category $\mathcal{C}$ in the following way.
 \begin{enumerate}
@@ -1380,7 +1516,7 @@ The adjunction
 \end{equation*}
 gives us a way of translating between the language of simplicial sets and the language of simplices in topological spaces.
 
-\section{Skeletons and coskeletons}
+\section{Skeleta and coskeleta}
 \label{sec:skeletons_and_coskeletons}
 
 For any $n \geq 0$, denote by $\iota_{\leq n}\colon \Delta_{\leq n} \hookrightarrow \Delta$ the full subcategory inclusion on objects $[0]$, $[1]$, \ldots, $[n]$. We can restrict any simplicial set along this functor, giving its so-called \emph{$n$-truncation.} This extends to a so-called \emph{$n$-truncation functor.}
