@@ -1,0 +1,348 @@
+\subsection{Rigidification}
+\label{ssc:rigidification}
+
+Intuitively, an $\infty$-category should be something like a category $\mathcal{C}$ with spaces $\Map_{\mathcal{C}}(x,y)$ instead of sets. However, the composition, associativity, and unitality of this category should not be strict, but rather should only hold up to a coherently chosen set of homotopies.\sidenote{We leave aside, for the moment, what precisely we mean by ``coherent". A quasi-categorical avatar of the non-uniqueness of composition is the fact that, in a quasi-category $\mathcal{C}$, each horn $\Lambda^2_1$ representing a pair of composable morphisms may have multiple different fillings to a simplex $\Delta^2$, which yields multiple possible composites.} 
+
+However, as in the world of 2-categories and bicategories, we might hope that we can "strictify" an infinity category $\mathcal{C}$ so as to give a strict composition operation which is coherently homotopy equivalent to the non-strict composition operation. The ideal way to express such a ``strictification" is as a simplicially enriched category (remember that simplicial sets can be used as a model for spaces). More precisely, we would like to define a ``strictification functor"
+\[
+\mathfrak{C}:\SSet \to \mathbf{Cat}_\Delta. 
+\] 
+Which we will call the \emph{rigidification}\sidenote{Following the terminology of \cite{Dugger-Spivak}. Unfortunately, the functor $\mathfrak{C}$ is still fairly commonly referred to as ``The left adjoint to the homotopy coherent nerve" in the literature. Cumbersome, to say the least.}. In fact, we are going to find that there is a Quillen adjunction 
+\[
+\mathfrak{C} : \SSet \leftrightarrow \mathbf{Cat}_\Delta : N_{\Delta}
+\] 
+Fortunately for us, we already have a very good technique for generating left-adjoint functors out of $\SSet$ --- cosimplicial objects! So we want to describe a cosimplicial object 
+\[
+\mathfrak{C}:\Delta\to \mathbf{Cat}_\Delta. 
+\]
+
+To this end, lets think a little bit about how we interpret a simplicial set as a category, and what we would want from a strictification. Fairly obviously we want to think of the 0-simplices as objects, and the $1$-simplices as morphisms. In this light, how do we think of a 2-simplex 
+\begin{equation*}
+\sigma=\begin{tikzcd}[column sep=small]
+& y
+\arrow[dr, "f"]
+\\
+x
+\arrow[ur, "g"]
+\arrow[rr, "h"']
+&& z
+\end{tikzcd} \quad ?
+\end{equation*}
+
+Following our discussion above, we would generically say that $\sigma$ ``displays $h$ as a composite of $f$ with $g$." However, this is no good for rigidification. When we rigidify, we want to define a \emph{strict} composite of $f$ with $g$, rather than many possible, equivalent composites. 
+
+To make this possible, we simply define the strict composite $f\circ g=fg$ to be the \emph{orieted path} of 1-simplices which first traces $g$ and then $f$. We can then interpret our 2-simplex $\sigma$ as displaying a \emph{specific} 2-isomorphism $h\Rightarrow f g$. Our mapping space can thus be seen as the simplicial set 
+\[
+\Delta^1 = \begin{aligned}
+\begin{tikzpicture}[dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=1.5,baseline=-1.3em]
+\coordinate[draw, dot, label=above:${h}$] (0) at (0,0);
+\coordinate[draw, dot, label=above:${fg}$] (1) at (1,0);
+
+\begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{to}}}]
+\draw[postaction={decorate}] (0)--(1);
+\end{scope}
+\end{tikzpicture}
+\end{aligned} \cong \Map(x,z)
+\]
+
+So how do we interpret a $3$-simplex 
+\begin{equation*}
+\sigma=\begin{tikzcd}[row sep=small, column sep=small]
+&& 2
+\arrow[drr,"f"]
+\\[2.5em]
+0
+\arrow[urr,"v"]
+\arrow[dr,"h"]
+\arrow[rrrr,"w"]
+&[5em]&&& 3
+\\[0.6em]
+& 1
+\arrow[urrr,"u"']
+\arrow[uur, crossing over, "g"]
+\end{tikzcd} \quad ?
+\end{equation*}
+Well, let's think about the mapping space from $0$ to $3$. Counting the "strict composites" we've added, we have four morphisms from $0$ to $3$: $w$, $uh$, $fv$, and $fgh$. The 2-simplices give us 2-isomorphisms 
+\begin{align*}
+	\alpha:w &\Rightarrow fv\\ 
+	\beta:w & \Rightarrow uh\\
+	\gamma:uh & \Rightarrow fgh\\
+	\delta:fv & \Rightarrow fgh
+\end{align*} 
+As with our interpretation of the 2-simplex, the 3-simplex itself is then interpreted as displaying a specific 3-isomorphism 
+\[
+\gamma\circ \beta \Rrightarrow \delta\circ \alpha  
+\] 
+Viewed as a simplicial set, this is then 
+\[
+	\begin{tikzpicture}[dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=2,baseline=1cm]
+	\coordinate[draw, dot, label=below left:${w}$] (00) at (0,0);
+	\coordinate[draw, dot, label=above left:${fv}$] (01) at (0,1);
+	\coordinate[draw, dot, label=below right:${uh}$] (10) at (1,0);
+	\coordinate[draw, dot, label=above right:${fgh}$] (11) at (1,1);
+	
+	\path[fill=black,opacity=0.2] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+	
+	\begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{to}}}]
+	\draw[postaction={decorate}] (00)--(01);
+	\draw[postaction={decorate}] (00)--(10);
+	\draw[postaction={decorate}] (00)--(11);
+	\draw[postaction={decorate}] (01)--(11);
+	\draw[postaction={decorate}] (10)--(11);
+	\end{scope} 
+	\end{tikzpicture} =\Map(0,3)
+\]
+Notice that, to express the isomorphism between $\delta\circ \alpha$ and $\gamma\circ \beta$, we had to define a new 2-morphism $w\Rightarrow fgh$. So we really interpret the 3-simplex as this 2-isomorphism $\mu:w\Rightarrow fgh$ together with two 2-isomorphisms $\mu\Rrightarrow \delta\circ\alpha$ and $\mu\Rrightarrow \gamma\circ\beta$.  
+
+We then notice that we can do this more cleverly. Instead of giving the 1-simplices names, we can identify each string of 1-simplices in $\Delta^n$ with the set of vertices it passes through.\sidenote{Note that this doesn't work in a generic simplicial set, but does work in the nerve of a poset.} Relabelling our mapping space, we get 
+\[
+\begin{tikzpicture}[dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}, scale=2,baseline=1cm]
+\coordinate[draw, dot, label=below left:${03}$] (00) at (0,0);
+\coordinate[draw, dot, label=above left:${023}$] (01) at (0,1);
+\coordinate[draw, dot, label=below right:${013}$] (10) at (1,0);
+\coordinate[draw, dot, label=above right:${0123}$] (11) at (1,1);
+
+\path[fill=black,opacity=0.2] (0,0) -- (1,0) -- (1,1) -- (0,1) -- cycle;
+
+\begin{scope}[decoration={markings,mark=at position 0.5 with {\arrow{to}}}]
+\draw[postaction={decorate}] (00)--(01);
+\draw[postaction={decorate}] (00)--(10);
+\draw[postaction={decorate}] (00)--(11);
+\draw[postaction={decorate}] (01)--(11);
+\draw[postaction={decorate}] (10)--(11);
+\end{scope} 
+\end{tikzpicture} =\Map(0,3)
+\]
+But this is just the nerve of the poset $P_{0,3}$ whose objects are subsets of $[3]$ containing both $1$ and $3$. With this in mind, we can make a preliminary definition our cosimplicial object $\mathfrak{C}$. 
+
+\marginnote{It's worth commenting here on why we don't simply use the cosimplicial object $[n]\mapsto [n]$, where $[n]$ is viewed as a simplicial category with discrete mapping spaces. The reason is that this collapses precisely the coherence data that we described above, and in more complicated infinity categories, will destroy much of the coherent data encoded in quasi-categories. There is, however, a morphism 
+\[
+\mathfrak{C}[\Delta^n]\to [n]
+\]
+which is an isomorphism on objects, and induces a weak homotopy equivalence on mapping spaces. We will later see that these functors are weak equivalences in the relevant model structure on $\mathbf{Cat}_\Delta$. 
+}
+\begin{definition}[Rigidification]
+	\label{def:rigidification}
+	We define a cosimplicial object called the \emph{rigidification} to be the functor
+	\begin{equation*}
+	\mathfrak{C}\colon \Delta \to \mathbf{Cat}_{\Delta}
+	\end{equation*}
+	defined as follows.
+	
+	It sends objects $[n]$ to the simplicially enriched category $\mathfrak{C}[\Delta^{n}]$ defined as follows.
+	\begin{itemize}
+		\item $\Obj(\mathfrak{C}[\Delta^{n}]) = \{0, \ldots, n\}$.
+		
+		\item For $i$, $j \in \{0, \ldots, n\}$
+		\begin{equation*}
+		\mathfrak{C}[\Delta^{n}](i, j) = N(P_{i, j}),
+		\end{equation*}
+		where $P_{i, j}$ is the poset of subsets of $\{i, \ldots, j\}$ containing $i$ and $j$.
+		
+		\item To define composition, we need a morphism of simplicial sets
+		\begin{equation*}
+		N(P_{i,j}) \times N(P_{j,k}) \to N(P_{i, k}).
+		\end{equation*}
+		We have a multiplication $P_{i,j} \times P_{j, k} \to P_{i, k}$ given by $(I, J) \mapsto I \cup J$. This induces the map we need.
+	\end{itemize}
+	
+	\marginnote{The poset $P_{i,j}$ can be equivalently described as the power set of the set $L_{i,j}:=\{k\in [n]\mid i<k<j\}$, and is thus, geometrically, a cube.}
+	A morphism $f\colon [m] \to [n]$ induces a functor $\mathfrak{C}[\Delta^{m}] \to \mathfrak{C}[\Delta^{n}]$ on objects by $i \mapsto f(i)$, and on hom-simplicial-sets $N(P_{i,j})$ as follows. On the underlying posets, we send
+	\begin{equation*}
+	P_{i,j} \ni \{ i, k_{1}, \ldots, k_{r-1}, j \} \mapsto \{f(i), f(k_{1}), \ldots, f(k_{r-1}), f(j)\} \in P_{f(i),f(j)}.
+	\end{equation*}
+	This extends to a functor of poset categories, hence a morphism of nerves.
+	
+	Taking the Yoneda extension of the thickening, we find a functor $\mathfrak{C}\colon \SSet \to \SCat$, called the \defn{rigidification}.
+\end{definition}
+
+By the usual theory of cosimplicial objects (explained in \hyperref[sec:simplicial_sets_from_cosimplicial_objects]{Section~\ref*{sec:simplicial_sets_from_cosimplicial_objects}}) we have the following results.
+
+\begin{lemma}
+	\label{lemma:thickening_preserves_colimits}
+	The rigidification $\mathfrak{C}$ preserves colimits.
+\end{lemma}
+
+\begin{definition}[homotopy-coherent nerve]
+	\label{def:homotopy-coherent_nerve}
+	Let $\mathcal{C}$ be a simplicial category. The \defn{homotopy-coherent nerve} of $\mathcal{C}$, denoted $N_{\Delta}$, is the functor
+	\begin{equation*}
+	N_{\Delta}(\mathcal{C}) = \mathbf{Cat}_{\Delta}(\mathfrak{C}(-), \mathcal{C})\colon \Delta\op \to \SSet.
+	\end{equation*}
+\end{definition}
+
+By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Theorem~\ref*{lemma:right_adjoint_to_yoneda_extension}}, we have an adjunction\marginnote{The right adjoint of our adjunction fits into a commutative triangle of right Quillen functors 
+\[
+\begin{tikzcd}[ampersand replacement=\&]
+	 \& \SCat\arrow[dr,"N_{\Delta}"] \& \\
+	 \mathbf{Cat}\arrow[rr,"N"']\arrow[ur,"\text{disc}"]\& \& \SSet 
+\end{tikzcd}
+\]
+where $\text{disc}$ includes categories into $\SCat$ as simplicial categories with discrete mapping spaces.
+}
+\begin{equation*}
+\mathfrak{C} : \SSet \leftrightarrow \SCat : N_{\Delta}.
+\end{equation*}
+
+While it would go far beyond the scope of this document to prove them, we will state and use the following theorems. 
+
+\begin{theorem}[Bergner]
+	There is a model structure on the category $\SCat$ with 
+	\begin{itemize}
+		\item[(WE)] weak equivalences given by those functors $F:\mathcal{C}\to \mathcal{D}$ which are essentially surjective and induce weak homotopy equivalences of simplicial sets 
+		\[
+		F_{x,y}:\mathcal{C}(x,y)\to \mathcal{D}(x,y)
+		\]
+		for every $x,y\in \mathcal{C}$
+		\item[(F)] Fibrations given by those functors $F:\mathcal{C}\to \mathcal{D}$ which are isofibrations and induce Kan fibrations 
+		\[
+		F_{x,y}:\mathcal{C}(x,y)\to \mathcal{D}(x,y)
+		\]
+		for every $x,y\in \mathcal{C}$.
+	\end{itemize}
+\end{theorem}
+
+\begin{theorem}[\cite{???}]
+	The adjoint functors  
+	\[
+	\mathfrak{C} : \SSet \leftrightarrow \SCat : N_{\Delta}
+	\]
+	define a Quillen equivalence between the Joyal model structure and the Bergner model structure. A map $X\to Y$ of simplicial sets is a Joyal equivalence if and only if the induced functor $\mathfrak{C}[X]\to \mathfrak{C}[Y]$ is a Bergner equivalence.\sidenote{The second statement here can be viewed as an $\infty$-categorical version of a very familiar theorem: A functor between 1-categories is an equivalence of categories if and only if it is essentially surjective and fully faithful (induces bijections on mapping spaces). Our version says that a functor $F:\mathcal{C}\to \mathcal{D}$ of quasi-categories is an equivalence if and only if it is essentially surjective and \emph{homotopy fully faithful}, i.e. induces homotopy equivalences on all mapping spaces.   
+	} 
+\end{theorem}
+
+We will later see some exemplar computations to show that $N_\Delta$ preserves, e.g, fibrant objects. 
+
+Before we do that, though, let's go back and formalize some of our intuition about mapping spaces in $\mathfrak{C}[X]$. 
+
+%\begin{definition}
+%	We define the $\underline{wedge}$ of $\Delta^n$ and $\Delta^m$ to be the simplicial set 
+%	\[
+%	\Delta^n\wedge \Delta^m:= \Delta^n\coprod_{\Delta^{\{n\}}=\Delta^{\{0\}}}\Delta^m 
+%	\]
+%	defined by attaching the last vertex of $\Delta^n$ to the first vertex of $\Delta^m$. We similarly define the wedge 
+%	\[
+%	\Delta^{n_1}\wedge \Delta^{n_2}\wedge \cdots \wedge \Delta^{n_k}.
+%	\]
+%	A 
+%\end{definition}
+
+\begin{theorem}[Dugger-Spivak]
+	Let $X=N(Q)$ be the nerve of a poset $Q$. For $x,y\in Q$ define a poset $P_{x,y}$ whose objects are totally ordered chains 
+	\[
+	x\leq z_1\leq z_2\leq \ldots \leq z_k\leq y
+	\]
+	ordered by inclusion. Then 
+	\[
+	\mathfrak{C}[X](x,y)\cong N(P_{x,y}) 
+	\]
+\end{theorem}
+
+\begin{proof}
+	ADD PROOF, EXPOSITION, NECKLACES, INTUITION.
+\end{proof}
+
+\begin{note}
+	For a simplicial subset $Y\subset N(Q)$ of the nerve of a poset, the mapping space $\mathfrak{C}[Y](x,y)\subset \mathfrak{C}[N(Q)](x,y)$ consists of precisely those simplices such that the corresponding necklace in $N(Q)$ factors through $Y$. 
+\end{note}
+
+Using this characterization, we can prove that certain morphisms of simplicial sets induce Bergner equivalences, and thus are themselves equivalences of simplicial sets.  
+
+\begin{definition}
+	Let $\Delta^n$ be an $n$-simplex. The simplicial subset 
+	\[
+	Z_n:=\Delta^{\{0,1\}}\coprod_{\Delta^{\{1\}}} \Delta^{\{1,2\}}\coprod_{\Delta^{\{2\}}} \cdots \coprod_{\Delta^{\{n-1\}}} \Delta^{\{n-1,n\}}\subset \Delta^n 
+	\]
+	is referred to as the \underline{spine} of $\Delta^n$.
+\end{definition}
+
+\begin{lemma}
+	The inclusion $i_n:Z_n\to \Delta^n$ is a Joyal equivalence of simplicial sets.  
+\end{lemma} 
+
+\begin{proof}
+	It suffices to show that $\mathfrak{C}[i_n]:\mathfrak{C}[Z_n]\to \mathfrak{C}[\Delta^n]$ is a Bergner equivalence. It is clearly essentially surjective (indeed, surjective on vertices). 
+	
+	However, we know that $\mathfrak{C}[\Delta^n](i,j)$ is contractible if $i\leq j$ and empty otherwise. It is immediate from the above theorem that $\mathfrak{C}[Z_n](i,j)$ is a 1-point space if $i\leq j$ and empty otherwise. Thus $\mathfrak{C}[i_n]$ induces homotopy equivalences on mapping spaces.
+\end{proof}
+
+We can also use this characterization to prove that $N_{\Delta}$ preserves fibrant objects (which is also an implication of the Quillen equivalence above).
+
+\begin{proposition}
+	\label{prop:simplicial_nerve_of_category_enriched_in_kan_complexes_gives_infinity_category}
+	Let $\mathcal{C}$ be a simplicial category such that for all $x$, $y$ in $\mathcal{C}$, $\mathcal{C}(x, y)$ is a Kan complex. Then $N_{\Delta}( \mathcal{C} )$ is an $\infty$-category.
+\end{proposition}
+\begin{proof}
+	We need to show that we can solve the following lifting problem.
+	\begin{equation*}
+	\begin{tikzcd}
+	\Lambda^{n}_{i}
+	\arrow[r]
+	\arrow[d, hookrightarrow]
+	& N_{\Delta}(\mathcal{C})
+	\\
+	\Delta^{n}
+	\arrow[ur, dashed]
+	\end{tikzcd}
+	\end{equation*}
+	
+	Passing to adjuncts, we find the following lifting problem.
+	\begin{equation*}
+	\begin{tikzcd}
+	\mathfrak{C}[\Lambda^{n}_{i}]
+	\arrow[r]
+	\arrow[d, hookrightarrow]
+	& \mathcal{C}
+	\\
+	\mathfrak{C}[\Delta^{n}]
+	\arrow[ur, dashed]
+	\end{tikzcd}
+	\end{equation*}
+	
+	We can view the simplicial category $\mathfrak{C}[\Lambda^{n}_{i}]$ as a subcategory of $\mathfrak{C}[\Delta^{n}]$, where the only data missing is the mapping space
+	\begin{equation*}
+	\mathfrak{C}[\Delta^{n}](0, n).
+	\end{equation*}
+	Therefore, a solution to the above lifting problem need only fill in this information. This means we need only solve the corresponding lifting problem.
+	\begin{equation*}
+	\begin{tikzcd}
+	\mathfrak{C}[\Lambda^{n}_{i}](0, n)
+	\arrow[r]
+	\arrow[d, hookrightarrow]
+	& \mathcal{C}(0, n)
+	\\
+	\mathfrak{C}[\Delta^{n}](0, n)
+	\arrow[ur, dashed]
+	\end{tikzcd}
+	\end{equation*}
+	
+	A $k$-simplex of $\mathfrak{C}[\Lambda^{n}_{i}](0, n)$ is a chain 
+	\[
+	S_0\subset S_1\subset\ldots\subset S_k
+	\]
+	of subsets of $[n]$ containing $0$ and $n$, such that, for each consecutive $s,t\in S_0$, the subset of $q\in S_k$ such that $s\leq q\leq t$ defines a simplex in $\Lambda^n_i$. We then note that there is a retract 
+	
+	FINISH ARGUMENT!!
+\end{proof}
+
+\begin{example}
+	Let $\mathbf{Kan} \subset \SSet$ be the full subcategory on Kan complexes. We may consider $\mathbf{Kan}$ to be simplicially enriched by taking $\mathbf{Kan}(K, S) = \Maps(K, S)$. We have seen in \hyperref[cor:mapping_space_to_kan_complex_is_kan_complex]{Corollary~\ref*{cor:mapping_space_to_kan_complex_is_kan_complex}} that each mapping space is a Kan complex. Thus, the simplicial nerve $N_{\Delta}(\textbf{Kan})$ is an $\infty$-category.
+\end{example}
+
+\begin{definition}[category of spaces]
+	\label{def:category_of_spaces}
+	The \defn{$\infty$-category of spaces} is the category
+	\begin{equation*}
+	\mathcal{S} = N_{\Delta}(\textbf{Kan}).
+	\end{equation*}
+\end{definition}
+
+
+
+
+
+
+
+
+
+

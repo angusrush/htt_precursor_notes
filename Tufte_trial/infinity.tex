@@ -447,7 +447,7 @@ Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techica
 
 \begin{definition}[simplicial category]
   \label{def:simplicial_category}
-  A category enriched over $\SSet$ (with the Cartesian monoidal structure) is called a \defn{simplicial category}. Denote the category whose objects are simplicial categories and whose morphisms are enriched functors by $\mathbf{Cat}_{\Delta}$.
+  A category enriched over $\SSet$ (with the Cartesian monoidal structure) is called a \defn{simplicial category}.\sidenote{This terminology, while common, is somewhat misleading. Generally, the phrase \emph{simplicial foo} is used to refer to a functor from $\Delta\op$ to the category of foos. However, in this case, \emph{simplicial category} refers to a category enriched over simplicial sets. While this is an abuse of terminology, it is not as extreme as it may appear. After unwinding the definitions, one finds that a simplicial object in $\mathbf{Cat}$ which is \emph{constant on objects} is equivalent to a $\SSet$-enriched category.} Denote the category whose objects are simplicial categories and whose morphisms are enriched functors by $\mathbf{Cat}_{\Delta}$.
 \end{definition}
 
 \begin{theorem}
@@ -478,9 +478,9 @@ Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techica
 
 
 
-\begin{note}
-  This notation is potentially confusing! We are \emph{not} talking about the category of functors $\Delta\op \to \mathbf{Cat}$.
-\end{note}
+%\begin{note}
+%  This notation is potentially confusing! We are \emph{not} talking about the category of functors $\Delta\op \to \mathbf{Cat}$.
+%\end{note}
 
 \begin{definition}[singular nerve]
   \label{def:singular_nerve}
@@ -495,123 +495,7 @@ Our reason for working in the category $\CGHaus$ rather than $\Top$ is a techica
   \end{equation*}
 \end{definition}
 
-\subsection{Thickening}
-\label{ssc:thickening}
-
-\begin{definition}[thickening]
-  \label{def:thickening}
-  We define a cosimplicial object called the \emph{thickening} to be the functor
-  \begin{equation*}
-    \mathfrak{C}\colon \Delta \to \mathbf{Cat}_{\Delta}
-  \end{equation*}
-  defined as follows.
-
-  It sends objects $[n]$ to the simplicially enriched category $\mathfrak{C}[\Delta^{n}]$ defined as follows.
-  \begin{itemize}
-    \item $\Obj(\mathfrak{C}[\Delta^{n}]) = \{0, \ldots, n\}$.
-
-    \item For $i$, $j \in \{0, \ldots, n\}$
-      \begin{equation*}
-        \mathfrak{C}[\Delta^{n}](i, j) = N(P_{i, j}),
-      \end{equation*}
-      where $P_{i, j}$ is the poset of subsets of $\{i, \ldots, j\}$ containing $i$ and $j$.
-
-    \item To define composition, we need a morphism of simplicial sets
-      \begin{equation*}
-        N(P_{i,j}) \times N(P_{j,k}) \to N(P_{i, k}).
-      \end{equation*}
-      We have a multiplication $P_{i,j} \times P_{j, k} \to P_{i, k}$ given by $(I, J) \mapsto I \cup J$. This induces the map we need.
-  \end{itemize}
-
-  A morphism $f\colon [m] \to [n]$ induces a functor $\mathfrak{C}[\Delta^{m}] \to \mathfrak{C}[\Delta^{n}]$ on objects by $i \mapsto f(i)$, and on hom-simplicial-sets $N(P_{i,j})$ as follows. On the underlying posets, we send
-  \begin{equation*}
-    P_{i,j} \supset \{ i, k_{1}, \ldots, k_{r-1}, j \} \mapsto \{f(i), f(k_{1}), \ldots, f(k_{r-1}), f(j)\} \subset P_{f(i),f(j)}.
-  \end{equation*}
-  This extends to a functor of poset categories, hence a morphism of nerves.
-
-  Taking the Yoneda extension of the thickening, we find a functor $\mathfrak{C}\colon \SSet \to \SCat$, called the \defn{thickening}.
-\end{definition}
-
-By the usual theory of cosimplicial objects (explained in \hyperref[sec:simplicial_sets_from_cosimplicial_objects]{Section~\ref*{sec:simplicial_sets_from_cosimplicial_objects}}) we have the following results.
-
-\begin{lemma}
-  \label{lemma:thickening_preserves_colimits}
-  The thickening $\mathfrak{C}$ preserves colimits.
-\end{lemma}
-
-\begin{definition}[simplicial nerve]
-  \label{def:simplicial_nerve}
-  Let $\mathcal{C}$ be a simplicial category. The \defn{simplicial nerve} of $\mathcal{C}$, denoted $N_{\Delta}$, is the functor
-  \begin{equation*}
-    N_{\Delta}(\mathcal{C}) = \mathbf{Cat}_{\Delta}(\mathfrak{C}(-), \mathcal{C})\colon \Delta\op \to \SSet.
-  \end{equation*}
-\end{definition}
-
-By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Theorem~\ref*{lemma:right_adjoint_to_yoneda_extension}}, we have an adjunction
-\begin{equation*}
-  \mathcal{Y}_{!}\mathfrak{C} : \SSet \leftrightarrow \SCat : N_{\Delta}.
-\end{equation*}
-
-\begin{proposition}
-  \label{prop:simplicial_nerve_of_category_enriched_in_kan_complexes_gives_infinity_category}
-  Let $\mathcal{C}$ be a simplicial category such that for all $x$, $y$ in $\mathcal{C}$, $\mathcal{C}(x, y)$ is a Kan complex. Then $N_{\Delta}( \mathcal{C} )$ is an $\infty$-category.
-\end{proposition}
-\begin{proof}
-  We need to show that we can solve the following lifting problem.
-  \begin{equation*}
-    \begin{tikzcd}
-      \Lambda^{n}_{i}
-      \arrow[r]
-      \arrow[d, hookrightarrow]
-      & N_{\Delta}(\mathcal{C})
-      \\
-      \Delta^{n}
-      \arrow[ur, dashed]
-    \end{tikzcd}
-  \end{equation*}
-
-  Passing to adjuncts, we find the following lifting problem.
-  \begin{equation*}
-    \begin{tikzcd}
-      \mathfrak{C}[\Lambda^{n}_{i}]
-      \arrow[r]
-      \arrow[d, hookrightarrow]
-      & \mathcal{C}
-      \\
-      \mathfrak{C}[\Delta^{n}]
-      \arrow[ur, dashed]
-    \end{tikzcd}
-  \end{equation*}
-
-  We can view the simplicial category $\mathfrak{C}[\Lambda^{n}_{i}]$ as a subcategory of $\mathfrak{C}[\Delta^{n}]$, where the only data missing\footnote{Why?} is the mapping space
-  \begin{equation*}
-    \mathfrak{C}[\Delta^{n}](0, n).
-  \end{equation*}
-  Therefore, a solution to the above lifting problem need only fill in this information. This means we need only solve the corresponding lifting problem.
-  \begin{equation*}
-    \begin{tikzcd}
-      \mathfrak{C}[\Lambda^{n}_{i}](0, n)
-      \arrow[r]
-      \arrow[d, hookrightarrow]
-      & \mathcal{C}(0, n)
-      \\
-      \mathfrak{C}[\Delta^{n}](0, n)
-      \arrow[ur, dashed]
-    \end{tikzcd}
-  \end{equation*}
-\end{proof}
-
-\begin{example}
-  Let $\mathbf{Kan} \subset \SSet$ be the full subcategory on Kan complexes. We may consider $\mathbf{Kan}$ to be simplicially enriched by taking $\mathbf{Kan}(K, S) = \Maps(K, S)$. We have seen in \hyperref[cor:mapping_space_to_kan_complex_is_kan_complex]{Corollary~\ref*{cor:mapping_space_to_kan_complex_is_kan_complex}} that each mapping space is a Kan complex. Thus, the simplicial nerve $N_{\Delta}(\textbf{Kan})$ is an $\infty$-category.
-\end{example}
-
-\begin{definition}[category of spaces]
-  \label{def:category_of_spaces}
-  The \defn{$\infty$-category of spaces} is the category
-  \begin{equation*}
-    \mathcal{S} = N_{\Delta}(\textbf{Kan}).
-  \end{equation*}
-\end{definition}
+\input{rigidification.tex}
 
 \section{Mapping spaces}
 \label{sec:mapping_spaces}
