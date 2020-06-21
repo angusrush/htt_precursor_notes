@@ -5,13 +5,15 @@
 \chapter{Category-theoretic preliminaries}
 \label{ch:category_theoretic_preliminaries}
 
-The theory of infinity categories rests on the shoulders of the theory of ordinary category theory. In this appendix, we recall some category-theoretic results that we will use. In general, we make no attempt to prove these results; they are standard, and proofs can be found in any introductory text on category theory. 
+The theory of infinity categories rests on the shoulders of the theory of ordinary category theory. In this appendix, we recall some category-theoretic results that we will use. In general, we provide no proofs for these results; they are standard, and proofs can be found in any introductory text on category theory. 
 
 \section{Limits and colimits}
 \label{sec:limits_and_colimits}
 
 \subsection{Formulae for limits}
 \label{ssc:formulae_for_limits}
+
+One can calculate limits using products and equalizers, and colimits using coproducts and coequalizers.
 
 \begin{fact}
   \label{fact:limit_colimit_formula}
@@ -62,7 +64,9 @@ The theory of infinity categories rests on the shoulders of the theory of ordina
 \subsection{Limits in functor categories}
 \label{ssc:limits_in_functor_categories}
 
-\begin{theorem}
+In this section, we review facts about limits and colimits in functor categories. Much of this text is devoted to one particular presheaf category $\SSet$, the category of functors $\Delta\op \to \Set$,\footnote{Where $\Delta$ is the \emph{simplex category,} \hyperref[def:simplex_category]{Definition~\ref*{def:simplex_category}}.} and it will pay to understand categories of this form.
+
+\begin{fact}
   \label{thm:limit_over_category_with_initial_object_is_that}
   Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor.
 
@@ -71,44 +75,44 @@ The theory of infinity categories rests on the shoulders of the theory of ordina
 
     \item If $\mathcal{C}$ has a terminal object $i$, then $\colim F = F(i)$.
   \end{itemize}
-\end{theorem}
-\begin{proof}
-  We prove the first; the second is dual.
-
-  For each $c \in \mathcal{C}$, we get a unique morphism $i \to c$. Sticking these into $F$ gives us a cone $\alpha_{c}\colon F(i) \to F(c)$ under $F(i)$.
-
-  Now let $(d, \epsilon)$ be any other cone over $F$. In particular, $\epsilon$ has a component
-  \begin{equation*}
-    \epsilon_{i}\colon d \to F(i).
-  \end{equation*}
-  In order to show that $\alpha$ is a limit cone, we need only show that this is the only possible morphism $d \to F(i)$ such that the triangles
-  \begin{equation*}
-    \begin{tikzcd}
-      & d
-      \arrow[ddl, bend right, swap, "\epsilon_{j}"]
-      \arrow[d, "\epsilon_{i}"]
-      \\
-      & F(i)
-      \arrow[dl, "\alpha_{c}"]
-      \\
-      F(c)
-    \end{tikzcd}
-  \end{equation*}
-  commute for all $c$. Let $f\colon d \to F(i)$ be any other such morphism. The triangle above must in particular commute when $c = i$, so $\alpha_{i} = F(\id_{i}) = \id_{F(i)}$.
-  \begin{equation*}
-    \begin{tikzcd}
-      & d
-      \arrow[ddl, bend right, swap, "\epsilon_{i}"]
-      \arrow[d, "f"]
-      \\
-      & F(i)
-      \arrow[dl, "\id_{F(i)}"]
-      \\
-      F(i)
-    \end{tikzcd}
-  \end{equation*}
-  Thus, $f = \epsilon_{i}$.
-\end{proof}
+\end{fact}
+%\begin{proof}
+%  We prove the first; the second is dual.
+%
+%  For each $c \in \mathcal{C}$, we get a unique morphism $i \to c$. Sticking these into $F$ gives us a cone $\alpha_{c}\colon F(i) \to F(c)$ under $F(i)$.
+%
+%  Now let $(d, \epsilon)$ be any other cone over $F$. In particular, $\epsilon$ has a component
+%  \begin{equation*}
+%    \epsilon_{i}\colon d \to F(i).
+%  \end{equation*}
+%  In order to show that $\alpha$ is a limit cone, we need only show that this is the only possible morphism $d \to F(i)$ such that the triangles
+%  \begin{equation*}
+%    \begin{tikzcd}
+%      & d
+%      \arrow[ddl, bend right, swap, "\epsilon_{j}"]
+%      \arrow[d, "\epsilon_{i}"]
+%      \\
+%      & F(i)
+%      \arrow[dl, "\alpha_{c}"]
+%      \\
+%      F(c)
+%    \end{tikzcd}
+%  \end{equation*}
+%  commute for all $c$. Let $f\colon d \to F(i)$ be any other such morphism. The triangle above must in particular commute when $c = i$, so $\alpha_{i} = F(\id_{i}) = \id_{F(i)}$.
+%  \begin{equation*}
+%    \begin{tikzcd}
+%      & d
+%      \arrow[ddl, bend right, swap, "\epsilon_{i}"]
+%      \arrow[d, "f"]
+%      \\
+%      & F(i)
+%      \arrow[dl, "\id_{F(i)}"]
+%      \\
+%      F(i)
+%    \end{tikzcd}
+%  \end{equation*}
+%  Thus, $f = \epsilon_{i}$.
+%\end{proof}
 
 \begin{theorem}
   \label{thm:functor_categories_complete_cocomplete}
@@ -119,9 +123,9 @@ The theory of infinity categories rests on the shoulders of the theory of ordina
     \item If $\mathcal{D}$ is cocomplete, then so is $[\mathcal{C}, \mathcal{D}]$.
   \end{itemize}
 \end{theorem}
-\begin{proof}[Sketch of proof]
-  A cone in a functor category is built out of natural transformations. Evaluating on a component gives a cone in the target category. A cone in a functor category is a limit cone if and only if each component is a limit cone.
-\end{proof}
+%\begin{proof}[Sketch of proof]
+%  A cone in a functor category is built out of natural transformations. Evaluating on a component gives a cone in the target category. A cone in a functor category is a limit cone if and only if each component is a limit cone.
+%\end{proof}
 
 \begin{corollary}
   \label{cor:limits_computed_pointwise}
@@ -192,7 +196,7 @@ Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor, and let $d \in \mathcal{
     \end{equation*}
     commutes. Note that there is an obvious forgetful functor $\mathcal{C}_{d/} \to \mathcal{C}$.
 \end{itemize}
-\marginnote[-5cm]{
+\marginnote{
   The categories $\mathcal{C}_{/d}$ and $\mathcal{C}_{d/}$ are often referred to as (co)slice categories, comma categories, and under- and overcategories. There seems to be little agreement in the literature as to which of these terms refers to precisely which concept. We will call $\mathcal{C}_{d/}$ an \emph{overcategory} and $\mathcal{C}_{/d}$ an \emph{undercategory.} 
 
   The notatations used for these categories are as diverse as the names. What we are calling $\mathcal{C}_{/d}$ is often called $(F \downarrow d)$, for example.
@@ -228,49 +232,40 @@ Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor, and let $d \in \mathcal{
 
 \begin{theorem}
   \label{thm:kan_extension_along_fully_faithful_functor_counit_isomorphism}
-  Let $\mathcal{C}$ be a small category, and $\mathcal{D}$ locally small. Let $F\colon \mathcal{C} \to \mathcal{C'}$ be fully faithful.
-  \begin{itemize}
-    \item If $\mathcal{D}$ has small limits, then the counit
-      \begin{equation*}
-        \eta\colon F^{*} \circ F_{*} \Rightarrow \id_{\mathcal{C}'}
-      \end{equation*}
-      is a natural isomorphism.
-
-    \item If $\mathcal{D}$ has small colimits, then the unit
-      \begin{equation*}
-        \epsilon\colon \id_{\mathcal{D}} \Rightarrow F^{*} \circ F_{!}
-      \end{equation*}
-      is a natural isomorphism.
-  \end{itemize}
+  Let $\mathcal{C}$ be a small category, and $\mathcal{D}$ locally small. Let $F\colon \mathcal{C} \to \mathcal{C'}$ be fully faithful. If $\mathcal{D}$ has small colimits, then the unit
+  \begin{equation*}
+    \epsilon\colon \id_{\Fun(\mathcal{C}, \mathcal{D})} \Rightarrow F^{*} \circ F_{!}
+  \end{equation*}
+  is a natural isomorphism.
 \end{theorem}
-\begin{proof}
-  We need to show that each component
-  \begin{equation*}
-    \eta_{G}\colon (F^{*} \circ F_{*})(G) \Rightarrow \id_{\mathcal{C}'}
-  \end{equation*}
-  is a natural isomorphism. By definition of the pullback, we have
-  \begin{equation*}
-    (F^{*} \circ F_{*})(G) = F^{*}(F_{*}G) = F_{*}G \circ F.
-  \end{equation*}
-
-  Consider some $c' \in \mathcal{C}'$. By the limit formula for Kan extensions, we can express $F_{*}G(c')$ as
-  \begin{equation*}
-    F_{*}G(c') = \lim_{c \in (F / c')} G(c).
-  \end{equation*}
-  In particular, if $c' = F(c)$ for some $c$, we have
-  \begin{equation*}
-    F_{*}G(F(c)) = \lim_{c \in (F / F(c))} G(c) = \lim\left[ (F / F(c)) \to \mathcal{C} \to \mathcal{D} \right].
-  \end{equation*}
-  Since the object $(c, \id_{F(c)})$ is initial in $(F / F(c))$ we have by \hyperref[thm:limit_over_category_with_initial_object_is_that]{Theorem~\ref*{thm:limit_over_category_with_initial_object_is_that}} that
-  \begin{equation*}
-    \lim\left[ (F / F(c)) \to \mathcal{C} \to \mathcal{D} \right] = G(c).
-  \end{equation*}
-  Thus, we have
-  \begin{equation*}
-    (F^{*} \circ F_{*})(G)(c) \cong G(c)
-  \end{equation*}
-  for all $c \in \mathcal{C}$
-\end{proof}
+%\begin{proof}
+%  We need to show that each component
+%  \begin{equation*}
+%    \epsilon_{G}\colon \id_{co}
+%  \end{equation*}
+%  is a natural isomorphism. By definition of the pullback, we have
+%  \begin{equation*}
+%    (F^{*} \circ F_{*})(G) = F^{*}(F_{*}G) = F_{*}G \circ F.
+%  \end{equation*}
+%
+%  Consider some $c' \in \mathcal{C}'$. By the limit formula for Kan extensions, we can express $F_{*}G(c')$ as
+%  \begin{equation*}
+%    F_{*}G(c') = \lim_{c \in (F / c')} G(c).
+%  \end{equation*}
+%  In particular, if $c' = F(c)$ for some $c$, we have
+%  \begin{equation*}
+%    F_{*}G(F(c)) = \lim_{c \in (F / F(c))} G(c) = \lim\left[ (F / F(c)) \to \mathcal{C} \to \mathcal{D} \right].
+%  \end{equation*}
+%  Since the object $(c, \id_{F(c)})$ is initial in $(F / F(c))$ we have by \hyperref[thm:limit_over_category_with_initial_object_is_that]{Theorem~\ref*{thm:limit_over_category_with_initial_object_is_that}} that
+%  \begin{equation*}
+%    \lim\left[ (F / F(c)) \to \mathcal{C} \to \mathcal{D} \right] = G(c).
+%  \end{equation*}
+%  Thus, we have
+%  \begin{equation*}
+%    (F^{*} \circ F_{*})(G)(c) \cong G(c)
+%  \end{equation*}
+%  for all $c \in \mathcal{C}$
+%\end{proof}
 
 \begin{corollary}
   Let $\mathcal{C}$ be a small category, and $\mathcal{D}$ locally small. Let $F\colon \mathcal{C} \to \mathcal{C'}$ be fully faithful.
@@ -287,11 +282,26 @@ Let $F\colon \mathcal{C} \to \mathcal{D}$ be a functor, and let $d \in \mathcal{
 
 For any locally small category $\mathcal{C}$, the \emph{Yoneda embedding} is the functor
 \begin{equation*}
-  \mathcal{Y}\colon \mathcal{C} \to [\mathcal{C}\op, \Set] := \Set_{\mathcal{C}};\qquad c \mapsto \Hom_{\mathcal{C}}(-, c).
+  \mathcal{Y}\colon \mathcal{C} \to \Fun(\mathcal{C}\op, \Set) := \Set_{\mathcal{C}};\qquad c \mapsto \Hom_{\mathcal{C}}(-, c).
 \end{equation*}
-The category $\Set_{\mathcal{C}}$ is the category of presheaves on $\mathcal{C}$. We will be particularly interested in Kan extensions along the Yoneda embedding; these are called \emph{Yoneda extensions.}
+The category $\Set_{\mathcal{C}}$ is the category of ($\Set$-valued) presheaves on $\mathcal{C}$. We will frequently be interested in Kan extensions along the Yoneda embedding; these are called \emph{Yoneda extensions.} That is, for any functor $F\colon \mathcal{C} \to \mathcal{D}$, we will often want to compute the Kan extension $\mathcal{Y}_{!}F$.
+\begin{equation*}
+  \begin{tikzcd}
+    \mathcal{C}
+    \arrow[rr, "F"]
+    \arrow[dr, swap, "\mathcal{Y}"]
+    && \mathcal{D}
+    \\
+    & \Set_{\mathcal{C}}
+    \arrow[ur, swap, "\mathcal{Y}_{!}F"]
+  \end{tikzcd}
+\end{equation*}
+In this section, we prove some basic results about Yoneda extensions.
 
-%It is often helpful to think of the objects in a category $\mathbf{Set}_{\mathcal{C}}$ as `generalized objects' of $\mathcal{C}$. This is possible becuase the Yoneda embedding is fully faithful, so one can reasonably think of $\mathcal{C}$ as sitting inside $\mathbf{Set}_{\mathcal{C}}$ as a full subcategory. One then imagines the objects of $\mathbf{Set}_{\mathcal{C}}$ as built by gluing together objects of $\mathcal{C}$. This point of view comes from the following result.
+%We can compute the values of $\mathcal{Y}_{!}F$ via the colimit formula given in \hyperref[fact:pointwise_formula_kan_extensions]{Fact~\ref*{fact:pointwise_formula_kan_extensions}}. The colimit formula tells us that for any object $X \in \Set_{\mathcal{C}}$, we have the formula
+%\begin{equation*}
+%  \mathcal{Y}_{!}F(X) \cong \colim \left[ \mathcal{C}_{/X} \to \mathcal{C} \overset{F}{\to} \mathcal{D} \right].
+%\end{equation*}
 
 \begin{lemma}
   \label{lemma:colimit_of_comma_category}
@@ -360,12 +370,6 @@ The category $\Set_{\mathcal{C}}$ is the category of presheaves on $\mathcal{C}$
 %  natural in $\alpha$. By Yoneda, we get a natural transformation $F \Rightarrow G$.
 \end{proof}
 
-The notation
-\begin{equation*}
-  \colim \left[ \mathcal{C}_{/F} \to \mathcal{C} \overset{\mathcal{Y}}{\to} \mathbf{Set}_{\mathcal{C}} \right]
-\end{equation*}
-is quite cumbersome, and we will be well-served by simplifying it. First, note that the category $\mathcal{C}_{/F}$ has objects $(c, f)$, where $f\colon \mathcal{Y}(c) \to F$. By the Yoneda lemma, specifying such an $f$ is the same as specifying an element of $F(c)$.
-
 \begin{lemma}
   \label{lemma:right_adjoint_to_yoneda_extension}
   Let $\mathcal{I}$ be a small category, and let $\mathcal{C}$ be locally small and cocomplete. Let $F$ be a functor as below. Then the Yoneda extension $\mathcal{Y}_{!}F$ is left adjoint to the functor
@@ -396,10 +400,10 @@ is quite cumbersome, and we will be well-served by simplifying it. First, note t
   Thus, we have the following string of natural isomorphisms.
   \begin{align*}
     \mathcal{C}((\mathcal{Y}_{!}F)(H), c) &\cong \mathcal{C}(\colim [F \circ \mathcal{U}], c) \\
-    &\cong \lim_{\leftarrow}\mathcal{C}(F(-), c) \circ \mathcal{U} \\
-    &\cong \lim_{\leftarrow} G(c) \circ \mathcal{U} \\
-    &\cong \lim_{\leftarrow}\mathbf{Set}_{\mathcal{I}}(\mathcal{Y}(-), G(c)) \circ \mathcal{U}. \\
-    &\cong\mathbf{Set}_{\mathcal{I}}(\lim_{\rightarrow}\mathcal{Y} \circ \mathcal{U}, G(c)) \\
+    &\cong \lim\mathcal{C}(F(-), c) \circ \mathcal{U} \\
+    &\cong \lim G(c) \circ \mathcal{U} \\
+    &\cong \lim\mathbf{Set}_{\mathcal{I}}(\mathcal{Y}(-), G(c)) \circ \mathcal{U}. \\
+    &\cong\mathbf{Set}_{\mathcal{I}}(\colim\mathcal{Y} \circ \mathcal{U}, G(c)) \\
     &\cong\mathbf{Set}_{\mathcal{I}}(H, G(c)).
   \end{align*}
 \end{proof}

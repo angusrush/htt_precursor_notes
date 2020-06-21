@@ -1076,21 +1076,37 @@ In this section, we define two ways of creating a simplicial set out of existing
 \end{equation*}
 where $\mathcal{C}$ is some locally small category.
 
-The idea is as follows. Given such a functor $\alpha\colon \Delta \to \mathcal{C}$ and any object $C \in \mathcal{C}$, we can define a corresponding simplicial set $\mathcal{N}(C)$ by first Yoneda embedding, and then composing the resulting hom functor with $\alpha$:
+The idea is as follows. Given a cosimplicial object $\alpha\colon \Delta \to \mathcal{C}$ and any object $C \in \mathcal{C}$, we can define a corresponding simplicial set $\mathcal{N}_{\alpha}(C)$ by first Yoneda embedding, and then composing the resulting hom functor with $\alpha$:
 \begin{equation*}
-  C \mapsto \mathcal{N}(C) = \mathcal{C}(\alpha(-), C).
+  C \mapsto \mathcal{N}_{\alpha}(C) = \mathcal{C}(\alpha(-), C).
 \end{equation*}
-That $\mathcal{N}(C)$ is a simplicial set follows immediately from the contravariance of the first slot of the hom functor.
+That $\mathcal{N}_{\alpha}(C)$ is a simplicial set follows immediately from the contravariance of the first slot of the hom functor.
 
-The $n$-simplices of $\mathcal{N}(C)$ are then given by maps of the $\mathcal{C}$-model of the $n$-simplex into $C$:
+The $n$-simplices of $\mathcal{N}_{\alpha}(C)$ are then given by maps of the $\mathcal{C}$-model of the $n$-simplex into $C$:
 \begin{equation*}
-  \mathcal{N}(C)_{n} = \mathcal{C}(\alpha([n]), C).
+  \mathcal{N}_{\alpha}(C)_{n} = \mathcal{C}(\alpha([n]), C).
 \end{equation*}
-In fact, by the functoriality of hom this construction gives us a functor $\mathcal{C} \to \SSet$ taking $C \mapsto \mathcal{N}(C)$.
+In fact, by the functoriality of hom this construction gives us a functor $\mathcal{C} \to \SSet$ taking $C \mapsto \mathcal{N}_{\alpha}(C)$.
+
+The power of defining simplicial sets via cosimplicial objects comes from \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}, which provides us immediately with a left adjoint to the functor $\mathcal{N}_{\alpha}$. This left adjoint provides a weak inverse, i.e.\ a way of constructing from any simplicial set $K$ an object of the category $\mathcal{C}$. More specifically, \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}} guarantees us an adjunction
+\begin{equation*}
+  \mathcal{Y}_{!}\alpha : \SSet \longleftrightarrow \mathcal{C} : \mathcal{N}_{\alpha},
+\end{equation*}
+where $\mathcal{Y}_{!}\alpha$ is the Yoneda extension of $\alpha$.
+
+%This notation is quite cumbersome, and we will be well-served by simplifying it. First, note that the category $\mathcal{C}_{/X}$ has objects $(c, f)$, where $c \in \mathcal{C}$ and $f\colon \mathcal{Y}(c) \to X$. By the Yoneda lemma, specifying such an $f$ is the same as specifying an element of $X(c)$. The indexing category of our colimit thus has objects
+%\begin{equation*}
+%  \ob(\mathcal{C}_{/X}) \simeq \coprod_{c \in \mathcal{C}} X(c).
+%\end{equation*}
+%The morphisms between an element of $\sigma \in X(c)$ and an element of $\tau \in X(c')$ are maps $g\colon c \to c'$ such that $X(g)$ takes $\sigma \mapsto \tau$. 
+%
+%The functor over which we are taking the colimit sends such an object $\sigma \in X(c)$ to $F(c)$. Thus, we will write the above colimit using the notation
+%\begin{equation*}
+%  \mathcal{Y}_{!}F(X) \cong \colim_{\mathcal{Y}(c) \to X} F(c).
+%\end{equation*}
+
 
 The alert reader will remember that we have already defined two cosimplicial objects: the \emph{realization functor} $\rho\colon \Delta \to \Top$ (\hyperref[def:realization_functor]{Definition~\ref*{def:realization_functor}}) and the \emph{categorification functor} $\chi\colon \Delta \to \mathbf{Cat}$. (\hyperref[def:categorification_functor]{Definition~\ref*{def:categorification_functor}}). We said that they would provide a connection between the theory of simplicial sets and the theory of topological spaces and categories respectively. Indeed, these are the cosimplicial objects we will use.
-
-The power of defining simplicial sets via cosimplicial objects comes from \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:right_adjoint_to_yoneda_extension}}, which provides us immediately with a right adjoint to the functor $\mathcal{N}$. This right adjoint provides a weak inverse, i.e.\ a way of constructing from any simplicial set $K$ an object of the category $\mathcal{C}$.
 
 \subsection{Nerves}
 \label{ssc:nerves}
@@ -1111,7 +1127,7 @@ Let us examine this construction in some detail. We have
 \begin{equation*}
   N(\mathcal{C})_{0} = \mathbf{Fun}([0], \mathcal{C}).
 \end{equation*}
-Since $[0]$ is nothing else but the one-object category, $\mathbf{Fun}([0], \mathcal{C})$ simply picks out the objects of $\mathcal{C}$. That is, the zero-simplices of $N(\mathcal{C})$ simply consist of the objects of $\mathcal{C}$.
+Since $[0]$ is nothing else but the category with one object and one morphism, $\mathbf{Fun}([0], \mathcal{C})$ simply picks out the objects of $\mathcal{C}$. That is, the zero-simplices of $N(\mathcal{C})$ simply consist of the objects of $\mathcal{C}$.
 
 Similarly, the category $[1]$ consists of two object and a morphism between them, so the functors in $\mathbf{Fun}([1], \mathcal{C})$ pick out diagrams of the form
 \begin{equation*}
@@ -1189,7 +1205,7 @@ The functor $\mathcal{Y}_{!}\chi$ provides a way of constructing, from any simpl
   is called the \defn{singular set} of $X$, and denoted $\Sing(X)$.
 \end{definition}
 
-Unlike the nerve, which creates a reasonably faithful simplicial likeness of any category, the singular set creates a grotesque caricature. Consider, for example, the geometric 2-simplex $|\Delta^{2}|$. We would hope that the singular set of $\abs{\Delta^{2}}$ would be something like $\Delta^{2}$, but alas: rather than three 0-simplices, there are uncountably many, one for each continuous map of the point $\abs{\Delta^{0}}$ into $\abs{\Delta^{2}}$. Similarly, there is a 1-simplex for each continuous map of the interval into $\abs{\Delta^{2}}$.
+Unlike the nerve, which creates a reasonably faithful simplicial likeness of any category, the singular set creates a caricature. Consider, for example, the geometric 2-simplex $|\Delta^{2}|$. We would hope that the singular set of $\abs{\Delta^{2}}$ would be something like $\Delta^{2}$, but alas: rather than three 0-simplices, there are uncountably many, one for each continuous map of the point $\abs{\Delta^{0}}$ into $\abs{\Delta^{2}}$. Similarly, there is a 1-simplex for each continuous map of the interval into $\abs{\Delta^{2}}$.
 
 However, things are not as hopeless as they may appear. We will later see that these extra simplices are in some sense superficial, and that the simplicial set $\Sing(\abs{\Delta^{2}})$ is, in an appropriate sense, equivalent to $\Delta^{2}$.
 
@@ -1220,7 +1236,7 @@ However, \hyperref[lemma:right_adjoint_to_yoneda_extension]{Lemma~\ref*{lemma:ri
   \label{prop:colimit_formula_for_simplicial_set}
   Let $K$ be any simplicial set. Then $K$ is the colimit of the functor
   \begin{equation*}
-    (\Delta \downarrow K) \to \Delta \overset{\mathcal{Y}}{\to} \SSet.
+    \Delta_{/K} \to \Delta \overset{\mathcal{Y}}{\to} \SSet.
   \end{equation*}
 \end{proposition}
 \begin{proof}
