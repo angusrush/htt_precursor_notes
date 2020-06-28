@@ -153,7 +153,7 @@ which is an isomorphism on objects, and induces a weak homotopy equivalence on m
 	\end{equation*}
 	This extends to a functor of poset categories, hence a morphism of nerves.
 	
-	Taking the Yoneda extension of the thickening, we find a functor $\mathfrak{C}\colon \SSet \to \SCat$, called the \defn{rigidification}.
+	Taking the Yoneda extension of the rigidification, we find a functor $\mathfrak{C}\colon \SSet \to \SCat$, also called the \defn{rigidification}.
 \end{definition}
 
 By the usual theory of cosimplicial objects (explained in \hyperref[sec:simplicial_sets_from_cosimplicial_objects]{Section~\ref*{sec:simplicial_sets_from_cosimplicial_objects}}) we have the following results.
@@ -213,21 +213,222 @@ While it would go far beyond the scope of this document to prove them, we will s
 
 We will later see some exemplar computations to show that $N_\Delta$ preserves, e.g, fibrant objects. 
 
-Before we do that, though, let's go back and formalize some of our intuition about mapping spaces in $\mathfrak{C}[X]$. 
+Before we do that, though, let's go back and formalize some of our intuition about mapping spaces in $\mathfrak{C}[X]$. The $k$-simplices in $\mathfrak{C}[\Delta^n](i,j)$ have the form
+\[
+\sigma:=S_0\subset S_1\subset\cdots \subset S_k
+\]
+where each $S_\ell\subset [n]$ such that $i,j\in S_\ell$ and, for all $s\in S_\ell$, $i\leq s\leq j$. We will reformulate the data involved in $\sigma$ to obtain a new interpretation of the mapping spaces. We first write 
+\[
+S_0= \{i=a_1\leq a_2\leq\cdots\leq a_r=j\}
+\] 
+and then define 
+\[
+S_k^\ell:=\{s\in S_k \mid a_\ell \leq a_{\ell+1}\}.
+\]
+We can think of $S_k^\ell$ as an $n$-simplex in $\Delta^n$ with initial vertex $a_\ell$ and final vertex $a_{\ell+1}$. We can thus completely encode the information of $S_0$ and $S_k$ in the string of simplices 
+\[
+S_k^1, S_k^2, \cdots, S_k^{r-1} 
+\] 
+in $\Delta^n$. Note that 
+\begin{itemize}
+	\item the final vertex of $S_k^\ell$ is the intitial vertex of $S_k^{\ell+1}$
+	\item the initial vertex of $S_k^1$ is $i$, and 
+	\item the final vertex of $S_k^{r-1}$ is $j$.  
+\end{itemize}
 
-%\begin{definition}
-%	We define the $\underline{wedge}$ of $\Delta^n$ and $\Delta^m$ to be the simplicial set 
-%	\[
-%	\Delta^n\wedge \Delta^m:= \Delta^n\coprod_{\Delta^{\{n\}}=\Delta^{\{0\}}}\Delta^m 
-%	\]
-%	defined by attaching the last vertex of $\Delta^n$ to the first vertex of $\Delta^m$. We similarly define the wedge 
-%	\[
-%	\Delta^{n_1}\wedge \Delta^{n_2}\wedge \cdots \wedge \Delta^{n_k}.
-%	\]
-%	A 
-%\end{definition}
+We can visualize this information as a \emph{necklace} of $n$-simplices:
+\begin{center}
+	\begin{tikzpicture}[decoration={markings,mark=at position 0.5 with {\arrow{to}}},scale=2,dot/.style={draw,circle,minimum size=1mm,inner sep=0pt,outer sep=0pt,fill=black}]
+		\draw[postaction={decorate}] (0,0) to (1,0); 
+		\begin{scope}
+		\draw[postaction={decorate}] (1,0) to (1.6,0.5) ;
+		\draw[postaction={decorate}](1.6,0.5) to (2,-0.3); 
+		\draw[postaction={decorate}](2,-0.3) to (2.3,0); 
+		\draw[postaction={decorate}](1,0) to (2,-0.3);
+		\draw[postaction={decorate}](1.6,0.5) to (2.3,0);
+		\draw[postaction={decorate},dashed](1,0) to (2.3,0);
+		\draw[postaction={decorate}](2.3,0) to (2.8,0.5);   
+		\draw[postaction={decorate}](2.8,0.5) to (3.3,0);
+		\draw[postaction={decorate}](2.3,0) to (3.3,0);
+		\end{scope}
+		\coordinate[draw,dot, label=above:$i$] (00) at (0,0);
+		\coordinate[draw,dot] (01) at (1,0);
+		\coordinate[draw,dot] (02) at (2.3,0);
+		\coordinate[draw,dot, label=above:$j$] (03) at (3.3,0);
+	\end{tikzpicture}
+\end{center}
 
-\begin{theorem}[Dugger-Spivak]
+\begin{definition}
+	The \emph{necklace} of shape $k_1,\ldots, k_r$ is the simplicial set 
+	\[
+	\EuScript{N}=\Delta^{k_1}\coprod_{\Delta^0} \Delta^{k_2}\coprod_{\Delta^0} \cdots \coprod_{\Delta^0} \Delta^{k_r}=: \Delta^{k_1}\vee \Delta^{k_2}\vee \cdots \vee \Delta^{k_r}
+	\]
+	The images in $\EuScript{N}$ of the vertices $0,k_\ell\in \Delta^{k_\ell}$ are called the \emph{joints} of $\EuScript{N}$ and the set of joints of $\EuScript{N}$ is denoted by $J_{\EuScript{N}}$. The set of vertices of $\EuScript{N}$ is denoted by $V_{\EuScript{N}}$.  
+	
+	The category $\mathbf{Nec}$ of necklaces is the subcategory of $\Set_\Delta$ whose objects are necklaces, and whose morphisms are maps of simplicial sets $f:\EuScript{N}\to \EuScript{M}$ preserving the minimal and maximal joints.  
+\end{definition}
+
+We have thus shown
+
+\begin{lemma}
+	A $k$-simplex in $\mathfrak{C}[\Delta^n](i,j)$ is equivalently the following data:
+	\begin{itemize}
+		\item A necklace $\EuScript{N}$. 
+		\item A collection of subsets 
+		\[
+		J_{\EuScript{N}}=S_0\subset S_1\subset \cdots \subset S_k=V_{\EuScript{N}}
+		\]
+		\item A map $f: \EuScript{N}_{\vec{k}}\to \Delta^n$ sending the lowest joint to $i$ and the highest joint to $j$. 
+	\end{itemize}
+	the simplex is degenerate if and only if there exists $0\leq \ell \leq k$ such that $S_\ell=S_{\ell+1}$. 
+\end{lemma}
+
+This may seem like we have unnecessarily complicated the definition of the rigidification. However this reformulation will allow us to give a generic description of mapping spaces in the rigidification of a simplicial sets. 
+
+Given a simplicial set $K$ and vertices $x,y\in K$, we define $(\mathbf{Nec}_{/K})_{x,y}$ as the full subcategory of $\mathbf{Nec}_{/K}$ on those maps $\EuScript{N}\to K$ which send the initial joint to $x$ and the final joint to $y$. By the functoriality of the rigidification, given a map $\EuScript{N}\to K$ in $(\mathbf{Nec}_{/K})_{x,y}$, we get a map 
+\[
+\mathfrak{C}[\EuScript{N}](x,y)\to \mathfrak{C}[K](x,y)
+\] 
+where we abuse notation by denoting by $x$ the lowest joint of $\EuScript{N}$ and by $y$ the highest joint of $\EuScript{N}$. These piece together to form a cone, so that we have a canonical map 
+\[
+\colim_{(\mathbf{Nec}_{/K})_{x,y}}\mathfrak{C}[\EuScript{N}](x,y) \to \mathfrak{C}[K](x,y)
+\] 
+We can define a simplicial category $E_K$ whose objects are the vertices of $K$, and with 
+\[
+E_K(x,y):=\colim_{(\mathbf{Nec}_{/K})_{x,y}}\mathfrak{C}[\EuScript{N}](x,y).
+\]
+The composition operation is given by "gluing necklaces", i.e. given $f:\EuScript{N}\to K$ in $(\mathbf{Nec}_{/K})_{a,b}$ and $g: \EuScript{M}\to K$ in $(\mathbf{Nec}_{/K})_{b,c}$ we can construct a new map 
+\[
+f\vee g: \EuScript{N}\vee \EuScript{M}:= \EuScript{N}\coprod_{\Delta^{\{b\}}} \EuScript{M} \to K
+\]
+in $(\mathbf{Nec}_{/K})_{a,c}$. It is a matter of unwinding the definitions to show that the canonical maps above piece together into a canonical functor
+\[
+E_K\to \mathfrak{C}[K].
+\]
+\begin{note}
+	The construction $K\mapsto E_K$ extends to a functor
+	\[
+	E_{(-)}: \Set_\Delta\to \mathbf{Cat}_\Delta. 
+	\]
+	The  simplicial functors $E_K\to\mathfrak{C}[K]$ assemble to a natural transformation $\mu: E_{(-)}\Rightarrow \mathfrak[C]$. Each of the functors $\mu_K$ is bijective on objects.
+\end{note}
+
+Before characterizing mapping spaces in general, we need some more facts about necklaces. 
+\begin{definition}
+	We define a functor 
+	\[
+	C_{(-)}:\mathbf{Nec}\to \mathbf{Cat}_\Delta 
+	\]
+	Which sends $\EuScript{N}$ to the simplicially enriched category $C_{\EuScript{N}}$ with $C_{\EuScript{N}}(x,y)=N(P_{x,y})$
+	where $P_{x,y}$ is the poset whose objects are totally ordered subsets of $V_{\EuScript{N}}$ starting at $x$ and ending at $y$, and containing $J_{\EuScript{N}}$.
+\end{definition}
+
+\begin{lemma}\label{lem:posetmappingspaceinnecklace}
+	Let $\EuScript{N}$ be a necklace. Then there is an isomorphism
+	\[
+	\mathfrak{C}[\EuScript{N}]\cong C_{\EuScript{N}}
+	\]
+	of simplicial categories.
+\end{lemma}
+
+\begin{proof}
+	This is definitional if $\EuScript{N}$ is a simplex. We now show that, for two necklaces $\EuScript{N}$ and $\EuScript{M}$, we have 
+	\[
+	C_{\EuScript{N}\vee \EuScript{M}}\cong C_{\EuScript{N}}\coprod_{C_{\Delta^0}} C_{\EuScript{M}}. 
+	\] 
+	The functor in question is clearly bijective on objects (i.e., that $C_{(-)}$ preserves pushouts). On mapping spaces, This follows by careful examination of the universal property of pushout.  
+	
+	It then follows that, for any necklace
+	\[
+	\EuScript{N}= \Delta^{k_1}\vee \cdots \vee \Delta^{k_r}. 
+	\] 
+	we have 
+	\begin{align*}
+	\mathfrak{C}[\EuScript{N}] & \cong \mathfrak{C}{\Delta^{k_1}}\coprod_{\mathfrak{C}[\Delta^0]} \cdots \coprod_{\mathfrak{C}[\Delta^0]} \mathfrak{C}{\Delta^{k_r}}\\
+	& \cong C_{\Delta^{k_1}}\coprod_{C_{\Delta^0}} \cdots \coprod_{C_{\Delta^0}} C_{\Delta^{k_r}}\\
+	& \cong C_{\EuScript{N}},
+	\end{align*}
+	proving the lemma. 
+\end{proof}
+
+\begin{corollary}\label{cor:mappingspaceinnecklacecolim}
+	Suppose $K$ is a necklace. Then the functor 
+	\[
+	\mu_K: E_K\to \mathfrak{C}[K] 
+	\]
+	is an isomorphism of simplicial categories.
+\end{corollary}
+\begin{proof}
+	Since $\mu_K$ is bijective on objects, it will suffice to check that it is bijective on mapping spaces. Given $x,y\in K$, let $K_{x,y}$ be the full simplicial subset on those vertices $s\in K$ with $x\leq s\leq y$. Then $K_{x,y}$ is also necklace, and the inclusion $K_{x,y}\to K$ is a terminal object in $(\mathbf{Nec}_{/K})_{x,y}$, so that $E_K(x,y)=\mathfrak{C}[K_{x,y}](x,y)$ and 
+	\[
+	\mu_K: \mathfrak{C}[K_{x,y}](x,y)\to \mathfrak{C}[K](x,y)
+	\]  
+	is the inclusion. However, it follows immediately from \autoref{lem:posetmappingspaceinnecklace} that this is an isomorphism of simplicial sets.
+\end{proof}
+
+Now, given a simplicial set $K$, the colimit cone exhibiting $K$ as the colimit over its category of simplices $\Delta_{/K}$ gives rise to a canonical functor 
+\[
+\colim_{\Delta_{/K}} E_{(\Delta^n)}\to E_{K}.
+\]
+
+\begin{lemma}\label{lem:DSsurjective}
+	Let $K$ be a simplicial set, and $x,y\in K$. Then the map
+	\[
+	\phi:\left(\colim_{\Delta_{/K}} E_{(\Delta^k)}\right)(x,y)\to E_{K}(x,y)
+	\]
+	is surjective.
+\end{lemma}
+
+\begin{proof}
+	Given an $n$-simplex $\sigma:\Delta^n\to E_K(x,y)$, there is by definition a necklace $\EuScript{N}$, a map $f:\EuScript{N}\to K$, and an $n$-simplex $\gamma:\Delta^n \to \mathfrak{C}[\EuScript{N}](x,y)\cong E_{\EuScript{N}}(x,y)$ representing $\sigma$ in the colimit. 
+	
+	We thus have a commutative diagram of simplicial sets
+	\[
+	\begin{tikzcd}
+		\left(\colim_{\Delta_{/\EuScript{N}}} E_{\Delta^k}\right)(x,y)\arrow[r,"\cong"]\arrow[d,"f"'] & E_{\EuScript{N}}(x,y)\arrow[d,"f"] & \gamma\arrow[d,mapsto] \\
+		\left(\colim_{\Delta_{/K}} E_{(\Delta^k)}\right)(x,y)\arrow[r,"\phi"'] & E_K(x,y) & \sigma
+	\end{tikzcd}
+	\]
+	where the top map is an isomorphism by \autoref{cor:mappingspaceinnecklacecolim}. We thus see that, by commutativity, there exists an $n$-simplex in 
+	\[
+		\left(\colim_{\Delta_{/K}} E_{(\Delta^n)}\right)
+	\]
+	which is sent to $\sigma$ under $\phi$. 
+\end{proof}
+
+\begin{proposition}[Dugger-Spivak]
+	For any simplicial set $K$, the canonical functor 
+	\[
+	E_K\to \mathfrak{C}[K]
+	\]
+	is an isomorphism of simplicial categories. 
+\end{proposition}
+
+\begin{proof}
+	The functor in question is clearly bijective on objects, so it will suffices to show that it is an isomorphism on mapping spaces. For $x,y\in K$, we obtain a commutative diagram 
+	\[
+	\begin{tikzcd}
+	\left(\colim_{\Delta_{/K}} E_{(\Delta^l)}\right)(x,y)\arrow[r,"\phi"]\arrow[d,"\cong"] & E_K(x,y)\arrow[d,"\mu_K"]\\
+		\left(\colim_{\Delta_{/K}} \mathfrak{C}[\Delta^k]\right)(x,y)\arrow[r,equal] & \mathfrak{C}[K](x,y)
+	\end{tikzcd}
+	\] 
+	where the left-hand map is an isomorphism by \autoref{cor:mappingspaceinnecklacecolim}. This thus implies that $\phi$ is injective. However, by \autoref{lem:DSsurjective}, $\phi$ is also surjective, and thus an isomorphism, and thus
+	\[
+	\mu_K:E_K(x,y)\to \mathfrak{C}[K](x,y)
+	\]
+	is an isomorphism. 
+\end{proof}
+
+\begin{note}
+	This proposition thus allows us to represent simplices of the mapping spaces $\mathfrak{C}[K](x,y)$ explicitly in terms of 
+	\begin{itemize}
+		\item an element $f:\EuScript{N}\to K$ of $(\mathbf{Nec}_{/K})_{x,y}$
+		\item an $n$-simplex in $\mathfrak{C}[\EuScript{N}](x,y)$ 
+	\end{itemize}
+	modulo equivalence relations. In the particular case where $K$ is a simplicial subset of the nerve of a poset, this simplifies substantially.
+\end{note}
+
+\begin{corollary}[Dugger-Spivak]
 	Let $X=N(Q)$ be the nerve of a poset $Q$. For $x,y\in Q$ define a poset $P_{x,y}$ whose objects are totally ordered chains 
 	\[
 	x\leq z_1\leq z_2\leq \ldots \leq z_k\leq y
@@ -236,10 +437,10 @@ Before we do that, though, let's go back and formalize some of our intuition abo
 	\[
 	\mathfrak{C}[X](x,y)\cong N(P_{x,y}) 
 	\]
-\end{theorem}
+\end{corollary}
 
 \begin{proof}
-	ADD PROOF, EXPOSITION, NECKLACES, INTUITION.
+	This follows from unravelling the relevant colimit.
 \end{proof}
 
 \begin{note}
