@@ -521,9 +521,36 @@ We can also use this characterization to prove that $N_{\Delta}$ preserves fibra
 	\[
 	S_0\subset S_1\subset\ldots\subset S_k
 	\]
-	of subsets of $[n]$ containing $0$ and $n$, such that, for each consecutive $s,t\in S_0$, the subset of $q\in S_k$ such that $s\leq q\leq t$ defines a simplex in $\Lambda^n_i$. We then note that there is a retract 
+	of subsets of $[n]$ containing $0$ and $n$, such that, for each consecutive $s,t\in S_0$, the subset $S_k^{s,t}:=\{q\in S_k\mid s\leq q \leq t\}$ defines a simplex in $\Lambda^n_i$. More precise, there exists $0\leq j \leq n$ with $j\neq i$ such that $S_k^{s,t}\subset \Delta^{\{0,1,\ldots,\hat{j},\ldots ,n\}}$. 
 	
-	FINISH ARGUMENT!!
+	Let $\mathfrak{C}[\Lambda^n_i](0,n)^i$ and $\mathfrak{C}[\Delta^n](0,n)^i$ be the full sub-simplicial sets (in the latter case, subposet) on those objects which contain $i$. We can define a map of posets 
+	\[
+	\mathfrak{C}[\Delta^n](0,n)\to \mathfrak{C}[\Delta^n](0,n)^i
+	\]
+	sending $S\mapsto S\cup\{i\}$. This is clearly homotopic to the identity, and one can check that both the map and the homotopy descend to
+	\[
+	\mathfrak{C}[\Lambda^n_i](0,n)\to\mathfrak{C}[\Lambda^n_i](0,n)^i
+	\]
+	We thus have a commutative diagram 
+	\[
+	\begin{tikzcd}
+	\mathfrak{C}[\Lambda^n_i](0,n)\arrow[r,"\simeq"]\arrow[d] & \mathfrak{C}[\Lambda^n_i](0,n)^i\arrow[d] \\
+	\mathfrak{C}[\Delta^n](0,n)\arrow[r,"\simeq"] & \mathfrak{C}[\Delta^n](0,n)^i
+	\end{tikzcd}
+	\]
+	
+	However, by definition, $\mathfrak{C}[\Delta^n](0,n)^i$ is the image of the composition map 
+	\[
+	\mathfrak{C}[\Delta^n](0,i)\times \mathfrak{C}[\Delta^n](i,n)\to \mathfrak{C}[\Delta^n](0,n). 
+	\]
+	We thus can extend the commutative diagram above to
+		\[
+	\begin{tikzcd}
+	\mathfrak{C}[\Lambda^n_i](0,n)\arrow[r,"\simeq"]\arrow[d] & \mathfrak{C}[\Lambda^n_i](0,n)^i\arrow[d] & \mathfrak{C}[\Lambda^n_i](0,i)\times \mathfrak{C}[\Lambda^n_i](i,n)\arrow[d,"\cong"]\arrow[l,"\cong"]\\
+	\mathfrak{C}[\Delta^n](0,n)\arrow[r,"\simeq"] & \mathfrak{C}[\Delta^n](0,n)^i & \mathfrak{C}[\Delta^n](0,i)\times \mathfrak{C}[\Delta^n](i,n)\arrow[l,"\cong"]
+	\end{tikzcd}
+	\]
+	By 2-out-of-3, $\mathfrak{C}[\Lambda^n_i](0,n)\to 	\mathfrak{C}[\Delta^n](0,n)$ is a weak homotopy equivalence.
 \end{proof}
 
 \begin{example}
