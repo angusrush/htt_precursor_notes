@@ -5,13 +5,13 @@ Intuitively, an $\infty$-category should be something like a category $\mathcal{
 
 However, as in the world of 2-categories and bicategories, we might hope that we can "strictify" an infinity category $\mathcal{C}$ so as to give a strict composition operation which is coherently homotopy equivalent to the non-strict composition operation. The ideal way to express such a ``strictification" is as a simplicially enriched category (remember that simplicial sets can be used as a model for spaces). More precisely, we would like to define a ``strictification functor"
 \[
-\mathfrak{C}:\SSet \to \mathbf{Cat}_\Delta. 
+\mathfrak{C}:\mathbf{Set}_{\Delta} \to \mathbf{Cat}_\Delta. 
 \] 
 Which we will call the \emph{rigidification}\sidenote{Following the terminology of \cite{Dugger-Spivak}. Unfortunately, the functor $\mathfrak{C}$ is still fairly commonly referred to as ``The left adjoint to the homotopy coherent nerve" in the literature. Cumbersome, to say the least.}. In fact, we are going to find that there is a Quillen adjunction 
 \[
-\mathfrak{C} : \SSet \leftrightarrow \mathbf{Cat}_\Delta : N_{\Delta}
+\mathfrak{C} : \mathbf{Set}_{\Delta} \leftrightarrow \mathbf{Cat}_\Delta : N_{\Delta}
 \] 
-Fortunately for us, we already have a very good technique for generating left-adjoint functors out of $\SSet$ --- cosimplicial objects! So we want to describe a cosimplicial object 
+Fortunately for us, we already have a very good technique for generating left-adjoint functors out of $\mathbf{Set}_{\Delta}$ --- cosimplicial objects! So we want to describe a cosimplicial object 
 \[
 \mathfrak{C}:\Delta\to \mathbf{Cat}_\Delta. 
 \]
@@ -153,7 +153,7 @@ which is an isomorphism on objects, and induces a weak homotopy equivalence on m
 	\end{equation*}
 	This extends to a functor of poset categories, hence a morphism of nerves.
 	
-	Taking the Yoneda extension of the rigidification, we find a functor $\mathfrak{C}\colon \SSet \to \SCat$, also called the \defn{rigidification}.
+	Taking the Yoneda extension of the rigidification, we find a functor $\mathfrak{C}\colon \mathbf{Set}_{\Delta} \to \mathbf{Cat}_{\Delta}$, also called the \defn{rigidification}.
 \end{definition}
 
 By the usual theory of cosimplicial objects (explained in \hyperref[sec:simplicial_sets_from_cosimplicial_objects]{Section~\ref*{sec:simplicial_sets_from_cosimplicial_objects}}) we have the following results.
@@ -167,27 +167,27 @@ By the usual theory of cosimplicial objects (explained in \hyperref[sec:simplici
 	\label{def:homotopy-coherent_nerve}
 	Let $\mathcal{C}$ be a simplicial category. The \defn{homotopy-coherent nerve} of $\mathcal{C}$, denoted $N_{\Delta}$, is the functor
 	\begin{equation*}
-	N_{\Delta}(\mathcal{C}) = \mathbf{Cat}_{\Delta}(\mathfrak{C}(-), \mathcal{C})\colon \Delta\op \to \SSet.
+	N_{\Delta}(\mathcal{C}) = \mathbf{Cat}_{\Delta}(\mathfrak{C}(-), \mathcal{C})\colon \Delta\op \to \mathbf{Set}_{\Delta}.
 	\end{equation*}
 \end{definition}
 
 By \hyperref[lemma:right_adjoint_to_yoneda_extension]{Theorem~\ref*{lemma:right_adjoint_to_yoneda_extension}}, we have an adjunction\marginnote{The right adjoint of our adjunction fits into a commutative triangle of right Quillen functors 
 \[
 \begin{tikzcd}[ampersand replacement=\&]
-	 \& \SCat\arrow[dr,"N_{\Delta}"] \& \\
-	 \mathbf{Cat}\arrow[rr,"N"']\arrow[ur,"\text{disc}"]\& \& \SSet 
+	 \& \mathbf{Cat}_{\Delta}\arrow[dr,"N_{\Delta}"] \& \\
+	 \mathbf{Cat}\arrow[rr,"N"']\arrow[ur,"\text{disc}"]\& \& \mathbf{Set}_{\Delta} 
 \end{tikzcd}
 \]
-where $\text{disc}$ includes categories into $\SCat$ as simplicial categories with discrete mapping spaces.
+where $\text{disc}$ includes categories into $\mathbf{Cat}_{\Delta}$ as simplicial categories with discrete mapping spaces.
 }
 \begin{equation*}
-\mathfrak{C} : \SSet \leftrightarrow \SCat : N_{\Delta}.
+\mathfrak{C} : \mathbf{Set}_{\Delta} \leftrightarrow \mathbf{Cat}_{\Delta} : N_{\Delta}.
 \end{equation*}
 
 While it would go far beyond the scope of this document to prove them, we will state and use the following theorems. 
 
 \begin{theorem}[Bergner]
-	There is a model structure on the category $\SCat$ with 
+	There is a model structure on the category $\mathbf{Cat}_{\Delta}$ with 
 	\begin{itemize}
 		\item[(WE)] weak equivalences given by those functors $F:\mathcal{C}\to \mathcal{D}$ which are essentially surjective and induce weak homotopy equivalences of simplicial sets 
 		\[
@@ -205,7 +205,7 @@ While it would go far beyond the scope of this document to prove them, we will s
 \begin{theorem}[\cite{???}]
 	The adjoint functors  
 	\[
-	\mathfrak{C} : \SSet \leftrightarrow \SCat : N_{\Delta}
+	\mathfrak{C} : \mathbf{Set}_{\Delta} \leftrightarrow \mathbf{Cat}_{\Delta} : N_{\Delta}
 	\]
 	define a Quillen equivalence between the Joyal model structure and the Bergner model structure. A map $X\to Y$ of simplicial sets is a Joyal equivalence if and only if the induced functor $\mathfrak{C}[X]\to \mathfrak{C}[Y]$ is a Bergner equivalence.\sidenote{The second statement here can be viewed as an $\infty$-categorical version of a very familiar theorem: A functor between 1-categories is an equivalence of categories if and only if it is essentially surjective and fully faithful (induces bijections on mapping spaces). Our version says that a functor $F:\mathcal{C}\to \mathcal{D}$ of quasi-categories is an equivalence if and only if it is essentially surjective and \emph{homotopy fully faithful}, i.e. induces homotopy equivalences on all mapping spaces.   
 	} 
@@ -554,7 +554,7 @@ We can also use this characterization to prove that $N_{\Delta}$ preserves fibra
 \end{proof}
 
 \begin{example}
-	Let $\mathbf{Kan} \subset \SSet$ be the full subcategory on Kan complexes. We may consider $\mathbf{Kan}$ to be simplicially enriched by taking $\mathbf{Kan}(K, S) = \Maps(K, S)$. We have seen in \hyperref[cor:mapping_space_to_kan_complex_is_kan_complex]{Corollary~\ref*{cor:mapping_space_to_kan_complex_is_kan_complex}} that each mapping space is a Kan complex. Thus, the simplicial nerve $N_{\Delta}(\textbf{Kan})$ is an $\infty$-category.
+	Let $\mathbf{Kan} \subset \mathbf{Set}_{\Delta}$ be the full subcategory on Kan complexes. We may consider $\mathbf{Kan}$ to be simplicially enriched by taking $\mathbf{Kan}(K, S) = \Maps(K, S)$. We have seen in \hyperref[cor:mapping_space_to_kan_complex_is_kan_complex]{Corollary~\ref*{cor:mapping_space_to_kan_complex_is_kan_complex}} that each mapping space is a Kan complex. Thus, the simplicial nerve $N_{\Delta}(\textbf{Kan})$ is an $\infty$-category.
 \end{example}
 
 \begin{definition}[category of spaces]
